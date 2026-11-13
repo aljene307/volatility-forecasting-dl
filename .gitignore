@@ -1,0 +1,33 @@
+# Secrets et variables d'environnement locales
+.env
+
+# Environnement virtuel Python
+.venv/
+
+# Fichiers compilés et caches Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Points de sauvegarde automatiques de Jupyter
+.ipynb_checkpoints/
+
+# Données brutes et transformées (régénérables, trop volumineuses)
+data/raw/
+data/processed/
+
+# Dossiers de travail locaux (sauvegardes, captures, exports)
+sauvegardes/
+captures_brutes/
+exports/
+
+# Journaux d'entraînement et fichiers de log
+lightning_logs/
+*.log
+
+# Réglages de l'éditeur
+.vscode/
+
+# Fichiers système Windows
+Thumbs.db
+desktop.ini
