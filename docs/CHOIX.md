@@ -35,6 +35,9 @@ Chaque entrée consigne une décision, sa raison et ce qui reste à vérifier.
 
 - Python 3.11 dans l'environnement virtuel `.venv`, alors que la version par défaut du poste est 3.13.
 - L'environnement se crée avec `py -3.11 -m venv .venv`.
+- Version retenue : Python 3.11.9 (dernière version 3.11 avec installateur Windows), la même que celle prévue sur Render.
+- Le 2026-11-13, Python 3.11.0 a été remplacé par 3.11.9, et `.venv` a été recréé (il était vide : seulement pip et setuptools).
+- Raison : la même version en local et sur le serveur évite des écarts de comportement.
 
 ### Documents du cours
 
