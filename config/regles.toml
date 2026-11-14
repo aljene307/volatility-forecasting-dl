@@ -1,0 +1,196 @@
+# Règles du projet, fixées AVANT tout téléchargement de données et tout calcul.
+# Version lisible pour le jury : docs/REGLES.md (les dates doivent y être identiques).
+# Toute modification ultérieure est écrite et datée dans docs/CHOIX.md.
+# La valeur "a_fixer_apres_mesure" signifie : choisie plus tard, à partir d'une mesure.
+
+[projet]
+graine = 42                                # graine aléatoire commune (Python, numpy, torch)
+fils_calcul = "a_fixer_apres_mesure"       # nombre de fils de calcul pour l'entraînement
+fils_calcul_candidats = [2, 4, 8]          # valeurs qui seront comparées par une mesure
+seuil_memoire_libre_go = "a_fixer_apres_mesure"  # en dessous, les scripts lourds refusent de démarrer
+
+[donnees]
+source = "Binance spot"                    # marché au comptant de Binance
+url_source = "https://data.binance.vision" # dépôt public des fichiers historiques
+type_fichier = "klines"                    # bougies : ouverture, plus haut, plus bas, clôture, volume
+intervalle = "5m"                          # une bougie toutes les 5 minutes
+actifs = ["BTCUSDT", "ETHUSDT"]            # bitcoin et ether, cotés en USDT
+fuseau = "UTC"                             # un jour va de 00:00 inclus à 24:00 exclu, en UTC
+debut = 2018-01-01                         # aucune donnée de 2017 (mois de démarrage de Binance)
+fin = 2026-10-31                           # dernier mois complet disponible
+horodatage_unite = "detectee_par_fichier"  # millisecondes ou microsecondes, d'après l'ordre de grandeur
+licence = "a_verifier_avant_commit_extrait" # vérifiée à l'étape des données
+
+[donnees.jour_valide]
+bougies_par_jour = 288                     # 24 h x 12 bougies de 5 minutes
+part_min_bougies = 0.95                    # au moins 95 % des bougies du jour
+bougies_min = 274                          # 95 % de 288, arrondi au supérieur
+ecart_max_minutes = 60                     # au-delà, entre deux bougies consécutives, le jour est non valide
+jours_invalides = "exclus_et_rapportes"    # exclus de la cible et de l'évaluation, listés dans un rapport
+
+[donnees.rendements]
+enjamber_bougies_manquantes = true         # rendement gardé entre deux clôtures consécutives disponibles
+premier_depuis_veille = true               # le 1er rendement part de la dernière clôture disponible de la veille
+rendement_manquant_compte_comme_bougie_manquante = true  # pour la règle des 274
+premier_jour_donnees = 2018-01-01          # pas de veille (aucune donnée de 2017) : 287 rendements, jour valide
+premier_jour_rendements = 287              # ce jour sert au préchauffage et n'est jamais une cible
+
+[donnees.exclusions]
+fenetre_entree_jours = 30                  # un exemple est exclu si sa fenêtre d'entrée contient un jour non valide
+seuil_secours = 0.05                       # au-delà de 5 % d'exemples exclus, on passe à la règle de secours
+secours = "derniere_valeur_valide_connue"  # le jour non valide en entrée prend la dernière valeur valide (passé seul)
+seuil_mesure = "une_fois_par_actif"        # taux d'exclusion mesuré une seule fois, pour chaque actif
+seuil_mesure_debut = 2018-04-01            # sur tout le développement (dates de cible), jamais sur le test final
+seuil_mesure_fin = 2024-12-31
+secours_portee = "deux_actifs_partout"     # si un actif dépasse 5 %, le secours s'applique aux deux actifs, partout
+
+[decoupage]
+convention_date = "cible"                  # un exemple (variables à la clôture de J, cible RV de J+1) appartient
+                                           # à la période qui contient sa cible J+1 ; toutes les bornes sont des dates de cible
+dev_debut = 2018-01-01                     # début des données de développement (préchauffage compris)
+premiere_cible = 2018-04-01                # première date de cible utilisée
+dev_fin = 2024-12-31                       # dernière date de cible du développement
+test_debut = 2025-01-01                    # première date de cible du test final
+test_fin = 2026-10-31                      # dernière date de cible du test final
+test_ouvertures_max = 1                    # le test final est ouvert une seule fois
+embargo_jours = 0                          # inutile : aucune cible commune entre apprentissage et évaluation à 1 jour
+reapprendre_transformations_par_pli = true # normalisation, etc. réapprises sur l'apprentissage de chaque pli
+
+[decoupage.prechauffage]
+debut = 2018-01-01                         # jours servant uniquement à calculer les variables
+fin = 2018-03-31                           # aucune cible dans cette période
+jours = 90                                 # durée du préchauffage
+
+[decoupage.walk_forward]
+fenetre = "croissante"                     # la fenêtre d'apprentissage s'agrandit à chaque pli
+premier_apprentissage_debut = 2018-04-01   # première cible d'apprentissage (= premiere_cible)
+premier_apprentissage_fin = 2019-12-31     # dernière cible du premier apprentissage
+plis_debut = 2020-01-01                    # première cible évaluée
+plis_fin = 2024-12-31                      # dernière cible évaluée
+duree_pli_mois = 6                         # chaque pli évalue 6 mois de cibles
+nombre_plis = 10                           # de 2020-01-01 à 2024-12-31 : 10 plis de 6 mois
+validation_interne_mois = 6                # 6 derniers mois de cibles de chaque apprentissage : arrêt anticipé, réglage, s²
+ajustement_commun = true                   # tous les modèles sont ajustés sur la même fenêtre d'ajustement
+                                           # (l'apprentissage du pli sans sa validation interne)
+
+[decoupage.modele_test_final]
+ajustement_debut = 2018-04-01              # cibles d'ajustement du modèle évalué sur le test final
+ajustement_fin = 2024-06-30
+validation_debut = 2024-07-01              # validation interne du modèle du test final
+validation_fin = 2024-12-31
+
+# Périodes de crise pour l'analyse par régime, fixées avant tout résultat.
+# Analysées sur les prévisions hors échantillon des plis walk-forward.
+[crises.covid]
+debut = 2020-03-01                         # krach lié au Covid
+fin = 2020-04-30
+
+[crises.terra_luna]
+debut = 2022-05-01                         # effondrement de Terra et Luna
+fin = 2022-06-30
+
+[crises.ftx]
+debut = 2022-11-01                         # faillite de FTX
+fin = 2022-12-31
+
+[cible]
+nom = "RV"                                 # volatilité réalisée journalière
+intervalle_rendements = "5m"               # log-rendements des clôtures de 5 minutes du jour UTC
+formule = "racine de la somme des carrés des log-rendements"  # RV = sqrt(somme r_i^2)
+horizon_jours = 1                          # prévoir RV de J+1 avec l'information connue à la clôture de J
+transformation_modele = "log"              # les modèles prévoient log(RV)
+annualisation_jours = 365                  # marché ouvert 7 jours sur 7
+
+[cible.retour_log]
+variance = "exp(2*y + 2*s2)"               # variance prévue (QLIKE), y = prévision de log(RV)
+s2 = "variance_residus_log"                # variance des résidus en log
+s2_mesuree_sur = "validation_interne"      # toujours, pour tous les modèles qui prévoient log(RV)
+sensibilite_sans_correction = true         # sigma prévue avec s2 = 0, rapportée sans changer la décision
+
+[cible.volatilite_prevue]
+formule = "sqrt(variance_prevue)"          # une seule volatilité prévue pour tout le projet
+usages = ["RMSE", "MAE", "strategie", "VaR"]
+limite = "un peu au-dessus de la moyenne de RV, ce qui pénalise légèrement le MAE"
+
+[variables]
+passe_strict = true                        # calculées uniquement jusqu'à la clôture de J incluse
+rv_moyennes_jours = [1, 7, 30]             # RV moyenne sur 1, 7 et 30 jours (HAR adapté au 7 j/7)
+estimateurs_journaliers = ["parkinson", "garman_klass"]  # volatilité à partir des prix extrêmes du jour
+log_rendement_jour = true                  # log-rendement de clôture à clôture du jour
+log_volume_jour = true                     # logarithme du volume échangé dans le jour
+rsi_jours = 14                             # RSI sur 14 jours, clôtures journalières
+macd = [12, 26, 9]                         # MACD : moyennes rapide, lente et ligne de signal
+bollinger_jours = 20                       # bandes de Bollinger sur 20 jours
+bollinger_ecarts_types = 2                 # largeur des bandes : 2 écarts-types
+jour_semaine = true                        # jour de la semaine
+fenetre_sequence_jours = 30                # longueur des séquences pour les modèles séquentiels
+
+[modeles]
+liste = ["HAR-RV", "GARCH(1,1)", "XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]
+graines_deep_learning = [0, 1, 2, 3, 4]    # 5 entraînements par modèle : moyenne et écart-type
+budget_reglage = "a_fixer_apres_mesure"    # identique pour tous les modèles de deep learning
+
+[modeles.har_rv]
+cible = "log_rv"                           # régression linéaire sur log(RV)
+fenetres_jours = [1, 7, 30]                # composantes jour, semaine, mois
+
+[modeles.garch]
+p = 1                                      # un retard sur les chocs passés
+q = 1                                      # un retard sur la variance passée
+donnees = "rendements_journaliers"         # estimé sur les rendements journaliers
+innovations = "student"                    # loi de Student pour les queues épaisses
+facteur_echelle = "moyenne(RV2) / moyenne(variance_garch)"  # met la variance GARCH à l'échelle de RV²
+facteur_appris_sur = "apprentissage_du_pli" # puis appliqué tel quel à l'évaluation
+variance_prevue = "variance_garch_mise_a_l_echelle"  # sigma prévue = sqrt(variance mise à l'échelle)
+
+[modeles.transformer]
+type = "encodeur"                          # encodeur seul
+implementation = "manuelle"                # codé à la main, sans modèle tout prêt
+
+[evaluation]
+metrique_principale = "QLIKE"              # calculée sur la variance (RV au carré)
+qlike_sur = "variance"
+metriques_secondaires = ["RMSE", "MAE"]    # calculées sur RV
+metriques_secondaires_sur = "RV"
+
+[evaluation.diebold_mariano]
+reference = "HAR-RV"                       # chaque modèle est comparé à HAR-RV
+perte = "QLIKE"
+erreurs = "HAC"                            # erreurs robustes à l'autocorrélation
+retards_hac = "floor(4*(T/100)^(2/9))"     # règle de Newey-West, T = nombre de jours évalués
+correction = "Harvey-Leybourne-Newbold"    # correction pour petits échantillons
+seuil = 0.05                               # seuil de significativité de 5 %
+test_principal = "10_plis_reunis"          # un seul test sur les jours évalués des 10 plis réunis
+par_pli_et_par_crise = "descriptif"        # aucune conclusion de test (évite les tests multiples)
+test_final = "un_seul_test"                # un seul test sur le test final
+
+[evaluation.bootstrap]
+niveau_confiance = 0.95                    # intervalles de confiance à 95 %
+methode = "blocs"                          # bootstrap par blocs (garde la dépendance temporelle)
+tirages = 1000                             # nombre de rééchantillonnages
+taille_bloc_jours = 20                     # longueur d'un bloc
+
+[evaluation.selection]
+critere = "plus petit QLIKE moyen sur les plis walk-forward"  # règle de choix du modèle
+choix_sur_test = false                     # sur le test final, tout est rapporté, rien n'est choisi
+
+[strategie]
+methode = "volatility_targeting"           # exposition = volatilité cible / volatilité prévue
+exposition_min = 0.0                       # pas de vente à découvert
+exposition_max = 1.0                       # pas d'emprunt
+rendement_liquidites = 0.0                 # la part non investie ne rapporte rien
+vol_cible = "mediane_rv_annualisee_jours_valides"  # médiane de la RV annualisée des jours valides, par actif
+vol_cible_debut = 2018-01-01               # calculée sur l'apprentissage seulement
+vol_cible_fin = 2019-12-31
+decalage_execution_jours = 1               # exposition décidée à la clôture de J, appliquée à J+1
+frais = 0.001                              # 0,10 % de la valeur échangée
+frais_sensibilite = [0.0005, 0.002]        # 0,05 % et 0,20 %, décrits sans changer la décision
+comparaisons = ["buy_and_hold", "HAR-RV"]  # stratégies de référence
+var_niveau = 0.95                          # VaR à 95 %
+var_loi = "normale"                        # même loi pour tous les modèles, appliquée à la volatilité prévue
+var_test = "Kupiec"                        # test du nombre de dépassements (sévère attendu : queues épaisses)
+
+[explicabilite]
+shap_modeles = ["XGBoost", "LSTM"]         # contributions des variables par SHAP
+attention_modeles = ["Transformer", "TFT"] # poids d'attention
+regle_fidelite = "permuter la variable la mieux classée par SHAP doit dégrader le QLIKE de validation plus que permuter la moins bien classée"
