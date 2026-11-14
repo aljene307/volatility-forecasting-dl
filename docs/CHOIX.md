@@ -133,4 +133,65 @@ Décidées après le commit des règles (31b9dae) et avant tout téléchargement
   - Décision : création d'un README minimal, qui renvoie vers `docs/REGLES.md` et `docs/CHOIX.md` et liste les exceptions datées.
   - Raison : la règle des exceptions demande de les lister dans le README, qui n'existait pas encore.
 
+Vérification prévue : l'affirmation de l'exception 2 (le biais de s² désavantage les modèles réglés) suppose que leur ŷ est sans biais ; à vérifier sur la validation (moyenne des résidus en log proche de 0) avant de l'affirmer.
+
 Note pour l'oral : le modèle du test final suit la même recette que les plis. Les 6 derniers mois du développement (cibles du 2024-07-01 au 2024-12-31) servent à l'arrêt anticipé et à la mesure de s², pas à l'ajustement.
+
+## 2026-11-14 — Téléchargement et contrôle des données
+
+### Choix techniques et raisons
+
+- **Téléchargement avec la bibliothèque standard** (`urllib`) : aucune dépendance de plus pour l'étape la plus sensible. Un fichier à la fois, délai d'attente de 60 s, au plus 3 nouvelles tentatives (attente qui double), pause de 0,3 s entre les fichiers, pour respecter le serveur.
+- **Vérification de chaque zip** avec le fichier `.CHECKSUM` publié par Binance (SHA-256). Le zip est écrit dans un fichier `.part`, renommé seulement après la vérification ; un fichier refusé est déplacé dans `data/raw/_rejets/`, jamais supprimé. Raison : un fichier abîmé ne peut jamais être pris pour un bon.
+- **Relance sans risque** : le `.CHECKSUM` est gardé à côté du zip, donc une relance vérifie les fichiers présents sans aucune requête réseau.
+- **Manifestes commités** (`data/manifeste_brut.json`, `data/manifeste_traite.json`) : triés, sans date de téléchargement ni chemin absolu, pour qu'une relance donne exactement les mêmes octets. Les données elles-mêmes restent hors du dépôt.
+- **Un Parquet par actif**, écrit mois par mois (mémoire limitée), dates en UTC avec une précision à la microseconde, exacte pour les deux unités de Binance.
+- **Unité des horodatages détectée par fichier** (13 chiffres = millisecondes, 16 = microsecondes) ; tout autre cas arrête la conversion. Constaté : millisecondes jusqu'en 2024-12, microsecondes à partir de 2025-01, pour les deux actifs.
+- **Empreinte de contenu** des Parquet, calculée sur les valeurs relues et non sur les octets : elle ne dépend ni de la version de pyarrow, ni du découpage du fichier. Un test le vérifie.
+- **Bibliothèques** : numpy, pandas et pyarrow épinglées en versions exactes dans `requirements.txt`, avec leurs dépendances.
+- **Test aveugle** : pour la période du test final, le rapport de qualité ne contient que des comptages. Aucune statistique de prix, de rendement, de volume ou de volatilité n'est produite, pour aucune période.
+
+### Mesures (essai réel)
+
+Les chiffres de qualité sont dans `docs/QUALITE_DONNEES.md`, généré par `src/qualite.py`. Mesures de l'essai sur ce poste :
+
+- Téléchargement de 212 fichiers : environ 1 115 s (le serveur répond lentement, environ 5 s par fichier), 424 requêtes, 0 rejet, 0 échec.
+- Conversion : environ 10 s. Contrôle de qualité : environ 4 s.
+- Taille : 90 Mo pour `data/raw` (212 zips et 212 `.CHECKSUM`), 141 Mo pour `data/processed`.
+- Mémoire maximale du vrai processus Python (mesurée de l'intérieur ; le lanceur de `.venv` est un processus parent séparé) : environ 30 Mo pour le téléchargement, 168 Mo pour la conversion, 385 Mo pour le contrôle de qualité.
+- Mémoire libre avant l'essai : environ 3,4 Go ; disque libre : environ 477 Go avant comme après.
+- Seconde exécution complète : 0 requête réseau, environ 15 s, manifestes, rapports et fichiers Parquet identiques octet pour octet.
+
+### Anomalies constatées (développement seulement)
+
+- **Bougies désalignées** : après la maintenance de Binance de février 2018, 241 bougies (du 2018-02-09 vers 09:58 au 2018-02-10 vers 05:58 UTC) commencent 3 min 14 s après la grille de 5 minutes, sur les deux actifs. Les règles ne prévoient pas ce cas : le contrôle de qualité les compte à part et les traite comme manquantes (exception 5 ci-dessous). Ces jours sont dans le préchauffage et étaient de toute façon non valides à cause de l'arrêt de plus de 50 heures.
+- **Jours non valides** : 30 par actif dans le développement, aux mêmes dates pour BTC et ETH (arrêts de toute la plateforme), aucun dans le test final. Le premier mois (2018-01) n'est pas complet à cause du 2018-01-04 ; le dernier mois (2026-10) est complet ; le 2018-01-01 est valide avec 287 rendements.
+- **Seuil de secours** : la règle d'exclusion par fenêtre de 30 jours s'est révélée bien plus sévère que prévu : elle exclut 24,16 % des exemples du développement pour chaque actif (chiffre lu dans `docs/QUALITE_DONNEES.md`), alors que le seuil était de 5 %. Un seul jour non valide exclut les 30 cibles qui le suivent. La règle de secours, écrite avant de voir les données, s'est donc déclenchée sans aucun choix après coup : elle s'applique aux deux actifs, partout.
+- **Attribution d'un trou** : un écart entre deux bougies est compté pour chaque jour qui contient une partie des bougies manquantes, et pour le jour de la bougie qui suit l'écart (exception 6 ci-dessous). Exemple : un arrêt de 23:00 à 01:00 rend non valides les deux jours.
+
+### Exceptions datées de l'étape (2026-11-14)
+
+- **Exception 5 — Bougies désalignées de février 2018.**
+  - Décision : les 241 bougies désalignées sont traitées comme manquantes.
+  - Raison : cas non prévu par les règles ; ces bougies sont dans le préchauffage, et les jours concernés étaient déjà non valides.
+- **Exception 6 — Attribution d'un trou aux deux jours qu'il touche.**
+  - Décision : validée.
+  - Raison : le premier jour perd des bougies, et le premier rendement du second jour enjambe le trou ; les deux mesures de volatilité sont donc faussées.
+
+### Licence des données (lue le 2026-11-14, décision prise le même jour)
+
+Décision : licence acceptée (CC BY-NC-SA 4.0 et Vision Dataset Terms), pour un usage éducatif et non commercial, avec ces règles :
+
+- le code du dépôt est sous licence MIT (le code seul) ;
+- tout ce qui est dérivé des données (graphiques, résultats, modèles entraînés, fichiers ONNX) est sous CC BY-NC-SA 4.0, avec la mention « Données : Binance Vision » ;
+- jamais de données brutes ni de séries journalières dérivées dans le dépôt ;
+- API et application : décision reportée à cette étape ; règle prudente par défaut (résultats agrégés et graphiques, pas de flux de données) ;
+- le fichier de licence du dépôt sera créé à la publication.
+
+Ce qui a été lu :
+
+- Les conditions de Binance Vision (`TERMS_AND_CONDITIONS.md` du dépôt public `binance/binance-public-data`, et la page « Terms of Use » de data.binance.vision) placent les données sous la licence CC BY-NC-SA 4.0, avec des règles plus strictes qui l'emportent en cas de conflit.
+- Usage non commercial seulement (recherche universitaire, projets éducatifs non rémunérés, backtests personnels) ; l'hébergement ou la redistribution des fichiers bruts est interdit ; une œuvre dérivée redistribuée doit citer Binance Vision et rester sous la même licence.
+- Points non clairs : si publier une série journalière dérivée compte comme « héberger un flux historique dérivé » (interdit), et le texte complet du PDF officiel et des conditions générales de Binance, qui n'a pas pu être lu.
+- Sources : https://github.com/binance/binance-public-data/blob/master/TERMS_AND_CONDITIONS.md et https://data.binance.vision/terms-of-use.html.
+- Seuls les manifestes et des comptages sont commités à cette étape.

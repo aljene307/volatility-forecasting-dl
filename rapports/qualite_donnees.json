@@ -1,0 +1,914 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "dernier_mois": {
+        "bougies_attendues": 8928,
+        "bougies_observees": 8928,
+        "complet": true,
+        "mois": "2026-10"
+      },
+      "developpement": {
+        "bougies_attendues": 736416,
+        "bougies_desalignees": 241,
+        "bougies_manquantes_dans_les_trous": 1847,
+        "bougies_observees": 734569,
+        "doublons": 0,
+        "ecarts_non_multiples_de_5_min": 0,
+        "hors_ordre": 0,
+        "incoherences_prix": 0,
+        "jours": 2557,
+        "jours_non_valides": 30,
+        "jours_non_valides_ecart_trop_long": 30,
+        "jours_non_valides_trop_peu_de_rendements": 26,
+        "jours_par_nombre_de_bougies": {
+          "aucune": 1,
+          "complet": 2526,
+          "entre_minimum_et_complet": 5,
+          "plus_que_complet": 0,
+          "sous_le_minimum": 25
+        },
+        "jours_valides": 2527,
+        "liste_desalignements": [
+          {
+            "bougies": 241,
+            "derniere": "2018-02-10 05:58:14.789000+00:00",
+            "premiere": "2018-02-09 09:58:14.789000+00:00"
+          }
+        ],
+        "liste_jours_non_valides": [
+          {
+            "bougies": 264,
+            "ecart_max_min": 125,
+            "jour": "2018-01-04",
+            "rendements": 264
+          },
+          {
+            "bougies": 6,
+            "ecart_max_min": 3230,
+            "jour": "2018-02-08",
+            "rendements": 6
+          },
+          {
+            "bougies": 0,
+            "ecart_max_min": 3230,
+            "jour": "2018-02-09",
+            "rendements": 0
+          },
+          {
+            "bougies": 213,
+            "ecart_max_min": 3230,
+            "jour": "2018-02-10",
+            "rendements": 213
+          },
+          {
+            "bougies": 168,
+            "ecart_max_min": 605,
+            "jour": "2018-06-26",
+            "rendements": 168
+          },
+          {
+            "bougies": 267,
+            "ecart_max_min": 110,
+            "jour": "2018-06-27",
+            "rendements": 267
+          },
+          {
+            "bougies": 197,
+            "ecart_max_min": 460,
+            "jour": "2018-07-04",
+            "rendements": 197
+          },
+          {
+            "bougies": 246,
+            "ecart_max_min": 215,
+            "jour": "2018-10-19",
+            "rendements": 246
+          },
+          {
+            "bougies": 204,
+            "ecart_max_min": 425,
+            "jour": "2018-11-14",
+            "rendements": 204
+          },
+          {
+            "bougies": 216,
+            "ecart_max_min": 365,
+            "jour": "2019-03-12",
+            "rendements": 216
+          },
+          {
+            "bougies": 168,
+            "ecart_max_min": 605,
+            "jour": "2019-05-15",
+            "rendements": 168
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2019-06-07",
+            "rendements": 276
+          },
+          {
+            "bougies": 192,
+            "ecart_max_min": 485,
+            "jour": "2019-08-15",
+            "rendements": 192
+          },
+          {
+            "bougies": 260,
+            "ecart_max_min": 145,
+            "jour": "2019-11-13",
+            "rendements": 260
+          },
+          {
+            "bougies": 264,
+            "ecart_max_min": 125,
+            "jour": "2019-11-25",
+            "rendements": 264
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2020-02-09",
+            "rendements": 276
+          },
+          {
+            "bougies": 218,
+            "ecart_max_min": 355,
+            "jour": "2020-02-19",
+            "rendements": 218
+          },
+          {
+            "bougies": 263,
+            "ecart_max_min": 130,
+            "jour": "2020-03-04",
+            "rendements": 263
+          },
+          {
+            "bougies": 258,
+            "ecart_max_min": 155,
+            "jour": "2020-04-25",
+            "rendements": 258
+          },
+          {
+            "bougies": 246,
+            "ecart_max_min": 215,
+            "jour": "2020-06-28",
+            "rendements": 246
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2020-11-30",
+            "rendements": 276
+          },
+          {
+            "bougies": 242,
+            "ecart_max_min": 235,
+            "jour": "2020-12-21",
+            "rendements": 242
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2020-12-25",
+            "rendements": 276
+          },
+          {
+            "bougies": 273,
+            "ecart_max_min": 80,
+            "jour": "2021-02-11",
+            "rendements": 273
+          },
+          {
+            "bougies": 270,
+            "ecart_max_min": 95,
+            "jour": "2021-03-06",
+            "rendements": 270
+          },
+          {
+            "bougies": 258,
+            "ecart_max_min": 155,
+            "jour": "2021-04-20",
+            "rendements": 258
+          },
+          {
+            "bougies": 232,
+            "ecart_max_min": 285,
+            "jour": "2021-04-25",
+            "rendements": 232
+          },
+          {
+            "bougies": 234,
+            "ecart_max_min": 275,
+            "jour": "2021-08-13",
+            "rendements": 234
+          },
+          {
+            "bougies": 264,
+            "ecart_max_min": 125,
+            "jour": "2021-09-29",
+            "rendements": 264
+          },
+          {
+            "bougies": 272,
+            "ecart_max_min": 85,
+            "jour": "2023-03-24",
+            "rendements": 272
+          }
+        ],
+        "liste_trous": [
+          {
+            "bougies_manquantes": 24,
+            "debut": "2018-01-04 03:05:00+00:00",
+            "duree_min": 120,
+            "fin": "2018-01-04 05:00:00+00:00"
+          },
+          {
+            "bougies_manquantes": 645,
+            "debut": "2018-02-08 00:30:00+00:00",
+            "duree_min": 3225,
+            "fin": "2018-02-10 06:10:00+00:00"
+          },
+          {
+            "bougies_manquantes": 6,
+            "debut": "2018-02-11 04:05:00+00:00",
+            "duree_min": 30,
+            "fin": "2018-02-11 04:30:00+00:00"
+          },
+          {
+            "bougies_manquantes": 120,
+            "debut": "2018-06-26 02:00:00+00:00",
+            "duree_min": 600,
+            "fin": "2018-06-26 11:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 21,
+            "debut": "2018-06-27 13:00:00+00:00",
+            "duree_min": 105,
+            "fin": "2018-06-27 14:40:00+00:00"
+          },
+          {
+            "bougies_manquantes": 91,
+            "debut": "2018-07-04 00:25:00+00:00",
+            "duree_min": 455,
+            "fin": "2018-07-04 07:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 42,
+            "debut": "2018-10-19 06:00:00+00:00",
+            "duree_min": 210,
+            "fin": "2018-10-19 09:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 84,
+            "debut": "2018-11-14 02:00:00+00:00",
+            "duree_min": 420,
+            "fin": "2018-11-14 08:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 72,
+            "debut": "2019-03-12 02:00:00+00:00",
+            "duree_min": 360,
+            "fin": "2019-03-12 07:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 120,
+            "debut": "2019-05-15 03:00:00+00:00",
+            "duree_min": 600,
+            "fin": "2019-05-15 12:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2019-06-07 21:15:00+00:00",
+            "duree_min": 60,
+            "fin": "2019-06-07 22:10:00+00:00"
+          },
+          {
+            "bougies_manquantes": 96,
+            "debut": "2019-08-15 02:00:00+00:00",
+            "duree_min": 480,
+            "fin": "2019-08-15 09:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 28,
+            "debut": "2019-11-13 02:00:00+00:00",
+            "duree_min": 140,
+            "fin": "2019-11-13 04:15:00+00:00"
+          },
+          {
+            "bougies_manquantes": 24,
+            "debut": "2019-11-25 02:00:00+00:00",
+            "duree_min": 120,
+            "fin": "2019-11-25 03:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2020-02-09 02:00:00+00:00",
+            "duree_min": 60,
+            "fin": "2020-02-09 02:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 70,
+            "debut": "2020-02-19 11:40:00+00:00",
+            "duree_min": 350,
+            "fin": "2020-02-19 17:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 25,
+            "debut": "2020-03-04 09:25:00+00:00",
+            "duree_min": 125,
+            "fin": "2020-03-04 11:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 30,
+            "debut": "2020-04-25 02:00:00+00:00",
+            "duree_min": 150,
+            "fin": "2020-04-25 04:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 42,
+            "debut": "2020-06-28 02:00:00+00:00",
+            "duree_min": 210,
+            "fin": "2020-06-28 05:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2020-11-30 06:00:00+00:00",
+            "duree_min": 60,
+            "fin": "2020-11-30 06:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 46,
+            "debut": "2020-12-21 14:10:00+00:00",
+            "duree_min": 230,
+            "fin": "2020-12-21 17:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2020-12-25 02:00:00+00:00",
+            "duree_min": 60,
+            "fin": "2020-12-25 02:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 15,
+            "debut": "2021-02-11 03:45:00+00:00",
+            "duree_min": 75,
+            "fin": "2021-02-11 04:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 18,
+            "debut": "2021-03-06 02:00:00+00:00",
+            "duree_min": 90,
+            "fin": "2021-03-06 03:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 30,
+            "debut": "2021-04-20 02:00:00+00:00",
+            "duree_min": 150,
+            "fin": "2021-04-20 04:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 56,
+            "debut": "2021-04-25 04:05:00+00:00",
+            "duree_min": 280,
+            "fin": "2021-04-25 08:40:00+00:00"
+          },
+          {
+            "bougies_manquantes": 54,
+            "debut": "2021-08-13 02:00:00+00:00",
+            "duree_min": 270,
+            "fin": "2021-08-13 06:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 24,
+            "debut": "2021-09-29 07:00:00+00:00",
+            "duree_min": 120,
+            "fin": "2021-09-29 08:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 16,
+            "debut": "2023-03-24 12:40:00+00:00",
+            "duree_min": 80,
+            "fin": "2023-03-24 13:55:00+00:00"
+          }
+        ],
+        "prix_negatifs_ou_nuls": 0,
+        "trous": 29,
+        "trous_de_plus_de_60_min": 28,
+        "valeurs_manquantes": 0,
+        "volumes_negatifs": 0
+      },
+      "premier_jour": {
+        "bougies": 288,
+        "jour": "2018-01-01",
+        "rendements": 287,
+        "valide": true
+      },
+      "premier_mois": {
+        "bougies_attendues": 8928,
+        "bougies_observees": 8904,
+        "complet": false,
+        "mois": "2018-01"
+      },
+      "seuil_de_secours": {
+        "exclus_au_total": 611,
+        "exclus_par_cible_invalide": 26,
+        "exclus_par_fenetre": 596,
+        "exemples": 2467,
+        "taux_fenetre": 0.24158897446291042,
+        "taux_total": 0.24766923388731252
+      },
+      "test_final_comptages_seulement": {
+        "bougies_attendues": 192672,
+        "bougies_desalignees": 0,
+        "bougies_manquantes_dans_les_trous": 0,
+        "bougies_observees": 192672,
+        "doublons": 0,
+        "ecarts_non_multiples_de_5_min": 0,
+        "hors_ordre": 0,
+        "incoherences_prix": 0,
+        "jours": 669,
+        "jours_non_valides": 0,
+        "jours_non_valides_ecart_trop_long": 0,
+        "jours_non_valides_trop_peu_de_rendements": 0,
+        "jours_par_nombre_de_bougies": {
+          "aucune": 0,
+          "complet": 669,
+          "entre_minimum_et_complet": 0,
+          "plus_que_complet": 0,
+          "sous_le_minimum": 0
+        },
+        "jours_valides": 669,
+        "prix_negatifs_ou_nuls": 0,
+        "trous": 0,
+        "trous_de_plus_de_60_min": 0,
+        "valeurs_manquantes": 0,
+        "volumes_negatifs": 0
+      }
+    },
+    "ETHUSDT": {
+      "dernier_mois": {
+        "bougies_attendues": 8928,
+        "bougies_observees": 8928,
+        "complet": true,
+        "mois": "2026-10"
+      },
+      "developpement": {
+        "bougies_attendues": 736416,
+        "bougies_desalignees": 241,
+        "bougies_manquantes_dans_les_trous": 1847,
+        "bougies_observees": 734569,
+        "doublons": 0,
+        "ecarts_non_multiples_de_5_min": 0,
+        "hors_ordre": 0,
+        "incoherences_prix": 0,
+        "jours": 2557,
+        "jours_non_valides": 30,
+        "jours_non_valides_ecart_trop_long": 30,
+        "jours_non_valides_trop_peu_de_rendements": 26,
+        "jours_par_nombre_de_bougies": {
+          "aucune": 1,
+          "complet": 2526,
+          "entre_minimum_et_complet": 5,
+          "plus_que_complet": 0,
+          "sous_le_minimum": 25
+        },
+        "jours_valides": 2527,
+        "liste_desalignements": [
+          {
+            "bougies": 241,
+            "derniere": "2018-02-10 05:58:14.800000+00:00",
+            "premiere": "2018-02-09 09:58:14.800000+00:00"
+          }
+        ],
+        "liste_jours_non_valides": [
+          {
+            "bougies": 264,
+            "ecart_max_min": 125,
+            "jour": "2018-01-04",
+            "rendements": 264
+          },
+          {
+            "bougies": 6,
+            "ecart_max_min": 3230,
+            "jour": "2018-02-08",
+            "rendements": 6
+          },
+          {
+            "bougies": 0,
+            "ecart_max_min": 3230,
+            "jour": "2018-02-09",
+            "rendements": 0
+          },
+          {
+            "bougies": 213,
+            "ecart_max_min": 3230,
+            "jour": "2018-02-10",
+            "rendements": 213
+          },
+          {
+            "bougies": 168,
+            "ecart_max_min": 605,
+            "jour": "2018-06-26",
+            "rendements": 168
+          },
+          {
+            "bougies": 267,
+            "ecart_max_min": 110,
+            "jour": "2018-06-27",
+            "rendements": 267
+          },
+          {
+            "bougies": 197,
+            "ecart_max_min": 460,
+            "jour": "2018-07-04",
+            "rendements": 197
+          },
+          {
+            "bougies": 246,
+            "ecart_max_min": 215,
+            "jour": "2018-10-19",
+            "rendements": 246
+          },
+          {
+            "bougies": 204,
+            "ecart_max_min": 425,
+            "jour": "2018-11-14",
+            "rendements": 204
+          },
+          {
+            "bougies": 216,
+            "ecart_max_min": 365,
+            "jour": "2019-03-12",
+            "rendements": 216
+          },
+          {
+            "bougies": 168,
+            "ecart_max_min": 605,
+            "jour": "2019-05-15",
+            "rendements": 168
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2019-06-07",
+            "rendements": 276
+          },
+          {
+            "bougies": 192,
+            "ecart_max_min": 485,
+            "jour": "2019-08-15",
+            "rendements": 192
+          },
+          {
+            "bougies": 260,
+            "ecart_max_min": 145,
+            "jour": "2019-11-13",
+            "rendements": 260
+          },
+          {
+            "bougies": 264,
+            "ecart_max_min": 125,
+            "jour": "2019-11-25",
+            "rendements": 264
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2020-02-09",
+            "rendements": 276
+          },
+          {
+            "bougies": 218,
+            "ecart_max_min": 355,
+            "jour": "2020-02-19",
+            "rendements": 218
+          },
+          {
+            "bougies": 263,
+            "ecart_max_min": 130,
+            "jour": "2020-03-04",
+            "rendements": 263
+          },
+          {
+            "bougies": 258,
+            "ecart_max_min": 155,
+            "jour": "2020-04-25",
+            "rendements": 258
+          },
+          {
+            "bougies": 246,
+            "ecart_max_min": 215,
+            "jour": "2020-06-28",
+            "rendements": 246
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2020-11-30",
+            "rendements": 276
+          },
+          {
+            "bougies": 242,
+            "ecart_max_min": 235,
+            "jour": "2020-12-21",
+            "rendements": 242
+          },
+          {
+            "bougies": 276,
+            "ecart_max_min": 65,
+            "jour": "2020-12-25",
+            "rendements": 276
+          },
+          {
+            "bougies": 273,
+            "ecart_max_min": 80,
+            "jour": "2021-02-11",
+            "rendements": 273
+          },
+          {
+            "bougies": 270,
+            "ecart_max_min": 95,
+            "jour": "2021-03-06",
+            "rendements": 270
+          },
+          {
+            "bougies": 258,
+            "ecart_max_min": 155,
+            "jour": "2021-04-20",
+            "rendements": 258
+          },
+          {
+            "bougies": 232,
+            "ecart_max_min": 285,
+            "jour": "2021-04-25",
+            "rendements": 232
+          },
+          {
+            "bougies": 234,
+            "ecart_max_min": 275,
+            "jour": "2021-08-13",
+            "rendements": 234
+          },
+          {
+            "bougies": 264,
+            "ecart_max_min": 125,
+            "jour": "2021-09-29",
+            "rendements": 264
+          },
+          {
+            "bougies": 272,
+            "ecart_max_min": 85,
+            "jour": "2023-03-24",
+            "rendements": 272
+          }
+        ],
+        "liste_trous": [
+          {
+            "bougies_manquantes": 24,
+            "debut": "2018-01-04 03:05:00+00:00",
+            "duree_min": 120,
+            "fin": "2018-01-04 05:00:00+00:00"
+          },
+          {
+            "bougies_manquantes": 645,
+            "debut": "2018-02-08 00:30:00+00:00",
+            "duree_min": 3225,
+            "fin": "2018-02-10 06:10:00+00:00"
+          },
+          {
+            "bougies_manquantes": 6,
+            "debut": "2018-02-11 04:05:00+00:00",
+            "duree_min": 30,
+            "fin": "2018-02-11 04:30:00+00:00"
+          },
+          {
+            "bougies_manquantes": 120,
+            "debut": "2018-06-26 02:00:00+00:00",
+            "duree_min": 600,
+            "fin": "2018-06-26 11:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 21,
+            "debut": "2018-06-27 13:00:00+00:00",
+            "duree_min": 105,
+            "fin": "2018-06-27 14:40:00+00:00"
+          },
+          {
+            "bougies_manquantes": 91,
+            "debut": "2018-07-04 00:25:00+00:00",
+            "duree_min": 455,
+            "fin": "2018-07-04 07:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 42,
+            "debut": "2018-10-19 06:00:00+00:00",
+            "duree_min": 210,
+            "fin": "2018-10-19 09:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 84,
+            "debut": "2018-11-14 02:00:00+00:00",
+            "duree_min": 420,
+            "fin": "2018-11-14 08:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 72,
+            "debut": "2019-03-12 02:00:00+00:00",
+            "duree_min": 360,
+            "fin": "2019-03-12 07:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 120,
+            "debut": "2019-05-15 03:00:00+00:00",
+            "duree_min": 600,
+            "fin": "2019-05-15 12:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2019-06-07 21:15:00+00:00",
+            "duree_min": 60,
+            "fin": "2019-06-07 22:10:00+00:00"
+          },
+          {
+            "bougies_manquantes": 96,
+            "debut": "2019-08-15 02:00:00+00:00",
+            "duree_min": 480,
+            "fin": "2019-08-15 09:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 28,
+            "debut": "2019-11-13 02:00:00+00:00",
+            "duree_min": 140,
+            "fin": "2019-11-13 04:15:00+00:00"
+          },
+          {
+            "bougies_manquantes": 24,
+            "debut": "2019-11-25 02:00:00+00:00",
+            "duree_min": 120,
+            "fin": "2019-11-25 03:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2020-02-09 02:00:00+00:00",
+            "duree_min": 60,
+            "fin": "2020-02-09 02:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 70,
+            "debut": "2020-02-19 11:40:00+00:00",
+            "duree_min": 350,
+            "fin": "2020-02-19 17:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 25,
+            "debut": "2020-03-04 09:25:00+00:00",
+            "duree_min": 125,
+            "fin": "2020-03-04 11:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 30,
+            "debut": "2020-04-25 02:00:00+00:00",
+            "duree_min": 150,
+            "fin": "2020-04-25 04:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 42,
+            "debut": "2020-06-28 02:00:00+00:00",
+            "duree_min": 210,
+            "fin": "2020-06-28 05:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2020-11-30 06:00:00+00:00",
+            "duree_min": 60,
+            "fin": "2020-11-30 06:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 46,
+            "debut": "2020-12-21 14:10:00+00:00",
+            "duree_min": 230,
+            "fin": "2020-12-21 17:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 12,
+            "debut": "2020-12-25 02:00:00+00:00",
+            "duree_min": 60,
+            "fin": "2020-12-25 02:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 15,
+            "debut": "2021-02-11 03:45:00+00:00",
+            "duree_min": 75,
+            "fin": "2021-02-11 04:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 18,
+            "debut": "2021-03-06 02:00:00+00:00",
+            "duree_min": 90,
+            "fin": "2021-03-06 03:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 30,
+            "debut": "2021-04-20 02:00:00+00:00",
+            "duree_min": 150,
+            "fin": "2021-04-20 04:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 56,
+            "debut": "2021-04-25 04:05:00+00:00",
+            "duree_min": 280,
+            "fin": "2021-04-25 08:40:00+00:00"
+          },
+          {
+            "bougies_manquantes": 54,
+            "debut": "2021-08-13 02:00:00+00:00",
+            "duree_min": 270,
+            "fin": "2021-08-13 06:25:00+00:00"
+          },
+          {
+            "bougies_manquantes": 24,
+            "debut": "2021-09-29 07:00:00+00:00",
+            "duree_min": 120,
+            "fin": "2021-09-29 08:55:00+00:00"
+          },
+          {
+            "bougies_manquantes": 16,
+            "debut": "2023-03-24 12:40:00+00:00",
+            "duree_min": 80,
+            "fin": "2023-03-24 13:55:00+00:00"
+          }
+        ],
+        "prix_negatifs_ou_nuls": 0,
+        "trous": 29,
+        "trous_de_plus_de_60_min": 28,
+        "valeurs_manquantes": 0,
+        "volumes_negatifs": 0
+      },
+      "premier_jour": {
+        "bougies": 288,
+        "jour": "2018-01-01",
+        "rendements": 287,
+        "valide": true
+      },
+      "premier_mois": {
+        "bougies_attendues": 8928,
+        "bougies_observees": 8904,
+        "complet": false,
+        "mois": "2018-01"
+      },
+      "seuil_de_secours": {
+        "exclus_au_total": 611,
+        "exclus_par_cible_invalide": 26,
+        "exclus_par_fenetre": 596,
+        "exemples": 2467,
+        "taux_fenetre": 0.24158897446291042,
+        "taux_total": 0.24766923388731252
+      },
+      "test_final_comptages_seulement": {
+        "bougies_attendues": 192672,
+        "bougies_desalignees": 0,
+        "bougies_manquantes_dans_les_trous": 0,
+        "bougies_observees": 192672,
+        "doublons": 0,
+        "ecarts_non_multiples_de_5_min": 0,
+        "hors_ordre": 0,
+        "incoherences_prix": 0,
+        "jours": 669,
+        "jours_non_valides": 0,
+        "jours_non_valides_ecart_trop_long": 0,
+        "jours_non_valides_trop_peu_de_rendements": 0,
+        "jours_par_nombre_de_bougies": {
+          "aucune": 0,
+          "complet": 669,
+          "entre_minimum_et_complet": 0,
+          "plus_que_complet": 0,
+          "sous_le_minimum": 0
+        },
+        "jours_valides": 669,
+        "prix_negatifs_ou_nuls": 0,
+        "trous": 0,
+        "trous_de_plus_de_60_min": 0,
+        "valeurs_manquantes": 0,
+        "volumes_negatifs": 0
+      }
+    }
+  },
+  "manifeste_traite_sha256": "6edd75e109eefc991c4a546d8f17bfa357c97984d8440db79219a2c78f79d47f",
+  "periodes": {
+    "developpement": [
+      "2018-01-01",
+      "2024-12-31"
+    ],
+    "mesure_seuil": [
+      "2018-04-01",
+      "2024-12-31"
+    ],
+    "test_final": [
+      "2025-01-01",
+      "2026-10-31"
+    ]
+  },
+  "secours_active": true
+}

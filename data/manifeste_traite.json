@@ -1,0 +1,1541 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "colonnes": {
+        "cloture": "double",
+        "date_cloture": "timestamp[us, tz=UTC]",
+        "date_ouverture": "timestamp[us, tz=UTC]",
+        "nombre_transactions": "int64",
+        "ouverture": "double",
+        "plus_bas": "double",
+        "plus_haut": "double",
+        "volume": "double",
+        "volume_achat_base": "double",
+        "volume_achat_cotation": "double",
+        "volume_cotation": "double"
+      },
+      "empreinte_contenu_sha256": "328072d7c1e1fd685b6b00d978f975b9b92af486bbcd441790098856fa8e7dc9",
+      "fichier": "BTCUSDT_5m.parquet",
+      "fichiers_avec_en_tete": 0,
+      "lignes": 927482,
+      "lignes_hors_mois": 0,
+      "sources": [
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-01.zip",
+          "lignes": 8904,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-02.zip",
+          "lignes": 7654,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-06.zip",
+          "lignes": 8499,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-07.zip",
+          "lignes": 8837,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-10.zip",
+          "lignes": 8886,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-11.zip",
+          "lignes": 8556,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2018-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-03.zip",
+          "lignes": 8856,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-05.zip",
+          "lignes": 8808,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-06.zip",
+          "lignes": 8628,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-08.zip",
+          "lignes": 8832,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-11.zip",
+          "lignes": 8588,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2019-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-02.zip",
+          "lignes": 8270,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-03.zip",
+          "lignes": 8903,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-04.zip",
+          "lignes": 8610,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-06.zip",
+          "lignes": 8598,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-11.zip",
+          "lignes": 8628,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2020-12.zip",
+          "lignes": 8870,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-02.zip",
+          "lignes": 8049,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-03.zip",
+          "lignes": 8910,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-04.zip",
+          "lignes": 8554,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-08.zip",
+          "lignes": 8874,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-09.zip",
+          "lignes": 8616,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2021-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2022-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-03.zip",
+          "lignes": 8912,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2023-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-02.zip",
+          "lignes": 8352,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2024-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2025-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "BTCUSDT-5m-2026-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        }
+      ],
+      "unites_trouvees": [
+        "ms",
+        "us"
+      ]
+    },
+    "ETHUSDT": {
+      "colonnes": {
+        "cloture": "double",
+        "date_cloture": "timestamp[us, tz=UTC]",
+        "date_ouverture": "timestamp[us, tz=UTC]",
+        "nombre_transactions": "int64",
+        "ouverture": "double",
+        "plus_bas": "double",
+        "plus_haut": "double",
+        "volume": "double",
+        "volume_achat_base": "double",
+        "volume_achat_cotation": "double",
+        "volume_cotation": "double"
+      },
+      "empreinte_contenu_sha256": "634dce5487be84184c1abd3aad675d541a1df951d0ef07b6edb1a2a007e4325f",
+      "fichier": "ETHUSDT_5m.parquet",
+      "fichiers_avec_en_tete": 0,
+      "lignes": 927482,
+      "lignes_hors_mois": 0,
+      "sources": [
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-01.zip",
+          "lignes": 8904,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-02.zip",
+          "lignes": 7654,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-06.zip",
+          "lignes": 8499,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-07.zip",
+          "lignes": 8837,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-10.zip",
+          "lignes": 8886,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-11.zip",
+          "lignes": 8556,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2018-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-03.zip",
+          "lignes": 8856,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-05.zip",
+          "lignes": 8808,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-06.zip",
+          "lignes": 8628,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-08.zip",
+          "lignes": 8832,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-11.zip",
+          "lignes": 8588,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2019-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-02.zip",
+          "lignes": 8270,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-03.zip",
+          "lignes": 8903,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-04.zip",
+          "lignes": 8610,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-06.zip",
+          "lignes": 8598,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-11.zip",
+          "lignes": 8628,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2020-12.zip",
+          "lignes": 8870,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-02.zip",
+          "lignes": 8049,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-03.zip",
+          "lignes": 8910,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-04.zip",
+          "lignes": 8554,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-08.zip",
+          "lignes": 8874,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-09.zip",
+          "lignes": 8616,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2021-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2022-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-03.zip",
+          "lignes": 8912,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2023-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-02.zip",
+          "lignes": 8352,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2024-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "ms"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-11.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2025-12.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-01.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-02.zip",
+          "lignes": 8064,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-03.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-04.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-05.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-06.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-07.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-08.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-09.zip",
+          "lignes": 8640,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        },
+        {
+          "en_tete": false,
+          "fichier": "ETHUSDT-5m-2026-10.zip",
+          "lignes": 8928,
+          "lignes_hors_mois": 0,
+          "unite": "us"
+        }
+      ],
+      "unites_trouvees": [
+        "ms",
+        "us"
+      ]
+    }
+  },
+  "manifeste_brut_sha256": "59feedb0189407169b741816b3dd8a772612185ade611995e914b43837c2bf79"
+}
