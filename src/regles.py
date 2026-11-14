@@ -18,6 +18,7 @@ import math
 import sys
 import tomllib
 from pathlib import Path
+from statistics import NormalDist
 
 RACINE = Path(__file__).resolve().parent.parent
 CHEMIN_REGLES = RACINE / "config" / "regles.toml"
@@ -182,6 +183,25 @@ def volatilite_prevue_depuis_log(y: float, s2: float) -> float:
     return volatilite_prevue(variance_prevue_depuis_log(y, s2))
 
 
+def exposition(regles: dict, vol_cible_annuelle: float, sigma_journaliere: float) -> float:
+    """Exposition = vol_cible_annuelle / (sigma_journaliere × racine(365)), bornée entre min et max.
+
+    sigma est journalière : on l'annualise avant de la comparer à la volatilité cible annuelle.
+    """
+    s = regles["strategie"]
+    if not sigma_journaliere > 0:
+        raise ErreurRegles(f"La volatilité prévue doit être strictement positive, reçu : {sigma_journaliere}")
+    brute = vol_cible_annuelle / (sigma_journaliere * math.sqrt(s["annualisation_jours"]))
+    return min(max(brute, s["exposition_min"]), s["exposition_max"])
+
+
+def var_un_jour(regles: dict, sigma_journaliere: float) -> float:
+    """VaR à 1 jour (perte positive) : quantile de la loi normale × sigma journalière, sans annualisation."""
+    if not sigma_journaliere > 0:
+        raise ErreurRegles(f"La volatilité prévue doit être strictement positive, reçu : {sigma_journaliere}")
+    return NormalDist().inv_cdf(regles["strategie"]["var_niveau"]) * sigma_journaliere
+
+
 def jour_valide(regles: dict, nombre_bougies: int, plus_grand_ecart_minutes: float) -> bool:
     """Un jour est valide s'il a assez de bougies (un rendement manquant compte comme une
     bougie manquante) et si aucun écart entre deux bougies consécutives ne dépasse le maximum."""
@@ -341,6 +361,19 @@ def verifier_coherence(regles: dict) -> None:
     # Correction du logarithme : s² toujours mesuré sur des jours non appris
     exiger(s2_sur == "validation_interne", f"s² doit être mesuré sur la validation interne, reçu : {s2_sur!r}.")
 
+    # Exceptions du 2026-11-14 : GARCH sur l'ajustement seul, sigma journalière
+    garch = regles.get("modeles", {}).get("garch", {})
+    for cle in ("parametres_appris_sur", "facteur_appris_sur"):
+        exiger(garch.get(cle) == "ajustement_du_pli",
+               f"GARCH : {cle} doit être « ajustement_du_pli » (sans la validation interne), reçu : {garch.get(cle)!r}.")
+    strat = regles.get("strategie", {})
+    exiger(regles.get("cible", {}).get("volatilite_prevue", {}).get("echelle") == "journaliere",
+           "La volatilité prévue doit être journalière.")
+    exiger(strat.get("annualisation_jours") == _valeur(regles, "cible.annualisation_jours"),
+           "La stratégie doit annualiser avec le même nombre de jours que la cible (365).")
+    exiger(strat.get("var_horizon_jours") == 1 and strat.get("var_volatilite") == "sigma_journaliere",
+           "La VaR à 1 jour utilise sigma journalière, sans annualisation.")
+
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))
 
@@ -409,7 +442,11 @@ def resume(regles: dict) -> str:
                         f"{e['diebold_mariano']['correction']}), bootstrap {e['bootstrap']['tirages']} tirages")
     ligne("", "Diebold-Mariano : un test sur les 10 plis réunis, un test sur le test final ; "
               "par pli et par crise : descriptif seulement")
-    ligne("Stratégie", f"exposition entre {s['exposition_min']:g} et {s['exposition_max']:g}, frais "
+    ligne("Stratégie", f"exposition = {s['exposition']}, bornée entre {s['exposition_min']:g} et {s['exposition_max']:g}")
+    ligne("", f"VaR {s['var_horizon_jours']} jour à {_pourcent(s['var_niveau']).replace(',00', '')} "
+              f"avec sigma journalière, loi {s['var_loi']} ; GARCH appris sur "
+              f"{regles['modeles']['garch']['parametres_appris_sur'].replace('_', ' ')}")
+    ligne("", f"frais "
                        f"{_pourcent(s['frais'])} (sensibilité {', '.join(_pourcent(x) for x in s['frais_sensibilite'])})")
     ligne("Graine", str(regles["projet"]["graine"]))
     restantes = valeurs_a_fixer(regles)

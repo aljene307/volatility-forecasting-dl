@@ -114,3 +114,23 @@ Remarques écrites en même temps :
 - **Dépendances de test** : pytest et toutes ses dépendances sont épinglés en versions exactes dans `requirements-dev.txt`.
 
 Ces règles sont commitées et poussées avant tout téléchargement de données.
+
+## 2026-11-14 — Exceptions datées
+
+Décidées après le commit des règles (31b9dae) et avant tout téléchargement ou calcul. Chacune est aussi listée dans le README.
+
+- **Exception 1 — GARCH(1,1) sur la fenêtre d'ajustement seule.**
+  - Décision : les paramètres de GARCH et son facteur d'échelle sont appris sur la fenêtre d'ajustement du pli, sans la validation interne.
+  - Raison : tous les modèles doivent être ajustés sur les mêmes données. La règle précédente (« apprentissage du pli ») donnait à GARCH six mois de plus que les autres.
+- **Exception 2 — Limite de la mesure de s².**
+  - Décision : s² reste mesuré sur la validation interne, même si celle-ci sert aussi à l'arrêt anticipé et au réglage d'XGBoost et du deep learning.
+  - Limite : pour ces modèles, s² est légèrement trop petit. Leurs prévisions de variance sont donc un peu trop basses, ce que QLIKE punit : ce biais les désavantage, il ne les favorise pas.
+  - Raison : garder une seule règle pour tous les modèles, avec un défaut connu et allant contre les modèles complexes.
+- **Exception 3 — Annualisation.**
+  - Décision : σ̂ est une volatilité journalière. Stratégie : exposition = volatilité cible annuelle / (σ̂ × racine(365)), bornée entre 0 et 1. VaR à 1 jour : σ̂ journalière, sans annualisation.
+  - Raison : la volatilité cible est annuelle, alors que σ̂ et la VaR portent sur un jour. Sans cette précision, une erreur d'échelle d'un facteur racine(365), soit environ 19, était possible. Un test et un témoin la détectent.
+- **Exception 4 — README.**
+  - Décision : création d'un README minimal, qui renvoie vers `docs/REGLES.md` et `docs/CHOIX.md` et liste les exceptions datées.
+  - Raison : la règle des exceptions demande de les lister dans le README, qui n'existait pas encore.
+
+Note pour l'oral : le modèle du test final suit la même recette que les plis. Les 6 derniers mois du développement (cibles du 2024-07-01 au 2024-12-31) servent à l'arrêt anticipé et à la mesure de s², pas à l'ajustement.

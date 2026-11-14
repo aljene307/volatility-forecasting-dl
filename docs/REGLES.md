@@ -4,6 +4,8 @@ Ces règles ont été écrites et commitées **avant** tout téléchargement de 
 
 Une valeur notée « à fixer après mesure » sera choisie plus tard, à partir d'une mesure. Tant qu'elle n'est pas fixée, le code refuse de lancer un entraînement.
 
+Les règles marquées « exception du 2026-11-14 » ont été précisées après le commit des règles et avant tout téléchargement ou calcul ; elles sont expliquées dans `docs/CHOIX.md`.
+
 ## 0. Convention de date
 
 Un **exemple** réunit des variables arrêtées à la clôture du jour J et une cible : la volatilité réalisée du jour J+1. Cet exemple appartient à la période qui contient sa **cible** (J+1). Toutes les bornes de période et de pli ci-dessous sont donc des dates de cible.
@@ -85,6 +87,8 @@ Fixées avant tout résultat, pour analyser les modèles par régime de marché.
 | Mesure de s² | variance des résidus en log, toujours mesurée sur la validation interne, pour tous les modèles qui prévoient log(RV) | L'erreur est mesurée sur des jours que le modèle n'a pas appris, et sur les mêmes données pour tous. |
 | Sensibilité | σ̂ non corrigée (s² = 0, soit exp(ŷ)) aussi rapportée, sans changer la décision | Montrer l'effet de la correction. |
 | Limite | σ̂ est un peu au-dessus de la moyenne de la RV, ce qui pénalise légèrement le MAE | Écrite d'avance, pour que ce petit désavantage ne soit pas une surprise. |
+| Limite de s² (exception du 2026-11-14) | la validation interne sert aussi à l'arrêt anticipé et au réglage : s² est légèrement trop petit pour XGBoost et le deep learning | Ce biais rend leurs prévisions un peu trop basses et les désavantage sous QLIKE : il ne les favorise pas. |
+| Échelle de σ̂ | journalière (volatilité sur 1 jour) | La cible est la RV d'un jour ; l'annualisation n'est faite que là où elle est écrite. |
 | Annualisation | 365 jours | Le marché crypto est ouvert 7 jours sur 7. |
 
 ## 6. Variables
@@ -105,7 +109,7 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Règle | Valeur | Raison |
 |---|---|---|
 | Références | HAR-RV (régression linéaire sur log RV, fenêtres 1, 7 et 30 jours), GARCH(1,1) (rendements journaliers, innovations de Student) | Un modèle de deep learning n'a d'intérêt que s'il bat ces références classiques. |
-| Mise à l'échelle de GARCH | facteur unique = moyenne(RV²) / moyenne(variance GARCH), appris sur l'apprentissage de chaque pli, puis appliqué tel quel à l'évaluation ; σ̂ = racine de la variance mise à l'échelle | GARCH prévoit la variance du rendement d'un jour, pas la RV calculée sur 5 minutes : il faut ramener les deux à la même échelle, sans regarder la période évaluée. |
+| Mise à l'échelle de GARCH | paramètres et facteur unique = moyenne(RV²) / moyenne(variance GARCH) appris sur la fenêtre d'ajustement du pli (sans la validation interne, comme tous les modèles ; exception du 2026-11-14), puis appliqués tels quels à l'évaluation ; σ̂ = racine de la variance mise à l'échelle | GARCH prévoit la variance du rendement d'un jour, pas la RV calculée sur 5 minutes : il faut ramener les deux à la même échelle, sans regarder la période évaluée. |
 | Autres modèles | XGBoost, LSTM, GRU, CNN-LSTM, Transformer encodeur codé à la main, TFT | Du plus simple au plus complexe, pour voir ce que chaque complexité apporte. |
 | Graines | 0, 1, 2, 3 et 4 pour le deep learning ; moyenne et écart-type rapportés | Un seul entraînement peut être chanceux : on mesure la variabilité. |
 | Budget de réglage | à fixer après mesure, identique pour tous les modèles de deep learning | Comparaison équitable. Il sera fixé par un essai chronométré sur des données aléatoires de même taille. |
@@ -126,12 +130,12 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 
 | Règle | Valeur | Raison |
 |---|---|---|
-| Principe | volatility targeting : exposition = volatilité cible / volatilité prévue σ̂ (annualisée), bornée entre 0 et 1 | On investit moins quand le marché s'agite, sans emprunt ni vente à découvert. Le reste est en liquidités, avec un rendement de 0. |
+| Principe | volatility targeting : exposition = volatilité cible annuelle / (σ̂ × racine(365)), bornée entre 0 et 1 (exception du 2026-11-14) | On investit moins quand le marché s'agite, sans emprunt ni vente à découvert. Le reste est en liquidités, avec un rendement de 0. |
 | Volatilité cible | médiane de la RV annualisée des jours valides de chaque actif, du 2018-01-01 au 2019-12-31, enregistrée dans un fichier | Calculée sur l'apprentissage seulement, pour ne rien emprunter au futur. |
 | Exécution | l'exposition décidée à la clôture de J s'applique au rendement de J+1 | On ne peut pas trader au prix d'une clôture qu'on vient juste d'observer. |
 | Frais | 0,10 % de la valeur échangée ; sensibilité à 0,05 % et à 0,20 % | Ordre de grandeur réaliste ; la sensibilité est décrite sans changer la décision. |
 | Comparaisons | buy and hold, et stratégie pilotée par HAR-RV | Montrer ce que la prévision apporte par rapport à ne rien faire, et par rapport au modèle classique. |
-| Risque | VaR à 95 % à partir de la volatilité prévue σ̂, avec le quantile de la loi normale pour tous les modèles ; test de Kupiec | La même règle pour tous rend la comparaison équitable. Les rendements crypto ont des queues épaisses : on s'attend à un test de Kupiec sévère. |
+| Risque | VaR à 1 jour à 95 % = quantile de la loi normale × σ̂ journalière, sans annualisation (exception du 2026-11-14), pour tous les modèles ; test de Kupiec | La même règle pour tous rend la comparaison équitable. Les rendements crypto ont des queues épaisses : on s'attend à un test de Kupiec sévère. |
 
 ## 10. Explicabilité
 

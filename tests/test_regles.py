@@ -160,6 +160,51 @@ def test_validation_interne_est_le_pli_precedent():
         assert courant["validation"][1] < courant["evaluation"][0], courant["nom"]
 
 
+def _exposition_sans_annualisation(regles, vol_cible_annuelle, sigma_journaliere):
+    """Implémentation volontairement fausse (oubli de racine(365)), utilisée comme témoin."""
+    s = regles["strategie"]
+    return min(max(vol_cible_annuelle / sigma_journaliere, s["exposition_min"]), s["exposition_max"])
+
+
+@pytest.mark.parametrize("facteur_sigma, attendu", [(1.0, 1.0), (2.0, 0.5), (4.0, 0.25), (0.5, 1.0)])
+def test_exposition_annualise_sigma_journaliere(facteur_sigma, attendu):
+    """sigma journalière = facteur × (vol cible / racine(365)) : exposition = 1 / facteur, bornée à 1."""
+    regles = R.charger_regles()
+    vol_cible = 0.60
+    sigma = facteur_sigma * vol_cible / math.sqrt(365)
+    assert math.isclose(R.exposition(regles, vol_cible, sigma), attendu, rel_tol=1e-9)
+
+
+def test_temoin_exposition_sans_annualisation_detectee():
+    """Témoin : oublier racine(365) donne une exposition toujours bloquée à 1 ; le test ci-dessus l'aurait vu."""
+    regles = R.charger_regles()
+    vol_cible, sigma = 0.60, 2.0 * 0.60 / math.sqrt(365)
+    assert math.isclose(R.exposition(regles, vol_cible, sigma), 0.5, rel_tol=1e-9)
+    assert _exposition_sans_annualisation(regles, vol_cible, sigma) == 1.0
+
+
+def test_exposition_bornee_et_sigma_nulle_refusee():
+    regles = R.charger_regles()
+    assert R.exposition(regles, 0.60, 1e-9) == 1.0
+    assert R.exposition(regles, 0.60, 10.0) > 0
+    with pytest.raises(R.ErreurRegles):
+        R.exposition(regles, 0.60, 0.0)
+
+
+def test_var_un_jour_sigma_journaliere():
+    regles = R.charger_regles()
+    assert math.isclose(R.var_un_jour(regles, 0.03), 1.6448536269514722 * 0.03, rel_tol=1e-9)
+
+
+def test_temoin_var_avec_sigma_annualisee_detectee():
+    """Témoin : passer une sigma annualisée multiplierait la VaR par racine(365), environ 19."""
+    regles = R.charger_regles()
+    juste = R.var_un_jour(regles, 0.03)
+    fausse = R.var_un_jour(regles, 0.03 * math.sqrt(365))
+    assert not math.isclose(juste, fausse, rel_tol=1e-3)
+    assert math.isclose(fausse / juste, math.sqrt(365), rel_tol=1e-9)
+
+
 @pytest.mark.parametrize("nombre_jours", [1827, 669])
 def test_retards_hac_des_tests_principaux(nombre_jours):
     """10 plis réunis (1827 jours au plus) et test final (669 jours au plus)."""
@@ -230,6 +275,10 @@ def test_temoin_chevauchement_rejete(periode, extrait):
         ("seuil_mesure_fin = 2024-12-31", "seuil_mesure_fin = 2026-10-31", "jamais sur le test final"),
         ('s2_mesuree_sur = "validation_interne"', 's2_mesuree_sur = "apprentissage_du_pli"', "validation interne"),
         ("premier_jour_rendements = 287", "premier_jour_rendements = 288", "premier_jour_rendements"),
+        ('facteur_appris_sur = "ajustement_du_pli"', 'facteur_appris_sur = "apprentissage_du_pli"', "GARCH"),
+        ('parametres_appris_sur = "ajustement_du_pli"', 'parametres_appris_sur = "apprentissage_du_pli"', "GARCH"),
+        ('var_volatilite = "sigma_journaliere"', 'var_volatilite = "sigma_annualisee"', "VaR"),
+        ('echelle = "journaliere"', 'echelle = "annuelle"', "journalière"),
     ],
 )
 def test_temoin_toml_faux_rejete(tmp_path, ancien, nouveau, extrait_attendu):

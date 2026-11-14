@@ -106,9 +106,11 @@ variance = "exp(2*y + 2*s2)"               # variance prévue (QLIKE), y = prév
 s2 = "variance_residus_log"                # variance des résidus en log
 s2_mesuree_sur = "validation_interne"      # toujours, pour tous les modèles qui prévoient log(RV)
 sensibilite_sans_correction = true         # sigma prévue avec s2 = 0, rapportée sans changer la décision
+limite_s2 = "légèrement trop petit pour XGBoost et le deep learning (validation aussi utilisée pour le réglage) : prévisions un peu trop basses, désavantagées sous QLIKE"
 
 [cible.volatilite_prevue]
 formule = "sqrt(variance_prevue)"          # une seule volatilité prévue pour tout le projet
+echelle = "journaliere"                    # sigma est une volatilité sur 1 jour
 usages = ["RMSE", "MAE", "strategie", "VaR"]
 limite = "un peu au-dessus de la moyenne de RV, ce qui pénalise légèrement le MAE"
 
@@ -140,7 +142,8 @@ q = 1                                      # un retard sur la variance passée
 donnees = "rendements_journaliers"         # estimé sur les rendements journaliers
 innovations = "student"                    # loi de Student pour les queues épaisses
 facteur_echelle = "moyenne(RV2) / moyenne(variance_garch)"  # met la variance GARCH à l'échelle de RV²
-facteur_appris_sur = "apprentissage_du_pli" # puis appliqué tel quel à l'évaluation
+parametres_appris_sur = "ajustement_du_pli" # exception du 2026-11-14 : sans la validation interne
+facteur_appris_sur = "ajustement_du_pli"   # exception du 2026-11-14 ; puis appliqué tel quel à l'évaluation
 variance_prevue = "variance_garch_mise_a_l_echelle"  # sigma prévue = sqrt(variance mise à l'échelle)
 
 [modeles.transformer]
@@ -176,6 +179,8 @@ choix_sur_test = false                     # sur le test final, tout est rapport
 
 [strategie]
 methode = "volatility_targeting"           # exposition = volatilité cible / volatilité prévue
+exposition = "vol_cible_annuelle / (sigma_journaliere * sqrt(365))"  # exception du 2026-11-14, bornée
+annualisation_jours = 365                  # sigma journalière annualisée par racine(365) pour la stratégie
 exposition_min = 0.0                       # pas de vente à découvert
 exposition_max = 1.0                       # pas d'emprunt
 rendement_liquidites = 0.0                 # la part non investie ne rapporte rien
@@ -187,6 +192,8 @@ frais = 0.001                              # 0,10 % de la valeur échangée
 frais_sensibilite = [0.0005, 0.002]        # 0,05 % et 0,20 %, décrits sans changer la décision
 comparaisons = ["buy_and_hold", "HAR-RV"]  # stratégies de référence
 var_niveau = 0.95                          # VaR à 95 %
+var_horizon_jours = 1                      # VaR à 1 jour
+var_volatilite = "sigma_journaliere"       # exception du 2026-11-14 : sigma journalière, sans annualisation
 var_loi = "normale"                        # même loi pour tous les modèles, appliquée à la volatilité prévue
 var_test = "Kupiec"                        # test du nombre de dépassements (sévère attendu : queues épaisses)
 
