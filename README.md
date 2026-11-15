@@ -14,12 +14,17 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 - Tout ce qui est dérivé des données (graphiques, résultats, modèles entraînés, fichiers ONNX) est sous licence CC BY-NC-SA 4.0, avec la mention « Données : Binance Vision ».
 - Aucune donnée brute ni aucune série journalière dérivée n'est stockée dans ce dépôt. Seuls sont commités les manifestes (noms, tailles et empreintes SHA-256 des fichiers) et le rapport de qualité, qui ne contient que des comptages.
 - API et application : décision reportée à cette étape ; par défaut, seuls des résultats agrégés et des graphiques seront exposés, jamais un flux de données.
-- Pour reconstruire les données : `src/telecharger.py`, puis `src/convertir.py`, puis `src/qualite.py`.
+- Pour reconstruire les données : `src/telecharger.py`, puis `src/convertir.py`, puis `src/qualite.py`, puis `src/variables.py`, puis `src/exploration.py`.
 
 ## Documentation
 
 - [Règles du projet](docs/REGLES.md) : chaque règle, sa valeur et sa raison.
 - [Journal des choix](docs/CHOIX.md) : chaque décision, avec sa raison et ses mesures.
+- [Qualité des données](docs/QUALITE_DONNEES.md) : comptages générés par le contrôle de qualité.
+
+## Avancement
+
+- Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
 
 ## Règles et exceptions
 

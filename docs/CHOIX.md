@@ -263,3 +263,38 @@ Ces précisions sont datées du 2026-11-15. Elles ont été écrites et commité
 - **Manifeste séparé** : l'empreinte de `variables.parquet` va dans `data/manifeste_variables.json`, et non dans `data/manifeste_traite.json`. Raison : le rapport de qualité enregistre l'empreinte du manifeste traité (elle deviendrait fausse), et une relance de la conversion effacerait l'ajout.
 - **Garde du test aveugle** : refus sans aucune option de contournement ; l'ouverture du test sera construite à l'étape du test final.
 - **Exploration** : développement seulement ; autocorrélation de log(RV) jusqu'à 60 jours avec les jours non valides laissés vides ; ADF (AIC) sur log(RV) et sur le log de la clôture, jours non valides retirés (limite écrite).
+
+## 2026-11-15 — Volatilité réalisée, variables, cible et analyse exploratoire
+
+### Choix techniques et raisons
+
+- **Une seule source de vérité** : `src/variables.py` reprend les fonctions de `src/qualite.py` (bougies alignées, trous, `bilan_jours`) pour les jours valides. Aucune logique de validité n'est dupliquée.
+- **Agrégats journaliers** : ouverture de la première bougie, plus haut, plus bas, clôture de la dernière bougie, volume en USDT. Raison du volume en USDT : il est comparable entre BTC et ETH et dans le temps.
+- **MACD divisé par la clôture** et **Bollinger divisé par la moyenne** : sans division, ces indicateurs grandissent avec le prix. Divisés, ils sont comparables entre 2018 et 2024.
+- **Garde du test aveugle** (`src/garde.py`) : deux fonctions seulement. `refuser_si_test` refuse toute valeur dont la date de cible est dans le test final ; `compter` permet les comptages. Un test vérifie, par l'analyse du code source, qu'il n'existe aucun paramètre en plus, aucune valeur par défaut, aucune lecture de l'environnement ou de la ligne de commande et aucun réglage d'ouverture. Un témoin (une fausse garde avec ces options) est bien détecté.
+- **Exploration** : les lignes journalières ne sont calculées que jusqu'au 2024-12-31. Aucune valeur du test final n'est donc calculée dans l'exploration, et chaque statistique et chaque figure passe en plus par la garde.
+- **Empreinte de contenu** : la fonction de `src/convertir.py` accepte maintenant d'autres colonnes, des jours et du texte. Vérifié : après relance de la conversion et du contrôle de qualité, le manifeste traité et les rapports de qualité sont identiques octet pour octet.
+
+### Décisions prises seul pendant le calcul (à valider)
+
+- Le manifeste des variables cite aussi l'empreinte de `config/regles.toml`, pour savoir avec quelles règles les variables ont été calculées.
+- Le test de l'avenir modifié a une seconde variante, plus sévère : facteur 10 multiplié par un bruit différent pour chaque bougie. Raison : la RV ne dépend pas du niveau des prix. Une multiplication par 10 seule ne change que le premier rendement du lendemain, donc une variable qui tricherait avec la RV d'un jour plus lointain pourrait passer inaperçue.
+- Les jours remplacés sont comptés par date du jour (préchauffage, développement, test final). Les exemples touchés par un jour remplacé sont comptés parmi les exemples gardés (cible valide). Ce chiffre est donc un peu plus petit que le taux d'exclusion du rapport de qualité, qui compte toutes les cibles.
+- Asymétrie : coefficient de pandas (Fisher, corrigé du biais). Zone « aucune autocorrélation » : ± 1,96 / racine(n), avec n le plus petit nombre de jours valides des deux actifs.
+- `docs/EXPLORATION.md` signale le pic d'autocorrélation tous les 7 jours, quand il est présent, avec une phrase générée à partir des valeurs.
+- Le README renvoie vers les trois fichiers de figures un par un, et non vers le dossier : le test du README n'accepte que des liens vers des fichiers suivis.
+
+### Limites
+
+- La règle de secours : rendement nul le jour remplacé, rendement sur deux jours le lendemain.
+- Le RSI et le MACD ont une mémoire plus longue que 30 jours. Un jour remplacé les influence donc un peu au-delà de la fenêtre de 30 jours comptée.
+
+### Résultats et mesures (essai réel)
+
+Les chiffres sont lus dans `data/manifeste_variables.json`, `rapports/volatilite_cible.json` et `rapports/exploration.json` (développement seulement), qui sont générés.
+
+- Règle de secours, pour chaque actif : 4 jours remplacés dans le préchauffage, 26 dans le développement, 0 dans le test final (comptage). Exemples gardés du développement : 2 441, dont 585 avec au moins un jour remplacé dans leur fenêtre de 30 jours.
+- Contrôle « la validité d'un jour en entrée n'utilise jamais l'avenir » : 2 jours contrôlés par actif (le trou de février 2018 passe deux minuits), aucun écart. Témoin : un trou synthétique de 23:25 à 00:40 est bien refusé.
+- Test de l'avenir modifié : 0 écart au bit près, sur des données synthétiques (bord de mois, crise Covid, jour remplacé, fin de mois) et sur les vraies données (5 jours par actif, dont la crise Covid et deux fins de mois), pour les deux variantes. Témoin : une moyenne centrée de RV est détectée pour chacun des jours choisis.
+- Deux exécutions complètes : variables, manifeste, volatilité cible, rapport exploratoire et figures identiques octet pour octet.
+- Durée et mémoire maximale du vrai processus Python : environ 0,7 s et 470 Mo pour les variables ; environ 1,9 s et 550 Mo pour l'exploration.

@@ -1,0 +1,79 @@
+{
+  "colonnes": {
+    "actif": "large_string",
+    "bollinger_largeur_relative": "double",
+    "cible": "double",
+    "date_cible": "date32[day]",
+    "date_origine": "date32[day]",
+    "fenetre_avec_jour_remplace": "int64",
+    "garman_klass": "double",
+    "jour_remplace": "int64",
+    "jour_semaine": "int64",
+    "log_rendement": "double",
+    "log_rv_1": "double",
+    "log_rv_30": "double",
+    "log_rv_7": "double",
+    "log_volume": "double",
+    "macd_histogramme_relatif": "double",
+    "parkinson": "double",
+    "rsi_14": "double",
+    "rv_1": "double",
+    "rv_30": "double",
+    "rv_7": "double"
+  },
+  "comptages_par_actif": {
+    "BTCUSDT": {
+      "exemples": {
+        "developpement": {
+          "cibles_possibles": 2467,
+          "exclus_cible_non_valide": 26,
+          "fenetre_30_jours_avec_jour_remplace": 585,
+          "gardes": 2441,
+          "origine_remplacee": 25
+        },
+        "test_final": {
+          "cibles_possibles": 669,
+          "exclus_cible_non_valide": 0,
+          "gardes": 669
+        }
+      },
+      "jours_controles_validite_passe": 2,
+      "jours_remplaces_par_date_du_jour": {
+        "developpement": 26,
+        "prechauffage": 4,
+        "test_final": 0
+      }
+    },
+    "ETHUSDT": {
+      "exemples": {
+        "developpement": {
+          "cibles_possibles": 2467,
+          "exclus_cible_non_valide": 26,
+          "fenetre_30_jours_avec_jour_remplace": 585,
+          "gardes": 2441,
+          "origine_remplacee": 25
+        },
+        "test_final": {
+          "cibles_possibles": 669,
+          "exclus_cible_non_valide": 0,
+          "gardes": 669
+        }
+      },
+      "jours_controles_validite_passe": 2,
+      "jours_remplaces_par_date_du_jour": {
+        "developpement": 26,
+        "prechauffage": 4,
+        "test_final": 0
+      }
+    }
+  },
+  "depend_de": {
+    "manifeste_traite_sha256": "6edd75e109eefc991c4a546d8f17bfa357c97984d8440db79219a2c78f79d47f",
+    "qualite_donnees_sha256": "64e585812e84a5ae0d3c5f24a8de1c3a47ef4809da5709c20d250b7654eb9ab5",
+    "regles_sha256": "f9754629d2e2cfe109e9eea719dd95572ba9549bf1ee7736807bc93c4341ab91"
+  },
+  "empreinte_contenu_sha256": "bd18e8295196a8253be4e532b490ab4ccb1d729aecb1aaa76abdbe1a663c52a1",
+  "fichier": "data/processed/variables.parquet",
+  "lignes": 6220,
+  "secours_active": true
+}

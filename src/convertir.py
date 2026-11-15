@@ -99,19 +99,29 @@ def lire_zip(chemin: Path) -> tuple[pd.DataFrame, dict]:
     return df, {"fichier": chemin.name, "unite": unite, "en_tete": en_tete, "lignes": int(len(df))}
 
 
-def empreinte_contenu(chemin_parquet: Path) -> str:
+def empreinte_contenu(chemin_parquet: Path, colonnes: list[str] | None = None) -> str:
     """SHA-256 calculé sur les valeurs relues, colonne par colonne, sous une forme canonique.
 
-    Dates : entiers en microsecondes ; réels : float64 petit-boutiste (NaN normalisé) ;
-    entiers : int64 petit-boutiste. Indépendant du découpage en groupes de lignes et de la version de pyarrow.
+    Dates : entiers en microsecondes ; jours : entiers (jours depuis 1970) ; textes : UTF-8, une valeur
+    par ligne ; réels : float64 petit-boutiste (NaN normalisé) ; entiers : int64 petit-boutiste.
+    Indépendant du découpage en groupes de lignes et de la version de pyarrow.
+    Par défaut, les colonnes des bougies converties.
     """
     fichier = pq.ParquetFile(chemin_parquet)
     h = hashlib.sha256()
-    for nom in COLONNES_SORTIE:
+    for nom in (COLONNES_SORTIE if colonnes is None else colonnes):
         colonne = fichier.read(columns=[nom]).column(nom)
         if pa.types.is_timestamp(colonne.type):
             valeurs = colonne.cast(pa.timestamp("us", tz="UTC")).cast(pa.int64()).to_numpy().astype("<i8")
             sorte = "date_us"
+        elif pa.types.is_date32(colonne.type):
+            valeurs = colonne.cast(pa.int32()).to_numpy().astype("<i8")
+            sorte = "jour"
+        elif pa.types.is_string(colonne.type) or pa.types.is_large_string(colonne.type):
+            texte = "\n".join(colonne.to_pylist())
+            h.update(f"{nom}:texte:{len(colonne)}\n".encode("utf-8"))
+            h.update(texte.encode("utf-8"))
+            continue
         elif pa.types.is_integer(colonne.type):
             valeurs = colonne.to_numpy().astype("<i8")
             sorte = "entier64"

@@ -1,0 +1,18 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "jours_valides_utilises": 715,
+      "valeur_annualisee": 0.5726055649405059
+    },
+    "ETHUSDT": {
+      "jours_valides_utilises": 715,
+      "valeur_annualisee": 0.7388521034746547
+    }
+  },
+  "manifeste_variables_empreinte_contenu": "bd18e8295196a8253be4e532b490ab4ccb1d729aecb1aaa76abdbe1a663c52a1",
+  "methode": "médiane de RV × racine(365) sur les jours valides",
+  "periode": [
+    "2018-01-01",
+    "2019-12-31"
+  ]
+}
