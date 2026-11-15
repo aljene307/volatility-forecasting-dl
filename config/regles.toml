@@ -127,6 +127,54 @@ bollinger_ecarts_types = 2                 # largeur des bandes : 2 écarts-type
 jour_semaine = true                        # jour de la semaine
 fenetre_sequence_jours = 30                # longueur des séquences pour les modèles séquentiels
 
+# Précisions datées du 2026-11-15, écrites avant le calcul des variables (raisons : docs/REGLES.md).
+[variables.precisions]
+date_ecriture = 2026-11-15
+jour_ouverture = "premiere_bougie"         # ouverture de la première bougie du jour UTC
+jour_plus_haut = "maximum_du_jour"
+jour_plus_bas = "minimum_du_jour"
+jour_cloture = "derniere_bougie"           # clôture de la dernière bougie du jour UTC
+jour_volume = "somme_volume_cotation"      # volume en USDT (monnaie de cotation)
+bougies_desalignees = "manquantes"         # comme au contrôle de qualité (exception 5)
+rv_moyennes_en_log = "log_de_la_moyenne"   # log(moyenne de RV sur 1, 7 ou 30 jours)
+log_rendement = "cloture_a_cloture"        # ln(clôture de J / clôture de J-1)
+parkinson = "ln(H/L)^2 / (4 ln 2)"
+garman_klass = "0.5 ln(H/L)^2 - (2 ln 2 - 1) ln(C/O)^2"
+rsi_lissage = "wilder"                     # moyennes de Wilder (alpha = 1/14)
+rsi_amorce = "moyenne_simple"              # la première moyenne est la moyenne simple des 14 premières variations
+macd_amorce = "premiere_cloture"           # moyennes exponentielles démarrées à la première clôture
+macd_variable = "histogramme_divise_par_cloture"  # comparable dans le temps
+bollinger_ecart_type = "population"        # écart-type avec ddof = 0, comme la définition d'origine
+bollinger_variable = "largeur_divisee_par_moyenne"  # (bande haute - bande basse) / moyenne mobile
+jour_semaine_codage = "entier_0_lundi_6_dimanche"   # encodage choisi à l'étape des modèles
+cible = "log_rv_j_plus_1"                  # cible = log(RV de J+1)
+
+[variables.secours]
+remplacement = "ligne_journaliere_entiere" # ouverture, haut, bas, clôture, volume et RV du dernier jour valide
+calcul = "variables_sur_la_serie_remplacee" # toutes les variables sont calculées ensuite sur la série remplacée
+limite = "rendement nul le jour remplacé, rendement sur deux jours le lendemain"
+comptage = "remplacements_par_actif_et_par_periode"
+comptage_fenetres_touchees = "developpement_par_actif"  # exemples dont la fenêtre de 30 jours contient un jour remplacé
+validite_en_entree = "passe_seulement"     # contrôle automatique : la validité d'un jour n'utilise jamais l'avenir
+
+[variables.sorties]
+fichier = "data/processed/variables.parquet"   # jamais commité
+manifeste = "data/manifeste_variables.json"    # empreinte de contenu ; cite les manifestes dont il dépend
+
+[test_aveugle]
+garde = "refus_sans_option"                # aucune option de contournement (paramètre, environnement, configuration)
+autorise = "comptages_seulement"
+ouverture = "construite_a_l_etape_du_test_final"
+
+[exploration]
+periode = "developpement_seulement"        # dates de cible jusqu'à decoupage.dev_fin
+acf_retards_max = 60                       # autocorrélation de log(RV) jusqu'à 60 jours
+acf_retards_rapportes = [1, 7, 30]
+acf_jours_non_valides = "manquants"        # laissés vides (statsmodels, missing = "conservative")
+adf_series = ["log_rv", "log_cloture"]     # contraste stationnaire / non stationnaire
+adf_autolag = "AIC"
+adf_jours_non_valides = "retires"          # limite écrite ; leur nombre est rapporté
+
 [modeles]
 liste = ["HAR-RV", "GARCH(1,1)", "XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]
 graines_deep_learning = [0, 1, 2, 3, 4]    # 5 entraînements par modèle : moyenne et écart-type

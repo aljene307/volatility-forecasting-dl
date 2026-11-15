@@ -374,6 +374,27 @@ def verifier_coherence(regles: dict) -> None:
     exiger(strat.get("var_horizon_jours") == 1 and strat.get("var_volatilite") == "sigma_journaliere",
            "La VaR à 1 jour utilise sigma journalière, sans annualisation.")
 
+    # Précisions du 2026-11-15, écrites avant le calcul des variables
+    var = regles.get("variables", {})
+    prec, secours = var.get("precisions", {}), var.get("secours", {})
+    exiger(prec.get("date_ecriture") == dt.date(2026, 11, 15),
+           f"variables.precisions.date_ecriture doit être 2026-11-15, reçu : {prec.get('date_ecriture')!r}.")
+    exiger(prec.get("jour_volume") == "somme_volume_cotation", "Le volume du jour doit être en USDT (volume_cotation).")
+    exiger(prec.get("macd_variable") == "histogramme_divise_par_cloture",
+           "L'histogramme MACD doit être divisé par la clôture.")
+    exiger(prec.get("bougies_desalignees") == "manquantes",
+           "Les bougies désalignées doivent rester manquantes, comme au contrôle de qualité.")
+    exiger(secours.get("remplacement") == "ligne_journaliere_entiere"
+           and secours.get("validite_en_entree") == "passe_seulement",
+           "Secours : la ligne journalière entière est remplacée, avec une validité qui n'utilise que le passé.")
+    exiger(regles.get("test_aveugle", {}).get("garde") == "refus_sans_option",
+           "La garde du test aveugle ne doit avoir aucune option de contournement.")
+    expl = regles.get("exploration", {})
+    exiger(expl.get("periode") == "developpement_seulement", "L'exploration porte sur le développement seulement.")
+    retards = expl.get("acf_retards_rapportes", [])
+    exiger(bool(retards) and max(retards) <= expl.get("acf_retards_max", 0),
+           f"Retards d'autocorrélation rapportés {retards} au-delà du maximum {expl.get('acf_retards_max')}.")
+
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))
 

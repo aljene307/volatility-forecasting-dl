@@ -31,3 +31,12 @@ Les règles ont été écrites et commitées avant tout téléchargement de donn
 4. 2026-11-14 — Création de ce README pour lister les exceptions.
 5. 2026-11-14 — Les 241 bougies désalignées de février 2018 (cas non prévu par les règles) sont traitées comme manquantes.
 6. 2026-11-14 — Un trou entre deux bougies est attribué aux deux jours qu'il touche.
+
+Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
+
+- ligne journalière (ouverture, plus haut, plus bas, clôture, volume en USDT) et formules exactes des variables (RV moyennes, Parkinson, Garman-Klass, RSI de Wilder, MACD divisé par la clôture, largeur de Bollinger) ;
+- règle de secours : la ligne entière d'un jour non valide est remplacée par celle du dernier jour valide, avec sa limite (rendement nul ce jour-là, rendement sur deux jours le lendemain) et ses comptages ;
+- validité d'un jour en entrée calculée sur le passé seulement, avec un contrôle automatique ;
+- empreinte des variables dans un manifeste séparé ;
+- garde du test aveugle sans aucune option de contournement ;
+- exploration sur le développement seulement (autocorrélation, test ADF).

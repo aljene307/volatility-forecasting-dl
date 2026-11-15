@@ -6,6 +6,8 @@ Une valeur notée « à fixer après mesure » sera choisie plus tard, à partir
 
 Les règles marquées « exception du 2026-11-14 » ont été précisées après le commit des règles et avant tout téléchargement ou calcul ; elles sont expliquées dans `docs/CHOIX.md`.
 
+Les règles marquées « précisions du 2026-11-15 » ont été écrites et commitées avant le calcul des variables.
+
 ## 0. Convention de date
 
 Un **exemple** réunit des variables arrêtées à la clôture du jour J et une cible : la volatilité réalisée du jour J+1. Cet exemple appartient à la période qui contient sa **cible** (J+1). Toutes les bornes de période et de pli ci-dessous sont donc des dates de cible.
@@ -103,6 +105,37 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Indicateurs techniques | RSI 14 jours, MACD (12, 26, 9), largeur des bandes de Bollinger (20 jours, 2 écarts-types), sur les clôtures journalières | Indicateurs courants, pour tester s'ils apportent une information utile. |
 | Calendrier | jour de la semaine | L'activité du week-end diffère de celle de la semaine. |
 | Séquences | 30 jours pour les modèles séquentiels | Un mois d'historique, cohérent avec la plus longue moyenne de RV. |
+
+### Précisions datées du 2026-11-15, écrites avant le calcul des variables
+
+| Précision | Valeur | Raison |
+|---|---|---|
+| Ligne journalière | ouverture de la première bougie, plus haut et plus bas du jour, clôture de la dernière bougie, volume = somme du volume en USDT (`volume_cotation`) | Le volume en USDT est comparable entre BTC et ETH et dans le temps ; le volume en unités de crypto ne l'est pas, car le prix a beaucoup changé. |
+| Bougies désalignées | traitées comme manquantes, comme au contrôle de qualité | Une seule source de vérité pour les jours valides. |
+| RV moyennes en log | log de la moyenne de RV sur 1, 7 ou 30 jours | Le modèle HAR moyenne la volatilité, puis on passe au log, comme pour la cible. |
+| Log-rendement du jour | ln(clôture de J / clôture de J-1) | Rendement de clôture à clôture, celui de la stratégie. |
+| Parkinson | ln(H/L)² / (4 ln 2) | Variance estimée à partir du plus haut et du plus bas du jour. |
+| Garman-Klass | 0,5 ln(H/L)² − (2 ln 2 − 1) ln(C/O)² | Ajoute l'ouverture et la clôture à Parkinson. |
+| RSI 14 jours | lissage de Wilder (alpha = 1/14), première moyenne = moyenne simple des 14 premières variations | Définition d'origine de Wilder, vérifiable à la main sur un petit exemple. |
+| MACD (12, 26, 9) | moyennes exponentielles démarrées à la première clôture ; variable = histogramme divisé par la clôture | Un écart de 100 $ n'a pas le même sens à 4 000 $ et à 100 000 $ : divisé par le prix, il est comparable dans le temps. |
+| Bollinger (20 jours, 2 écarts-types) | écart-type de population (ddof = 0) ; variable = (bande haute − bande basse) / moyenne mobile | Définition d'origine ; divisée par la moyenne pour être comparable dans le temps. |
+| Jour de la semaine | entier de 0 (lundi) à 6 (dimanche) ; encodage choisi à l'étape des modèles | Le bon encodage dépend du modèle. |
+| Cible | log(RV de J+1) | Échelle des modèles (section 5). |
+| Règle de secours | la ligne journalière entière d'un jour non valide (ouverture, haut, bas, clôture, volume, RV) est remplacée par celle du dernier jour valide ; toutes les variables sont ensuite calculées sur cette série | Une seule règle, simple, qui n'utilise que le passé. |
+| Limite du secours | le rendement du jour remplacé est nul, et celui du lendemain porte sur deux jours | Conséquence directe de la règle, acceptée et écrite d'avance. |
+| Comptages du secours | remplacements par actif et par période ; exemples du développement dont la fenêtre d'entrée de 30 jours contient au moins un jour remplacé, par actif | Mesurer combien d'exemples sont touchés par la règle. |
+| Validité en entrée | contrôle automatique : la validité d'un jour, utilisée en entrée, n'utilise jamais l'avenir | Un trou qui passe minuit pourrait sinon faire dépendre la validité de J du jour J+1. |
+| Sorties | `data/processed/variables.parquet` (jamais commité) ; son empreinte de contenu va dans `data/manifeste_variables.json`, qui cite les empreintes du manifeste traité et du rapport de qualité | Chaîne sans boucle : brut, traité, qualité, variables. Une relance de la conversion n'efface rien. |
+
+### Test aveugle et exploration (précisions du 2026-11-15)
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Garde du test aveugle | une fonction centrale refuse toute statistique, tout graphique et tout affichage de valeurs dont la date de cible est postérieure ou égale au début du test final ; seuls les comptages sont permis ; aucune option de contournement (paramètre, variable d'environnement ou réglage) | Le test ne doit jamais influencer une décision avant son ouverture unique. |
+| Ouverture du test | mécanisme construit à l'étape du test final | Rien ne doit permettre de l'ouvrir avant. |
+| Période explorée | développement seulement (cibles jusqu'au 2024-12-31) | Même raison. |
+| Autocorrélation | log(RV), jusqu'à 60 jours, valeurs rapportées à 1, 7 et 30 jours ; jours non valides laissés vides | Montrer le regroupement de volatilité sans inventer de valeurs. |
+| Test ADF | sur log(RV) et sur le log du prix de clôture, retards choisis par AIC ; jours non valides retirés (limite écrite ; leur nombre est rapporté) | Contraster une série qui revient vers sa moyenne et une série qui dérive. |
 
 ## 7. Modèles
 

@@ -279,6 +279,13 @@ def test_temoin_chevauchement_rejete(periode, extrait):
         ('parametres_appris_sur = "ajustement_du_pli"', 'parametres_appris_sur = "apprentissage_du_pli"', "GARCH"),
         ('var_volatilite = "sigma_journaliere"', 'var_volatilite = "sigma_annualisee"', "VaR"),
         ('echelle = "journaliere"', 'echelle = "annuelle"', "journalière"),
+        ("date_ecriture = 2026-11-15", "date_ecriture = 2026-12-01", "date_ecriture"),
+        ('jour_volume = "somme_volume_cotation"', 'jour_volume = "somme_volume"', "USDT"),
+        ('macd_variable = "histogramme_divise_par_cloture"', 'macd_variable = "histogramme"', "MACD"),
+        ('garde = "refus_sans_option"', 'garde = "refus_sauf_drapeau"', "contournement"),
+        ('validite_en_entree = "passe_seulement"', 'validite_en_entree = "complete"', "Secours"),
+        ('periode = "developpement_seulement"', 'periode = "tout"', "développement seulement"),
+        ("acf_retards_rapportes = [1, 7, 30]", "acf_retards_rapportes = [1, 7, 90]", "autocorrélation"),
     ],
 )
 def test_temoin_toml_faux_rejete(tmp_path, ancien, nouveau, extrait_attendu):

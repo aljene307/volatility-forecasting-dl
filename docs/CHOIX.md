@@ -249,3 +249,17 @@ Les 7 essais ont réussi, en 41 s au total, avec une mémoire maximale du proces
 - Correction : `float_precision="round_trip"` dans la lecture du CSV, ce qui donne une lecture exacte quelle que soit la version de pandas. Test témoin : le texte `92242008.04830823` doit être lu comme `float()` le lit ; ce test échoue sans l'option et passe avec elle.
 - L'écart d'un ulp serait resté sous la tolérance de 1e-9 des règles, mais la lecture exacte rend les empreintes identiques à celles déjà commitées et protège contre les futures versions de pandas.
 - Résultat : après la correction, le manifeste des données traitées, le rapport de qualité et les deux fichiers Parquet sont identiques octet pour octet à ceux d'avant le changement de pile.
+
+## 2026-11-15 — Précisions écrites avant le calcul des variables
+
+Ces précisions sont datées du 2026-11-15. Elles ont été écrites et commitées avant tout calcul de variable, dans `config/regles.toml` (sections `variables.precisions`, `variables.secours`, `variables.sorties`, `test_aveugle`, `exploration`) et dans `docs/REGLES.md`, avec la raison de chacune.
+
+- **Ligne journalière** : ouverture de la première bougie, plus haut et plus bas du jour, clôture de la dernière bougie, volume en USDT. Raison : le volume en USDT est comparable entre actifs et dans le temps.
+- **Formules** : RV moyennes en log = log de la moyenne ; log-rendement de clôture à clôture ; RSI de Wilder amorcé par la moyenne simple des 14 premières variations ; moyennes du MACD démarrées à la première clôture, histogramme divisé par la clôture ; Bollinger avec l'écart-type de population, largeur divisée par la moyenne mobile. Raison : définitions d'origine, vérifiables à la main, et comparables dans le temps.
+- **Règle de secours** : la ligne journalière entière d'un jour non valide est remplacée par celle du dernier jour valide, puis toutes les variables sont calculées sur cette série. Raison : une seule règle, simple, qui n'utilise que le passé.
+- **Limite du secours** : le rendement du jour remplacé est nul, et celui du lendemain porte sur deux jours.
+- **Comptages** : remplacements par actif et par période ; exemples du développement dont la fenêtre d'entrée de 30 jours contient au moins un jour remplacé, par actif.
+- **Validité en entrée** : un contrôle automatique vérifie que la validité d'un jour, utilisée en entrée, n'utilise jamais l'avenir. Vérification préalable, en lecture seule : un seul trou du développement passe minuit (du 2018-02-08 au 2018-02-10), et le jour où il commence est déjà non valide avec ce qu'on sait à sa clôture.
+- **Manifeste séparé** : l'empreinte de `variables.parquet` va dans `data/manifeste_variables.json`, et non dans `data/manifeste_traite.json`. Raison : le rapport de qualité enregistre l'empreinte du manifeste traité (elle deviendrait fausse), et une relance de la conversion effacerait l'ajout.
+- **Garde du test aveugle** : refus sans aucune option de contournement ; l'ouverture du test sera construite à l'étape du test final.
+- **Exploration** : développement seulement ; autocorrélation de log(RV) jusqu'à 60 jours avec les jours non valides laissés vides ; ADF (AIC) sur log(RV) et sur le log de la clôture, jours non valides retirés (limite écrite).
