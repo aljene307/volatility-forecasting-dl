@@ -148,7 +148,7 @@ Note pour l'oral : le modèle du test final suit la même recette que les plis. 
 - **Un Parquet par actif**, écrit mois par mois (mémoire limitée), dates en UTC avec une précision à la microseconde, exacte pour les deux unités de Binance.
 - **Unité des horodatages détectée par fichier** (13 chiffres = millisecondes, 16 = microsecondes) ; tout autre cas arrête la conversion. Constaté : millisecondes jusqu'en 2024-12, microsecondes à partir de 2025-01, pour les deux actifs.
 - **Empreinte de contenu** des Parquet, calculée sur les valeurs relues et non sur les octets : elle ne dépend ni de la version de pyarrow, ni du découpage du fichier. Un test le vérifie.
-- **Bibliothèques** : numpy, pandas et pyarrow épinglées en versions exactes dans `requirements.txt`, avec leurs dépendances.
+- **Bibliothèques** : numpy, pandas et pyarrow épinglées en versions exactes dans `requirements.txt`, avec leurs dépendances (pandas a été baissé le 2026-11-15, voir plus bas).
 - **Test aveugle** : pour la période du test final, le rapport de qualité ne contient que des comptages. Aucune statistique de prix, de rendement, de volume ou de volatilité n'est produite, pour aucune période.
 
 ### Mesures (essai réel)
@@ -192,6 +192,60 @@ Ce qui a été lu :
 
 - Les conditions de Binance Vision (`TERMS_AND_CONDITIONS.md` du dépôt public `binance/binance-public-data`, et la page « Terms of Use » de data.binance.vision) placent les données sous la licence CC BY-NC-SA 4.0, avec des règles plus strictes qui l'emportent en cas de conflit.
 - Usage non commercial seulement (recherche universitaire, projets éducatifs non rémunérés, backtests personnels) ; l'hébergement ou la redistribution des fichiers bruts est interdit ; une œuvre dérivée redistribuée doit citer Binance Vision et rester sous la même licence.
-- Points non clairs : si publier une série journalière dérivée compte comme « héberger un flux historique dérivé » (interdit), et le texte complet du PDF officiel et des conditions générales de Binance, qui n'a pas pu être lu.
+- Point non clair : si publier une série journalière dérivée compte comme « héberger un flux historique dérivé » (interdit). La règle prudente retenue (aucune série journalière dans le dépôt) évite la question.
+- Vérification complémentaire (2026-11-15) : les clauses 2.4, 3.1, 3.3 et 4.5 ont été vérifiées dans le PDF officiel des conditions de Binance Vision. Les conditions générales de binance.com, auxquelles ce texte renvoie, n'ont pas été lues : limite acceptée pour un usage éducatif et non commercial.
 - Sources : https://github.com/binance/binance-public-data/blob/master/TERMS_AND_CONDITIONS.md et https://data.binance.vision/terms-of-use.html.
 - Seuls les manifestes et des comptages sont commités à cette étape.
+
+## 2026-11-15 — Vérification de la pile de bibliothèques
+
+But : vérifier, avant de calculer les variables, que toutes les bibliothèques prévues s'installent et fonctionnent ensemble sous Python 3.11.
+
+### Corrections préalables
+
+- **Recherche des mots interdits** : un mot trop général, qui détectait à tort l'en-tête HTTP « User-Agent », est remplacé par deux expressions plus précises, recherchées sans tenir compte des majuscules ; « User-Agent » est explicitement permis. Témoins : un fichier qui contient une des expressions est trouvé ; un fichier qui ne contient que « User-Agent » ne l'est pas.
+- **Test du README** : chaque chemin de fichier cité entre accents graves dans le README doit exister et être suivi par git, avec un témoin.
+
+### Versions retenues et raisons
+
+Toutes les versions exactes, dépendances comprises, sont dans `requirements.txt`, en deux sections (calcul ; apprentissage profond). numpy (2.4.6) et pyarrow (26.0.1) sont inchangés.
+
+- **pandas baissé de 3.1.1 à 3.0.6** (dernière 3.0.x). Raison : pytorch-forecasting 1.8.0, la version la plus récente, qui fournit le TFT, exige `pandas<3.1.0`. Ses versions plus anciennes refusent elles aussi pandas 3.1. On reste sur pandas 3.
+- **lightning 2.6.6** : pytorch-forecasting exige `lightning<2.7.0`, sauf 2.6.2 et 2.6.3. **scikit-base 1.0.2** : pytorch-forecasting exige `scikit-base<1.1.0`.
+- **xgboost 3.2.0 et shap 0.51.0** : les versions plus récentes (xgboost 3.4.1, shap 0.54.1) exigent Python 3.12. On reste en Python 3.11, la version fixée dans les règles et prévue pour le déploiement. On prend donc les dernières versions encore publiées pour Python 3.11 sous Windows.
+- numba 0.68.1 (dépendance de shap) accepte numpy < 2.6 : compatible avec numpy 2.4.6.
+- Méthode : les exigences déclarées sur PyPI ont été lues avant l'installation, puis un fichier de contraintes avec une version exacte par bibliothèque a été construit, pour que pip n'ait plus à chercher.
+
+### Temps perdu (dit honnêtement)
+
+- Première tentative : pip est revenu à un paquet source et a échoué à le construire (`pkg_resources` absent).
+- Deuxième tentative, sans les contraintes exactes : pip a fait un « retour arrière » pendant environ 1 h 20. Il a essayé une à une des versions de plus en plus anciennes de pytorch-forecasting, jusqu'à la 0.1.0, pour trouver une version compatible avec pandas 3.1.1, sans en trouver. Arrêtée à la main.
+- Troisième tentative, avec les contraintes exactes : le choix des versions a pris environ 1 min 30, sans aucun retour arrière. Elle a été arrêtée par la limite de 10 minutes pendant les téléchargements, à cause de la connexion lente.
+- Vitesse de connexion mesurée : torch (126,7 Mo) en 8 min 44 s, soit environ 0,24 Mo/s.
+- Solution : tous les fichiers ont d'abord été téléchargés dans un dossier temporaire hors du projet (63 fichiers, 423,4 Mo, 94 s, torch étant déjà dans le cache de pip). L'installation s'est faite ensuite depuis ce dossier, sans réseau.
+
+### Installation et mesures
+
+- Environnement temporaire hors du projet : installation sans réseau en 399 s, `pip check` sans problème, 1 557,6 Mo installés. Cet environnement a été supprimé à la fin de l'étape.
+- `.venv` du projet : installation sans réseau en 441 s, `pip check` sans problème, 1 572,2 Mo au total.
+
+### Essais rapides sur données aléatoires
+
+Les 7 essais ont réussi, en 41 s au total, avec une mémoire maximale du processus de 616 Mo.
+
+- torch, LSTM, un pas d'entraînement avec `use_deterministic_algorithms(True)` : deux exécutions avec la même graine donnent des poids identiques (écart 0). Le déterminisme de torch a été vérifié avec 10 fils de calcul ; il n'est garanti que pour un nombre de fils fixé, d'où l'importance de figer `fils_calcul` après la mesure.
+- xgboost : ajustement et prévision.
+- arch : GARCH(1,1) avec loi de Student, convergé.
+- statsmodels : régression avec erreurs HAC (Newey-West).
+- shap : TreeExplainer sur le petit XGBoost, la somme des contributions retrouve la prévision (écart 3,0e-07).
+- pytorch-forecasting : TFT construit sur un DataFrame pandas 3.0.6, un pas d'entraînement, les poids changent. Pendant cet essai, le mode déterministe de torch était désactivé ; le déterminisme du TFT reste à vérifier.
+- onnx et onnxruntime : export du LSTM, écart avec torch de 4,1e-08 (tolérance 1e-5).
+- Point ouvert : le nouvel exportateur ONNX de torch (« dynamo ») demande la bibliothèque `onnxscript`, qui n'est pas dans la pile prévue. L'ancien exportateur fonctionne. À revoir à l'étape de l'export.
+
+### Lecture exacte des nombres (correction de `src/convertir.py`)
+
+- Constat : après la baisse de pandas, la conversion a donné une empreinte de contenu différente pour BTCUSDT (ETHUSDT identique). Seules deux colonnes de volume en monnaie de cotation différaient, sur 141 lignes sur 927 482, d'un ulp (le plus petit écart possible entre deux nombres à virgule). Pour la période de test, seules ces lignes ont été comptées ; aucune valeur n'a été regardée.
+- Cause : le lecteur CSV par défaut de pandas 3.0.6 arrondit parfois au voisin d'à côté des nombres à 17 chiffres. pandas 3.1.1 donnait la valeur exacte, vérifiée avec `float()` de Python sur toutes les lignes de développement concernées.
+- Correction : `float_precision="round_trip"` dans la lecture du CSV, ce qui donne une lecture exacte quelle que soit la version de pandas. Test témoin : le texte `92242008.04830823` doit être lu comme `float()` le lit ; ce test échoue sans l'option et passe avec elle.
+- L'écart d'un ulp serait resté sous la tolérance de 1e-9 des règles, mais la lecture exacte rend les empreintes identiques à celles déjà commitées et protège contre les futures versions de pandas.
+- Résultat : après la correction, le manifeste des données traitées, le rapport de qualité et les deux fichiers Parquet sont identiques octet pour octet à ceux d'avant le changement de pile.

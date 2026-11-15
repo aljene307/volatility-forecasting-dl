@@ -84,7 +84,9 @@ def lire_zip(chemin: Path) -> tuple[pd.DataFrame, dict]:
         brut = archive.read(noms[0])
     texte = brut.decode("ascii")
     en_tete = a_un_en_tete(texte.split("\n", 1)[0])
+    # round_trip : lecture exacte des nombres (arrondi correct), quelle que soit la version de pandas.
     df = pd.read_csv(io.StringIO(texte), header=None, skiprows=1 if en_tete else 0, names=COLONNES_BRUTES,
+                     float_precision="round_trip",
                      dtype={**{c: "int64" for c in COLONNES_DATES + COLONNES_ENTIERS},
                             **{c: "float64" for c in COLONNES_REELS}, "ignore": "float64"})
     unites = {c: detecter_unite(df[c].to_numpy(), f"dans {chemin.name}, colonne {c}") for c in COLONNES_DATES}

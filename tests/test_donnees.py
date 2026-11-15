@@ -85,6 +85,15 @@ def test_en_tete_detecte(tmp_path):
     assert list(avec.columns) == CV.COLONNES_SORTIE
 
 
+def test_nombres_lus_exactement_comme_float(tmp_path):
+    # Volume réel de Binance (BTCUSDT, 2021-01-02 12:20 UTC) : sans lecture exacte, pandas 3.0
+    # le lit à un ulp près. float() de Python arrondit toujours correctement.
+    texte_volume = "92242008.04830823"
+    csv = _csv_klines(MS_2018, 1).replace(",10.0,5,", f",{texte_volume},5,")
+    df, _ = CV.lire_zip(_chemin_zip(tmp_path, "v.zip", csv))
+    assert df["volume_cotation"].iloc[0] == float(texte_volume)
+
+
 def _chemin_zip(dossier: Path, nom: str, texte: str) -> Path:
     chemin = dossier / nom
     _zip(chemin, nom.replace(".zip", ".csv"), texte)
