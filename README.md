@@ -25,13 +25,14 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 ## Avancement
 
 - Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
+- Étape 5 — Baselines sur le développement (persistance, HAR-RV, GARCH, XGBoost ; 5 plis annuels) : [résultats](docs/RESULTATS_BASELINES.md) ; figures : [BTC](figures/figure_4_previsions_BTCUSDT.png), [ETH](figures/figure_4_previsions_ETHUSDT.png). Le test final reste fermé.
 
 ## Règles et exceptions
 
 Les règles ont été écrites et commitées avant tout téléchargement de données et tout calcul (commit 31b9dae). Les précisions apportées ensuite sont des exceptions datées, expliquées dans le [journal des choix](docs/CHOIX.md) :
 
 1. 2026-11-14 — GARCH(1,1) : paramètres et facteur d'échelle appris sur la fenêtre d'ajustement seule, comme tous les autres modèles.
-2. 2026-11-14 — Mesure de s² sur la validation interne, qui sert aussi au réglage : limite acceptée et écrite (elle désavantage XGBoost et le deep learning sous QLIKE).
+2. 2026-11-14 — Mesure de s² sur la validation interne, qui sert aussi au réglage : limite acceptée et écrite (elle désavantage XGBoost et le deep learning sous QLIKE ; affirmation retirée le 2026-11-16, voir la rectification ci-dessous).
 3. 2026-11-14 — Annualisation : la volatilité prévue est journalière ; elle est annualisée pour la stratégie, pas pour la VaR à 1 jour.
 4. 2026-11-14 — Création de ce README pour lister les exceptions.
 5. 2026-11-14 — Les 241 bougies désalignées de février 2018 (cas non prévu par les règles) sont traitées comme manquantes.
@@ -52,6 +53,11 @@ Précisions datées du 2026-11-16, écrites avant le calcul des baselines (secti
 - GARCH sans aucune information postérieure à la fenêtre d'ajustement ou à l'origine de la prévision ;
 - prévisions journalières jamais commitées ; aucune prévision sur le test final ;
 - test de l'avenir modifié appliqué aux prévisions de chaque baseline.
+
+Précision et rectification datées du 2026-11-16, décidées APRÈS avoir vu les résultats des baselines (détails dans le [journal des choix](docs/CHOIX.md)) :
+
+- QLIKE moyen de la règle de sélection : les deux définitions (tous les jours réunis, moyenne des moyennes par pli) sont rapportées ; si elles diffèrent, la moyenne des moyennes par pli s'applique ;
+- rectification de l'exception 2 : l'affirmation selon laquelle le biais de s² désavantage les modèles réglés n'est vérifiée que pour les plis 1 à 3 ; dans les plis 4 et 5, XGBoost prévoit trop haut sur la validation interne (valeurs dans les [résultats des baselines](docs/RESULTATS_BASELINES.md)) ; l'affirmation est retirée. Explication probable, non démontrée : un modèle à arbres ne peut pas prévoir sous les valeurs vues à l'apprentissage, et ces validations tombent sur des périodes calmes.
 
 Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
 

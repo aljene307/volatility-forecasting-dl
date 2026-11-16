@@ -89,7 +89,9 @@ Fixées avant tout résultat, pour analyser les modèles par régime de marché.
 | Mesure de s² | variance des résidus en log, toujours mesurée sur la validation interne, pour tous les modèles qui prévoient log(RV) | L'erreur est mesurée sur des jours que le modèle n'a pas appris, et sur les mêmes données pour tous. |
 | Sensibilité | σ̂ non corrigée (s² = 0, soit exp(ŷ)) aussi rapportée, sans changer la décision | Montrer l'effet de la correction. |
 | Limite | σ̂ est un peu au-dessus de la moyenne de la RV, ce qui pénalise légèrement le MAE | Écrite d'avance, pour que ce petit désavantage ne soit pas une surprise. |
-| Limite de s² (exception du 2026-11-14) | la validation interne sert aussi à l'arrêt anticipé et au réglage : s² est légèrement trop petit pour XGBoost et le deep learning | Ce biais rend leurs prévisions un peu trop basses et les désavantage sous QLIKE : il ne les favorise pas. |
+| Limite de s² (exception du 2026-11-14) | la validation interne sert aussi à l'arrêt anticipé et au réglage : s² est légèrement trop petit pour XGBoost et le deep learning | Ce biais rend leurs prévisions un peu trop basses et les désavantage sous QLIKE : il ne les favorise pas. **Rectification du 2026-11-16 : cette affirmation est retirée** (voir ci-dessous). |
+
+Rectification du 2026-11-16 (exception 2) : l'affirmation selon laquelle le biais de s² désavantage les modèles réglés n'est vérifiée que pour les plis 1 à 3. Dans les plis 4 et 5, XGBoost prévoit trop haut sur la validation interne (moyenne des résidus de −0,07 à −0,14, lue dans `rapports/baselines.json`). L'affirmation est retirée. Explication probable, non démontrée : un modèle à arbres ne peut pas prévoir sous les valeurs vues à l'apprentissage, et ces validations tombent sur des périodes calmes. La règle de mesure de s² elle-même ne change pas.
 | Échelle de σ̂ | journalière (volatilité sur 1 jour) | La cible est la RV d'un jour ; l'annualisation n'est faite que là où elle est écrite. |
 | Annualisation | 365 jours | Le marché crypto est ouvert 7 jours sur 7. |
 
@@ -158,6 +160,7 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Portée du test | test principal sur les plis réunis (5 plis annuels, mêmes jours qu'avec 10 plis) ; un seul test sur le test final ; par pli et par crise, résultats descriptifs seulement, sans conclusion de test | Multiplier les tests finit toujours par donner un résultat « significatif » par hasard. |
 | Intervalles de confiance | 95 %, bootstrap par blocs, 1000 tirages, blocs de 20 jours | Les blocs gardent l'enchaînement des jours, qui ne sont pas indépendants. |
 | Règle de sélection | le plus petit QLIKE moyen sur les 5 plis walk-forward ; sur le test final, tous les modèles sont rapportés et aucun choix n'est fait | Choisir sur le test reviendrait à tricher avec la période de contrôle. |
+| QLIKE moyen (précision du 2026-11-16, décidée APRÈS avoir vu les résultats des baselines) | les deux définitions sont rapportées : QLIKE sur tous les jours évalués réunis, et moyenne des QLIKE moyens par pli ; si les classements diffèrent, la définition littérale (moyenne des moyennes par pli) s'applique | La règle ne précisait pas la définition. Décidée après les résultats : c'est écrit honnêtement, et les deux classements restent visibles. |
 
 ## 9. Stratégie
 

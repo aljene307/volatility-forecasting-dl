@@ -70,7 +70,7 @@
   "depend_de": {
     "manifeste_traite_sha256": "6edd75e109eefc991c4a546d8f17bfa357c97984d8440db79219a2c78f79d47f",
     "qualite_donnees_sha256": "64e585812e84a5ae0d3c5f24a8de1c3a47ef4809da5709c20d250b7654eb9ab5",
-    "regles_sha256": "ebc7e5d4bc58bc936f0c18d7e1d1226509f4d4c7fef634c52baf99b8165d6a35"
+    "regles_sha256": "ee910463e249484e75d48022548c339fb242c0caa016d1cf5ecab62e9d5b1845"
   },
   "empreinte_contenu_sha256": "bd18e8295196a8253be4e532b490ab4ccb1d729aecb1aaa76abdbe1a663c52a1",
   "fichier": "data/processed/variables.parquet",

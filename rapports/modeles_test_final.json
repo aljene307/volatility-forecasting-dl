@@ -1,0 +1,17 @@
+{
+  "description": "Empreintes SHA-256 des modèles du test final (enregistrés dans sorties/, ignoré par Git) ; aucune prévision n'a été faite sur le test.",
+  "modeles": {
+    "BTCUSDT": {
+      "har_garch.json": "cb9b55d254931462d788a0d4f8dd325453779ad79896a7e774273ef9fa03557c",
+      "xgboost_graine_0.json": "3f95e1b53b0c234a2c4206f29e37ab3b2fdd4a5c113685798bed9a9c4e4246aa",
+      "xgboost_graine_1.json": "7a0c327a315f7266d982961ef6c212acbcc6239dddbca889a8c0498742938766",
+      "xgboost_graine_2.json": "75f5b797dc180ddb4d623b6ad71761e174e0b581abe9bd2a0141df88ad30f92d"
+    },
+    "ETHUSDT": {
+      "har_garch.json": "27ede18918098429409e661922b689af749244937d5c9e1c5be65f3621cb1220",
+      "xgboost_graine_0.json": "1992b8608f68e203890f3c192f8e5a518e9af26c1b92494dd477d3899e966071",
+      "xgboost_graine_1.json": "1f836ff2d8885f598cb4a5115bf7507b65b6183bb6646adb2c70d47c164274ae",
+      "xgboost_graine_2.json": "b573a8c026e58ecd42c6afa980e1985680b2f171f79f1732db83e8101d0e0772"
+    }
+  }
+}

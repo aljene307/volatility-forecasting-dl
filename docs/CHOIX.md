@@ -398,3 +398,40 @@ Les 5 répétitions donnent des poids (ou des prévisions pour XGBoost) identiqu
 - **XGBoost** : mêmes 12 combinaisons pour les deux actifs, graines dérivées de l'identifiant, arrêt anticipé sur chaque validation interne, sans normalisation.
 - **Modèles du test final** entraînés et enregistrés sans aucune prévision ; **sorties journalières** dans `sorties/`, ignoré par Git.
 - **Test de l'avenir modifié des prévisions**, pour les quatre baselines, avec un témoin (GARCH dont la variance de départ utilise toute la série).
+
+## 2026-11-16 — Baselines sur le développement (5 plis annuels)
+
+Les chiffres sont lus dans `rapports/baselines.json` et présentés dans `docs/RESULTATS_BASELINES.md`, tous deux générés par `src/baselines.py`. Aucune prévision n'a été faite sur le test final. Les modèles du test final (HAR-RV, GARCH, 3 XGBoost par actif) sont enregistrés dans `sorties/` (ignoré par Git), avec leurs empreintes dans `rapports/modeles_test_final.json`.
+
+### Décisions prises pendant le calcul
+
+- **GARCH, récurrence faite à la main** : arch estime les paramètres avec la variance de départ (backcast) calculée sur la fenêtre d'ajustement et passée explicitement. Mais sa fonction de prévision recalcule cette variance de départ à partir de la série qu'on lui donne. La récurrence σ²ₜ = ω + α·ε²ₜ₋₁ + β·σ²ₜ₋₁ est donc faite dans `src/baselines.py`, avec le backcast figé. Vérifié : elle redonne les variances d'arch sur la fenêtre d'ajustement, à moins de 2·10⁻¹³ près.
+- **Témoin du GARCH à corriger (à valider)** : le témoin demandé (backcast calculé sur toute la série) n'est pas détectable. L'effet de la variance de départ décroît comme β à la puissance du nombre de jours ; avec β ≈ 0,93 et environ 730 jours avant le premier jour évalué, il vaut environ 10⁻²⁴, bien moins que la précision des nombres. Un test le prouve (prévisions identiques au bit près). Le témoin détectable retenu est un GARCH dont le facteur d'échelle est calculé avec les RV² de toute la série, avenir compris : il est bien détecté.
+- **Durées hors du JSON** : à une relance, la reprise saute les unités déjà faites ; une durée écrite dans le JSON ne serait donc pas celle du calcul. Les durées sont affichées et notées ici. `rapports/baselines.json` est identique d'une exécution à l'autre, et un calcul complet à neuf (dossier de reprise vide) redonne le même fichier.
+- **Rapport généré** : une colonne « significatif à 5 % » accompagne le sens du test de Diebold-Mariano, pour qu'un écart non significatif ne se lise pas comme une victoire.
+- **Classement provisoire** : par le QLIKE moyen sur tous les jours évalués des 5 plis réunis.
+
+### Contrôles de bon sens
+
+- **HAR-RV** : coefficients des trois composantes presque toujours positifs (une seule exception : ETH, pli 1, composante mensuelle légèrement négative) ; somme des pentes entre 0,76 et 0,92, donc inférieure à 1 : le modèle revient vers une moyenne.
+- **GARCH(1,1)** : α + β égal à 1 (à l'arrondi près) pour BTC dans tous les découpages, et pour ETH dans le pli 1 et le modèle du test final : la persistance de la variance est à la limite de la stationnarité (cas proche d'un IGARCH). Degrés de liberté de la loi de Student entre 2,75 et 3,6 : queues très épaisses. Le facteur d'échelle d'ETH (0,61 à 0,92) montre que la variance GARCH surestime RV² sur la fenêtre d'ajustement.
+- **XGBoost** : combinaison retenue, de profondeur 2 pour les deux actifs ; aucun tirage écarté.
+- **Vérification de l'exception 2** (moyenne des résidus en log sur la validation interne) : proche de 0 dans les plis 1 à 3 (entre −0,07 et +0,04) et pour le modèle du test final, mais **pas proche de 0 dans les plis 4 et 5** (−0,12 et −0,13 pour BTC ; −0,07 et −0,14 pour ETH) : XGBoost prévoit trop haut sur ces validations. L'affirmation de l'exception 2 (« ŷ sans biais ») n'est donc pas vérifiée partout ; c'est écrit ici, sans rien corriger.
+- **Seuil d'alerte** : XGBoost bat HAR-RV de 6,8 % (BTC) et de 0,1 % (ETH) en QLIKE moyen, sous le seuil de 20 % : pas d'arrêt.
+
+### Durées (calcul complet, sur secteur)
+
+- Calcul complet des baselines : 18,9 s pour les deux actifs, dont 11,9 s pour XGBoost (réglage et 3 graines sur 6 découpages). Estimation de l'étape des mesures pour XGBoost : 101 s, calculée avec 2000 arbres sans arrêt anticipé ; l'arrêt anticipé arrête bien avant, d'où l'écart.
+
+### Précision datée du 2026-11-16, décidée APRÈS avoir vu les résultats des baselines : définition du QLIKE moyen
+
+- Dit honnêtement : cette précision a été décidée après avoir vu les résultats des baselines. Elle remplace la phrase « classement provisoire : par le QLIKE moyen sur tous les jours évalués réunis » écrite plus haut dans cette entrée.
+- Les deux définitions sont calculées et rapportées : QLIKE moyen sur tous les jours évalués réunis, et moyenne des QLIKE moyens par pli. Si elles donnent des classements différents, la définition littérale de la règle (« QLIKE moyen sur les plis », c'est-à-dire la moyenne des moyennes par pli) s'applique (`evaluation.selection.qlike_moyen` dans `config/regles.toml`).
+- Résultat sur les baselines : les deux définitions donnent le même classement pour chaque actif (lu dans `rapports/baselines.json`, champ `classement.identiques`).
+
+### Rectification de l'exception 2 (2026-11-16)
+
+L'affirmation selon laquelle le biais de s² désavantage les modèles réglés n'est vérifiée que pour les plis 1 à 3. Dans les plis 4 et 5, XGBoost prévoit trop haut sur la validation interne (moyenne des résidus de −0,07 à −0,14). L'affirmation est retirée. Explication probable, non démontrée : un modèle à arbres ne peut pas prévoir sous les valeurs vues à l'apprentissage, et ces validations tombent sur des périodes calmes.
+
+- Les valeurs sont lues dans `rapports/baselines.json` (champ `controles.xgboost_validation`) et reprises dans `docs/RESULTATS_BASELINES.md`, section « Vérification de l'exception 2 ».
+- L'exception 2 elle-même (s² mesuré sur la validation interne, qui sert aussi au réglage) reste en vigueur ; seule l'affirmation sur le sens de son effet est retirée. L'historique n'est pas réécrit : l'entrée d'origine reste plus haut.

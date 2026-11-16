@@ -368,6 +368,8 @@ graine = 42
 [evaluation.selection]
 critere = "plus petit QLIKE moyen sur les plis walk-forward"  # règle de choix du modèle
 choix_sur_test = false                     # sur le test final, tout est rapporté, rien n'est choisi
+qlike_moyen = "moyenne_des_moyennes_par_pli"  # précision du 2026-11-16, décidée APRÈS les résultats des baselines ;
+                                           # le QLIKE sur tous les jours réunis est aussi rapporté
 
 [strategie]
 methode = "volatility_targeting"           # exposition = volatilité cible / volatilité prévue
