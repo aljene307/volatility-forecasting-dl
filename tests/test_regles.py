@@ -232,22 +232,36 @@ def test_retards_hac_newey_west(nombre_jours, attendu):
     assert R.retards_hac(nombre_jours) == attendu
 
 
-def test_entrainement_refuse_tant_que_des_valeurs_sont_a_fixer():
-    regles = R.charger_regles()
-    with pytest.raises(R.ErreurRegles) as erreur:
-        R.verifier_pret_pour_entrainement(regles)
-    message = str(erreur.value)
-    for cle in ("projet.fils_calcul", "projet.seuil_memoire_libre_go", "modeles.budget_reglage"):
-        assert cle in message
+VALEURS_MESUREES = ("projet.fils_calcul", "projet.seuil_memoire_libre_go", "modeles.budget_reglage")
 
 
-def test_entrainement_accepte_quand_tout_est_fixe():
-    """Contrôle inverse : sans valeur à fixer, la vérification passe."""
+def test_entrainement_accepte_avec_les_valeurs_mesurees():
     regles = R.charger_regles()
-    regles["projet"]["fils_calcul"] = 4
-    regles["projet"]["seuil_memoire_libre_go"] = 2.0
-    regles["modeles"]["budget_reglage"] = 20
+    assert R.valeurs_a_fixer(regles) == []
     R.verifier_pret_pour_entrainement(regles)
+    assert R.main(["--entrainement"]) == 0
+
+
+@pytest.mark.parametrize("cle", VALEURS_MESUREES)
+def test_temoin_entrainement_refuse_si_une_valeur_redevient_a_fixer(cle):
+    regles = R.charger_regles()
+    section, nom = cle.split(".")
+    regles[section][nom] = R.A_FIXER
+    with pytest.raises(R.ErreurRegles, match=cle.replace(".", r"\.")):
+        R.verifier_pret_pour_entrainement(regles)
+
+
+def test_valeurs_du_toml_egales_au_rapport_de_mesures():
+    """Les trois valeurs fixées sont celles calculées dans rapports/mesures_entrainement.json (aucune saisie à la main)."""
+    import json
+    rapport = json.loads((RACINE / "rapports" / "mesures_entrainement.json").read_text(encoding="utf-8"))
+    regles = R.charger_regles()
+    assert regles["projet"]["fils_calcul"] == rapport["fils_choisi"]
+    assert regles["projet"]["seuil_memoire_libre_go"] == rapport["memoire"]["seuil_go"]
+    assert regles["modeles"]["budget_reglage"] == rapport["budget"]["n"]
+    assert rapport["budget"]["n_suffisant"] and rapport["memoire"]["seuil_acceptable"]
+    assert rapport["alimentation_debut"]["secteur"] is True and rapport["alimentation_fin"]["secteur"] is True
+    assert all(v["reproductible"] for v in rapport["fils"][str(rapport["fils_choisi"])].values())
 
 
 # --- Témoins : des découpages et des fichiers volontairement faux doivent être rejetés

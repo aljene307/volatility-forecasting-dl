@@ -341,3 +341,48 @@ Les premières mesures, sur données aléatoires, ont donné N = −5 : la règl
 - **Alimentation** : les scripts d'entraînement et de mesure refusent de démarrer sur batterie, avec un message clair. Si le PC passe sur batterie pendant un calcul, ils s'arrêtent proprement après l'unité en cours, et la reprise permet de continuer. Raison : des temps et un calcul fiables, et pas de calcul interrompu par une batterie vide. Test avec un état d'alimentation simulé, et témoin.
 - **Règle de suivi** inchangée : arrêt propre si la durée réelle dépasse l'estimation de plus de 50 %.
 - **Tests mis à jour** : 5 plis annuels, séparation des plis, validation interne égale à la seconde moitié du pli précédent, réglage sur le premier découpage, Diebold-Mariano sur les plis réunis, avec des témoins.
+
+## 2026-11-16 — Mesures sur secteur et valeurs fixées
+
+Les chiffres sont lus dans `rapports/mesures_entrainement.json`, généré par `src/mesures.py`. Toutes les mesures sont faites sur des données aléatoires de même forme que les vraies.
+
+### Conditions
+
+- PC sur secteur pendant toutes les mesures (batterie en charge), mode d'alimentation de Windows 11 « Performances optimales » ; le mode de gestion de `powercfg` reste « Balanced ». Chrome allégé.
+- Mémoire libre : 2,59 Go au début, 2,95 Go avant les mesures de mémoire, 2,90 Go à la fin.
+- Aucune vraie donnée lue : le crochet d'audit refuse toute ouverture dans `data/` et les fonctions de lecture de pandas et pyarrow sont remplacées par un refus, dans le processus principal et dans chaque processus de mesure. Les tests le prouvent, avec un témoin (sans le crochet, la même lecture réussit).
+
+### Temps d'une époque (configuration médiane, 5 répétitions : médiane, min-max)
+
+| Modèle | 2 fils | 4 fils |
+|---|---|---|
+| LSTM | 0,73 s (0,68 – 0,75) | 0,89 s (0,84 – 1,12) |
+| GRU | 2,21 s (2,14 – 2,36) | 3,31 s (2,79 – 3,88) |
+| CNN-LSTM | 0,96 s (0,92 – 1,17) | 1,38 s (1,04 – 1,55) |
+| Transformer | 2,30 s (2,16 – 2,41) | 2,98 s (2,42 – 3,17) |
+| TFT | 8,16 s (8,10 – 9,79) | 10,25 s (9,51 – 12,35) |
+| XGBoost (2000 arbres) | 1,68 s (1,54 – 2,05) | 1,38 s (1,17 – 1,75) |
+
+Les 5 répétitions donnent des poids (ou des prévisions pour XGBoost) identiques, pour chaque modèle, TFT compris, avec 2 comme avec 4 fils. Le GRU est plus lent que le LSTM de façon stable ; la cause n'a pas été étudiée.
+
+### Valeurs fixées
+
+- **fils_calcul = 2** : la plus petite somme des médianes des 5 modèles, parmi les nombres de fils reproductibles.
+- **seuil_memoire_libre_go = 1,0** : pic de 564 Mo (TFT dans sa plus grande configuration ; Transformer : 353 Mo), × 1,5, arrondi au 0,5 Go supérieur. Inchangé par rapport à la première mesure.
+- **budget_reglage = N = 12** :
+  - un entraînement de chaque modèle (médiane × 100 époques) : LSTM 73 s, GRU 221 s, CNN-LSTM 96 s, Transformer 230 s, TFT 816 s ; somme 1 436 s ;
+  - N = plus grand entier tel que 2 × 1 436 s × (N + 3 × 6) ≤ 86 400 s, soit N + 18 ≤ 30,09, donc **N = 12** ;
+  - total estimé : 2 × 1 436 s × 30 = 86 149 s, environ **23,9 heures** de deep learning ; XGBoost en plus, environ 2 minutes.
+- `src/regles.py --entrainement` est maintenant accepté ; un témoin vérifie qu'il est refusé si une des trois valeurs redevient « à fixer ». Un test vérifie que les trois valeurs du TOML sont égales à celles du rapport de mesures.
+
+### Reprise et alimentation (test de principe sur de petites données aléatoires)
+
+- Un calcul interrompu exprès, puis relancé, donne des fichiers identiques à un calcul sans interruption ; les unités terminées sont sautées ; l'ordre d'exécution ne change rien ; un fichier abîmé ou un reste de fichier temporaire est recalculé. Témoin : une graine tirée de l'ordre d'exécution donne des fichiers différents.
+- Alimentation simulée : refus de démarrer sur batterie ; passage sur batterie pendant le calcul : arrêt propre après l'unité en cours, sans fichier à moitié écrit, puis reprise identique.
+
+### Décisions prises seul
+
+- La perte MSE du TFT est dans son propre fichier (`src/perte_tft.py`) : une classe définie dans une fonction ne peut pas être sauvegardée avec le modèle.
+- Le temps retenu pour un réseau est celui de la 2e époque (la 1re contient le démarrage).
+- Les manifestes des variables et de l'exploration ont été recalculés, parce qu'ils citent l'empreinte de `config/regles.toml`, qui a changé. Leur contenu est identique : même empreinte de contenu des variables, mêmes figures.
+- Un profil rapide du Transformer montre que la génération des masques de dropout est l'opération la plus coûteuse (environ un tiers du temps) ; aucune modification n'en découle. Le mode déterministe de torch n'est pas la cause des temps : 10,5 s sans lui contre 11,4 s avec lui, mesuré sur batterie.

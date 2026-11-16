@@ -5,9 +5,9 @@
 
 [projet]
 graine = 42                                # graine aléatoire commune (Python, numpy, torch)
-fils_calcul = "a_fixer_apres_mesure"       # nombre de fils de calcul pour l'entraînement
+fils_calcul = 2                            # mesuré le 2026-11-16 (rapports/mesures_entrainement.json) : le plus rapide, reproductible
 fils_calcul_candidats = [2, 4]             # exception du 2026-11-16 : 8 écarté, mesuré plus lent
-seuil_memoire_libre_go = "a_fixer_apres_mesure"  # en dessous, les scripts lourds refusent de démarrer
+seuil_memoire_libre_go = 1.0               # mesuré le 2026-11-16 : pic × 1,5 arrondi ; en dessous, les scripts lourds refusent de démarrer
 
 [donnees]
 source = "Binance spot"                    # marché au comptant de Binance
@@ -178,7 +178,7 @@ adf_jours_non_valides = "retires"          # limite écrite ; leur nombre est ra
 [modeles]
 liste = ["HAR-RV", "GARCH(1,1)", "XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]
 graines_deep_learning = [0, 1, 2]          # exception du 2026-11-16 : 3 entraînements par modèle (au lieu de 5)
-budget_reglage = "a_fixer_apres_mesure"    # identique pour tous les modèles de deep learning
+budget_reglage = 12                        # N, mesuré le 2026-11-16 : identique pour tous les modèles réglés (XGBoost compris)
 
 # Règles d'entraînement : précisions datées du 2026-11-16, écrites avant tout entraînement
 # (raisons : docs/REGLES.md, section 11).

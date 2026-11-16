@@ -1,0 +1,281 @@
+{
+  "alimentation_debut": {
+    "batterie_pourcent": 33,
+    "mode": "Performances optimales",
+    "secteur": true
+  },
+  "alimentation_fin": {
+    "batterie_pourcent": 49,
+    "mode": "Performances optimales",
+    "secteur": true
+  },
+  "budget": {
+    "actifs": 2,
+    "budget_s": 86400,
+    "decoupages": 6,
+    "entrainements_par_modele_et_actif": 30,
+    "epoques_estimees": 100,
+    "formule": "actifs × somme_modeles(mediane_epoque × epoques_estimees) × (N + graines × decoupages) <= budget",
+    "graines": 3,
+    "n": 12,
+    "n_suffisant": true,
+    "somme_des_5_modeles_s": 1435.818520002067,
+    "temps_entrainement_s": {
+      "cnn_lstm": 95.69825000071432,
+      "gru": 220.53554999874905,
+      "lstm": 72.9217600019183,
+      "tft": 816.4868499996373,
+      "transformer": 230.17611000104807
+    },
+    "total_estime_h_pour_n": 23.93030866670112,
+    "total_estime_s_pour_n": 86149.11120012403
+  },
+  "configurations": {
+    "mediane": {
+      "cnn_lstm": {
+        "couches": 2,
+        "dropout": 0.2,
+        "filtres": 32,
+        "lot": 32,
+        "noyau": 5,
+        "taille_cachee": 32,
+        "taux_apprentissage": 0.0005477225575051661,
+        "weight_decay": 3.1622776601683795e-05
+      },
+      "gru": {
+        "couches": 2,
+        "dropout": 0.2,
+        "lot": 32,
+        "taille_cachee": 32,
+        "taux_apprentissage": 0.0005477225575051661,
+        "weight_decay": 3.1622776601683795e-05
+      },
+      "lstm": {
+        "couches": 2,
+        "dropout": 0.2,
+        "lot": 32,
+        "taille_cachee": 32,
+        "taux_apprentissage": 0.0005477225575051661,
+        "weight_decay": 3.1622776601683795e-05
+      },
+      "tft": {
+        "dropout": 0.2,
+        "hidden_continuous_size": 16,
+        "hidden_size": 16,
+        "lot": 32,
+        "taux_apprentissage": 0.0005477225575051661,
+        "tetes_attention": 2,
+        "weight_decay": 3.1622776601683795e-05
+      },
+      "transformer": {
+        "couches": 2,
+        "d_model": 32,
+        "dimension_feed_forward": 128,
+        "dropout": 0.2,
+        "lot": 32,
+        "taux_apprentissage": 0.0005477225575051661,
+        "tetes": 4,
+        "weight_decay": 3.1622776601683795e-05
+      }
+    },
+    "plus_grande": {
+      "tft": {
+        "dropout": 0.2,
+        "hidden_continuous_size": 16,
+        "hidden_size": 32,
+        "lot": 64,
+        "taux_apprentissage": 0.0005477225575051661,
+        "tetes_attention": 4,
+        "weight_decay": 3.1622776601683795e-05
+      },
+      "transformer": {
+        "couches": 2,
+        "d_model": 64,
+        "dimension_feed_forward": 128,
+        "dropout": 0.2,
+        "lot": 64,
+        "taux_apprentissage": 0.0005477225575051661,
+        "tetes": 4,
+        "weight_decay": 3.1622776601683795e-05
+      }
+    }
+  },
+  "fils": {
+    "2": {
+      "cnn_lstm": {
+        "max": 1.1666148999938741,
+        "mediane": 0.9569825000071432,
+        "min": 0.9164168999996036,
+        "reproductible": true,
+        "valeurs": [
+          0.9218364999978803,
+          1.159703899989836,
+          0.9164168999996036,
+          1.1666148999938741,
+          0.9569825000071432
+        ]
+      },
+      "gru": {
+        "max": 2.35909929999616,
+        "mediane": 2.2053554999874905,
+        "min": 2.1374880999792367,
+        "reproductible": true,
+        "valeurs": [
+          2.1496410999970976,
+          2.2053554999874905,
+          2.305268600001,
+          2.1374880999792367,
+          2.35909929999616
+        ]
+      },
+      "lstm": {
+        "max": 0.7489474999892991,
+        "mediane": 0.729217600019183,
+        "min": 0.6759210000163876,
+        "reproductible": true,
+        "valeurs": [
+          0.6759210000163876,
+          0.729217600019183,
+          0.7489474999892991,
+          0.7452363000193145,
+          0.7282180000038352
+        ]
+      },
+      "tft": {
+        "max": 9.790474200010067,
+        "mediane": 8.164868499996373,
+        "min": 8.09796740001184,
+        "reproductible": true,
+        "valeurs": [
+          8.6018929000129,
+          9.790474200010067,
+          8.164868499996373,
+          8.130443999980344,
+          8.09796740001184
+        ]
+      },
+      "transformer": {
+        "max": 2.4126555000257213,
+        "mediane": 2.3017611000104807,
+        "min": 2.157904799998505,
+        "reproductible": true,
+        "valeurs": [
+          2.2485371000075247,
+          2.3423710000060964,
+          2.4126555000257213,
+          2.3017611000104807,
+          2.157904799998505
+        ]
+      },
+      "xgboost": {
+        "max": 2.0504373000003397,
+        "mediane": 1.6825713000143878,
+        "min": 1.5449124000151642,
+        "reproductible": true,
+        "valeurs": [
+          1.5449124000151642,
+          2.0504373000003397,
+          1.6825713000143878,
+          1.7263887999870349,
+          1.6800397999759298
+        ]
+      }
+    },
+    "4": {
+      "cnn_lstm": {
+        "max": 1.5453097999852616,
+        "mediane": 1.3849890000128653,
+        "min": 1.035234400012996,
+        "reproductible": true,
+        "valeurs": [
+          1.4718017000122927,
+          1.035234400012996,
+          1.060513100004755,
+          1.5453097999852616,
+          1.3849890000128653
+        ]
+      },
+      "gru": {
+        "max": 3.880746100010583,
+        "mediane": 3.305635299999267,
+        "min": 2.7942212000198197,
+        "reproductible": true,
+        "valeurs": [
+          3.0789153999940027,
+          3.880746100010583,
+          3.305635299999267,
+          2.7942212000198197,
+          3.536306699999841
+        ]
+      },
+      "lstm": {
+        "max": 1.11865280001075,
+        "mediane": 0.8857724000117742,
+        "min": 0.8368832000123803,
+        "reproductible": true,
+        "valeurs": [
+          1.11865280001075,
+          0.8706185000191908,
+          0.9095701000187546,
+          0.8368832000123803,
+          0.8857724000117742
+        ]
+      },
+      "tft": {
+        "max": 12.34885030001169,
+        "mediane": 10.252657400007593,
+        "min": 9.50574290001532,
+        "reproductible": true,
+        "valeurs": [
+          10.1454148000048,
+          11.73969250000664,
+          12.34885030001169,
+          10.252657400007593,
+          9.50574290001532
+        ]
+      },
+      "transformer": {
+        "max": 3.1679371999925934,
+        "mediane": 2.9780829999945126,
+        "min": 2.4208557000092696,
+        "reproductible": true,
+        "valeurs": [
+          2.598721599992132,
+          3.0080431000096723,
+          2.9780829999945126,
+          3.1679371999925934,
+          2.4208557000092696
+        ]
+      },
+      "xgboost": {
+        "max": 1.7490488999756053,
+        "mediane": 1.3809051999996882,
+        "min": 1.1683526999840979,
+        "reproductible": true,
+        "valeurs": [
+          1.1683526999840979,
+          1.3809051999996882,
+          1.3485998999967705,
+          1.7490488999756053,
+          1.5797640999953728
+        ]
+      }
+    }
+  },
+  "fils_choisi": 2,
+  "memoire": {
+    "pic_max_go": 0.5510406494140625,
+    "pics_mo": {
+      "tft": 564.265625,
+      "transformer": 353.2890625
+    },
+    "seuil_acceptable": true,
+    "seuil_go": 1.0
+  },
+  "memoire_libre_avant_memoire_go": 2.951953887939453,
+  "memoire_libre_debut_go": 2.585498809814453,
+  "memoire_libre_fin_go": 2.8969764709472656,
+  "powercfg": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+  "repetitions": 5,
+  "xgboost_total_estime_s": 100.95427800086327
+}
