@@ -6,7 +6,7 @@ Une valeur notée « à fixer après mesure » sera choisie plus tard, à partir
 
 Les règles marquées « exception du 2026-11-14 » ont été précisées après le commit des règles et avant tout téléchargement ou calcul ; elles sont expliquées dans `docs/CHOIX.md`.
 
-Les règles marquées « précisions du 2026-11-15 » ont été écrites et commitées avant le calcul des variables. Celles de la section 11 (précisions du 2026-11-16) ont été écrites et commitées avant tout entraînement.
+Les règles marquées « précisions du 2026-11-15 » ont été écrites et commitées avant le calcul des variables. Celles de la section 11 (précisions du 2026-11-16) ont été écrites et commitées avant tout entraînement. Les règles marquées « exception du 2026-11-16 » (plis annuels, réglage unique, 3 graines, AdamW, budget de 24 heures, répétitions, alimentation) ont remplacé, avant tout entraînement réel, une règle initiale irréalisable ; la raison et les mesures sont dans `docs/CHOIX.md`.
 
 ## 0. Convention de date
 
@@ -56,16 +56,16 @@ Exemple : l'exemple dont la cible est le 2025-01-01 a ses variables arrêtées l
 | Première cible | 2018-04-01 | Premier jour où toutes les variables sont calculables. |
 | Développement | cibles du 2018-04-01 au 2024-12-31 | Toutes les mises au point se font sur cette période. |
 | Test final | cibles du 2025-01-01 au 2026-10-31, ouvert une seule fois | Une période jamais vue donne une mesure honnête de la performance. |
-| Walk-forward | premier apprentissage : cibles du 2018-04-01 au 2019-12-31 ; puis 10 plis de 6 mois, cibles du 2020-01-01 au 2024-12-31 | On imite l'usage réel : apprendre sur le passé, prévoir la suite, puis recommencer avec plus d'historique (fenêtre qui s'agrandit). |
+| Walk-forward | premier apprentissage : cibles du 2018-04-01 au 2019-12-31 ; puis 5 plis annuels de 12 mois, cibles du 2020-01-01 au 2024-12-31 (exception du 2026-11-16 ; au départ, 10 plis de 6 mois) | On imite l'usage réel : apprendre sur le passé, prévoir la suite, puis recommencer avec plus d'historique (fenêtre qui s'agrandit). Le réentraînement annuel est courant en pratique, et les jours évalués sont les mêmes. |
 | Validation interne | les 6 derniers mois de cibles de chaque apprentissage | Sert à l'arrêt anticipé, au réglage et à la mesure de s², sans toucher aux mois évalués. |
 | Fenêtre d'ajustement commune | tous les modèles (HAR-RV, XGBoost, deep learning) sont ajustés sur la même fenêtre : l'apprentissage du pli sans sa validation interne | Mêmes données pour tous : la comparaison est équitable. |
 | Modèle du test final | ajustement sur les cibles du 2018-04-01 au 2024-06-30, validation interne du 2024-07-01 au 2024-12-31 | Même règle que pour les plis, appliquée une dernière fois avant le test final. |
 | Embargo | 0 jour | Avec la convention « date de la cible », aucune cible n'est commune entre apprentissage et évaluation pour un horizon d'un jour. Un test le vérifie pour chaque pli. |
 | Transformations | réapprises sur l'apprentissage de chaque pli | Une normalisation calculée sur des données futures serait une fuite d'information. |
 
-Exemple du premier pli : ajustement sur les cibles du 2018-04-01 au 2019-06-30, validation interne du 2019-07-01 au 2019-12-31, évaluation du 2020-01-01 au 2020-06-30. Le dernier pli évalue les cibles du 2024-07-01 au 2024-12-31.
+Exemple du premier pli : ajustement sur les cibles du 2018-04-01 au 2019-06-30, validation interne du 2019-07-01 au 2019-12-31, évaluation du 2020-01-01 au 2020-12-31. Le dernier pli évalue les cibles du 2024-01-01 au 2024-12-31.
 
-La validation interne d'un pli est la période évaluée du pli précédent ; c'est du passé au moment du pli, donc ce n'est pas une fuite.
+La validation interne d'un pli (6 mois) est la seconde moitié de la période évaluée du pli précédent ; c'est du passé au moment du pli, donc ce n'est pas une fuite.
 
 ## 4. Périodes de crise
 
@@ -144,7 +144,7 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Références | HAR-RV (régression linéaire sur log RV, fenêtres 1, 7 et 30 jours), GARCH(1,1) (rendements journaliers, innovations de Student) | Un modèle de deep learning n'a d'intérêt que s'il bat ces références classiques. |
 | Mise à l'échelle de GARCH | paramètres et facteur unique = moyenne(RV²) / moyenne(variance GARCH) appris sur la fenêtre d'ajustement du pli (sans la validation interne, comme tous les modèles ; exception du 2026-11-14), puis appliqués tels quels à l'évaluation ; σ̂ = racine de la variance mise à l'échelle | GARCH prévoit la variance du rendement d'un jour, pas la RV calculée sur 5 minutes : il faut ramener les deux à la même échelle, sans regarder la période évaluée. |
 | Autres modèles | XGBoost, LSTM, GRU, CNN-LSTM, Transformer encodeur codé à la main, TFT | Du plus simple au plus complexe, pour voir ce que chaque complexité apporte. |
-| Graines | 0, 1, 2, 3 et 4 pour le deep learning ; moyenne et écart-type rapportés | Un seul entraînement peut être chanceux : on mesure la variabilité. |
+| Graines | 0, 1 et 2 pour le deep learning et XGBoost (exception du 2026-11-16 ; au départ, 5 graines) ; moyenne et écart-type rapportés | Un seul entraînement peut être chanceux : on mesure la variabilité. Trois graines restent le minimum pour un écart-type. |
 | Budget de réglage | à fixer après mesure, identique pour tous les modèles de deep learning | Comparaison équitable. Il sera fixé par un essai chronométré sur des données aléatoires de même taille. |
 
 ## 8. Évaluation
@@ -155,9 +155,9 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Métriques secondaires | RMSE et MAE sur RV | Plus faciles à lire, en unités de volatilité. |
 | Test de Diebold-Mariano | contre HAR-RV, perte QLIKE, erreurs HAC, seuil de 5 % | Dire si un écart de performance est réel ou dû au hasard. |
 | Retards HAC | floor(4·(T/100)^(2/9)), règle de Newey-West, T = nombre de jours évalués ; correction de Harvey-Leybourne-Newbold | Le nombre de retards est fixé par une formule, pas choisi après coup. La correction rend le test plus fiable sur de petits échantillons. |
-| Portée du test | test principal sur les 10 plis réunis ; un seul test sur le test final ; par pli et par crise, résultats descriptifs seulement, sans conclusion de test | Multiplier les tests finit toujours par donner un résultat « significatif » par hasard. |
+| Portée du test | test principal sur les plis réunis (5 plis annuels, mêmes jours qu'avec 10 plis) ; un seul test sur le test final ; par pli et par crise, résultats descriptifs seulement, sans conclusion de test | Multiplier les tests finit toujours par donner un résultat « significatif » par hasard. |
 | Intervalles de confiance | 95 %, bootstrap par blocs, 1000 tirages, blocs de 20 jours | Les blocs gardent l'enchaînement des jours, qui ne sont pas indépendants. |
-| Règle de sélection | le plus petit QLIKE moyen sur les 10 plis walk-forward ; sur le test final, tous les modèles sont rapportés et aucun choix n'est fait | Choisir sur le test reviendrait à tricher avec la période de contrôle. |
+| Règle de sélection | le plus petit QLIKE moyen sur les 5 plis walk-forward ; sur le test final, tous les modèles sont rapportés et aucun choix n'est fait | Choisir sur le test reviendrait à tricher avec la période de contrôle. |
 
 ## 9. Stratégie
 
@@ -191,6 +191,7 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Normalisation | moyenne et écart-type appris sur la fenêtre d'ajustement de chaque pli, enregistrés en JSON et réappliqués tels quels ; log(RV) aussi normalisée pour les réseaux | Aucune information de la validation ou de l'évaluation ne sert à préparer les données. |
 | Perte | erreur quadratique sur log(RV) pour tous les modèles réglés, TFT compris | Cohérent avec HAR-RV, ajusté par moindres carrés sur log(RV). QLIKE reste la métrique d'évaluation finale. |
 | Limite du TFT | le TFT est entraîné en MSE comme les autres modèles, il ne fournit donc pas d'intervalles de quantiles ; ses normaliseurs internes sont désactivés (les données sont déjà normalisées avec le JSON du pli) | Même perte et même préparation pour tous : la comparaison est équitable. |
+| Lightning allégé pour le TFT | sans barre de progression, journaux, sauvegardes automatiques ni résumé du modèle ; jeux de données construits une seule fois | Moins de fichiers inutiles. Vérifié le 2026-11-16 sur données aléatoires : prévisions identiques au bit près, sans gain de temps mesurable. |
 | Choix des hyperparamètres | la plus petite erreur quadratique en log(RV), remise en unités de log(RV), sur la validation interne | Le choix ne regarde jamais la période évaluée. |
 | Arrêt anticipé | réseaux : patience de 20 époques, 200 époques au plus ; XGBoost : patience de 50 arbres, 2000 arbres au plus ; sur la validation interne | On arrête quand le modèle cesse de progresser sur des jours non appris. |
 | Dropout des réseaux récurrents | la même valeur entre les couches et à la sortie de la couche récurrente ; avec 1 couche, à la sortie seulement | Le dropout interne de torch n'agit qu'entre deux couches : sans cette règle, il ne ferait rien avec 1 couche. |
@@ -202,7 +203,9 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 | Méthode | recherche aléatoire, graine fixe (42), dans des espaces écrits d'avance | Rejouable, et aucun espace n'est élargi après avoir vu un résultat. |
 | Nombre de combinaisons | le même N de combinaisons VALIDES pour XGBoost et pour chaque modèle de deep learning ; N fixé par une mesure de temps | Comparaison équitable : chaque modèle a la même chance d'être bien réglé. |
 | Tirages incohérents | écartés et remplacés par la suite déterministe des tirages (même graine) ; leur nombre est rapporté | N reste le même pour tous, et le tirage reste rejouable. |
-| Graines | pour chaque pli : N combinaisons avec une graine, puis la meilleure réentraînée avec les 5 graines (0 à 4) | Mesurer la variabilité due au hasard de l'entraînement. Remarque : XGBoost avec subsample = colsample = 1 n'a aucun hasard, et ses 5 graines donnent alors le même modèle. |
+| Réglage (exception du 2026-11-16) | UNE SEULE FOIS par actif et par modèle (XGBoost compris), sur le premier découpage : ajustement du 2018-04-01 au 2019-06-30, validation interne du 2019-07-01 au 2019-12-31 ; N combinaisons avec une graine ; les hyperparamètres sont ensuite figés pour les 5 plis et le test final | Décision prise avec l'information disponible fin 2019, sans regarder l'avenir. Limite : réglage sur peu de données (un an et demi). |
+| Graines | la combinaison retenue est entraînée avec les 3 graines (0, 1, 2) sur chacun des 6 découpages (5 plis et test final) | Mesurer la variabilité due au hasard de l'entraînement. Remarque : XGBoost avec subsample = colsample = 1 n'a aucun hasard, et ses graines donnent alors le même modèle. |
+| Optimiseur (exception du 2026-11-16) | AdamW pour tous les modèles de deep learning | Le même optimiseur pour tous, avec un weight decay correctement appliqué. |
 
 Espaces :
 
@@ -223,7 +226,9 @@ Espaces :
 | Relance | les unités terminées et intactes sont sautées | Reprendre là où le calcul s'est arrêté. |
 | Mise en veille | empêchée pendant le calcul, puis rétablie à la fin, même en cas d'erreur | Un calcul de plusieurs heures ne doit pas s'arrêter parce que l'écran se met en veille. |
 | Mesures | sur des données aléatoires de même forme que les vraies (2441 exemples, prudent) ; aucune vraie donnée lue, contrôlé par un crochet d'audit | Fixer les réglages sans rien regarder des vraies données. |
-| Fils de calcul | le plus rapide parmi les nombres de fils (2, 4, 8) qui donnent deux exécutions identiques | La vitesse ne doit jamais coûter la reproductibilité. |
+| Fils de calcul | le plus rapide (médiane) parmi les nombres de fils (2, 4 ; 8 écarté le 2026-11-16, mesuré plus lent) qui donnent des exécutions identiques | La vitesse ne doit jamais coûter la reproductibilité. |
+| Répétitions (exception du 2026-11-16) | 5 répétitions par mesure ; la médiane est retenue, l'écart min-max est rapporté | Les temps varient d'un essai à l'autre : la médiane résiste aux essais perturbés. |
+| Alimentation (exception du 2026-11-16) | les scripts d'entraînement et de mesure refusent de démarrer sur batterie ; si le PC passe sur batterie pendant un calcul, ils s'arrêtent proprement après l'unité en cours (la reprise permet de continuer) | Des temps et un calcul fiables, et pas de calcul interrompu par une batterie vide. |
 | Seuil de mémoire libre | pic du TFT et du Transformer dans leur plus grande configuration × 1,5, arrondi au 0,5 Go supérieur ; au-delà de 2,5 Go, arrêt et rapport avant de le fixer | Marge de sécurité, sur un poste où Chrome reste ouvert. |
-| Budget N | plus grand N tel que, pour les 5 modèles de deep learning, 2 actifs × 11 découpages × (N + 5) entraînements × (temps d'une époque × 100) ≤ 12 heures ; si N < 5, arrêt et rapport | Un budget écrit d'avance, identique pour tous les modèles. |
+| Budget N (exception du 2026-11-16) | plus grand entier N tel que 2 actifs × somme sur les 5 modèles de deep learning de (médiane d'une époque × 100) × (N + 3 graines × 6 découpages) ≤ 24 heures, réparties sur plusieurs nuits grâce à la reprise ; si N < 5, arrêt et rapport. Au départ : 11 découpages, 5 graines et 12 heures, soit environ 124 heures estimées : irréalisable | Un budget écrit d'avance, identique pour tous les modèles. |
 | Suivi | si la durée réelle dépasse l'estimation de plus de 50 %, le calcul s'arrête proprement ; la décision est écrite comme exception datée ; N n'est jamais changé en silence | Garder la maîtrise du temps sans changer les règles en cours de route. |

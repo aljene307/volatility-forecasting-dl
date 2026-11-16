@@ -434,6 +434,24 @@ def verifier_coherence(regles: dict) -> None:
     exiger(ent.get("reprise", {}).get("graine_unite") == "hachage_de_l_identifiant",
            "Reprise : la graine d'une unité vient de son identifiant, jamais de l'ordre d'exécution.")
 
+    # Exceptions du 2026-11-16 (avant tout entraînement réel)
+    exiger(ent.get("exceptions_date") == dt.date(2026, 11, 16), "entrainement.exceptions_date doit être 2026-11-16.")
+    exiger(ent.get("optimiseur") == "adamw", "Optimiseur AdamW pour tous les modèles de deep learning.")
+    exiger(ent.get("alimentation") == "secteur_obligatoire" and ent.get("arret_sur_batterie") == "apres_unite_en_cours",
+           "Alimentation : refus de démarrer sur batterie, arrêt propre après l'unité en cours.")
+    exiger(_valeur(regles, "evaluation.diebold_mariano.test_principal") == "plis_reunis",
+           "Diebold-Mariano : un seul test principal, sur les plis réunis.")
+    if not problemes:
+        pli1 = decoupages(regles)[0]
+        reglage = ((rech.get("reglage_ajustement_debut"), rech.get("reglage_ajustement_fin")),
+                   (rech.get("reglage_validation_debut"), rech.get("reglage_validation_fin")))
+        exiger(rech.get("reglage") == "une_fois_par_actif_et_modele" and reglage == (pli1["ajustement"], pli1["validation"]),
+               f"Réglage des hyperparamètres : une seule fois, sur le premier découpage {pli1['ajustement']} / "
+               f"{pli1['validation']} ; reçu {reglage}.")
+        exiger(reglage[1][1] < pli1["evaluation"][0], "Le réglage ne doit utiliser que l'information disponible avant les plis.")
+    exiger(mes.get("repetitions", 0) >= 3 and mes.get("statistique") == "mediane",
+           "Mesures : au moins 3 répétitions, médiane retenue.")
+
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))
 
@@ -500,7 +518,7 @@ def resume(regles: dict) -> str:
     ligne("Évaluation", f"{e['metrique_principale']} sur la {e['qlike_sur']}, Diebold-Mariano contre "
                         f"{e['diebold_mariano']['reference']} (retards {e['diebold_mariano']['retards_hac']}, "
                         f"{e['diebold_mariano']['correction']}), bootstrap {e['bootstrap']['tirages']} tirages")
-    ligne("", "Diebold-Mariano : un test sur les 10 plis réunis, un test sur le test final ; "
+    ligne("", f"Diebold-Mariano : un test sur les {wf['nombre_plis']} plis réunis, un test sur le test final ; "
               "par pli et par crise : descriptif seulement")
     ligne("Stratégie", f"exposition = {s['exposition']}, bornée entre {s['exposition_min']:g} et {s['exposition_max']:g}")
     ligne("", f"VaR {s['var_horizon_jours']} jour à {_pourcent(s['var_niveau']).replace(',00', '')} "

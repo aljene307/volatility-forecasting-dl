@@ -36,6 +36,13 @@ Les règles ont été écrites et commitées avant tout téléchargement de donn
 4. 2026-11-14 — Création de ce README pour lister les exceptions.
 5. 2026-11-14 — Les 241 bougies désalignées de février 2018 (cas non prévu par les règles) sont traitées comme manquantes.
 6. 2026-11-14 — Un trou entre deux bougies est attribué aux deux jours qu'il touche.
+7. 2026-11-16 — Plis annuels : 5 plis de 12 mois au lieu de 10 plis de 6 mois (mêmes jours évalués).
+8. 2026-11-16 — Hyperparamètres réglés une seule fois par actif et par modèle, sur le premier découpage (information disponible fin 2019), puis figés.
+9. 2026-11-16 — 3 graines au lieu de 5 ; optimiseur AdamW ; XGBoost suit les mêmes règles.
+10. 2026-11-16 — Budget de 24 heures pour le deep learning, avec une nouvelle formule de N et des mesures répétées 5 fois (médiane).
+11. 2026-11-16 — Les calculs refusent de démarrer sur batterie, et s'arrêtent proprement si le PC passe sur batterie.
+
+Ces exceptions du 2026-11-16 remplacent une règle initiale irréalisable (mesures dans le [journal des choix](docs/CHOIX.md)), avant tout entraînement sur les vraies données.
 
 Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
 

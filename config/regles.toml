@@ -6,7 +6,7 @@
 [projet]
 graine = 42                                # graine aléatoire commune (Python, numpy, torch)
 fils_calcul = "a_fixer_apres_mesure"       # nombre de fils de calcul pour l'entraînement
-fils_calcul_candidats = [2, 4, 8]          # valeurs qui seront comparées par une mesure
+fils_calcul_candidats = [2, 4]             # exception du 2026-11-16 : 8 écarté, mesuré plus lent
 seuil_memoire_libre_go = "a_fixer_apres_mesure"  # en dessous, les scripts lourds refusent de démarrer
 
 [donnees]
@@ -67,8 +67,8 @@ premier_apprentissage_debut = 2018-04-01   # première cible d'apprentissage (= 
 premier_apprentissage_fin = 2019-12-31     # dernière cible du premier apprentissage
 plis_debut = 2020-01-01                    # première cible évaluée
 plis_fin = 2024-12-31                      # dernière cible évaluée
-duree_pli_mois = 6                         # chaque pli évalue 6 mois de cibles
-nombre_plis = 10                           # de 2020-01-01 à 2024-12-31 : 10 plis de 6 mois
+duree_pli_mois = 12                        # exception du 2026-11-16 : plis annuels (au lieu de 6 mois)
+nombre_plis = 5                            # de 2020-01-01 à 2024-12-31 : 5 plis de 12 mois (au lieu de 10 plis de 6 mois)
 validation_interne_mois = 6                # 6 derniers mois de cibles de chaque apprentissage : arrêt anticipé, réglage, s²
 ajustement_commun = true                   # tous les modèles sont ajustés sur la même fenêtre d'ajustement
                                            # (l'apprentissage du pli sans sa validation interne)
@@ -177,7 +177,7 @@ adf_jours_non_valides = "retires"          # limite écrite ; leur nombre est ra
 
 [modeles]
 liste = ["HAR-RV", "GARCH(1,1)", "XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]
-graines_deep_learning = [0, 1, 2, 3, 4]    # 5 entraînements par modèle : moyenne et écart-type
+graines_deep_learning = [0, 1, 2]          # exception du 2026-11-16 : 3 entraînements par modèle (au lieu de 5)
 budget_reglage = "a_fixer_apres_mesure"    # identique pour tous les modèles de deep learning
 
 # Règles d'entraînement : précisions datées du 2026-11-16, écrites avant tout entraînement
@@ -202,6 +202,11 @@ xgboost_patience_arbres = 50
 dropout_reseaux_recurrents = "entre_couches_et_en_sortie"  # même valeur ; avec 1 couche : en sortie seulement
 tft_perte = "mse"                          # limite : pas d'intervalles de quantiles
 tft_normaliseurs_internes = false          # données déjà normalisées avec le JSON du pli
+tft_lightning_allege = true                # sans barre, journaux, sauvegardes ni résumé : prévisions identiques au bit près
+optimiseur = "adamw"                       # exception du 2026-11-16 : tous les modèles de deep learning
+alimentation = "secteur_obligatoire"       # exception du 2026-11-16 : refus de démarrer sur batterie
+arret_sur_batterie = "apres_unite_en_cours" # passage sur batterie pendant un calcul : arrêt propre, puis reprise
+exceptions_date = 2026-11-16               # règle initiale irréalisable (docs/CHOIX.md) ; changée avant tout entraînement réel
 
 [entrainement.recherche]
 methode = "aleatoire"
@@ -209,7 +214,13 @@ graine = 42
 combinaisons = "modeles.budget_reglage"    # N : même nombre de combinaisons VALIDES pour chaque modèle réglé
 modeles_regles = ["XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]
 tirages_incoherents = "ecartes_et_remplaces"  # remplacés par la suite déterministe des tirages ; nombre rapporté
-graines_finales = "modeles.graines_deep_learning"  # la meilleure combinaison réentraînée avec ces 5 graines
+graines_finales = "modeles.graines_deep_learning"  # la meilleure combinaison réentraînée avec ces graines
+reglage = "une_fois_par_actif_et_modele"   # exception du 2026-11-16 : sur le premier découpage, puis figé
+reglage_ajustement_debut = 2018-04-01      # = fenêtre d'ajustement du pli 1
+reglage_ajustement_fin = 2019-06-30
+reglage_validation_debut = 2019-07-01      # = validation interne du pli 1 (information disponible fin 2019)
+reglage_validation_fin = 2019-12-31
+hyperparametres_figes_pour = "5_plis_et_test_final"
 
 [entrainement.espaces.xgboost]
 max_depth = [2, 3, 4, 6]
@@ -260,7 +271,10 @@ veille_windows = "empechee_pendant_le_calcul"  # SetThreadExecutionState, rétab
 donnees = "aleatoires_meme_forme"          # aucune vraie donnée lue (contrôlé par un crochet d'audit)
 exemples = 2441                            # tout le développement : prudent (la plus grande fenêtre d'ajustement est plus petite)
 epoques_estimees = 100                     # estimation prudente d'un arrêt anticipé moyen
-budget_heures_deep_learning = 12           # N = plus grand nombre tel que le total estimé tienne en 12 heures
+budget_heures_deep_learning = 24           # exception du 2026-11-16 : 24 h (au lieu de 12), sur plusieurs nuits grâce à la reprise
+formule_n = "actifs × somme_modeles(mediane_epoque × epoques_estimees) × (N + graines × decoupages) <= budget"
+repetitions = 5                            # exception du 2026-11-16 : 5 répétitions par mesure, médiane et min-max
+statistique = "mediane"
 n_minimum = 5                              # en dessous : arrêt et rapport
 marge_memoire = 1.5                        # seuil = pic × 1,5, arrondi au 0,5 Go supérieur
 arrondi_memoire_go = 0.5
@@ -298,7 +312,7 @@ erreurs = "HAC"                            # erreurs robustes à l'autocorrélat
 retards_hac = "floor(4*(T/100)^(2/9))"     # règle de Newey-West, T = nombre de jours évalués
 correction = "Harvey-Leybourne-Newbold"    # correction pour petits échantillons
 seuil = 0.05                               # seuil de significativité de 5 %
-test_principal = "10_plis_reunis"          # un seul test sur les jours évalués des 10 plis réunis
+test_principal = "plis_reunis"             # un seul test sur les jours évalués des plis réunis (5 plis annuels)
 par_pli_et_par_crise = "descriptif"        # aucune conclusion de test (évite les tests multiples)
 test_final = "un_seul_test"                # un seul test sur le test final
 

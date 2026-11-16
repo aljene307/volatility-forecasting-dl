@@ -316,3 +316,28 @@ Précisions datées du 2026-11-16, écrites et commitées avant tout entraîneme
 - **Mesures** : sur des données aléatoires de même forme que les vraies, avec 2441 exemples (tout le développement). C'est prudent : la plus grande fenêtre d'ajustement est un peu plus petite. Un crochet d'audit contrôle qu'aucune vraie donnée n'est lue.
 - **Arrêts obligatoires** : N < 5, ou seuil de mémoire (pic × 1,5, arrondi au 0,5 Go supérieur) au-dessus de 2,5 Go.
 - **Suivi** : si la durée réelle dépasse l'estimation de plus de 50 %, arrêt propre et exception datée ; N n'est jamais changé en silence.
+
+## 2026-11-16 — Exceptions : la règle d'entraînement initiale était irréalisable
+
+### Constat (dit honnêtement)
+
+Les premières mesures, sur données aléatoires, ont donné N = −5 : la règle initiale demandait environ **124 heures** de deep learning pour N = 5, et même 62 heures pour N = 0, avec un budget de 12 heures.
+
+- Temps d'une époque (2 fils, configuration médiane) : LSTM 0,93 s ; GRU 3,31 s ; CNN-LSTM 1,22 s ; Transformer 3,66 s ; TFT 11,24 s. Somme des 5 modèles × 100 époques : 2 035 s par entraînement.
+- Calcul : 2 actifs × 11 découpages × (5 + 5) × 2 035 s, soit 447 735 s, environ 124 heures.
+- Ces premières mesures ont été faites **sur batterie, à 22 %, en mode d'alimentation « Utilisation normale »**. Elles étaient bruitées (une même époque du LSTM : 9,9 s puis 0,9 s). Elles sont **remplacées** par de nouvelles mesures sur secteur (voir l'entrée suivante).
+- Allègement du TFT (sans barre de progression, journaux, sauvegardes ni résumé de Lightning) : prévisions et poids identiques au bit près sur données aléatoires, mais aucun gain de temps mesurable (10,7 s contre 11,0 s par époque). Le coût du TFT vient de son calcul. L'allègement est gardé.
+
+### Exceptions datées du 2026-11-16, écrites avant tout entraînement sur les vraies données
+
+- **Plis annuels** : 5 plis de 12 mois, du 2020-01-01 au 2024-12-31, au lieu de 10 plis de 6 mois. La validation interne (6 derniers mois de la fenêtre d'ajustement) et le modèle du test final ne changent pas. Raison : le réentraînement annuel est courant en pratique, et les jours évalués sont les mêmes.
+- **Réglage unique** : les hyperparamètres sont réglés une seule fois par actif et par modèle, sur le premier découpage (ajustement du 2018-04-01 au 2019-06-30, validation interne du 2019-07-01 au 2019-12-31), puis figés pour les 5 plis et le test final. Raison : décision prise avec l'information disponible fin 2019, sans regarder l'avenir. Limite : réglage sur peu de données.
+- **3 graines** au lieu de 5 : 0, 1 et 2.
+- **Optimiseur AdamW** pour tous les modèles de deep learning.
+- **XGBoost** suit les mêmes règles : même N, réglé une fois, 3 graines.
+- **Budget de 24 heures** pour le deep learning, réparties sur plusieurs nuits grâce à la reprise.
+- **Formule de N** : le plus grand entier tel que 2 actifs × somme sur les 5 modèles de (médiane d'une époque × 100) × (N + 3 graines × 6 découpages) ≤ 24 heures. Si N < 5 : arrêt et rapport.
+- **Mesures** : 5 répétitions, médiane et écart min-max ; 2 et 4 fils (8 fils écarté, mesuré plus lent).
+- **Alimentation** : les scripts d'entraînement et de mesure refusent de démarrer sur batterie, avec un message clair. Si le PC passe sur batterie pendant un calcul, ils s'arrêtent proprement après l'unité en cours, et la reprise permet de continuer. Raison : des temps et un calcul fiables, et pas de calcul interrompu par une batterie vide. Test avec un état d'alimentation simulé, et témoin.
+- **Règle de suivi** inchangée : arrêt propre si la durée réelle dépasse l'estimation de plus de 50 %.
+- **Tests mis à jour** : 5 plis annuels, séparation des plis, validation interne égale à la seconde moitié du pli précédent, réglage sur le premier découpage, Diebold-Mariano sur les plis réunis, avec des témoins.

@@ -42,19 +42,21 @@ def test_prechauffage_et_premiere_cible():
     assert regles["donnees"]["debut"].year == 2018, "Aucune donnée de 2017."
 
 
-def test_dix_plis_de_six_mois_en_dates_de_cible():
+def test_cinq_plis_annuels_en_dates_de_cible():
+    """Exception du 2026-11-16 : 5 plis de 12 mois, mêmes jours évalués que les 10 plis de 6 mois."""
     plis = R.plis_walk_forward(R.charger_regles())
-    assert len(plis) == 10
-    assert plis[0] == (D("2020-01-01"), D("2020-06-30"))
-    assert plis[-1] == (D("2024-07-01"), D("2024-12-31"))
+    assert len(plis) == 5
+    assert plis[0] == (D("2020-01-01"), D("2020-12-31"))
+    assert plis[-1] == (D("2024-01-01"), D("2024-12-31"))
+    assert sum((fin - debut).days + 1 for debut, fin in plis) == (D("2024-12-31") - D("2020-01-01")).days + 1
     for (_, fin), (debut_suivant, _) in zip(plis, plis[1:]):
         assert debut_suivant == fin + R.UN_JOUR, "Les plis doivent se suivre sans trou ni recouvrement."
 
 
 def test_separation_stricte_pour_chaque_pli_et_la_validation_interne():
-    """Dernière cible d'apprentissage < première cible évaluée, pour les 10 plis et le test final."""
+    """Dernière cible d'apprentissage < première cible évaluée, pour les 5 plis et le test final."""
     liste = R.decoupages(R.charger_regles())
-    assert len(liste) == 11
+    assert len(liste) == 6
     for d in liste:
         assert d["ajustement"][1] < d["validation"][0], d["nom"]
         assert d["apprentissage"][1] < d["evaluation"][0], d["nom"]
@@ -152,12 +154,26 @@ def test_modele_du_test_final_ecrit_dans_le_toml():
     assert final["validation"] == (tf["validation_debut"], tf["validation_fin"])
 
 
-def test_validation_interne_est_le_pli_precedent():
-    """La validation interne du pli k est la période évaluée du pli k-1 : du passé, pas une fuite."""
+def test_validation_interne_est_la_fin_du_pli_precedent():
+    """Plis annuels : la validation interne du pli k (6 mois) est la seconde moitié de la période évaluée
+    du pli k-1 : du passé, pas une fuite."""
     liste = R.decoupages(R.charger_regles())
     for precedent, courant in zip(liste[:-2], liste[1:-1]):
-        assert courant["validation"] == precedent["evaluation"], courant["nom"]
+        assert courant["validation"][1] == precedent["evaluation"][1], courant["nom"]
+        assert precedent["evaluation"][0] < courant["validation"][0], courant["nom"]
         assert courant["validation"][1] < courant["evaluation"][0], courant["nom"]
+        assert courant["validation"][0] == R.ajouter_mois(courant["evaluation"][0], -6), courant["nom"]
+
+
+def test_reglage_une_fois_sur_le_premier_decoupage():
+    """Exception du 2026-11-16 : hyperparamètres réglés une fois, avec l'information disponible fin 2019."""
+    regles = R.charger_regles()
+    rech = regles["entrainement"]["recherche"]
+    pli1 = R.decoupages(regles)[0]
+    assert (rech["reglage_ajustement_debut"], rech["reglage_ajustement_fin"]) == pli1["ajustement"]
+    assert (rech["reglage_validation_debut"], rech["reglage_validation_fin"]) == pli1["validation"]
+    assert rech["reglage_validation_fin"] == D("2019-12-31") < pli1["evaluation"][0]
+    assert regles["modeles"]["graines_deep_learning"] == [0, 1, 2]
 
 
 def _exposition_sans_annualisation(regles, vol_cible_annuelle, sigma_journaliere):
@@ -207,7 +223,7 @@ def test_temoin_var_avec_sigma_annualisee_detectee():
 
 @pytest.mark.parametrize("nombre_jours", [1827, 669])
 def test_retards_hac_des_tests_principaux(nombre_jours):
-    """10 plis réunis (1827 jours au plus) et test final (669 jours au plus)."""
+    """5 plis réunis (1827 jours au plus, les mêmes qu'avec 10 plis) et test final (669 jours au plus)."""
     assert R.retards_hac(nombre_jours) == math.floor(4 * (nombre_jours / 100) ** (2 / 9))
 
 
@@ -262,7 +278,14 @@ def test_temoin_chevauchement_rejete(periode, extrait):
         ("debut = 2020-03-01", "debut = 2019-11-01", "hors des plis"),
         ("exposition_max = 1.0", "exposition_max = 1.5", "exposition_max"),
         ("exposition_min = 0.0", "exposition_min = -0.5", "exposition_min"),
-        ("nombre_plis = 10", "nombre_plis = 9", "Nombre de plis"),
+        ("nombre_plis = 5", "nombre_plis = 10", "Nombre de plis"),
+        ("duree_pli_mois = 12", "duree_pli_mois = 6", "Nombre de plis"),
+        ("reglage_validation_fin = 2019-12-31", "reglage_validation_fin = 2020-06-30", "Réglage des hyperparamètres"),
+        ("reglage_ajustement_fin = 2019-06-30", "reglage_ajustement_fin = 2019-09-30", "Réglage des hyperparamètres"),
+        ('optimiseur = "adamw"', 'optimiseur = "sgd"', "AdamW"),
+        ('alimentation = "secteur_obligatoire"', 'alimentation = "indifferente"', "batterie"),
+        ('test_principal = "plis_reunis"', 'test_principal = "10_plis_reunis"', "plis réunis"),
+        ("exceptions_date = 2026-11-16", "exceptions_date = 2026-12-01", "exceptions_date"),
         ("bougies_min = 274", "bougies_min = 273", "bougies_min"),
         ("vol_cible_fin = 2019-12-31", "vol_cible_fin = 2020-06-30", "volatilité cible"),
         ("premiere_cible = 2018-04-01", "premiere_cible = 2018-03-15", "suivre le préchauffage"),
