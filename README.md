@@ -44,6 +44,15 @@ Les règles ont été écrites et commitées avant tout téléchargement de donn
 
 Ces exceptions du 2026-11-16 remplacent une règle initiale irréalisable (mesures dans le [journal des choix](docs/CHOIX.md)), avant tout entraînement sur les vraies données.
 
+Précisions datées du 2026-11-16, écrites avant le calcul des baselines (section 12 des [règles](docs/REGLES.md)) :
+
+- référence descriptive « persistance » (demain comme aujourd'hui), hors de la sélection et des tests principaux ;
+- formes exactes de QLIKE, du test de Diebold-Mariano et du bootstrap par blocs ;
+- prévision d'un modèle réglé = moyenne des prévisions de ses graines (limite : petit ensemble) ;
+- GARCH sans aucune information postérieure à la fenêtre d'ajustement ou à l'origine de la prévision ;
+- prévisions journalières jamais commitées ; aucune prévision sur le test final ;
+- test de l'avenir modifié appliqué aux prévisions de chaque baseline.
+
 Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
 
 - ligne journalière (ouverture, plus haut, plus bas, clôture, volume en USDT) et formules exactes des variables (RV moyennes, Parkinson, Garman-Klass, RSI de Wilder, MACD divisé par la clôture, largeur de Bollinger) ;

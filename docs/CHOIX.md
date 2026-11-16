@@ -386,3 +386,15 @@ Les 5 répétitions donnent des poids (ou des prévisions pour XGBoost) identiqu
 - Le temps retenu pour un réseau est celui de la 2e époque (la 1re contient le démarrage).
 - Les manifestes des variables et de l'exploration ont été recalculés, parce qu'ils citent l'empreinte de `config/regles.toml`, qui a changé. Leur contenu est identique : même empreinte de contenu des variables, mêmes figures.
 - Un profil rapide du Transformer montre que la génération des masques de dropout est l'opération la plus coûteuse (environ un tiers du temps) ; aucune modification n'en découle. Le mode déterministe de torch n'est pas la cause des temps : 10,5 s sans lui contre 11,4 s avec lui, mesuré sur batterie.
+
+## 2026-11-16 — Précisions écrites avant le calcul des baselines
+
+Écrites et commitées avant tout calcul de baseline, dans `config/regles.toml` (sections `modeles.persistance`, `modeles.garch_precisions`, `modeles.xgboost`, `evaluation.precisions`, compléments de `evaluation.diebold_mariano` et `evaluation.bootstrap`) et dans `docs/REGLES.md` (section 12), avec la raison de chacune.
+
+- **Persistance** : référence descriptive (log RV de J+1 prévu = log RV de J, même correction s²), hors de la sélection et des tests principaux, avec un Diebold-Mariano descriptif de HAR-RV contre elle. Raison : montrer ce qu'apporte HAR-RV par rapport à « ne rien faire ».
+- **QLIKE** de Patton ; **Diebold-Mariano** (Newey-West, Harvey-Leybourne-Newbold, Student à T − 1, bilatéral) ; **bootstrap** par blocs mobiles de 20 jours, graine 42, intervalle par percentiles.
+- **Prévision d'un modèle réglé** = moyenne des log de ses 3 graines, avec s² mesuré pour elle ; métriques par graine rapportées (moyenne et écart-type). Limite : petit ensemble, léger avantage par rapport à HAR-RV et GARCH ; la même règle s'appliquera au deep learning.
+- **GARCH** : log-rendements des variables × 100, moyenne constante ; facteur d'échelle aligné sur les jours ; paramètres figés et mise à jour quotidienne sans réajustement ; variance de départ calculée sur la fenêtre d'ajustement puis fixée explicitement. Limite : la série de rendements contient les effets de la règle de secours.
+- **XGBoost** : mêmes 12 combinaisons pour les deux actifs, graines dérivées de l'identifiant, arrêt anticipé sur chaque validation interne, sans normalisation.
+- **Modèles du test final** entraînés et enregistrés sans aucune prévision ; **sorties journalières** dans `sorties/`, ignoré par Git.
+- **Test de l'avenir modifié des prévisions**, pour les quatre baselines, avec un témoin (GARCH dont la variance de départ utilise toute la série).

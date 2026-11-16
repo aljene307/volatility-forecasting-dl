@@ -452,6 +452,27 @@ def verifier_coherence(regles: dict) -> None:
     exiger(mes.get("repetitions", 0) >= 3 and mes.get("statistique") == "mediane",
            "Mesures : au moins 3 répétitions, médiane retenue.")
 
+    # Précisions du 2026-11-16, écrites avant le calcul des baselines
+    ev = regles.get("evaluation", {})
+    pe = ev.get("precisions", {})
+    exiger(pe.get("date_precisions") == dt.date(2026, 11, 16), "evaluation.precisions.date_precisions doit être 2026-11-16.")
+    exiger(pe.get("qlike_forme") == "RV2/h - ln(RV2/h) - 1", "QLIKE : forme de Patton, nulle quand la prévision est exacte.")
+    exiger(pe.get("prevision_modele_regle") == "moyenne_des_log_des_graines"
+           and pe.get("s2_prevision_moyenne") == "validation_interne",
+           "Modèle réglé : prévision = moyenne des log des graines, s² mesuré pour elle sur la validation interne.")
+    exiger(pe.get("sorties_journalieres") == "sorties/", "Les prévisions journalières vont dans sorties/ (ignoré par Git).")
+    pers = regles.get("modeles", {}).get("persistance", {})
+    exiger(pers.get("dans_selection") is False and pers.get("dans_diebold_mariano_principal") is False,
+           "La persistance est descriptive : hors de la sélection et des tests de Diebold-Mariano principaux.")
+    gp = regles.get("modeles", {}).get("garch_precisions", {})
+    exiger(gp.get("backcast") == "calcule_sur_l_ajustement_puis_fixe"
+           and gp.get("mise_a_jour") == "parametres_fixes_serie_coupee_a_l_origine",
+           "GARCH : variance de départ calculée sur l'ajustement puis fixée ; paramètres figés, série coupée à l'origine.")
+    dm = ev.get("diebold_mariano", {})
+    exiger(dm.get("difference") == "QLIKE(modele) - QLIKE(HAR-RV)" and dm.get("bilateral") is True,
+           "Diebold-Mariano : différence QLIKE(modèle) − QLIKE(HAR-RV), test bilatéral.")
+    exiger(ev.get("bootstrap", {}).get("blocs") == "mobiles", "Bootstrap par blocs mobiles.")
+
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))
 

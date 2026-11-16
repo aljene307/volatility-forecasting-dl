@@ -295,6 +295,29 @@ parametres_appris_sur = "ajustement_du_pli" # exception du 2026-11-14 : sans la 
 facteur_appris_sur = "ajustement_du_pli"   # exception du 2026-11-14 ; puis appliqué tel quel à l'évaluation
 variance_prevue = "variance_garch_mise_a_l_echelle"  # sigma prévue = sqrt(variance mise à l'échelle)
 
+# Précisions datées du 2026-11-16, écrites avant le calcul des baselines (raisons : docs/REGLES.md, section 12).
+[modeles.persistance]
+role = "reference_descriptive"             # montrer ce qu'apporte HAR par rapport à « ne rien faire »
+prevision = "log_rv_1_du_jour_j"           # log RV(J+1) prévu = log RV(J)
+correction_s2 = "validation_interne"       # même correction que les autres modèles en log
+dans_selection = false                     # hors de la règle de sélection
+dans_diebold_mariano_principal = false     # hors des tests principaux
+diebold_mariano_descriptif = "HAR-RV contre persistance"
+
+[modeles.garch_precisions]
+rendements = "log_rendement_des_variables_x100"  # même série que les autres modèles (règle de secours comprise), × 100
+moyenne = "constante"
+fenetre_estimation = "du_debut_des_donnees_a_la_fin_de_l_ajustement"
+facteur_alignement = "variance_du_jour_t_avec_info_jusqu_a_t_moins_1_contre_rv2_du_jour_t"
+mise_a_jour = "parametres_fixes_serie_coupee_a_l_origine"  # aucune donnée après J
+backcast = "calcule_sur_l_ajustement_puis_fixe"           # variance de départ : jamais l'avenir
+limite = "rendement nul le jour remplacé et rendement sur deux jours le lendemain (règle de secours)"
+
+[modeles.xgboost]
+combinaisons_communes_aux_actifs = true    # les mêmes 12 combinaisons pour BTC et ETH (graine 42)
+normalisation = false                      # sans effet sur un arbre
+arret_anticipe = "validation_interne_de_chaque_decoupage"
+
 [modeles.transformer]
 type = "encodeur"                          # encodeur seul
 implementation = "manuelle"                # codé à la main, sans modèle tout prêt
@@ -304,6 +327,19 @@ metrique_principale = "QLIKE"              # calculée sur la variance (RV au ca
 qlike_sur = "variance"
 metriques_secondaires = ["RMSE", "MAE"]    # calculées sur RV
 metriques_secondaires_sur = "RV"
+
+[evaluation.precisions]                    # précisions datées du 2026-11-16, écrites avant le calcul des baselines
+date_precisions = 2026-11-16
+qlike_forme = "RV2/h - ln(RV2/h) - 1"      # forme de Patton : 0 si et seulement si h = RV²
+prevision_modele_regle = "moyenne_des_log_des_graines"  # XGBoost et deep learning : DM, bootstrap, crises, figures, classement
+s2_prevision_moyenne = "validation_interne"             # s² mesuré pour cette prévision moyenne
+metriques_par_graine = "moyenne_et_ecart_type"          # chaque graine avec son propre s²
+limite_ensemble = "la moyenne des graines forme un petit ensemble : léger avantage par rapport à HAR et GARCH, déterministes"
+s2_variance = "centree_ddof_0"             # la moyenne des résidus est rapportée à part (exception 2)
+sorties_journalieres = "sorties/"          # ignoré par Git : jamais commité (licence)
+modeles_test_final = "entraines_et_enregistres_sans_aucune_prevision"
+avenir_modifie_previsions = "persistance, HAR-RV, GARCH, XGBoost"  # prévisions des origines <= J identiques au bit près
+avenir_modifie_temoin = "GARCH avec une variance de départ calculée sur toute la série"
 
 [evaluation.diebold_mariano]
 reference = "HAR-RV"                       # chaque modèle est comparé à HAR-RV
@@ -315,12 +351,19 @@ seuil = 0.05                               # seuil de significativité de 5 %
 test_principal = "plis_reunis"             # un seul test sur les jours évalués des plis réunis (5 plis annuels)
 par_pli_et_par_crise = "descriptif"        # aucune conclusion de test (évite les tests multiples)
 test_final = "un_seul_test"                # un seul test sur le test final
+difference = "QLIKE(modele) - QLIKE(HAR-RV)"  # moyenne négative : le modèle fait mieux que HAR-RV
+variance_long_terme = "newey_west_bartlett"
+loi = "student_T_moins_1"
+bilateral = true
 
 [evaluation.bootstrap]
 niveau_confiance = 0.95                    # intervalles de confiance à 95 %
 methode = "blocs"                          # bootstrap par blocs (garde la dépendance temporelle)
 tirages = 1000                             # nombre de rééchantillonnages
 taille_bloc_jours = 20                     # longueur d'un bloc
+blocs = "mobiles"                          # blocs de jours consécutifs, débuts tirés au hasard
+intervalle = "percentiles"                 # 2,5 % et 97,5 % de la moyenne rééchantillonnée
+graine = 42
 
 [evaluation.selection]
 critere = "plus petit QLIKE moyen sur les plis walk-forward"  # règle de choix du modèle

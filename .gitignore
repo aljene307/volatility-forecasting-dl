@@ -16,6 +16,9 @@ __pycache__/
 data/raw/
 data/processed/
 
+# Prévisions journalières, unités de reprise et modèles entraînés (dérivés des données : jamais commités)
+sorties/
+
 # Dossiers de travail locaux (sauvegardes, captures, exports)
 sauvegardes/
 captures_brutes/
