@@ -395,6 +395,45 @@ def verifier_coherence(regles: dict) -> None:
     exiger(bool(retards) and max(retards) <= expl.get("acf_retards_max", 0),
            f"Retards d'autocorrélation rapportés {retards} au-delà du maximum {expl.get('acf_retards_max')}.")
 
+    # Précisions du 2026-11-16 : règles d'entraînement, écrites avant tout entraînement
+    ent = regles.get("entrainement", {})
+    exiger(ent.get("date_ecriture") == dt.date(2026, 11, 16),
+           f"entrainement.date_ecriture doit être 2026-11-16, reçu : {ent.get('date_ecriture')!r}.")
+    exiger(ent.get("un_modele_par_actif") is True, "Un modèle par actif, pour tous les modèles.")
+    exiger(ent.get("perte") == "mse_log_rv" and ent.get("tft_perte") == "mse",
+           "La perte d'entraînement est l'erreur quadratique sur log(RV), TFT compris.")
+    exiger(isinstance(ent.get("patience_epoques"), int) and isinstance(ent.get("epoques_max"), int)
+           and 0 < ent.get("patience_epoques", 0) < ent.get("epoques_max", 0),
+           "Il faut 0 < patience_epoques < epoques_max.")
+    exiger(not set(ent.get("reperes_non_entrees", [])) & set(ent.get("variables_continues", [])),
+           "Un repère de comptage ne doit jamais être une entrée.")
+    rech = ent.get("recherche", {})
+    exiger(sorted(rech.get("modeles_regles", [])) == sorted(m for m in regles.get("modeles", {}).get("liste", [])
+                                                             if m not in ("HAR-RV", "GARCH(1,1)")),
+           "Tous les modèles réglés (XGBoost et deep learning) ont le même nombre N de combinaisons.")
+    espaces = ent.get("espaces", {})
+    for nom_espace, espace in espaces.items():
+        for cle, valeur in espace.items():
+            if isinstance(valeur, list):
+                exiger(len(valeur) > 0, f"Espace {nom_espace}.{cle} vide.")
+            elif isinstance(valeur, dict) and valeur.get("loi") == "log_uniforme":
+                exiger(0 < valeur.get("min", 0) < valeur.get("max", 0),
+                       f"Espace {nom_espace}.{cle} : il faut 0 < min < max pour une loi log-uniforme.")
+    tr = espaces.get("transformer", {})
+    exiger(all(d % t == 0 for d in tr.get("d_model", []) for t in tr.get("tetes", [])),
+           "Transformer : chaque d_model doit être divisible par chaque nombre de têtes.")
+    tft = espaces.get("tft", {})
+    exiger(all(h % t == 0 for h in tft.get("hidden_size", []) for t in tft.get("tetes_attention", [])),
+           "TFT : chaque hidden_size doit être divisible par chaque nombre de têtes.")
+    exiger(tft.get("contrainte") == "hidden_continuous_size <= hidden_size",
+           "TFT : la contrainte hidden_continuous_size <= hidden_size doit être écrite.")
+    mes = ent.get("mesures", {})
+    exiger(mes.get("donnees") == "aleatoires_meme_forme", "Les mesures se font sur des données aléatoires seulement.")
+    exiger(mes.get("n_minimum", 0) >= 1 and mes.get("marge_memoire", 0) >= 1 and mes.get("budget_heures_deep_learning", 0) > 0,
+           "Mesures : n_minimum >= 1, marge_memoire >= 1 et budget en heures > 0.")
+    exiger(ent.get("reprise", {}).get("graine_unite") == "hachage_de_l_identifiant",
+           "Reprise : la graine d'une unité vient de son identifiant, jamais de l'ordre d'exécution.")
+
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))
 

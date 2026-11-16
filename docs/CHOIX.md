@@ -298,3 +298,21 @@ Les chiffres sont lus dans `data/manifeste_variables.json`, `rapports/volatilite
 - Test de l'avenir modifié : 0 écart au bit près, sur des données synthétiques (bord de mois, crise Covid, jour remplacé, fin de mois) et sur les vraies données (5 jours par actif, dont la crise Covid et deux fins de mois), pour les deux variantes. Témoin : une moyenne centrée de RV est détectée pour chacun des jours choisis.
 - Deux exécutions complètes : variables, manifeste, volatilité cible, rapport exploratoire et figures identiques octet pour octet.
 - Durée et mémoire maximale du vrai processus Python : environ 0,7 s et 470 Mo pour les variables ; environ 1,9 s et 550 Mo pour l'exploration.
+
+## 2026-11-16 — Règles d'entraînement, écrites avant tout entraînement
+
+Précisions datées du 2026-11-16, écrites et commitées avant tout entraînement, dans `config/regles.toml` (section `entrainement`) et dans `docs/REGLES.md` (section 11), avec la raison de chacune. Les trois valeurs « à fixer après mesure » restent à fixer à ce commit.
+
+- **Un modèle par actif**, pour tous les modèles. Raison : comparaison directe avec HAR-RV et GARCH, univariés. Limite : moins de données par réseau.
+- **Entrées** : les 13 variables continues et le jour de la semaine (entier pour XGBoost, one-hot pour les modèles séquentiels, catégorie connue pour le TFT). Les repères de comptage de la règle de secours ne sont jamais des entrées.
+- **Normalisation** : moyenne et écart-type appris sur la fenêtre d'ajustement de chaque pli, enregistrés en JSON ; log(RV) est aussi normalisée pour les réseaux, et la sélection se fait en unités de log(RV).
+- **Perte** : erreur quadratique sur log(RV) pour tous les modèles réglés. QLIKE reste la métrique d'évaluation finale.
+- **Limite du TFT** : le TFT est entraîné en MSE comme les autres modèles, il ne fournit donc pas d'intervalles de quantiles. Ses normaliseurs internes sont désactivés.
+- **Dropout** : avec 2 couches, la même valeur s'applique entre les couches et à la sortie ; avec 1 couche, à la sortie seulement (le dropout interne de torch n'agirait pas).
+- **Arrêt anticipé** : patience de 20 époques, 200 au plus ; XGBoost : patience de 50 arbres, 2000 au plus.
+- **Recherche aléatoire** : graine 42, même nombre N de combinaisons VALIDES pour chaque modèle réglé. Les tirages incohérents (TFT avec hidden_continuous_size > hidden_size) sont écartés et remplacés par la suite déterministe des tirages ; leur nombre sera rapporté.
+- **Remarque sur XGBoost** : avec subsample = colsample = 1, il n'a aucun hasard ; ses 5 graines donnent alors le même modèle.
+- **Reprise après interruption** : unités indépendantes, un fichier par unité, graine dérivée de l'identifiant par hachage, unités terminées sautées à la relance, mise en veille de Windows empêchée pendant le calcul. Le code complet sera construit à l'étape d'entraînement.
+- **Mesures** : sur des données aléatoires de même forme que les vraies, avec 2441 exemples (tout le développement). C'est prudent : la plus grande fenêtre d'ajustement est un peu plus petite. Un crochet d'audit contrôle qu'aucune vraie donnée n'est lue.
+- **Arrêts obligatoires** : N < 5, ou seuil de mémoire (pic × 1,5, arrondi au 0,5 Go supérieur) au-dessus de 2,5 Go.
+- **Suivi** : si la durée réelle dépasse l'estimation de plus de 50 %, arrêt propre et exception datée ; N n'est jamais changé en silence.

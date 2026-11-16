@@ -45,3 +45,11 @@ Précisions datées du 2026-11-15, écrites avant le calcul des variables (déta
 - empreinte des variables dans un manifeste séparé ;
 - garde du test aveugle sans aucune option de contournement ;
 - exploration sur le développement seulement (autocorrélation, test ADF).
+
+Précisions datées du 2026-11-16, écrites avant tout entraînement (section 11 des [règles](docs/REGLES.md)) :
+
+- un modèle par actif ; entrées et encodage du jour de la semaine propres à chaque famille de modèles ; normalisation apprise sur la fenêtre d'ajustement de chaque pli ;
+- perte en erreur quadratique sur log(RV) pour tous les modèles réglés, TFT compris (limite : pas d'intervalles de quantiles pour le TFT) ; arrêt anticipé ;
+- recherche aléatoire dans des espaces écrits d'avance, avec le même nombre de combinaisons valides pour chaque modèle réglé ;
+- reprise après interruption avec des graines dérivées de l'identifiant de chaque calcul ;
+- mesures sur des données aléatoires pour fixer les fils de calcul, le seuil de mémoire et le budget, avec une règle de suivi de la durée.

@@ -6,7 +6,7 @@ Une valeur notée « à fixer après mesure » sera choisie plus tard, à partir
 
 Les règles marquées « exception du 2026-11-14 » ont été précisées après le commit des règles et avant tout téléchargement ou calcul ; elles sont expliquées dans `docs/CHOIX.md`.
 
-Les règles marquées « précisions du 2026-11-15 » ont été écrites et commitées avant le calcul des variables.
+Les règles marquées « précisions du 2026-11-15 » ont été écrites et commitées avant le calcul des variables. Celles de la section 11 (précisions du 2026-11-16) ont été écrites et commitées avant tout entraînement.
 
 ## 0. Convention de date
 
@@ -176,3 +176,54 @@ Toutes calculées uniquement sur le passé, jusqu'à la clôture du jour J inclu
 |---|---|---|
 | Méthodes | SHAP sur XGBoost et LSTM ; attention du Transformer et du TFT | Comprendre quelles variables pèsent dans la prévision. |
 | Règle de fidélité | permuter la variable la mieux classée par SHAP doit dégrader le QLIKE de validation plus que permuter la moins bien classée ; sinon, on écrit honnêtement que SHAP échoue sur ce modèle | Une explication n'a de valeur que si elle correspond au comportement réel du modèle. |
+
+## 11. Entraînement (précisions datées du 2026-11-16, écrites avant tout entraînement)
+
+### Données d'entrée et apprentissage
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Un modèle par actif | BTC et ETH séparément, pour tous les modèles | Comparaison directe avec HAR-RV et GARCH, qui sont univariés. Limite : chaque réseau a moins de données. |
+| Entrées | les 13 variables continues du jour J et le jour de la semaine ; les repères de comptage (`jour_remplace`, `fenetre_avec_jour_remplace`) ne sont jamais des entrées | Ces repères servent à compter les effets de la règle de secours, pas à prévoir. |
+| XGBoost | tableau des variables du jour J, sans séquence ; jour de la semaine en entier | Un arbre coupe directement sur un entier. |
+| Modèles séquentiels | séquences de 30 jours ; jour de la semaine en one-hot (7 colonnes de 0 et de 1) | Un réseau ne doit pas croire que dimanche (6) vaut « six fois » mardi (1). |
+| TFT | jour de la semaine en variable catégorielle connue d'avance | C'est la façon prévue par le TFT de traiter un calendrier. |
+| Normalisation | moyenne et écart-type appris sur la fenêtre d'ajustement de chaque pli, enregistrés en JSON et réappliqués tels quels ; log(RV) aussi normalisée pour les réseaux | Aucune information de la validation ou de l'évaluation ne sert à préparer les données. |
+| Perte | erreur quadratique sur log(RV) pour tous les modèles réglés, TFT compris | Cohérent avec HAR-RV, ajusté par moindres carrés sur log(RV). QLIKE reste la métrique d'évaluation finale. |
+| Limite du TFT | le TFT est entraîné en MSE comme les autres modèles, il ne fournit donc pas d'intervalles de quantiles ; ses normaliseurs internes sont désactivés (les données sont déjà normalisées avec le JSON du pli) | Même perte et même préparation pour tous : la comparaison est équitable. |
+| Choix des hyperparamètres | la plus petite erreur quadratique en log(RV), remise en unités de log(RV), sur la validation interne | Le choix ne regarde jamais la période évaluée. |
+| Arrêt anticipé | réseaux : patience de 20 époques, 200 époques au plus ; XGBoost : patience de 50 arbres, 2000 arbres au plus ; sur la validation interne | On arrête quand le modèle cesse de progresser sur des jours non appris. |
+| Dropout des réseaux récurrents | la même valeur entre les couches et à la sortie de la couche récurrente ; avec 1 couche, à la sortie seulement | Le dropout interne de torch n'agit qu'entre deux couches : sans cette règle, il ne ferait rien avec 1 couche. |
+
+### Recherche des hyperparamètres
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Méthode | recherche aléatoire, graine fixe (42), dans des espaces écrits d'avance | Rejouable, et aucun espace n'est élargi après avoir vu un résultat. |
+| Nombre de combinaisons | le même N de combinaisons VALIDES pour XGBoost et pour chaque modèle de deep learning ; N fixé par une mesure de temps | Comparaison équitable : chaque modèle a la même chance d'être bien réglé. |
+| Tirages incohérents | écartés et remplacés par la suite déterministe des tirages (même graine) ; leur nombre est rapporté | N reste le même pour tous, et le tirage reste rejouable. |
+| Graines | pour chaque pli : N combinaisons avec une graine, puis la meilleure réentraînée avec les 5 graines (0 à 4) | Mesurer la variabilité due au hasard de l'entraînement. Remarque : XGBoost avec subsample = colsample = 1 n'a aucun hasard, et ses 5 graines donnent alors le même modèle. |
+
+Espaces :
+
+| Modèle | Espace |
+|---|---|
+| XGBoost | max_depth {2, 3, 4, 6} ; learning_rate log-uniforme [0,01 ; 0,1] ; au plus 2000 arbres avec arrêt anticipé ; subsample et colsample_bytree {0,6 ; 0,8 ; 1,0} ; min_child_weight {1, 5, 10} ; reg_lambda log-uniforme [0,1 ; 10] |
+| LSTM et GRU | taille cachée {16, 32, 64} ; couches {1, 2} ; dropout {0 ; 0,1 ; 0,2 ; 0,3} ; taux d'apprentissage log-uniforme [1e-4 ; 3e-3] ; lot {32, 64} ; weight decay log-uniforme [1e-6 ; 1e-3] |
+| CNN-LSTM | filtres {16, 32} ; noyau {3, 5} ; puis l'espace du LSTM |
+| Transformer | d_model {16, 32, 64} ; têtes {2, 4} ; couches {1, 2} ; dimension feed-forward {64, 128} ; dropout, taux d'apprentissage, lot et weight decay comme le LSTM |
+| TFT | hidden_size {8, 16, 32} ; têtes d'attention {1, 2, 4} ; hidden_continuous_size {8, 16}, avec hidden_continuous_size ≤ hidden_size ; dropout, taux d'apprentissage, lot et weight decay comme le LSTM |
+
+### Reprise, mesures et suivi
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Unités de calcul | une unité = (actif, modèle, pli, combinaison, graine), enregistrée dans son propre fichier dès qu'elle est finie (fichier temporaire, puis renommage) | Une coupure ne fait perdre que l'unité en cours. |
+| Graine d'une unité | dérivée de son identifiant par hachage, jamais de l'ordre d'exécution | Une relance donne exactement les mêmes résultats, dans n'importe quel ordre. |
+| Relance | les unités terminées et intactes sont sautées | Reprendre là où le calcul s'est arrêté. |
+| Mise en veille | empêchée pendant le calcul, puis rétablie à la fin, même en cas d'erreur | Un calcul de plusieurs heures ne doit pas s'arrêter parce que l'écran se met en veille. |
+| Mesures | sur des données aléatoires de même forme que les vraies (2441 exemples, prudent) ; aucune vraie donnée lue, contrôlé par un crochet d'audit | Fixer les réglages sans rien regarder des vraies données. |
+| Fils de calcul | le plus rapide parmi les nombres de fils (2, 4, 8) qui donnent deux exécutions identiques | La vitesse ne doit jamais coûter la reproductibilité. |
+| Seuil de mémoire libre | pic du TFT et du Transformer dans leur plus grande configuration × 1,5, arrondi au 0,5 Go supérieur ; au-delà de 2,5 Go, arrêt et rapport avant de le fixer | Marge de sécurité, sur un poste où Chrome reste ouvert. |
+| Budget N | plus grand N tel que, pour les 5 modèles de deep learning, 2 actifs × 11 découpages × (N + 5) entraînements × (temps d'une époque × 100) ≤ 12 heures ; si N < 5, arrêt et rapport | Un budget écrit d'avance, identique pour tous les modèles. |
+| Suivi | si la durée réelle dépasse l'estimation de plus de 50 %, le calcul s'arrête proprement ; la décision est écrite comme exception datée ; N n'est jamais changé en silence | Garder la maîtrise du temps sans changer les règles en cours de route. |

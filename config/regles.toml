@@ -180,6 +180,93 @@ liste = ["HAR-RV", "GARCH(1,1)", "XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transfor
 graines_deep_learning = [0, 1, 2, 3, 4]    # 5 entraînements par modèle : moyenne et écart-type
 budget_reglage = "a_fixer_apres_mesure"    # identique pour tous les modèles de deep learning
 
+# Règles d'entraînement : précisions datées du 2026-11-16, écrites avant tout entraînement
+# (raisons : docs/REGLES.md, section 11).
+[entrainement]
+date_ecriture = 2026-11-16
+un_modele_par_actif = true                 # BTC et ETH séparément, pour tous les modèles
+variables_continues = ["rv_1", "rv_7", "rv_30", "log_rv_1", "log_rv_7", "log_rv_30", "parkinson", "garman_klass",
+                       "log_rendement", "log_volume", "rsi_14", "macd_histogramme_relatif", "bollinger_largeur_relative"]
+reperes_non_entrees = ["jour_remplace", "fenetre_avec_jour_remplace"]  # repères de comptage, jamais des entrées
+jour_semaine_xgboost = "entier"            # tableau des variables du jour J, sans séquence
+jour_semaine_sequentiels = "one_hot_7"     # LSTM, GRU, CNN-LSTM, Transformer : séquences de 30 jours
+jour_semaine_tft = "categorielle_connue"
+normalisation = "moyenne_ecart_type"       # apprise sur la fenêtre d'ajustement de chaque pli, enregistrée en JSON
+normaliser_cible_reseaux = true            # log(RV) normalisée pour les réseaux ; sélection en unités de log(RV)
+perte = "mse_log_rv"                       # erreur quadratique sur log(RV), pour tous les modèles réglés
+selection = "plus_petite_mse_log_rv_validation_interne"
+patience_epoques = 20
+epoques_max = 200
+xgboost_arbres_max = 2000
+xgboost_patience_arbres = 50
+dropout_reseaux_recurrents = "entre_couches_et_en_sortie"  # même valeur ; avec 1 couche : en sortie seulement
+tft_perte = "mse"                          # limite : pas d'intervalles de quantiles
+tft_normaliseurs_internes = false          # données déjà normalisées avec le JSON du pli
+
+[entrainement.recherche]
+methode = "aleatoire"
+graine = 42
+combinaisons = "modeles.budget_reglage"    # N : même nombre de combinaisons VALIDES pour chaque modèle réglé
+modeles_regles = ["XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]
+tirages_incoherents = "ecartes_et_remplaces"  # remplacés par la suite déterministe des tirages ; nombre rapporté
+graines_finales = "modeles.graines_deep_learning"  # la meilleure combinaison réentraînée avec ces 5 graines
+
+[entrainement.espaces.xgboost]
+max_depth = [2, 3, 4, 6]
+learning_rate = { loi = "log_uniforme", min = 0.01, max = 0.1 }
+subsample = [0.6, 0.8, 1.0]
+colsample_bytree = [0.6, 0.8, 1.0]
+min_child_weight = [1, 5, 10]
+reg_lambda = { loi = "log_uniforme", min = 0.1, max = 10.0 }
+
+[entrainement.espaces.lstm]
+taille_cachee = [16, 32, 64]
+couches = [1, 2]
+dropout = [0.0, 0.1, 0.2, 0.3]
+taux_apprentissage = { loi = "log_uniforme", min = 1e-4, max = 3e-3 }
+lot = [32, 64]
+weight_decay = { loi = "log_uniforme", min = 1e-6, max = 1e-3 }
+
+[entrainement.espaces.gru]
+meme_espace_que = "lstm"
+
+[entrainement.espaces.cnn_lstm]
+filtres = [16, 32]
+noyau = [3, 5]
+meme_espace_que = "lstm"                   # plus les réglages du LSTM
+
+[entrainement.espaces.transformer]
+d_model = [16, 32, 64]
+tetes = [2, 4]
+couches = [1, 2]
+dimension_feed_forward = [64, 128]
+dropout_lot_taux_weight_decay = "comme_lstm"
+
+[entrainement.espaces.tft]
+hidden_size = [8, 16, 32]
+tetes_attention = [1, 2, 4]
+hidden_continuous_size = [8, 16]
+contrainte = "hidden_continuous_size <= hidden_size"  # tirages qui ne la respectent pas : écartés et remplacés
+dropout_lot_taux_weight_decay = "comme_lstm"
+
+[entrainement.reprise]
+unite = ["actif", "modele", "pli", "combinaison", "graine"]  # une unité indépendante = un fichier
+ecriture = "fichier_temporaire_puis_renommage"
+graine_unite = "hachage_de_l_identifiant"  # jamais l'ordre d'exécution
+relance = "unites_terminees_et_intactes_sautees"
+veille_windows = "empechee_pendant_le_calcul"  # SetThreadExecutionState, rétabli à la fin, même en cas d'erreur
+
+[entrainement.mesures]
+donnees = "aleatoires_meme_forme"          # aucune vraie donnée lue (contrôlé par un crochet d'audit)
+exemples = 2441                            # tout le développement : prudent (la plus grande fenêtre d'ajustement est plus petite)
+epoques_estimees = 100                     # estimation prudente d'un arrêt anticipé moyen
+budget_heures_deep_learning = 12           # N = plus grand nombre tel que le total estimé tienne en 12 heures
+n_minimum = 5                              # en dessous : arrêt et rapport
+marge_memoire = 1.5                        # seuil = pic × 1,5, arrondi au 0,5 Go supérieur
+arrondi_memoire_go = 0.5
+seuil_memoire_max_go = 2.5                 # au-delà : arrêt et rapport avant de fixer le seuil
+depassement_suivi_max = 0.5                # durée réelle > estimation × 1,5 : arrêt propre, décision écrite et datée
+
 [modeles.har_rv]
 cible = "log_rv"                           # régression linéaire sur log(RV)
 fenetres_jours = [1, 7, 30]                # composantes jour, semaine, mois

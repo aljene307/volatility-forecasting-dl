@@ -286,6 +286,16 @@ def test_temoin_chevauchement_rejete(periode, extrait):
         ('validite_en_entree = "passe_seulement"', 'validite_en_entree = "complete"', "Secours"),
         ('periode = "developpement_seulement"', 'periode = "tout"', "développement seulement"),
         ("acf_retards_rapportes = [1, 7, 30]", "acf_retards_rapportes = [1, 7, 90]", "autocorrélation"),
+        ("date_ecriture = 2026-11-16", "date_ecriture = 2026-11-20", "entrainement.date_ecriture"),
+        ("un_modele_par_actif = true", "un_modele_par_actif = false", "Un modèle par actif"),
+        ('tft_perte = "mse"', 'tft_perte = "quantile"', "TFT compris"),
+        ("patience_epoques = 20", "patience_epoques = 250", "patience_epoques"),
+        ("d_model = [16, 32, 64]", "d_model = [16, 30, 64]", "divisible"),
+        ('reperes_non_entrees = ["jour_remplace"', 'reperes_non_entrees = ["rv_1"', "repère"),
+        ('modeles_regles = ["XGBoost", "LSTM", "GRU", "CNN-LSTM", "Transformer", "TFT"]',
+         'modeles_regles = ["XGBoost", "LSTM"]', "même nombre N"),
+        ('graine_unite = "hachage_de_l_identifiant"', 'graine_unite = "ordre_d_execution"', "Reprise"),
+        ('donnees = "aleatoires_meme_forme"', 'donnees = "vraies"', "aléatoires"),
     ],
 )
 def test_temoin_toml_faux_rejete(tmp_path, ancien, nouveau, extrait_attendu):
