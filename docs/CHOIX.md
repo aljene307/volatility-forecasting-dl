@@ -608,3 +608,22 @@ Calcul fait après le commit des règles et des attentes (96b896d). Aucune valeu
 - Le README reçoit cette conclusion dans un bloc GÉNÉRÉ par `src/comparer.py` à partir du JSON (aucun chiffre tapé à la main) ; un test vérifie que le bloc du README est exactement celui que donne le JSON.
 - `src/ouvrir_test.py` calcule et juge H7 (Diebold-Mariano du modèle retenu contre HAR-J, Holm sur les 2 actifs) et la seconde prévision ; testé avec des résultats fictifs et des témoins (modèle retenu moins bon que HAR-J ; aucun écart net).
 - Mode `--verification` relancé après le commit 0359186 (dépôt propre et poussé) : toujours **conforme**, écart nul sur les métriques et les expositions ; le verdict H7 calculé sur 2024 figure dans `rapports/verification_test_2024.json`, à titre de vérification du programme seulement (il ne dit rien du test). Le fichier `rapports/test_final.json` n'existe pas.
+
+## 2026-11-19 — Ouverture du test final
+
+- **Ouverture** : le 2026-11-19 à 20:12:22, par l'auteur, avec `src/ouvrir_test.py --ouvrir`, une seule exécution, avec le code du commit f5259b6. Intégrité contrôlée avant toute analyse : le fichier contient l'identifiant f5259b6 (égal au commit de HEAD), il a été modifié 0,9 s après l'horodatage d'ouverture qu'il contient et plus jamais ensuite, les empreintes des attentes et des règles qu'il cite sont celles du commit, 42 empreintes de modèles et de normalisations ont été vérifiées. `rapports/test_final.json` a été commité seul et poussé tel quel (commit 15cb1fe), avant toute autre analyse.
+- **Aucun modèle, aucune règle, aucun réglage modifié** après l'ouverture. Les figures du test ont été produites par le seul chemin qui lève la garde (`src/ouvrir_test.py --figures`, commit 2e8f753) : il refuse si les résultats publiés ne sont pas intacts, recalcule la même chaîne sans modifier aucun modèle, et refuse de tracer si les résultats recalculés diffèrent des résultats publiés. Résultat : 0 écart.
+- **Verdicts** (lus dans `rapports/test_final.json`, présentés dans `docs/RESULTATS_TEST.md`) : H1 à H7 **confirmées pour les deux actifs**.
+  - H1 : Transformer (BTC) et CNN-LSTM (ETH) font mieux que HAR-RV, p-valeurs ajustées < 0,0001.
+  - H7 : confirmée pour ETH (p-valeur ajustée 0,0018) et **de justesse pour BTC** (p-valeur ajustée 0,0483, pour un seuil de 0,05).
+  - H2, H3, H4, H5, H6 : confirmées pour les deux actifs ; pour H5, la réduction du drawdown maximal est petite (moins de 3 points).
+- **Ce qui a démenti les attentes** :
+  - les deux prévisions chiffrées ont **sous-estimé** les gains : gain du modèle retenu sur HAR-RV de 32,2 % (BTC) et 28,3 % (ETH), au-dessus de l'intervalle prévu de 0 à 15 % ; gain sur HAR-J de 11,1 % et 13,9 %, au-dessus de l'intervalle prévu de 0 à 9 ;
+  - H7 était annoncée « probablement non significative » : elle est significative pour les deux actifs (de justesse pour BTC) ;
+  - sur BTC, le plus petit QLIKE du test est celui du LSTM, pas celui du Transformer retenu (écart très petit) ; la sélection, faite sur le développement, ne change pas.
+- **Ce qui a confirmé les attentes** : la hiérarchie persistance > HAR-RV > HAR-J > réseaux en QLIKE, la faiblesse du GARCH, la VaR de HAR-RV non rejetée, et le fait que le jour de la semaine (HAR-J) explique une partie de l'avantage des réseaux (H6).
+- **Stratégie** : rendement annualisé négatif sur le test pour l'achat simple et pour les stratégies (marché en baisse) ; volatilité et drawdown un peu plus faibles avec la stratégie ; pour ETH, le Sharpe de la stratégie du CNN-LSTM est plus bas que celui de HAR-RV, avec un intervalle bootstrap qui ne contient pas 0 (descriptif).
+- **Décisions prises seul (à valider)** :
+  - rapport et section du README générés depuis `rapports/test_final.json` seul (`src/resultats_test.py`), avec un test d'égalité et un témoin ; un verdict « confirmé de justesse » est écrit quand la p-valeur ajustée est au-dessus de la moitié du seuil ;
+  - figures produites par un mode `--figures` ajouté au programme d'ouverture après l'ouverture (code commité et poussé avant de l'exécuter), et non par un autre chemin ;
+  - la phrase « Le test final reste fermé » des étapes 5 à 8 du README est conservée : elle décrit l'état à chacune de ces étapes ; le statut en tête du README est mis à jour.

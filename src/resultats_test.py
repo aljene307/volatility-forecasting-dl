@@ -186,12 +186,14 @@ def lecture(t: dict, attentes: dict, dev: dict) -> list[str]:
                       f"{_pc(x5['drawdown_achat'])}" + (" (réduction de moins de 3 points)." if 0 < ecart_dd < 0.03 else "."))
         negatifs = [m for m in (ACHAT, "HAR-RV", retenu) if s[m]["rendement_annualise"] < 0]
         if negatifs:
-            lignes.append(f"- {nom} : le rendement annualisé est négatif sur le test pour {_liste(negatifs)} ; la stratégie réduit le risque "
+            noms = [{ACHAT: "l'achat simple"}.get(m, f"la stratégie de {m}") for m in negatifs]
+            lignes.append(f"- {nom} : le rendement annualisé est négatif sur le test pour {_liste(noms)} ; la stratégie réduit le risque "
                           "mais ne transforme pas une baisse du marché en gain.")
         ds = s["difference_sharpe_retenu_moins_har"]
         if ds["haut"] < 0:
             lignes.append(f"- {nom} : le Sharpe de la stratégie de {retenu} est plus bas que celui de la stratégie de HAR-RV, et l'intervalle "
-                          "bootstrap de la différence ne contient pas 0 (descriptif) : la meilleure prévision en QLIKE ne donne pas la meilleure stratégie.")
+                          "bootstrap de la différence ne contient pas 0 (descriptif)"
+                          + (" : un QLIKE plus faible que HAR-RV ne se traduit pas ici par une meilleure stratégie." if x1["confirmee"] else "."))
         elif ds["bas"] > 0:
             lignes.append(f"- {nom} : le Sharpe de la stratégie de {retenu} est plus élevé que celui de HAR-RV, et l'intervalle bootstrap de la "
                           "différence ne contient pas 0 (descriptif).")
@@ -199,9 +201,15 @@ def lecture(t: dict, attentes: dict, dev: dict) -> list[str]:
             lignes.append(f"- {nom} : l'intervalle bootstrap de la différence de Sharpe entre {retenu} et HAR-RV contient 0 : on ne peut pas "
                           "dire qu'une stratégie fait mieux que l'autre (descriptif).")
         x4 = h["H4"][actif]
-        rejets = [m for m, k in r["var"]["modeles"].items() if k["p_valeur"] < 0.05]
-        lignes.append(f"- {nom} : H4 est {_oui(x4['confirmee'])} (taux de dépassement de HAR-RV {_pc(x4['taux'], 2)}, p-valeur {_p(x4['p_valeur_kupiec'])}) ; "
-                      + (f"Kupiec rejette la VaR de {_liste(rejets)}." if rejets else "Kupiec ne rejette la VaR d'aucun modèle."))
+        vm = r["var"]["modeles"]
+        peu = [m for m, k in vm.items() if k["p_valeur"] < 0.05 and k["taux"] < k["attendu"]]
+        trop = [m for m, k in vm.items() if k["p_valeur"] < 0.05 and k["taux"] > k["attendu"]]
+        detail = ("Kupiec ne rejette la VaR d'aucun modèle." if not peu + trop else
+                  "Kupiec rejette la VaR de " + " ; ".join(
+                      ([f"{_liste(peu)} (trop peu de dépassements : VaR trop prudente)"] if peu else [])
+                      + ([f"{_liste(trop)} (trop de dépassements : VaR trop optimiste)"] if trop else [])) + ".")
+        lignes.append(f"- {nom} : H4 est {_oui(x4['confirmee'])} (taux de dépassement de HAR-RV {_pc(x4['taux'], 2)}, p-valeur "
+                      f"{_p(x4['p_valeur_kupiec'])}) ; " + detail)
     return lignes + [""]
 
 

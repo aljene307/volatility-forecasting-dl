@@ -2,7 +2,7 @@
 
 Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'ether, à partir de bougies de 5 minutes. Il compare des modèles de deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT) à des références classiques (HAR-RV, GARCH) et à XGBoost, avec un découpage chronologique strict. Les prévisions pilotent ensuite une stratégie simple de gestion du risque.
 
-**Statut : en construction.** Les résultats du développement (2020 à 2024) sont disponibles ; le test final reste fermé.
+**Statut : en construction.** Les résultats du développement (2020 à 2024) sont disponibles ; le test final a été ouvert une seule fois le 2026-11-19 et ses résultats sont publiés tels quels (section « Résultats du test final » ci-dessous).
 
 ## Données et licence
 
@@ -22,6 +22,24 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 - [Journal des choix](docs/CHOIX.md) : chaque décision, avec sa raison et ses mesures.
 - [Qualité des données](docs/QUALITE_DONNEES.md) : comptages générés par le contrôle de qualité.
 
+<!-- début du bloc généré par src/resultats_test.py : test final -->
+## Résultats du test final
+
+Test ouvert une seule fois le 2026-11-19 (code du commit `f5259b6`), sur les dates de cible du 2025-01-01 au 2026-10-31, avec des [attentes écrites avant l'ouverture](docs/ATTENTES_TEST.md). Détails : [résultats du test final](docs/RESULTATS_TEST.md). Tableau généré depuis `rapports/test_final.json`.
+
+| Hypothèse | BTC (Transformer) | ETH (CNN-LSTM) |
+|---|---|---|
+| H1 : QLIKE(modèle retenu) < QLIKE(HAR-RV) (principale) | confirmée | confirmée |
+| H2 : QLIKE(HAR-RV) < QLIKE(persistance) | confirmée | confirmée |
+| H3 : QLIKE(GARCH(1,1)) > QLIKE(HAR-RV) | confirmée | confirmée |
+| H4 : VaR de HAR-RV non rejetée par Kupiec | confirmée | confirmée |
+| H5 : stratégie du modèle retenu : volatilité et drawdown plus faibles que l'achat simple | confirmée | confirmée |
+| H6 : gain du modèle retenu sur HAR-J < gain sur HAR-RV (descriptive) | confirmée | confirmée |
+| H7 : QLIKE(modèle retenu) < QLIKE(HAR-J) (secondaire, ajoutée le 2026-11-19) | confirmée | confirmée |
+| Gain du modèle retenu sur HAR-RV (prévu : 0 % à 15 %) | 32,2 % | 28,3 % |
+| Gain du modèle retenu sur HAR-J (prévu : 0 % à 9 %) | 11,1 % | 13,9 % |
+<!-- fin du bloc généré par src/resultats_test.py : test final -->
+
 ## Avancement
 
 - Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
@@ -29,7 +47,7 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 - Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT ; entraînement `src/entrainer.py`, suivi `src/suivi.py`) : [comparaison de tous les modèles](docs/RESULTATS_DL.md) (`src/comparer.py`) ; figures : [BTC](figures/figure_5_deep_learning_BTCUSDT.png), [ETH](figures/figure_5_deep_learning_ETHUSDT.png) ; empreintes des poids : [manifeste](rapports/modeles_deep_learning.json). Le test final reste fermé.
 - Étape 7 — Stratégie de volatility targeting sur le développement (`src/strategie.py`) : [résultats](docs/STRATEGIE.md) ; figures : [BTC](figures/figure_6_strategie_BTCUSDT.png), [ETH](figures/figure_6_strategie_ETHUSDT.png). Le test final reste fermé.
 - Étape 8 — Explicabilité sur le développement (SHAP, attention, fidélité ; `src/explicabilite.py`) : [résultats](docs/EXPLICABILITE.md) ; figures : importance des variables ([BTC](figures/figure_7_importance_variables_BTCUSDT.png), [ETH](figures/figure_7_importance_variables_ETHUSDT.png)), importance par retard ([BTC](figures/figure_8_importance_retards_BTCUSDT.png), [ETH](figures/figure_8_importance_retards_ETHUSDT.png)), [attention du Transformer](figures/figure_9_attention_transformer.png). Le test final reste fermé.
-- Étape 9 — Test final : **en préparation, le test reste fermé**. [Attentes écrites avant l'ouverture](docs/ATTENTES_TEST.md) ; modèle descriptif HAR-J (`src/har_j.py`, résultats dans la [comparaison](docs/RESULTATS_DL.md)) ; programme d'ouverture `src/ouvrir_test.py`, vérifié sur 2024 ; [attentes](docs/ATTENTES_TEST.md) complétées le 2026-11-19 par H7 (modèle retenu contre HAR-J), décidée après les résultats de HAR-J et avant l'ouverture.
+- Étape 9 — Test final : **ouvert une seule fois le 2026-11-19** ; [résultats du test final](docs/RESULTATS_TEST.md) (`src/resultats_test.py`, depuis `rapports/test_final.json`) ; figures : prévisions ([BTC](figures/figure_10_test_previsions_BTCUSDT.png), [ETH](figures/figure_10_test_previsions_ETHUSDT.png)), stratégie ([BTC](figures/figure_11_test_strategie_BTCUSDT.png), [ETH](figures/figure_11_test_strategie_ETHUSDT.png)). Préparation : [attentes écrites avant l'ouverture](docs/ATTENTES_TEST.md) ; modèle descriptif HAR-J (`src/har_j.py`, résultats dans la [comparaison](docs/RESULTATS_DL.md)) ; programme d'ouverture `src/ouvrir_test.py`, vérifié sur 2024 ; [attentes](docs/ATTENTES_TEST.md) complétées le 2026-11-19 par H7 (modèle retenu contre HAR-J), décidée après les résultats de HAR-J et avant l'ouverture.
 <!-- début du bloc généré par src/comparer.py : HAR-J -->
   Conclusion descriptive sur HAR-J (développement, QLIKE moyen par pli ; chiffres lus dans `rapports/comparaison_modeles.json`) :
   - BTC : HAR-J fait 9,9 % de mieux que HAR-RV ; le modèle retenu (Transformer) fait 13,6 % de mieux que HAR-RV, mais seulement 4,2 % de mieux que HAR-J. Le jour de la semaine de la cible, ajouté seul à HAR-RV, comble 72 % de l'écart entre HAR-RV et le modèle retenu.
