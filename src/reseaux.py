@@ -105,6 +105,19 @@ class TransformerEncodeur(nn.Module):
         return self.sortie(z[:, -1, :]).squeeze(-1)
 
 
+def construire_reseau(modele: str, combinaison: dict, n_entrees: int, longueur: int) -> nn.Module:
+    """Réseau torch d'après le nom du modèle et une combinaison d'hyperparamètres (le TFT est construit à part)."""
+    c = combinaison
+    if modele in ("LSTM", "GRU"):
+        return ReseauRecurrent(modele.lower(), n_entrees, c["taille_cachee"], c["couches"], c["dropout"])
+    if modele == "CNN-LSTM":
+        return CnnLstm(n_entrees, c["filtres"], c["noyau"], c["taille_cachee"], c["couches"], c["dropout"])
+    if modele == "Transformer":
+        return TransformerEncodeur(n_entrees, longueur, c["d_model"], c["tetes"], c["couches"], c["dimension_feed_forward"],
+                                   c["dropout"])
+    raise ValueError(f"Modèle inconnu pour construire_reseau : {modele}")
+
+
 def perte_mse_tft():
     """Perte MSE pour le TFT de pytorch-forecasting (qui ne fournit que RMSE) : même perte que les autres modèles."""
     from perte_tft import MSE   # import tardif : pytorch-forecasting n'est chargé que pour le TFT

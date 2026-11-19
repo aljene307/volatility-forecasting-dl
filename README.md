@@ -26,6 +26,7 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 
 - Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
 - Étape 5 — Baselines sur le développement (persistance, HAR-RV, GARCH, XGBoost ; 5 plis annuels) : [résultats](docs/RESULTATS_BASELINES.md) ; figures : [BTC](figures/figure_4_previsions_BTCUSDT.png), [ETH](figures/figure_4_previsions_ETHUSDT.png). Le test final reste fermé.
+- Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT) : **en cours**. Le code est écrit et testé (`src/entrainer.py`, suivi avec `src/suivi.py`) ; le long calcul (réglage, puis plis) reste à lancer.
 
 ## Règles et exceptions
 

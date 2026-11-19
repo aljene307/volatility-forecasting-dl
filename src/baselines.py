@@ -160,8 +160,13 @@ def prevoir_garch(journalier: pd.DataFrame, origines: list[dt.date], modele: dic
 
 def tirer_combinaisons(regles: dict, nom_espace: str, n: int, valide=lambda c: True) -> tuple[list[dict], int]:
     """N combinaisons VALIDES tirées au hasard (graine de la recherche) ; renvoie aussi le nombre de tirages écartés."""
-    espace = regles["entrainement"]["espaces"][nom_espace]
-    rng = np.random.default_rng(regles["entrainement"]["recherche"]["graine"])
+    return tirer_dans_espace(regles["entrainement"]["espaces"][nom_espace], n, regles["entrainement"]["recherche"]["graine"], valide)
+
+
+def tirer_dans_espace(espace: dict, n: int, graine: int, valide=lambda c: True) -> tuple[list[dict], int]:
+    """Tirage déterministe : clés dans l'ordre alphabétique ; liste -> une valeur ; loi log-uniforme -> exp(uniforme).
+    Un tirage invalide est écarté et remplacé par la suite des tirages (même graine)."""
+    rng = np.random.default_rng(graine)
     combinaisons, ecartes = [], 0
     while len(combinaisons) < n:
         tirage = {}

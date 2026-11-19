@@ -435,3 +435,33 @@ L'affirmation selon laquelle le biais de s² désavantage les modèles réglés 
 
 - Les valeurs sont lues dans `rapports/baselines.json` (champ `controles.xgboost_validation`) et reprises dans `docs/RESULTATS_BASELINES.md`, section « Vérification de l'exception 2 ».
 - L'exception 2 elle-même (s² mesuré sur la validation interne, qui sert aussi au réglage) reste en vigueur ; seule l'affirmation sur le sens de son effet est retirée. L'historique n'est pas réécrit : l'entrée d'origine reste plus haut.
+
+## 2026-11-19 — Étape 6, phase A : code du deep learning, vérifié avant le long calcul
+
+Le code (`src/entrainer.py`, `src/reseaux.py`, `src/suivi.py`) est construit, testé et commité avant tout entraînement long. La phase B (réglage, puis plis) sera lancée à part. Le test final reste fermé : les modèles du test final seront entraînés, sans aucune prévision sur le test.
+
+### Choix techniques
+
+- **Données** : les séquences utilisent les variables de TOUS les jours (série remplacée par la règle de secours), y compris les jours dont la cible n'est pas valide ; seuls les exemples à cible valide servent à apprendre et à évaluer.
+- **Normalisation** par découpage : entrées sur les jours d'origine jusqu'à la dernière origine de l'ajustement ; cible sur les exemples d'ajustement ; enregistrée en JSON dans `sorties/`.
+- **TFT** : la série « y » de l'encodeur est le log de RV de la série remplacée (égale à la vraie valeur les jours valides) ; les échantillons ne gardent que les jours prédits à cible valide ; seul le jour de la semaine est connu pour le jour prédit. Les meilleurs poids sont gardés en mémoire (aucun fichier de sauvegarde de Lightning).
+- **Réseaux torch** : meilleurs poids sur la validation interne gardés en mémoire, puis rechargés.
+- **Tirage des combinaisons** : la fonction de tirage d'XGBoost a été rendue générale (`tirer_dans_espace`), pour une seule source ; le GRU a le même espace que le LSTM, donc les mêmes 12 combinaisons.
+- **Règle de suivi** : vérifiée avant chaque nouvelle unité, sur le temps réel cumulé des unités terminées comparé à leur estimation (médiane d'une époque × 100) ; arrêt propre au-delà de +50 %. Journal dans `sorties/deep_learning/journal.json`, lu par `src/suivi.py`.
+- **Options d'essai** (`--combinaisons`, `--epoques-max`, `--graines`, `--decoupages`) : réservées à l'essai à blanc ; les valeurs par défaut sont celles des règles.
+
+### Tests (données synthétiques, 2 époques)
+
+- Test de l'avenir modifié pour chacun des 5 réseaux : 0 écart au bit près. Témoin : une séquence qui se termine à J+1 est détectée.
+- Déterminisme : la même unité deux fois donne les mêmes poids et les mêmes prévisions (LSTM, Transformer, TFT).
+- Reprise : interruption puis relance, fichiers identiques.
+- Règle de suivi : déclenchée au-delà de +50 % (temps simulé), avec la 1re unité gardée.
+- TFT : seul le jour de la semaine de la cible est connu pour le jour prédit ; encodeur de 30 jours.
+
+### Essai à blanc sur les vraies données (développement)
+
+1 combinaison, 2 époques, 1 graine, premier découpage, 5 réseaux, 2 actifs, dans un dossier supprimé ensuite. Les deux phases fonctionnent de bout en bout (réglage : 34 s ; plis : 33 s).
+
+- Premier découpage (448 exemples d'ajustement pour BTC) : temps par époque de 0,09 s (LSTM) à 4,28 s (TFT), tous sous la mesure.
+- Plus grand découpage (modèle du test final, 2 257 exemples d'ajustement), 2e époque, BTC, avec la combinaison de l'essai : LSTM 0,23 s, GRU 0,59 s, CNN-LSTM 0,83 s, Transformer 1,74 s, TFT 9,66 s. Mesures sur données aléatoires (2 441 exemples, configuration médiane) : 0,73 ; 2,21 ; 0,96 ; 2,30 ; 8,16 s.
+- Lecture : sur le plus grand découpage, seul le TFT dépasse la mesure (+18 %) ; les autres découpages sont plus petits. Le risque principal pour la règle de suivi est un TFT qui s'entraîne longtemps (jusqu'à 200 époques) avec une grande combinaison.

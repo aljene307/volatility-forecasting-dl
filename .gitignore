@@ -18,6 +18,7 @@ data/processed/
 
 # Prévisions journalières, unités de reprise et modèles entraînés (dérivés des données : jamais commités)
 sorties/
+sorties_essai/
 
 # Dossiers de travail locaux (sauvegardes, captures, exports)
 sauvegardes/
