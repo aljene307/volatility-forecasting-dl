@@ -266,7 +266,17 @@ def controle_modeles_test_final(regles: dict) -> dict:
     return sortie
 
 
-def chaine(regles: dict, decoupage: dict) -> dict:
+def _sans_series(sortie: dict) -> dict:
+    """Retire les séries journalières (clés commençant par « _ ») : seuls les agrégats sont publiés."""
+    for res in sortie["actifs"].values():
+        for cle in [k for k in res if k.startswith("_")]:
+            res.pop(cle)
+        for cle in [k for k in res["strategie"] if k.startswith("_")]:
+            res["strategie"].pop(cle)
+    return sortie
+
+
+def chaine(regles: dict, decoupage: dict, garder_series: bool = False) -> dict:
     """Tout le calcul d'une période évaluée : prévisions, métriques, tests, stratégie, VaR. La garde s'applique."""
     tol = regles["test_final"]["verification_tolerance"]
     attentes = tomllib.loads(CHEMIN_ATTENTES.read_text(encoding="utf-8"))
@@ -329,6 +339,8 @@ def chaine(regles: dict, decoupage: dict) -> dict:
         res["diebold_mariano_descriptif"] = {"HAR-RV contre persistance": EV.diebold_mariano(ref, pertes["Persistance"]["qlike"]),
                                              "HAR-J contre HAR-RV": EV.diebold_mariano(pertes["HAR-J"]["qlike"], ref)}
         res["strategie"], res["var"] = strategie(table, jb, decoupage, regles, vol_cible[actif]["valeur_annualisee"], retenu)
+        if garder_series:
+            res["_table"] = table[["date_cible", "cible", "HAR-RV", "HAR-J", retenu]].copy()
         sortie["actifs"][actif] = res
     sortie["hypotheses"] = hypotheses(sortie, attentes, regles)
     return sortie
@@ -359,6 +371,8 @@ def strategie(table: pd.DataFrame, jb: pd.DataFrame, decoupage: dict, regles: di
     res["difference_sharpe_retenu_moins_har"] = EV.bootstrap_statistique(
         [sims[retenu]["rendement"], sims["HAR-RV"]["rendement"]], lambda u, v: S.sharpe(u, a) - S.sharpe(v, a), regles)
     res["_expositions"] = {mm: expo[mm].tolist() for mm in ("HAR-RV", retenu)}
+    res["_valeurs"] = {mm: sims[mm]["valeur"].tolist() for mm in (S.ACHAT, "HAR-RV", retenu)}       # pour les figures
+    res["_jours"] = [str(x) for x in jours]
     v = valide.to_numpy()
     un_jour = v[1:] & v[:-1]
     var = {"jours_exclus_non_valides": int((~un_jour).sum()),
@@ -461,17 +475,17 @@ def verifier(regles: dict) -> dict:
     entete = _preparer(regles, pli5)
     sortie = chaine(regles, pli5)
     sortie["verification"] = comparer_a_2024(sortie, regles)
-    for res in sortie["actifs"].values():
-        res["strategie"].pop("_expositions")
+    _sans_series(sortie)
     rapport = {"mode": "verification sur 2024 (pli 5), PAS le test final", **entete, **sortie}
     C.ecrire_texte(C.RACINE / regles["test_final"]["verification"], C.texte_json(rapport))
     return rapport
 
 
-def _chaine_sur_le_test_ouvert(regles: dict) -> dict:
-    """La seule fonction autorisée à lever la garde (voir src/garde.py)."""
+def _chaine_sur_le_test_ouvert(regles: dict, garder_series: bool = False) -> dict:
+    """La seule fonction autorisée à lever la garde (voir src/garde.py). Aucun modèle n'est modifié : ils sont
+    chargés depuis leurs fichiers, vérifiés par empreinte."""
     with G._ouverture_officielle():
-        return chaine(regles, R.decoupages(regles)[-1])
+        return chaine(regles, R.decoupages(regles)[-1], garder_series)
 
 
 def ouvrir(regles: dict) -> dict:
@@ -479,12 +493,124 @@ def ouvrir(regles: dict) -> dict:
     if chemin.exists():
         raise ErreurOuverture(f"Refusé : {chemin.name} existe déjà ; le test final ne s'ouvre qu'une fois.")
     entete = _preparer(regles, R.decoupages(regles)[-1])
-    sortie = _chaine_sur_le_test_ouvert(regles)
-    for res in sortie["actifs"].values():
-        res["strategie"].pop("_expositions")
+    sortie = _sans_series(_chaine_sur_le_test_ouvert(regles))
     rapport = {"mode": "test final", "ouvert_le": dt.datetime.now().isoformat(timespec="seconds"), **entete, **sortie}
     ecrire_exclusif(chemin, C.texte_json(rapport))
     return rapport
+
+
+# --- Figures du test (après l'ouverture) -----------------------------------------------------------------
+
+def verifier_resultats_publies(racine: Path, chemin_relatif: str) -> dict:
+    """Le fichier de résultats doit exister, être suivi par Git dans le commit poussé et ne pas avoir été modifié."""
+    chemin = racine / chemin_relatif
+    if not chemin.exists():
+        raise ErreurOuverture(f"Refusé : {chemin_relatif} n'existe pas (le test n'a pas été ouvert).")
+    if chemin_relatif not in _git(racine, "ls-tree", "-r", "--name-only", "HEAD", "--", chemin_relatif).splitlines():
+        raise ErreurOuverture(f"Refusé : {chemin_relatif} n'est pas dans le commit poussé ; publiez-le d'abord.")
+    if _git(racine, "status", "--porcelain", "--", chemin_relatif):
+        raise ErreurOuverture(f"Refusé : {chemin_relatif} a été modifié depuis sa publication.")
+    return json.loads(chemin.read_text(encoding="utf-8"))
+
+
+def ecarts_aux_resultats_publies(recalcule: dict, publie: dict) -> list[str]:
+    """Différences (au bit près, après passage par le même JSON) entre les agrégats recalculés et publiés."""
+    a = json.loads(C.texte_json({k: recalcule[k] for k in ("decoupage", "periode", "actifs", "hypotheses")}))
+    b = {k: publie[k] for k in ("decoupage", "periode", "actifs", "hypotheses")}
+    ecarts = []
+
+    def parcourir(x, y, chemin):
+        if isinstance(x, dict) and isinstance(y, dict):
+            for k in sorted(set(x) | set(y)):
+                if k not in x or k not in y:
+                    ecarts.append(f"{chemin}/{k} : clé absente")
+                else:
+                    parcourir(x[k], y[k], f"{chemin}/{k}")
+        elif isinstance(x, list) and isinstance(y, list) and len(x) == len(y):
+            for i, (u, v) in enumerate(zip(x, y)):
+                parcourir(u, v, f"{chemin}[{i}]")
+        elif x != y:
+            ecarts.append(f"{chemin} : {x} ≠ {y}")
+
+    parcourir(a, b, "")
+    return ecarts
+
+
+def _figures_test(sortie: dict, regles: dict) -> list[str]:
+    import matplotlib
+    matplotlib.use("Agg")
+    import math
+    import matplotlib.dates as mdates
+    import matplotlib.pyplot as plt
+    from matplotlib.ticker import FuncFormatter
+    import exploration as X
+    a = math.sqrt(regles["cible"]["annualisation_jours"])
+    ecrits = []
+    for actif, res in sortie["actifs"].items():
+        retenu, t = res["modele_retenu"], res["_table"]
+        dates = pd.to_datetime([str(j) for j in t["date_cible"]])
+        fig, ax = plt.subplots(figsize=(11, 5))
+        ax.plot(dates, np.exp(t["cible"]) * a, color="#999999", linewidth=0.6, label="RV réalisée")
+        ax.plot(dates, np.sqrt(t["HAR-RV"]) * a, color=X.COULEURS[actif], linewidth=1.0, label="Prévision HAR-RV")
+        ax.plot(dates, np.sqrt(t["HAR-J"]) * a, color="#16A34A", linewidth=0.9, alpha=0.85, label="Prévision HAR-J")
+        ax.plot(dates, np.sqrt(t[retenu]) * a, color="#7C3AED", linewidth=0.9, alpha=0.85, label=f"Prévision {retenu} (modèle retenu)")
+        ax.yaxis.set_major_formatter(X.FORMAT_POURCENT)
+        ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth=(1, 4, 7, 10)))
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda x, _p: mdates.num2date(x).strftime("%m/%Y")))
+        ax.set_ylabel("Volatilité annualisée")
+        ax.set_xlabel("Date de la cible (test final ; aucune crise définie sur cette période)")
+        ax.set_title(f"{X.NOMS[actif]} : test final, RV réalisée et prévisions à un jour")
+        ax.legend(loc="upper right")
+        ax.grid(alpha=0.3)
+        fig.tight_layout(rect=(0, 0.03, 1, 1))
+        chemin = C.RACINE / "figures" / f"figure_10_test_previsions_{actif}.png"
+        X._finir(fig, chemin)
+        ecrits.append(chemin.name)
+        s = res["strategie"]
+        jours = pd.to_datetime(s["_jours"])
+        couleurs = {S.ACHAT: "#999999", "HAR-RV": X.COULEURS[actif], retenu: "#7C3AED"}
+        fig, (h, b) = plt.subplots(2, 1, figsize=(11, 7), sharex=True, gridspec_kw={"height_ratios": [2, 1]})
+        for m, v in s["_valeurs"].items():
+            h.plot(jours, v, color=couleurs[m], linewidth=1.0, label=m if m != retenu else f"{m} (modèle retenu)")
+        h.set_yscale("log")
+        h.yaxis.set_major_formatter(FuncFormatter(lambda x, _p: X.nombre_fr_auto(round(x, 6))))
+        h.yaxis.set_minor_formatter(FuncFormatter(lambda x, _p: X.nombre_fr_auto(round(x, 6))))
+        h.set_ylabel("Valeur du portefeuille (départ 1, échelle log)")
+        h.legend(loc="upper left")
+        h.grid(alpha=0.3)
+        for m, e in s["_expositions"].items():
+            b.plot(jours, e, color=couleurs[m], linewidth=0.7, label=m if m != retenu else f"{m} (modèle retenu)")
+        b.set_ylim(-0.02, 1.05)
+        b.yaxis.set_major_formatter(X.FORMAT_POURCENT)
+        b.set_ylabel("Exposition")
+        b.legend(loc="lower left")
+        b.grid(alpha=0.3)
+        b.xaxis.set_major_locator(mdates.MonthLocator(bymonth=(1, 4, 7, 10)))
+        b.xaxis.set_major_formatter(FuncFormatter(lambda x, _p: mdates.num2date(x).strftime("%m/%Y")))
+        b.set_xlabel("Date (test final, frais de 0,10 % compris)")
+        h.set_title(f"{X.NOMS[actif]} : test final, volatility targeting, achat simple, HAR-RV et {retenu}")
+        fig.tight_layout(rect=(0, 0.03, 1, 1))
+        chemin = C.RACINE / "figures" / f"figure_11_test_strategie_{actif}.png"
+        X._finir(fig, chemin)
+        ecrits.append(chemin.name)
+    return ecrits
+
+
+def figures(regles: dict) -> dict:
+    """Figures du test : seulement si les résultats publiés sont intacts et si la chaîne recalculée les redonne exactement."""
+    C.verifier_secteur(contexte="figures du test")
+    T.configurer_torch(regles)
+    verifier_depot(C.RACINE)
+    publie = verifier_resultats_publies(C.RACINE, regles["test_final"]["resultats"])
+    verifier_fichiers(empreintes_attendues(regles, R.decoupages(regles)[-1]))
+    sortie = _chaine_sur_le_test_ouvert(regles, garder_series=True)
+    series = {a: {"_table": r.pop("_table"), "strategie": {k: r["strategie"][k] for k in ("_jours", "_valeurs", "_expositions")},
+                  "modele_retenu": r["modele_retenu"]} for a, r in sortie["actifs"].items()}
+    ecarts = ecarts_aux_resultats_publies(_sans_series(sortie), publie)
+    if ecarts:
+        raise ErreurOuverture(f"Refusé : la chaîne recalculée diffère des résultats publiés ({len(ecarts)} écarts, "
+                              f"premier : {ecarts[0]}). Aucune figure n'est produite.")
+    return {"ecarts_aux_resultats_publies": 0, "figures": _figures_test({"actifs": series}, regles)}
 
 
 def main(arguments: list[str]) -> int:
@@ -494,9 +620,12 @@ def main(arguments: list[str]) -> int:
         action = verifier
     elif arguments == ["--ouvrir"]:
         action = ouvrir
+    elif arguments == ["--figures"]:
+        action = figures
     else:
         print("Usage : python src/ouvrir_test.py --verification   (même chaîne sur 2024, sans ouvrir le test)\n"
-              "        python src/ouvrir_test.py --ouvrir         (ouvre le test final, UNE seule fois)")
+              "        python src/ouvrir_test.py --ouvrir         (ouvre le test final, UNE seule fois)\n"
+              "        python src/ouvrir_test.py --figures        (après l'ouverture : figures, si la chaîne redonne les résultats publiés)")
         return 2
     try:
         rapport = action(regles)
@@ -514,6 +643,9 @@ def main(arguments: list[str]) -> int:
                   f"gain sur HAR-J {100 * rapport['hypotheses']['prevision_har_j'][a]['gain']:.1f} %")
         print("Vérification " + ("CONFORME" if v["conforme"] else "NON CONFORME") + " (rapports/verification_test_2024.json).")
         return 0 if v["conforme"] else 1
+    if action is figures:
+        print(f"Chaîne recalculée identique aux résultats publiés (0 écart) ; figures : {', '.join(rapport['figures'])}.")
+        return 0
     print("Test final ouvert ; résultats dans rapports/test_final.json.")
     return 0
 

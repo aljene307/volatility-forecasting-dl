@@ -95,6 +95,32 @@ def test_manifestes_reels_complets_pour_le_test_final_et_le_pli_5():
     assert len(O.empreintes_attendues(REGLES, pli5)) == 2 * (5 * 3 + 1)
 
 
+# --- Figures après l'ouverture : résultats publiés intacts, chaîne identique ----------------------------
+
+def test_figures_refusees_si_resultats_absents_non_publies_ou_modifies(depot):
+    with pytest.raises(O.ErreurOuverture, match="n'existe pas"):
+        O.verifier_resultats_publies(depot, "rapports/test_final.json")
+    (depot / "rapports").mkdir()
+    (depot / "rapports" / "test_final.json").write_text('{"a": 1}\n', encoding="utf-8")
+    with pytest.raises(O.ErreurOuverture, match="pas dans le commit"):
+        O.verifier_resultats_publies(depot, "rapports/test_final.json")
+    _git(depot, "add", ".")
+    _git(depot, "commit", "-m", "résultats")
+    assert O.verifier_resultats_publies(depot, "rapports/test_final.json") == {"a": 1}
+    (depot / "rapports" / "test_final.json").write_text('{"a": 2}\n', encoding="utf-8")
+    with pytest.raises(O.ErreurOuverture, match="modifié"):
+        O.verifier_resultats_publies(depot, "rapports/test_final.json")
+
+
+def test_ecarts_aux_resultats_publies_nuls_puis_temoin_detecte():
+    publie = {"decoupage": "test final", "periode": ["a", "b"], "actifs": {"X": {"qlike": 0.1234567890123}},
+              "hypotheses": {"H1": {"X": {"confirmee": True}}}}
+    recalcule = {**publie, "autre": 1}
+    assert O.ecarts_aux_resultats_publies(recalcule, publie) == []
+    modifie = {**publie, "actifs": {"X": {"qlike": 0.1234567890124}}}
+    assert O.ecarts_aux_resultats_publies(modifie, publie) != []
+
+
 # --- Verdicts : H7 (modèle retenu contre HAR-J, Holm sur les 2 actifs) -----------------------------
 
 def _sortie_synthetique(decalage_retenu: dict) -> dict:
@@ -164,7 +190,7 @@ def test_temoin_fonction_du_meme_nom_ailleurs_refusee():
 
 def test_la_porte_s_ouvre_seulement_dans_la_fonction_prevue_puis_se_referme(monkeypatch):
     """Témoin positif, sans aucune donnée : la chaîne est remplacée par un faux calcul sur des dates de 2025."""
-    def fausse_chaine(regles, decoupage):
+    def fausse_chaine(regles, decoupage, garder_series=False):
         G.refuser_si_test([D("2025-03-01")], "faux calcul")        # passerait seulement si la porte est ouverte
         return {"ok": True}
     monkeypatch.setattr(O, "chaine", fausse_chaine)
@@ -179,6 +205,8 @@ def test_seul_ouvrir_test_utilise_la_porte():
 
 
 def test_sans_option_explicite_rien_ne_s_ouvre(capsys):
+    chemin = RACINE / REGLES["test_final"]["resultats"]
+    avant = chemin.read_bytes() if chemin.exists() else None        # depuis l'ouverture (2026-11-19), le fichier existe
     assert O.main([]) == 2 and O.main(["--ouvrir-maintenant"]) == 2
     assert "Usage" in capsys.readouterr().out
-    assert not (RACINE / REGLES["test_final"]["resultats"]).exists()
+    assert (chemin.read_bytes() if chemin.exists() else None) == avant
