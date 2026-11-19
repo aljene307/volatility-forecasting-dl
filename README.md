@@ -78,6 +78,10 @@ Précisions datées du 2026-11-19 pour l'explicabilité, écrites et commitées 
 
 - SHAP sur XGBoost, le LSTM et le modèle retenu de chaque actif (GradientExplainer pour les réseaux, TreeExplainer pour XGBoost) ; attention du Transformer et du TFT ; règle de fidélité précisée, avec un témoin ; limite : l'attention montre où le modèle regarde, pas nécessairement pourquoi il décide.
 
+Précisions datées du 2026-11-19, écrites AVANT l'ouverture du test final (section 17 des [règles](docs/REGLES.md)) :
+
+- modèle descriptif HAR-J (HAR-RV + jour de la semaine de la cible) ; [attentes du test final](docs/ATTENTES_TEST.md) (hypothèses H1 à H6 et prévision chiffrée) ; un seul chemin d'ouverture, avec ses préconditions et un mode de vérification sur 2024.
+
 Sensibilité descriptive du 2026-11-19, décidée APRÈS avoir vu les gains par année (détails dans le [journal des choix](docs/CHOIX.md)) :
 
 - gain sur HAR-RV et Diebold-Mariano (p-valeurs brutes et ajustées par Holm) sans 2024, et calibration de HAR-RV par année ; sans effet sur le classement ni la sélection.

@@ -485,6 +485,16 @@ def verifier_coherence(regles: dict) -> None:
            "strategie.precisions.date_precisions_strategie doit être 2026-11-19.")
     exiger(sp.get("jour_non_valide") == "pas_de_decision" and sp.get("exposition_initiale") == 0.0,
            "Stratégie : aucune décision un jour non valide ; exposition initiale nulle.")
+    hj = regles.get("modeles", {}).get("har_j", {})
+    exiger(hj.get("role") == "descriptif" and hj.get("jour_reference") == 0,
+           "HAR-J : modèle descriptif (hors sélection et hors Holm principal), lundi en référence.")
+    tf = regles.get("test_final", {})
+    exiger(tf.get("seul_chemin_d_ouverture") == "src/ouvrir_test.py" and tf.get("reentrainement") is False
+           and tf.get("resultats") != tf.get("verification"),
+           "Test final : un seul chemin d'ouverture, aucun réentraînement, vérification dans un fichier différent.")
+    exiger(set(tf.get("preconditions", [])) >= {"depot_propre", "commit_local_egal_origin_main", "attentes_dans_le_commit_pousse",
+                                                 "empreintes_des_modeles_verifiees"},
+           "Test final : les quatre préconditions d'ouverture sont obligatoires.")
     xp = regles.get("explicabilite", {}).get("precisions", {})
     exiger(xp.get("date_precisions_explicabilite") == dt.date(2026, 11, 19),
            "explicabilite.precisions.date_precisions_explicabilite doit être 2026-11-19.")

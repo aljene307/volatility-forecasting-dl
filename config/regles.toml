@@ -318,6 +318,26 @@ combinaisons_communes_aux_actifs = true    # les mêmes 12 combinaisons pour BTC
 normalisation = false                      # sans effet sur un arbre
 arret_anticipe = "validation_interne_de_chaque_decoupage"
 
+[modeles.har_j]                            # précision datée du 2026-11-19, déclarée AVANT l'ouverture du test final
+date_declaration = 2026-11-19
+role = "descriptif"                        # hors de la règle de sélection et hors de la famille de Holm principale
+variables = "HAR-RV + 6 indicatrices du jour de la semaine de la CIBLE"
+jour_reference = 0                         # lundi : modalité de référence (sans indicatrice)
+ajustement = "moindres_carres_sur_la_fenetre_d_ajustement"  # comme HAR-RV
+s2 = "validation_interne"                  # comme HAR-RV
+raison = "l'explicabilité montre que les réseaux s'appuient sur le jour de la semaine, que HAR-RV n'utilise pas"
+
+[test_final]                               # précisions datées du 2026-11-19, écrites AVANT l'ouverture du test final
+date_precisions_test = 2026-11-19
+attentes = "config/attentes_test.toml"     # avec docs/ATTENTES_TEST.md ; doivent être dans le commit poussé
+seul_chemin_d_ouverture = "src/ouvrir_test.py"
+resultats = "rapports/test_final.json"     # création exclusive : refus si le fichier existe
+verification = "rapports/verification_test_2024.json"  # même chaîne sur 2024 (pli 5), modèles du pli 5
+verification_tolerance = 1e-9
+preconditions = ["depot_propre", "commit_local_egal_origin_main", "attentes_dans_le_commit_pousse", "empreintes_des_modeles_verifiees"]
+donnees_coupees_apres = "fin_de_la_periode_evaluee"  # aucune bougie postérieure n'entre dans le calcul
+reentrainement = false                     # modèles du découpage du test final, chargés et vérifiés par empreinte
+
 [modeles.transformer]
 type = "encodeur"                          # encodeur seul
 implementation = "manuelle"                # codé à la main, sans modèle tout prêt

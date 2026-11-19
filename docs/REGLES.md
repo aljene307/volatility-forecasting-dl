@@ -302,3 +302,16 @@ Espaces :
 | Fidélité (règle d'origine, précisée) | sur la validation interne de chaque pli : la variable la mieux classée et la moins bien classée par SHAP (importance du pli) sont permutées entre les jours (la variable entière, sur ses 30 jours), 20 répétitions, graine 42 ; prévision = moyenne des log des 3 graines avec le s² de la validation sans permutation ; dégradation = QLIKE moyen permuté − QLIKE sans permutation ; fidèle si la meilleure dégrade plus que la moins bonne ; conclusion « fidèle sur k plis sur 5 » | Vérifier que le classement SHAP correspond au comportement réel du modèle. |
 | Témoin de fidélité | une variable de bruit pur ajoutée à un petit modèle sur données synthétiques doit être classée dernière, et sa permutation doit dégrader le QLIKE de moins de 1 % de la dégradation due à la meilleure variable | Montrer que la méthode sait reconnaître une variable inutile. |
 | Limite | l'attention montre où le modèle regarde, pas nécessairement pourquoi il décide | Une attention forte n'est pas une preuve de cause. |
+
+## 17. HAR-J et ouverture du test final (précisions datées du 2026-11-19, écrites AVANT l'ouverture)
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| HAR-J | HAR-RV + 6 indicatrices du jour de la semaine de la CIBLE (lundi en référence) ; mêmes règles que HAR-RV (moindres carrés sur la fenêtre d'ajustement, s² sur la validation interne) ; modèle descriptif, hors de la règle de sélection et hors de la famille de Holm principale ; son modèle du test final est entraîné et son empreinte enregistrée | L'explicabilité montre que les réseaux s'appuient sur le jour de la semaine, que HAR-RV n'utilise pas : HAR-J mesure ce que ce seul ajout apporte à HAR-RV. |
+| Attentes | hypothèses H1 à H6 et prévision chiffrée dans `config/attentes_test.toml` et `docs/ATTENTES_TEST.md`, commitées et poussées avant l'ouverture | Juger le test sur des attentes fixées d'avance. |
+| Seul chemin d'ouverture | `src/ouvrir_test.py` ; la garde du test aveugle reste active partout ailleurs (vérifié par un test) | Une seule porte, contrôlée. |
+| Préconditions | dépôt propre ; commit local égal à origin/main ; fichiers des attentes dans le commit poussé ; empreintes de tous les modèles du test final et des normalisations vérifiées avant toute prévision | Le test ne peut être ouvert qu'avec un code et des attentes publiés, et avec les modèles exacts. |
+| Modèles | ceux du découpage du test final, chargés tels quels, sans aucun réentraînement | Aucune décision n'est prise après avoir vu le test. |
+| Données | coupées à la fin de la période évaluée | Aucune bougie postérieure n'entre dans le calcul. |
+| Résultats | `rapports/test_final.json`, en création exclusive (refus si le fichier existe), avec l'identifiant du commit du code | Le test ne peut pas être recalculé en silence. |
+| Vérification | mode `--verification` : exactement la même chaîne, sur 2024 (pli 5) avec les modèles du pli 5, écrite dans `rapports/verification_test_2024.json` ; elle doit redonner les chiffres déjà publiés pour 2024 (écart nul ou inférieur à 1e-9) | Prouver que la chaîne calcule juste avant de l'appliquer au test. |

@@ -1,0 +1,61 @@
+# Attentes du test final, écrites et commitées AVANT son ouverture (2026-11-19).
+# Lues par src/ouvrir_test.py, qui refuse d'ouvrir le test si ce fichier n'est pas dans le commit poussé.
+# Version lisible : docs/ATTENTES_TEST.md.
+
+date_ecriture = 2026-11-19
+periode_test = [2025-01-01, 2026-10-31]          # dates de cible
+publication = "tous les résultats sont publiés, quels qu'ils soient"
+rectification = "tout bug découvert après l'ouverture est corrigé par une rectification datée ; les deux versions sont publiées"
+
+[modele_retenu]                                  # par la règle de sélection sur le développement (QLIKE moyen par pli)
+BTCUSDT = "Transformer"
+ETHUSDT = "CNN-LSTM"
+
+[conditions]
+modeles = "modèles du découpage du test final (ajustement jusqu'au 2024-06-30), chargés et vérifiés par empreinte, sans réentraînement"
+s2 = "mesuré sur la validation interne du découpage du test final (2024-07-01 à 2024-12-31)"
+prevision_modele_regle = "moyenne des log des 3 graines"
+strategie = "mêmes règles que sur le développement ; exposition initiale nulle au début du test"
+crises = "aucune crise n'est définie dans la période du test : rien à rapporter"
+qlike_moyen = "QLIKE moyen sur tous les jours du test (une seule période)"
+
+[H1]
+type = "principale"
+enonce = "pour chaque actif, QLIKE(modèle retenu) < QLIKE(HAR-RV) sur le test"
+test = "Diebold-Mariano bilatéral, d = QLIKE(modèle retenu) − QLIKE(HAR-RV), Newey-West, Harvey-Leybourne-Newbold, Student à T − 1"
+ajustement = "Holm sur les 2 actifs"
+seuil = 0.05
+confirmee_si = "moyenne de d < 0 et p-valeur ajustée < 0,05 (jugée pour chaque actif)"
+
+[H2]
+enonce = "QLIKE(HAR-RV) < QLIKE(persistance)"
+jugee_sur = "QLIKE moyen du test, pour chaque actif ; Diebold-Mariano rapporté à titre descriptif"
+
+[H3]
+enonce = "QLIKE(GARCH(1,1)) > QLIKE(HAR-RV)"
+jugee_sur = "QLIKE moyen du test, pour chaque actif ; Diebold-Mariano rapporté à titre descriptif"
+
+[H4]
+enonce = "la VaR à 1 jour à 95 % de HAR-RV n'est pas rejetée par le test de Kupiec (p-valeur > 0,05)"
+jugee_sur = "pour chaque actif"
+seuil = 0.05
+
+[H5]
+enonce = "la stratégie du modèle retenu a une volatilité réalisée et un drawdown maximal plus faibles que l'achat simple"
+jugee_sur = "pour chaque actif : volatilité réalisée plus basse ET drawdown maximal moins profond (frais de 0,10 %)"
+
+[H6]
+type = "descriptive"
+enonce = "le gain du modèle retenu sur HAR-J est plus faible que son gain sur HAR-RV"
+jugee_sur = "gains relatifs en QLIKE moyen du test, pour chaque actif"
+
+[prevision]
+texte = "gain attendu du modèle retenu sur HAR-RV entre 0 % et 15 % ; significativité incertaine (elle disparaissait sans 2024 sur le développement)"
+gain_definition = "(QLIKE de HAR-RV − QLIKE du modèle retenu) / QLIKE de HAR-RV, sur tous les jours du test"
+gain_min = 0.0
+gain_max = 0.15
+
+[descriptif]
+famille_holm_7 = "les 7 comparaisons contre HAR-RV de chaque actif (GARCH, XGBoost, 5 réseaux) sont aussi rapportées, brutes et ajustées par Holm sur 7, à titre descriptif"
+har_j = "HAR-J (HAR-RV + jour de la semaine de la cible) : descriptif, hors sélection et hors Holm principal"
+autres = "métriques et intervalles bootstrap de tous les modèles, stratégie et VaR de tous les modèles"
