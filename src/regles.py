@@ -473,6 +473,14 @@ def verifier_coherence(regles: dict) -> None:
            "Diebold-Mariano : différence QLIKE(modèle) − QLIKE(HAR-RV), test bilatéral.")
     exiger(ev.get("bootstrap", {}).get("blocs") == "mobiles", "Bootstrap par blocs mobiles.")
 
+    # Précision du 2026-11-19, écrite avant de lire les résultats du deep learning
+    tm = ev.get("tests_multiples", {})
+    exiger(tm.get("date_tests_multiples") == dt.date(2026, 11, 19),
+           "evaluation.tests_multiples.date_tests_multiples doit être 2026-11-19.")
+    exiger(tm.get("methode") == "holm" and tm.get("significatif_selon") == "p_valeur_ajustee"
+           and tm.get("p_valeurs_rapportees") == "brutes_et_ajustees",
+           "Tests multiples : ajustement de Holm ; p-valeurs brutes et ajustées ; « significatif » selon la p-valeur ajustée.")
+
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))
 

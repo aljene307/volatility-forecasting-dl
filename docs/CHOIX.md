@@ -465,3 +465,22 @@ Le code (`src/entrainer.py`, `src/reseaux.py`, `src/suivi.py`) est construit, te
 - Premier découpage (448 exemples d'ajustement pour BTC) : temps par époque de 0,09 s (LSTM) à 4,28 s (TFT), tous sous la mesure.
 - Plus grand découpage (modèle du test final, 2 257 exemples d'ajustement), 2e époque, BTC, avec la combinaison de l'essai : LSTM 0,23 s, GRU 0,59 s, CNN-LSTM 0,83 s, Transformer 1,74 s, TFT 9,66 s. Mesures sur données aléatoires (2 441 exemples, configuration médiane) : 0,73 ; 2,21 ; 0,96 ; 2,30 ; 8,16 s.
 - Lecture : sur le plus grand découpage, seul le TFT dépasse la mesure (+18 %) ; les autres découpages sont plus petits. Le risque principal pour la règle de suivi est un TFT qui s'entraîne longtemps (jusqu'à 200 époques) avec une grande combinaison.
+
+## 2026-11-19 — Précision écrite avant de lire les résultats du deep learning, et limites du réglage
+
+La phase B (réglage, puis plis) est terminée. Cette entrée est écrite et commitée AVANT toute lecture des résultats du deep learning sur les plis (aucune prévision, aucune métrique des plis n'a été regardée). Le test final reste fermé.
+
+### Précision : tests multiples (méthode de Holm)
+
+- Par actif, 7 modèles sont comparés à HAR-RV (GARCH, XGBoost, LSTM, GRU, CNN-LSTM, Transformer, TFT). Avec 7 tests au seuil de 5 %, un résultat « significatif » peut apparaître par hasard bien plus souvent qu'une fois sur 20.
+- Les p-valeurs de Diebold-Mariano sont donc rapportées brutes ET ajustées par la méthode de Holm, sur la famille des 7 comparaisons contre HAR-RV de chaque actif (plis réunis). Les phrases « significatif » de la lecture des résultats s'appuient sur les p-valeurs ajustées (`evaluation.tests_multiples` dans `config/regles.toml`, section 13 des règles).
+- Décision prise seul (à valider) : le test descriptif de HAR-RV contre la persistance reste hors de la famille, puisqu'il est descriptif et ne compare pas un modèle à HAR-RV. Le test final n'est pas concerné par cette précision : sa règle sera écrite avant son ouverture.
+- Les p-valeurs des baselines déjà publiées dans `docs/RESULTATS_BASELINES.md` restent brutes (3 tests à l'époque) ; leurs valeurs ajustées sur la famille de 7 tests figureront dans la comparaison de tous les modèles.
+- Décision prise seul (à valider) : `rapports/baselines.json` et `rapports/exploration.json` citent l'empreinte de `config/regles.toml` d'avant cette précision. Ils ne sont pas recalculés : l'empreinte citée est celle des règles en vigueur au moment de leur calcul, et la précision n'ajoute qu'une section sans effet sur eux.
+
+### Limites du réglage (constatées à la lecture de `reglage.json`, avant les plis)
+
+- **Une seule graine par combinaison** : le choix de la combinaison est en partie dû au hasard de l'entraînement. Les écarts entre la 1re et la 2e combinaison sont parfois minuscules en MSE de validation sur log(RV) : Transformer ETH 0,1050 contre 0,1051 ; Transformer BTC 0,1057 contre 0,1061 ; LSTM ETH 0,1101 contre 0,1106. Une autre graine pourrait inverser ces classements.
+- **Combinaisons au bord des espaces de recherche** : dropout 0,3 (le maximum) retenu 8 fois sur 10, sans être systématiquement le meilleur (des tirages à 0,3 se classent aussi 11e ou 12e sur 12) ; taux d'apprentissage du LSTM et du GRU sur BTC à 97 % de l'intervalle en échelle log (près de 3e-3) ; taille maximale retenue pour le TFT (hidden_size 32) et le CNN-LSTM (64 neurones, 32 filtres) sur les deux actifs. Piste d'amélioration : des espaces plus larges. Les espaces ne sont PAS modifiés (ils sont écrits d'avance).
+- Aucune MSE NaN ; aucune meilleure époque inférieure à 6 ; aucune unité au plafond de 200 époques.
+- Durée réelle du réglage : 54,5 min contre 9,6 h estimées (rapport 0,095). L'estimation supposait 100 époques par unité (67 en moyenne en réalité) et des temps mesurés sur 2 441 exemples (448 dans le premier découpage).

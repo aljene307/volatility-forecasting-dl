@@ -254,3 +254,11 @@ Espaces :
 | Modèles du test final | entraînés et enregistrés (dossier ignoré par Git, empreintes dans un manifeste), sans AUCUNE prévision sur le test | Le test reste fermé. |
 | Sorties journalières | prévisions jour par jour, unités de reprise et modèles dans `sorties/`, ignoré par Git, jamais commité | Règle de licence : aucune série journalière dérivée dans le dépôt. |
 | Test de l'avenir modifié des prévisions | pour la persistance, HAR-RV, GARCH et XGBoost : toutes les données après J sont modifiées (facteur 10 avec bruit) ; les prévisions des origines ≤ J doivent rester identiques au bit près ; témoin : un GARCH dont la variance de départ est calculée sur toute la série doit être détecté | Prouver qu'aucune prévision n'utilise l'avenir. |
+
+## 13. Tests multiples (précision datée du 2026-11-19, écrite AVANT de lire les résultats du deep learning)
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Ajustement | méthode de Holm, appliquée par actif à toutes les comparaisons contre HAR-RV sur les plis réunis : GARCH, XGBoost, LSTM, GRU, CNN-LSTM, Transformer et TFT, soit 7 tests ; le test descriptif de HAR-RV contre la persistance n'en fait pas partie | Avec 7 tests au seuil de 5 %, la probabilité d'au moins un « significatif » dû au hasard dépasse nettement 5 %. Holm la ramène à 5 % au plus, sans hypothèse sur la dépendance entre les tests. |
+| Méthode de Holm | les p-valeurs sont rangées de la plus petite à la plus grande ; la k-ième (k = 1 à m) est multipliée par (m − k + 1) ; on garde la plus grande valeur rencontrée jusque-là, plafonnée à 1 | Méthode standard, plus puissante que Bonferroni, fixée avant de voir un résultat. |
+| Rapport | les p-valeurs brutes ET ajustées sont rapportées ; les phrases « significatif » de la lecture des résultats s'appuient sur les p-valeurs AJUSTÉES | Les deux restent visibles, mais la conclusion tient compte du nombre de tests. |

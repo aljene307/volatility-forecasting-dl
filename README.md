@@ -60,6 +60,10 @@ Précision et rectification datées du 2026-11-16, décidées APRÈS avoir vu le
 - QLIKE moyen de la règle de sélection : les deux définitions (tous les jours réunis, moyenne des moyennes par pli) sont rapportées ; si elles diffèrent, la moyenne des moyennes par pli s'applique ;
 - rectification de l'exception 2 : l'affirmation selon laquelle le biais de s² désavantage les modèles réglés n'est vérifiée que pour les plis 1 à 3 ; dans les plis 4 et 5, XGBoost prévoit trop haut sur la validation interne (valeurs dans les [résultats des baselines](docs/RESULTATS_BASELINES.md)) ; l'affirmation est retirée. Explication probable, non démontrée : un modèle à arbres ne peut pas prévoir sous les valeurs vues à l'apprentissage, et ces validations tombent sur des périodes calmes.
 
+Précision datée du 2026-11-19, écrite AVANT de lire les résultats du deep learning (section 13 des [règles](docs/REGLES.md)) :
+
+- tests multiples : les p-valeurs de Diebold-Mariano contre HAR-RV (GARCH, XGBoost et les 5 réseaux, par actif) sont rapportées brutes et ajustées par la méthode de Holm ; « significatif » s'appuie sur la p-valeur ajustée.
+
 Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
 
 - ligne journalière (ouverture, plus haut, plus bas, clôture, volume en USDT) et formules exactes des variables (RV moyennes, Parkinson, Garman-Klass, RSI de Wilder, MACD divisé par la clôture, largeur de Bollinger) ;

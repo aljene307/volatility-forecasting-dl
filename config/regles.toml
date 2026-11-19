@@ -356,6 +356,14 @@ variance_long_terme = "newey_west_bartlett"
 loi = "student_T_moins_1"
 bilateral = true
 
+[evaluation.tests_multiples]                # précision datée du 2026-11-19, écrite AVANT de lire les résultats du deep learning
+date_tests_multiples = 2026-11-19
+methode = "holm"                           # ajustement de Holm des p-valeurs (plusieurs comparaisons contre HAR-RV)
+famille = "toutes_les_comparaisons_contre_har_rv_de_l_actif"  # GARCH, XGBoost et les 5 réseaux : 7 tests par actif
+famille_portee = "plis_reunis"             # tests principaux du développement ; la persistance (descriptive) n'en fait pas partie
+p_valeurs_rapportees = "brutes_et_ajustees"
+significatif_selon = "p_valeur_ajustee"    # les phrases « significatif » de la lecture des résultats
+
 [evaluation.bootstrap]
 niveau_confiance = 0.95                    # intervalles de confiance à 95 %
 methode = "blocs"                          # bootstrap par blocs (garde la dépendance temporelle)
