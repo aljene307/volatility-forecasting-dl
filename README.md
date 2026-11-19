@@ -28,6 +28,7 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 - Étape 5 — Baselines sur le développement (persistance, HAR-RV, GARCH, XGBoost ; 5 plis annuels) : [résultats](docs/RESULTATS_BASELINES.md) ; figures : [BTC](figures/figure_4_previsions_BTCUSDT.png), [ETH](figures/figure_4_previsions_ETHUSDT.png). Le test final reste fermé.
 - Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT ; entraînement `src/entrainer.py`, suivi `src/suivi.py`) : [comparaison de tous les modèles](docs/RESULTATS_DL.md) (`src/comparer.py`) ; figures : [BTC](figures/figure_5_deep_learning_BTCUSDT.png), [ETH](figures/figure_5_deep_learning_ETHUSDT.png) ; empreintes des poids : [manifeste](rapports/modeles_deep_learning.json). Le test final reste fermé.
 - Étape 7 — Stratégie de volatility targeting sur le développement (`src/strategie.py`) : [résultats](docs/STRATEGIE.md) ; figures : [BTC](figures/figure_6_strategie_BTCUSDT.png), [ETH](figures/figure_6_strategie_ETHUSDT.png). Le test final reste fermé.
+- Étape 8 — Explicabilité sur le développement (SHAP, attention, fidélité ; `src/explicabilite.py`) : [résultats](docs/EXPLICABILITE.md) ; figures : importance des variables ([BTC](figures/figure_7_importance_variables_BTCUSDT.png), [ETH](figures/figure_7_importance_variables_ETHUSDT.png)), importance par retard ([BTC](figures/figure_8_importance_retards_BTCUSDT.png), [ETH](figures/figure_8_importance_retards_ETHUSDT.png)), [attention du Transformer](figures/figure_9_attention_transformer.png). Le test final reste fermé.
 
 ## Règles et exceptions
 
