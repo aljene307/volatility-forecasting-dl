@@ -1,0 +1,124 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "fichiers_onnx": [
+        "BTCUSDT_Transformer_graine_0.onnx",
+        "BTCUSDT_Transformer_graine_1.onnx",
+        "BTCUSDT_Transformer_graine_2.onnx"
+      ],
+      "modele": "Transformer",
+      "normalisation": {
+        "cible_ecart_type": 0.5461015041003746,
+        "cible_moyenne": -3.6213077995038354,
+        "ecarts_types": [
+          0.021494254344269645,
+          0.01688679397583938,
+          0.014344742125709867,
+          0.5589984673347708,
+          0.4593991565076901,
+          0.39561866720282957,
+          0.0038656202506968528,
+          0.003673359275906779,
+          0.03625104382375273,
+          1.2043138143282772,
+          14.06415770897929,
+          0.012754319335689102,
+          0.1440130110149343
+        ],
+        "moyennes": [
+          0.03221601184202455,
+          0.03226401390697617,
+          0.03266362742187307,
+          -3.5966947826343203,
+          -3.54362010984747,
+          -3.5031242578281043,
+          0.0014465660107978128,
+          0.0014985567220083618,
+          0.0007213821878294824,
+          20.67610571187994,
+          52.11061030902237,
+          0.00016892439201076826,
+          0.22666909605152977
+        ]
+      },
+      "s2": 0.063149350000674,
+      "validation_interne": [
+        "2024-07-01",
+        "2024-12-31"
+      ],
+      "vol_cible_annuelle": 0.5726055649405059
+    },
+    "ETHUSDT": {
+      "fichiers_onnx": [
+        "ETHUSDT_CNN-LSTM_graine_0.onnx",
+        "ETHUSDT_CNN-LSTM_graine_1.onnx",
+        "ETHUSDT_CNN-LSTM_graine_2.onnx"
+      ],
+      "modele": "CNN-LSTM",
+      "normalisation": {
+        "cible_ecart_type": 0.5325016920129342,
+        "cible_moyenne": -3.377467732624958,
+        "ecarts_types": [
+          0.02582432091391694,
+          0.020239820597748044,
+          0.016689888039762044,
+          0.5388535020288492,
+          0.45133814391534827,
+          0.39271113407791525,
+          0.005759823527147404,
+          0.005503531589243694,
+          0.047028710469273184,
+          1.4421477561874878,
+          13.425701795621139,
+          0.017310224362545142,
+          0.1827037473781223
+        ],
+        "moyennes": [
+          0.04034376666818136,
+          0.04039689407683955,
+          0.040819409718673344,
+          -3.3600397156947133,
+          -3.3133015779050723,
+          -3.2755544894169266,
+          0.002351550826889913,
+          0.002413937495297562,
+          0.0004500824978456843,
+          19.68258983687117,
+          51.35681040391151,
+          4.03567700741339e-05,
+          0.2948101352442856
+        ]
+      },
+      "s2": 0.05945229132936443,
+      "validation_interne": [
+        "2024-07-01",
+        "2024-12-31"
+      ],
+      "vol_cible_annuelle": 0.7388521034746547
+    }
+  },
+  "annualisation_jours": 365,
+  "description": "Paramètres des modèles servis par l'API (découpage du test final).",
+  "exposition_max": 1.0,
+  "exposition_min": 0.0,
+  "jour_semaine": "one-hot de 7 colonnes après les variables, lundi = 0",
+  "licence": "CC BY-NC-SA 4.0 (œuvre dérivée) ; Données : Binance Vision",
+  "longueur_sequence": 30,
+  "var_niveau": 0.95,
+  "var_quantile": 1.6448536269514715,
+  "variables": [
+    "rv_1",
+    "rv_7",
+    "rv_30",
+    "log_rv_1",
+    "log_rv_7",
+    "log_rv_30",
+    "parkinson",
+    "garman_klass",
+    "log_rendement",
+    "log_volume",
+    "rsi_14",
+    "macd_histogramme_relatif",
+    "bollinger_largeur_relative"
+  ]
+}

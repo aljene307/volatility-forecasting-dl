@@ -1,0 +1,13 @@
+{
+  "description": "Empreintes SHA-256 des fichiers servis par l'API, vérifiées à son démarrage.",
+  "fichiers": {
+    "BTCUSDT_Transformer_graine_0.onnx": "67e9463bcf8733651fbd1d3e70f6e005f02489766ae19162c923a6b3af0d17db",
+    "BTCUSDT_Transformer_graine_1.onnx": "119753418657f0dd0f747daafd7b75e42e0812ea598f823648723123a7f304b0",
+    "BTCUSDT_Transformer_graine_2.onnx": "d6c7ab93833c1fe5a3e1f640cf564acff564163c766e66ac0b3cb969cc7bdee8",
+    "ETHUSDT_CNN-LSTM_graine_0.onnx": "e2996519abb6b1a4b639d9d2be10240456eab52cf9c93dc9d88d5fc09b375dcf",
+    "ETHUSDT_CNN-LSTM_graine_1.onnx": "a28a9d16aed71967674c0b976e256ad6dda0112b32c702921d31b82fdd70b35c",
+    "ETHUSDT_CNN-LSTM_graine_2.onnx": "d006a4ddd40c34b0e09a88a7976bd73054ad3415870fa7ae10c59dba3a4b73ab",
+    "parametres.json": "6644d193f355758c8b55bc595a14e3f7ca7c96a778eeba6643e732f7ec0d80e6"
+  },
+  "licence": "CC BY-NC-SA 4.0 (œuvre dérivée) ; Données : Binance Vision"
+}

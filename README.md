@@ -13,7 +13,7 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 - Le code de ce dépôt est sous licence MIT (le code seul).
 - Tout ce qui est dérivé des données (graphiques, résultats, modèles entraînés, fichiers ONNX) est sous licence CC BY-NC-SA 4.0, avec la mention « Données : Binance Vision ».
 - Aucune donnée brute ni aucune série journalière dérivée n'est stockée dans ce dépôt. Seuls sont commités les manifestes (noms, tailles et empreintes SHA-256 des fichiers) et le rapport de qualité, qui ne contient que des comptages.
-- API et application : décision reportée à cette étape ; par défaut, seuls des résultats agrégés et des graphiques seront exposés, jamais un flux de données.
+- API : elle ne télécharge et ne diffuse aucune donnée Binance ; l'utilisateur fournit lui-même ses données, et l'exemple de démonstration est synthétique (voir la section « API »).
 - Pour reconstruire les données : `src/telecharger.py`, puis `src/convertir.py`, puis `src/qualite.py`, puis `src/variables.py`, puis `src/exploration.py`.
 
 ## Documentation
@@ -53,6 +53,29 @@ Test ouvert une seule fois le 2026-11-19 (code du commit `f5259b6`), sur les dat
   - BTC : HAR-J fait 9,9 % de mieux que HAR-RV ; le modèle retenu (Transformer) fait 13,6 % de mieux que HAR-RV, mais seulement 4,2 % de mieux que HAR-J. Le jour de la semaine de la cible, ajouté seul à HAR-RV, comble 72 % de l'écart entre HAR-RV et le modèle retenu.
   - ETH : HAR-J fait 7,5 % de mieux que HAR-RV ; le modèle retenu (CNN-LSTM) fait 15,4 % de mieux que HAR-RV, mais seulement 8,6 % de mieux que HAR-J. Le jour de la semaine de la cible, ajouté seul à HAR-RV, comble 49 % de l'écart entre HAR-RV et le modèle retenu.
 <!-- fin du bloc généré par src/comparer.py : HAR-J -->
+
+## API (lancement en local sous Windows)
+
+L'API (`api/app.py`) sert les modèles retenus du test final (Transformer pour BTC, CNN-LSTM pour ETH, 3 graines chacun) au format ONNX, sans torch ni pandas. Elle reçoit 30 jours consécutifs des 13 variables du projet (non normalisées) et le jour de la semaine du dernier jour (lundi = 0), et renvoie la volatilité prévue du lendemain (journalière et annualisée), l'exposition de la stratégie et la VaR à 1 jour à 95 %. **Elle ne télécharge et ne diffuse aucune donnée Binance** : les données viennent de l'utilisateur. Les fichiers ONNX et leurs paramètres (`api/modeles/`) sont des œuvres dérivées sous licence CC BY-NC-SA 4.0 (Données : Binance Vision) ; leurs empreintes sont vérifiées au démarrage.
+
+Dans PowerShell, depuis le dossier du projet :
+
+```powershell
+# 1. Dépendances de l'API (déjà présentes dans le .venv du projet)
+.venv\Scripts\python -m pip install -r requirements-api.txt
+
+# 2. Lancer l'API (laisser cette fenêtre ouverte)
+.venv\Scripts\python -m uvicorn api.app:app --port 8000
+
+# 3. Dans une deuxième fenêtre PowerShell : état de l'API
+Invoke-RestMethod http://127.0.0.1:8000/health
+
+# 4. Prévision avec l'exemple de démonstration SYNTHÉTIQUE (valeurs tirées au hasard, aucune donnée de marché)
+$corps = (Get-Content api\exemple_synthetique.json -Raw -Encoding UTF8 | ConvertFrom-Json).requete | ConvertTo-Json -Depth 5
+Invoke-RestMethod -Uri http://127.0.0.1:8000/prevoir -Method Post -ContentType "application/json" -Body $corps
+```
+
+La documentation interactive est à l'adresse http://127.0.0.1:8000/docs. Une requête invalide renvoie une erreur 422 en français, champ par champ (par exemple « jours[5].rv_7 : valeur manquante »). Export des modèles : `src/exporter_onnx.py` ; mesure de la mémoire et du temps de réponse : `api/mesurer.py`.
 
 ## Règles et exceptions
 

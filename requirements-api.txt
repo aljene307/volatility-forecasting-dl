@@ -1,0 +1,22 @@
+# API légère (api/app.py) : sans torch ni pandas.
+# Paquets de l'API et toutes leurs dépendances, en versions exactes (relevées dans .venv).
+fastapi==0.165.0
+uvicorn==0.54.0
+onnxruntime==1.32.0
+numpy==2.4.6
+pydantic==2.14.4
+pydantic-core==2.50.5
+starlette==1.10.0
+annotated-doc==0.0.7
+annotated-types==0.8.0
+anyio==4.16.0
+click==8.5.1
+colorama==0.4.6 ; sys_platform == "win32"
+flatbuffers==25.12.19
+h11==0.16.0
+idna==3.20
+opentelemetry-api==1.45.2
+packaging==26.3
+protobuf==7.36.2
+typing-extensions==4.16.0
+typing-inspection==0.4.5
