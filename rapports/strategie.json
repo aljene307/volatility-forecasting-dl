@@ -1,0 +1,2054 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "difference_sharpe_retenu_moins_har": {
+        "bas": -0.11409041457662208,
+        "haut": 0.04652719952620207,
+        "valeur": -0.032637899801628456
+      },
+      "jours": 1827,
+      "jours_non_valides": 15,
+      "modele_retenu": "Transformer",
+      "strategies": {
+        "Achat simple": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4743689141775843,
+              "jours": 61,
+              "rendement_cumule": 0.011308588731769653,
+              "sharpe": 0.8396202146307535,
+              "volatilite_annualisee": 1.3710555857423474
+            },
+            "ftx": {
+              "drawdown_max": -0.2590724514387045,
+              "jours": 61,
+              "rendement_cumule": -0.1926889902463258,
+              "sharpe": -1.8527743523307685,
+              "volatilite_annualisee": 0.5935522953534599
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5220259511211893,
+              "jours": 61,
+              "rendement_cumule": -0.470056177386609,
+              "sharpe": -4.123144768806842,
+              "volatilite_annualisee": 0.8315224046610098
+            }
+          },
+          "drawdown_max": -0.7662925431645936,
+          "exposition_moyenne": 1.0,
+          "frais_annuels_en_rendement": 0.00019978106185002738,
+          "frais_total": 0.001,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.5359790262519866,
+              "jours": 366,
+              "rendement_cumule": 3.0158141393673255,
+              "sharpe": 2.2586334650600177,
+              "volatilite_annualisee": 0.7509728810800047
+            },
+            "2021": {
+              "drawdown_max": -0.5314140778607939,
+              "jours": 365,
+              "rendement_cumule": 0.5978952157803168,
+              "sharpe": 0.9828204501044361,
+              "volatilite_annualisee": 0.8057171360495797
+            },
+            "2022": {
+              "drawdown_max": -0.669312370541033,
+              "jours": 365,
+              "rendement_cumule": -0.64207055726116,
+              "sharpe": -1.287920046865425,
+              "volatilite_annualisee": 0.63739255975001
+            },
+            "2023": {
+              "drawdown_max": -0.20002746848357156,
+              "jours": 365,
+              "rendement_cumule": 1.5560728793887235,
+              "sharpe": 2.3491557067310413,
+              "volatilite_annualisee": 0.44062457964126217
+            },
+            "2024": {
+              "drawdown_max": -0.26151375053867754,
+              "jours": 366,
+              "rendement_cumule": 1.2130576455446787,
+              "sharpe": 1.7562962125420198,
+              "volatilite_annualisee": 0.530770614801591
+            }
+          },
+          "part_jours_exposition_max": 1.0,
+          "rendement_annualise": 0.6691417823313595,
+          "rotation_annuelle": 0.19978106185002736,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.0005,
+              "rendement_annualise": 0.6693086472763472,
+              "sharpe": 1.1226913869268407
+            },
+            "0.002": {
+              "frais_total": 0.002,
+              "rendement_annualise": 0.6688078518477181,
+              "sharpe": 1.1222266735640505
+            }
+          },
+          "sharpe": 1.1225366159731434,
+          "sharpe_intervalle": {
+            "bas": 0.20263505917623065,
+            "haut": 2.1262554634620012,
+            "valeur": 1.1225366159731434
+          },
+          "sortino": 1.6437575126180677,
+          "valeur_finale": 12.992277383766748,
+          "volatilite_annualisee": 0.6481103172636575,
+          "volatilite_sur_cible": 1.131861715893377
+        },
+        "CNN-LSTM": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.34408720512973934,
+              "jours": 61,
+              "rendement_cumule": -0.019670443462231346,
+              "sharpe": 0.31467244701928937,
+              "volatilite_annualisee": 0.8429603168643119
+            },
+            "ftx": {
+              "drawdown_max": -0.22629341593135655,
+              "jours": 61,
+              "rendement_cumule": -0.16819595366061035,
+              "sharpe": -2.297787939533688,
+              "volatilite_annualisee": 0.4369624675759478
+            },
+            "terra_luna": {
+              "drawdown_max": -0.39655390301901394,
+              "jours": 61,
+              "rendement_cumule": -0.36353264907534955,
+              "sharpe": -4.2867819020293405,
+              "volatilite_annualisee": 0.5880310722151817
+            }
+          },
+          "drawdown_max": -0.7374272484108171,
+          "exposition_moyenne": 0.869337503118315,
+          "frais_annuels_en_rendement": 0.018301232000932737,
+          "frais_total": 0.28418700024109655,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.41936703609679504,
+              "jours": 366,
+              "rendement_cumule": 1.8965990397457024,
+              "sharpe": 2.2420725835374635,
+              "volatilite_annualisee": 0.5413108407490337
+            },
+            "2021": {
+              "drawdown_max": -0.4658561012962934,
+              "jours": 365,
+              "rendement_cumule": 0.23301586498294946,
+              "sharpe": 0.6534161582745347,
+              "volatilite_annualisee": 0.5635672167222596
+            },
+            "2022": {
+              "drawdown_max": -0.6278861926882648,
+              "jours": 365,
+              "rendement_cumule": -0.6027456657737367,
+              "sharpe": -1.5167112552268447,
+              "volatilite_annualisee": 0.5188157415844319
+            },
+            "2023": {
+              "drawdown_max": -0.19627855639587455,
+              "jours": 365,
+              "rendement_cumule": 1.4375629972310078,
+              "sharpe": 2.2994659838026226,
+              "volatilite_annualisee": 0.4269862356499934
+            },
+            "2024": {
+              "drawdown_max": -0.31160502670882506,
+              "jours": 366,
+              "rendement_cumule": 0.8780072458084023,
+              "sharpe": 1.5601805819126562,
+              "volatilite_annualisee": 0.4747980875874042
+            }
+          },
+          "part_jours_exposition_max": 0.4668856048166393,
+          "rendement_annualise": 0.453241716576418,
+          "rotation_annuelle": 18.301232000932735,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.14591551431287608,
+              "rendement_annualise": 0.466602492413696,
+              "sharpe": 1.0097550213993383
+            },
+            "0.002": {
+              "frais_total": 0.5392511563307538,
+              "rendement_annualise": 0.4268809164640903,
+              "sharpe": 0.9557377105615913
+            }
+          },
+          "sharpe": 0.9917523289254923,
+          "sharpe_intervalle": {
+            "bas": 0.0009766052719374192,
+            "haut": 2.009413091651545,
+            "valeur": 0.9917523289254923
+          },
+          "sortino": 1.4492461114033555,
+          "valeur_finale": 6.494994735084836,
+          "volatilite_annualisee": 0.508234198636417,
+          "volatilite_sur_cible": 0.8875816613644383
+        },
+        "GARCH(1,1)": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4299934050651987,
+              "jours": 61,
+              "rendement_cumule": -0.22225949895399366,
+              "sharpe": -0.9721458955068784,
+              "volatilite_annualisee": 0.9622663596403778
+            },
+            "ftx": {
+              "drawdown_max": -0.23677074311524704,
+              "jours": 61,
+              "rendement_cumule": -0.18276409272106864,
+              "sharpe": -2.215760098718845,
+              "volatilite_annualisee": 0.48899210530140536
+            },
+            "terra_luna": {
+              "drawdown_max": -0.419692419466115,
+              "jours": 61,
+              "rendement_cumule": -0.3752732164398024,
+              "sharpe": -4.322150540224287,
+              "volatilite_annualisee": 0.6058226022028489
+            }
+          },
+          "drawdown_max": -0.7233915659621742,
+          "exposition_moyenne": 0.8772006117328651,
+          "frais_annuels_en_rendement": 0.00601357474705728,
+          "frais_total": 0.0958915754137083,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.496858868852583,
+              "jours": 366,
+              "rendement_cumule": 1.7625400681791108,
+              "sharpe": 1.99948558413745,
+              "volatilite_annualisee": 0.6089382558680194
+            },
+            "2021": {
+              "drawdown_max": -0.4377088836956018,
+              "jours": 365,
+              "rendement_cumule": 0.3677065029800137,
+              "sharpe": 0.8206506076478203,
+              "volatilite_annualisee": 0.6031135366738792
+            },
+            "2022": {
+              "drawdown_max": -0.6096299220691598,
+              "jours": 365,
+              "rendement_cumule": -0.5863636028835169,
+              "sharpe": -1.41395586868095,
+              "volatilite_annualisee": 0.525222972324325
+            },
+            "2023": {
+              "drawdown_max": -0.20002746848357156,
+              "jours": 365,
+              "rendement_cumule": 1.4317429985868073,
+              "sharpe": 2.2928287171308717,
+              "volatilite_annualisee": 0.4272262529209279
+            },
+            "2024": {
+              "drawdown_max": -0.2613499075863741,
+              "jours": 366,
+              "rendement_cumule": 1.1230235096268917,
+              "sharpe": 1.7628160196067413,
+              "volatilite_annualisee": 0.4950291160116731
+            }
+          },
+          "part_jours_exposition_max": 0.4236453201970443,
+          "rendement_annualise": 0.5176094173369634,
+          "rotation_annuelle": 6.0135747470572785,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.04837054083846465,
+              "rendement_annualise": 0.5221797974546747,
+              "sharpe": 1.0577354384511608
+            },
+            "0.002": {
+              "frais_total": 0.18843924880706792,
+              "rendement_annualise": 0.5085090218221178,
+              "sharpe": 1.0409458213178966
+            }
+          },
+          "sharpe": 1.0521395976008427,
+          "sharpe_intervalle": {
+            "bas": 0.024808575332538857,
+            "haut": 2.0805665889802714,
+            "valeur": 1.0521395976008427
+          },
+          "sortino": 1.5135838632961078,
+          "valeur_finale": 8.068498486131332,
+          "volatilite_annualisee": 0.5369438754612467,
+          "volatilite_sur_cible": 0.9377203232683139
+        },
+        "GRU": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.36326241995257535,
+              "jours": 61,
+              "rendement_cumule": -0.023997138403945906,
+              "sharpe": 0.3341783200447002,
+              "volatilite_annualisee": 0.9049999445824874
+            },
+            "ftx": {
+              "drawdown_max": -0.23648259727137977,
+              "jours": 61,
+              "rendement_cumule": -0.17710723990330568,
+              "sharpe": -2.369296070397395,
+              "volatilite_annualisee": 0.44856522077059613
+            },
+            "terra_luna": {
+              "drawdown_max": -0.38593234103481144,
+              "jours": 61,
+              "rendement_cumule": -0.35232986318844317,
+              "sharpe": -4.25002012425057,
+              "volatilite_annualisee": 0.5711066820571825
+            }
+          },
+          "drawdown_max": -0.7382441878471464,
+          "exposition_moyenne": 0.8661866275525213,
+          "frais_annuels_en_rendement": 0.020441242510990516,
+          "frais_total": 0.3029303611835528,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.4405108307356306,
+              "jours": 366,
+              "rendement_cumule": 1.9085507167484845,
+              "sharpe": 2.1917014393344734,
+              "volatilite_annualisee": 0.5614787334979762
+            },
+            "2021": {
+              "drawdown_max": -0.45155148872300266,
+              "jours": 365,
+              "rendement_cumule": 0.21481889842410462,
+              "sharpe": 0.6283144534447122,
+              "volatilite_annualisee": 0.553464321007272
+            },
+            "2022": {
+              "drawdown_max": -0.63299768033604,
+              "jours": 365,
+              "rendement_cumule": -0.6080977470855937,
+              "sharpe": -1.5813594613307667,
+              "volatilite_annualisee": 0.5091872446168684
+            },
+            "2023": {
+              "drawdown_max": -0.19821095987735426,
+              "jours": 365,
+              "rendement_cumule": 1.3396477829201778,
+              "sharpe": 2.2288680337164037,
+              "volatilite_annualisee": 0.4209879580564869
+            },
+            "2024": {
+              "drawdown_max": -0.3090861955484012,
+              "jours": 366,
+              "rendement_cumule": 0.900422906139992,
+              "sharpe": 1.584528867832663,
+              "volatilite_annualisee": 0.47505643756906835
+            }
+          },
+          "part_jours_exposition_max": 0.4641488779419814,
+          "rendement_annualise": 0.4378067343152312,
+          "rotation_annuelle": 20.44124251099051,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.1560009545533515,
+              "rendement_annualise": 0.4525793358745498,
+              "sharpe": 0.9922657207292128
+            },
+            "0.002": {
+              "frais_total": 0.5714770612428355,
+              "rendement_annualise": 0.40870688959407353,
+              "sharpe": 0.9318692945435739
+            }
+          },
+          "sharpe": 0.9721379669405953,
+          "sharpe_intervalle": {
+            "bas": -0.044387572060260824,
+            "haut": 2.0144119062140584,
+            "valeur": 0.9721379669405953
+          },
+          "sortino": 1.412962211765272,
+          "valeur_finale": 6.15696492372018,
+          "volatilite_annualisee": 0.5075273148448607,
+          "volatilite_sur_cible": 0.8863471574845647
+        },
+        "HAR-RV": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4049973421318557,
+              "jours": 61,
+              "rendement_cumule": -0.0745370983105842,
+              "sharpe": 0.11187839811666682,
+              "volatilite_annualisee": 1.0055481892035176
+            },
+            "ftx": {
+              "drawdown_max": -0.23235271615089081,
+              "jours": 61,
+              "rendement_cumule": -0.16473140983312684,
+              "sharpe": -2.082083350403583,
+              "volatilite_annualisee": 0.46436943637036004
+            },
+            "terra_luna": {
+              "drawdown_max": -0.4275505083010165,
+              "jours": 61,
+              "rendement_cumule": -0.3962254237079027,
+              "sharpe": -4.370212331931172,
+              "volatilite_annualisee": 0.6406513656979105
+            }
+          },
+          "drawdown_max": -0.7493048290496296,
+          "exposition_moyenne": 0.8818822391759601,
+          "frais_annuels_en_rendement": 0.019845277112573913,
+          "frais_total": 0.3169899872948351,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.47500669957039254,
+              "jours": 366,
+              "rendement_cumule": 2.1046761564792953,
+              "sharpe": 2.1717665709894183,
+              "volatilite_annualisee": 0.6131491560872598
+            },
+            "2021": {
+              "drawdown_max": -0.4602890026153965,
+              "jours": 365,
+              "rendement_cumule": 0.1866509089644639,
+              "sharpe": 0.5853663527173114,
+              "volatilite_annualisee": 0.5651540959736179
+            },
+            "2022": {
+              "drawdown_max": -0.6450041787774585,
+              "jours": 365,
+              "rendement_cumule": -0.6172584867549777,
+              "sharpe": -1.510291563417105,
+              "volatilite_annualisee": 0.538368942588514
+            },
+            "2023": {
+              "drawdown_max": -0.1938255550130089,
+              "jours": 365,
+              "rendement_cumule": 1.3495843994876453,
+              "sharpe": 2.224387413470455,
+              "volatilite_annualisee": 0.42437153891302654
+            },
+            "2024": {
+              "drawdown_max": -0.2862448088671229,
+              "jours": 366,
+              "rendement_cumule": 0.990320785688962,
+              "sharpe": 1.6832320245054724,
+              "volatilite_annualisee": 0.4741927427203158
+            }
+          },
+          "part_jours_exposition_max": 0.4931581828133552,
+          "rendement_annualise": 0.4576472948451369,
+          "rotation_annuelle": 19.84527711257391,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.16308021450766796,
+              "rendement_annualise": 0.4721848745826318,
+              "sharpe": 1.0012781281723582
+            },
+            "0.002": {
+              "frais_total": 0.5991746093975183,
+              "rendement_annualise": 0.42899774380209754,
+              "sharpe": 0.9448867321664252
+            }
+          },
+          "sharpe": 0.9824837459549698,
+          "sharpe_intervalle": {
+            "bas": -0.0560218431823107,
+            "haut": 2.0175901688431477,
+            "valeur": 0.9824837459549698
+          },
+          "sortino": 1.4192013443553888,
+          "valeur_finale": 6.594152409127025,
+          "volatilite_annualisee": 0.5281471322682406,
+          "volatilite_sur_cible": 0.9223576657399679
+        },
+        "LSTM": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.36048842632434586,
+              "jours": 61,
+              "rendement_cumule": -0.013578325559304272,
+              "sharpe": 0.40198652301991383,
+              "volatilite_annualisee": 0.9035688225892159
+            },
+            "ftx": {
+              "drawdown_max": -0.24448536530943876,
+              "jours": 61,
+              "rendement_cumule": -0.1834420926370044,
+              "sharpe": -2.406714748652927,
+              "volatilite_annualisee": 0.45873221627177335
+            },
+            "terra_luna": {
+              "drawdown_max": -0.39164747212027673,
+              "jours": 61,
+              "rendement_cumule": -0.3583577327203723,
+              "sharpe": -4.344147486397787,
+              "volatilite_annualisee": 0.5714520909998722
+            }
+          },
+          "drawdown_max": -0.744090580958205,
+          "exposition_moyenne": 0.8683361380820807,
+          "frais_annuels_en_rendement": 0.019025489641300318,
+          "frais_total": 0.29147036666495796,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.4346013323718443,
+              "jours": 366,
+              "rendement_cumule": 2.041941973748732,
+              "sharpe": 2.2608620838406943,
+              "volatilite_annualisee": 0.5648211866651142
+            },
+            "2021": {
+              "drawdown_max": -0.46856917154098376,
+              "jours": 365,
+              "rendement_cumule": 0.22091640426339598,
+              "sharpe": 0.6347450350399976,
+              "volatilite_annualisee": 0.5706936093689872
+            },
+            "2022": {
+              "drawdown_max": -0.6412751994580143,
+              "jours": 365,
+              "rendement_cumule": -0.6148589118391619,
+              "sharpe": -1.6033017118974666,
+              "volatilite_annualisee": 0.5120997582029747
+            },
+            "2023": {
+              "drawdown_max": -0.20134218846367735,
+              "jours": 365,
+              "rendement_cumule": 1.3775638956580778,
+              "sharpe": 2.2693448651316763,
+              "volatilite_annualisee": 0.4204571125392468
+            },
+            "2024": {
+              "drawdown_max": -0.3124224886556961,
+              "jours": 366,
+              "rendement_cumule": 0.8707187746054361,
+              "sharpe": 1.5590744936966319,
+              "volatilite_annualisee": 0.4717188040348425
+            }
+          },
+          "part_jours_exposition_max": 0.4433497536945813,
+          "rendement_annualise": 0.4472499518294255,
+          "rotation_annuelle": 19.025489641300318,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.1498187376306067,
+              "rendement_annualise": 0.4610846694783506,
+              "sharpe": 0.9992779174451357
+            },
+            "0.002": {
+              "frais_total": 0.5518836347237092,
+              "rendement_annualise": 0.41996895027674896,
+              "sharpe": 0.9435487230162196
+            }
+          },
+          "sharpe": 0.9807050472982503,
+          "sharpe_intervalle": {
+            "bas": -0.023412191149050684,
+            "haut": 1.9957228125807727,
+            "valeur": 0.9807050472982503
+          },
+          "sortino": 1.4292409622540145,
+          "valeur_finale": 6.362054857955783,
+          "volatilite_annualisee": 0.511988082319128,
+          "volatilite_sur_cible": 0.8941374545885244
+        },
+        "Persistance": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.3621934292366309,
+              "jours": 61,
+              "rendement_cumule": -0.020150143729209646,
+              "sharpe": 0.3672182334456364,
+              "volatilite_annualisee": 0.9186523658807544
+            },
+            "ftx": {
+              "drawdown_max": -0.2147867323594832,
+              "jours": 61,
+              "rendement_cumule": -0.15071573014914263,
+              "sharpe": -2.150924408920215,
+              "volatilite_annualisee": 0.4138290006341055
+            },
+            "terra_luna": {
+              "drawdown_max": -0.4003760456212947,
+              "jours": 61,
+              "rendement_cumule": -0.3672621123329879,
+              "sharpe": -4.235924561895827,
+              "volatilite_annualisee": 0.6013995792019688
+            }
+          },
+          "drawdown_max": -0.7498450087522691,
+          "exposition_moyenne": 0.8376358617400439,
+          "frais_annuels_en_rendement": 0.03992547539848071,
+          "frais_total": 0.5682609024488322,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.43279760848091275,
+              "jours": 366,
+              "rendement_cumule": 2.173878276057263,
+              "sharpe": 2.310362688237454,
+              "volatilite_annualisee": 0.5731244725519737
+            },
+            "2021": {
+              "drawdown_max": -0.46870004119856634,
+              "jours": 365,
+              "rendement_cumule": 0.027114217754379943,
+              "sharpe": 0.31774947921137997,
+              "volatilite_annualisee": 0.5351973842157106
+            },
+            "2022": {
+              "drawdown_max": -0.6242896455744191,
+              "jours": 365,
+              "rendement_cumule": -0.5985377369049812,
+              "sharpe": -1.5320724221751763,
+              "volatilite_annualisee": 0.5097567674240511
+            },
+            "2023": {
+              "drawdown_max": -0.191799590452857,
+              "jours": 365,
+              "rendement_cumule": 1.1094950015522231,
+              "sharpe": 2.038555858342001,
+              "volatilite_annualisee": 0.40656119373172284
+            },
+            "2024": {
+              "drawdown_max": -0.2815713636249506,
+              "jours": 366,
+              "rendement_cumule": 0.8139541189015187,
+              "sharpe": 1.5749405192316213,
+              "volatilite_annualisee": 0.43751701023816475
+            }
+          },
+          "part_jours_exposition_max": 0.4559386973180077,
+          "rendement_annualise": 0.3796804964623557,
+          "rotation_annuelle": 39.92547539848071,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.3003753440787111,
+              "rendement_annualise": 0.4075053249875944,
+              "sharpe": 0.9389253642767126
+            },
+            "0.002": {
+              "frais_total": 1.0193704305094746,
+              "rendement_annualise": 0.32565907864961563,
+              "sharpe": 0.8183706215254176
+            }
+          },
+          "sharpe": 0.8987483672506235,
+          "sharpe_intervalle": {
+            "bas": -0.1187798840307158,
+            "haut": 1.917930066154053,
+            "valeur": 0.8987483672506235
+          },
+          "sortino": 1.3064702321993513,
+          "valeur_finale": 5.007933287991233,
+          "volatilite_annualisee": 0.4971642964140788,
+          "volatilite_sur_cible": 0.8682491523912006
+        },
+        "TFT": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4011136428262172,
+              "jours": 61,
+              "rendement_cumule": -0.06527166401499451,
+              "sharpe": 0.16032748608705183,
+              "volatilite_annualisee": 0.9951306211713761
+            },
+            "ftx": {
+              "drawdown_max": -0.22349150932109674,
+              "jours": 61,
+              "rendement_cumule": -0.1614709166227961,
+              "sharpe": -2.096268987242759,
+              "volatilite_annualisee": 0.4526587603548246
+            },
+            "terra_luna": {
+              "drawdown_max": -0.4194309235308272,
+              "jours": 61,
+              "rendement_cumule": -0.3841982712567581,
+              "sharpe": -4.288340295232496,
+              "volatilite_annualisee": 0.6274871028400881
+            }
+          },
+          "drawdown_max": -0.7383194630191346,
+          "exposition_moyenne": 0.8684423915853225,
+          "frais_annuels_en_rendement": 0.01698499262652707,
+          "frais_total": 0.24565132430515085,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.46750076597057577,
+              "jours": 366,
+              "rendement_cumule": 1.776019921463352,
+              "sharpe": 2.054673745148451,
+              "volatilite_annualisee": 0.5855206775134569
+            },
+            "2021": {
+              "drawdown_max": -0.43867894482981884,
+              "jours": 365,
+              "rendement_cumule": 0.25488215723421903,
+              "sharpe": 0.6853403879167492,
+              "volatilite_annualisee": 0.5605841488906739
+            },
+            "2022": {
+              "drawdown_max": -0.6307635813132358,
+              "jours": 365,
+              "rendement_cumule": -0.6039128125851339,
+              "sharpe": -1.5175969094523127,
+              "volatilite_annualisee": 0.5197468027777878
+            },
+            "2023": {
+              "drawdown_max": -0.19773687492908876,
+              "jours": 365,
+              "rendement_cumule": 1.336058281881178,
+              "sharpe": 2.2343350801071202,
+              "volatilite_annualisee": 0.41888733389177274
+            },
+            "2024": {
+              "drawdown_max": -0.2804600845524675,
+              "jours": 366,
+              "rendement_cumule": 0.9565408551765164,
+              "sharpe": 1.6323288235828586,
+              "volatilite_annualisee": 0.4804753434853776
+            }
+          },
+          "part_jours_exposition_max": 0.458128078817734,
+          "rendement_annualise": 0.44471665012085637,
+          "rotation_annuelle": 16.984992626527074,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.12585207628172,
+              "rendement_annualise": 0.45703954612901665,
+              "sharpe": 0.9914454392640712
+            },
+            "0.002": {
+              "frais_total": 0.46815535167545386,
+              "rendement_annualise": 0.42037991002443453,
+              "sharpe": 0.9422080192229687
+            }
+          },
+          "sharpe": 0.9750359077188357,
+          "sharpe_intervalle": {
+            "bas": -0.017086285487641954,
+            "haut": 1.9879856280060957,
+            "valeur": 0.9750359077188357
+          },
+          "sortino": 1.401066319988505,
+          "valeur_finale": 6.306507426131134,
+          "volatilite_annualisee": 0.5171889156464621,
+          "volatilite_sur_cible": 0.9032202048196971
+        },
+        "Transformer": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.3864915995000674,
+              "jours": 61,
+              "rendement_cumule": -0.06990906066058777,
+              "sharpe": 0.06786314639413848,
+              "volatilite_annualisee": 0.9390181136536219
+            },
+            "ftx": {
+              "drawdown_max": -0.21747514584849714,
+              "jours": 61,
+              "rendement_cumule": -0.15749666084848757,
+              "sharpe": -2.1842961579235727,
+              "volatilite_annualisee": 0.4268465960896229
+            },
+            "terra_luna": {
+              "drawdown_max": -0.4071617914327046,
+              "jours": 61,
+              "rendement_cumule": -0.3745119011458683,
+              "sharpe": -4.343719628401494,
+              "volatilite_annualisee": 0.6020452688352091
+            }
+          },
+          "drawdown_max": -0.7421463633794292,
+          "exposition_moyenne": 0.8648924772315102,
+          "frais_annuels_en_rendement": 0.020948776995884866,
+          "frais_total": 0.2939749447906193,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.45822770605427865,
+              "jours": 366,
+              "rendement_cumule": 1.779372380917723,
+              "sharpe": 2.0932704627257617,
+              "volatilite_annualisee": 0.5699441357100009
+            },
+            "2021": {
+              "drawdown_max": -0.4600860344687827,
+              "jours": 365,
+              "rendement_cumule": 0.23071799128353443,
+              "sharpe": 0.6512796134042074,
+              "volatilite_annualisee": 0.5562934480165427
+            },
+            "2022": {
+              "drawdown_max": -0.6444509697480558,
+              "jours": 365,
+              "rendement_cumule": -0.6197341441295638,
+              "sharpe": -1.6030046241794398,
+              "volatilite_annualisee": 0.5181441185331501
+            },
+            "2023": {
+              "drawdown_max": -0.19454742073079934,
+              "jours": 365,
+              "rendement_cumule": 1.399142185365668,
+              "sharpe": 2.286216994741877,
+              "volatilite_annualisee": 0.42151534947851643
+            },
+            "2024": {
+              "drawdown_max": -0.2993527864116933,
+              "jours": 366,
+              "rendement_cumule": 0.8725486384896739,
+              "sharpe": 1.5655644401308193,
+              "volatilite_annualisee": 0.4698577338843312
+            }
+          },
+          "part_jours_exposition_max": 0.46250684181718665,
+          "rendement_annualise": 0.4228806937998504,
+          "rotation_annuelle": 20.948776995884863,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.1514705498308322,
+              "rendement_annualise": 0.43786491477850276,
+              "sharpe": 0.9703512965642057
+            },
+            "0.002": {
+              "frais_total": 0.554017599207667,
+              "rendement_annualise": 0.39337503397836526,
+              "sharpe": 0.9088253592570745
+            }
+          },
+          "sharpe": 0.9498458461533413,
+          "sharpe_intervalle": {
+            "bas": -0.07680669266939115,
+            "haut": 1.9841945954245057,
+            "valeur": 0.9498458461533413
+          },
+          "sortino": 1.36995298628056,
+          "valeur_finale": 5.843616585734928,
+          "volatilite_annualisee": 0.5109576696995299,
+          "volatilite_sur_cible": 0.8923379390359555
+        },
+        "XGBoost": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4022073940965806,
+              "jours": 61,
+              "rendement_cumule": -0.05932110283556924,
+              "sharpe": 0.21205311370627988,
+              "volatilite_annualisee": 1.0120951702078087
+            },
+            "ftx": {
+              "drawdown_max": -0.24838802240946745,
+              "jours": 61,
+              "rendement_cumule": -0.18373145820340409,
+              "sharpe": -2.207112089503398,
+              "volatilite_annualisee": 0.49359939416907556
+            },
+            "terra_luna": {
+              "drawdown_max": -0.44961758611293945,
+              "jours": 61,
+              "rendement_cumule": -0.4157393221625777,
+              "sharpe": -4.35295153639895,
+              "volatilite_annualisee": 0.6815729331837949
+            }
+          },
+          "drawdown_max": -0.7593706357068242,
+          "exposition_moyenne": 0.8823732324533503,
+          "frais_annuels_en_rendement": 0.02043328282648812,
+          "frais_total": 0.2929167116218608,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.47579990866697275,
+              "jours": 366,
+              "rendement_cumule": 2.0723039306022746,
+              "sharpe": 2.159902630171043,
+              "volatilite_annualisee": 0.6108953165240048
+            },
+            "2021": {
+              "drawdown_max": -0.4760736350218062,
+              "jours": 365,
+              "rendement_cumule": 0.11638698760201849,
+              "sharpe": 0.47771000356393994,
+              "volatilite_annualisee": 0.5665183734138833
+            },
+            "2022": {
+              "drawdown_max": -0.6493826732151968,
+              "jours": 365,
+              "rendement_cumule": -0.6229442996201069,
+              "sharpe": -1.4707889903817712,
+              "volatilite_annualisee": 0.5562741537889029
+            },
+            "2023": {
+              "drawdown_max": -0.19300630654376283,
+              "jours": 365,
+              "rendement_cumule": 1.2714439451585258,
+              "sharpe": 2.1847605600451057,
+              "volatilite_annualisee": 0.4147574036708929
+            },
+            "2024": {
+              "drawdown_max": -0.3032297403726547,
+              "jours": 366,
+              "rendement_cumule": 0.9043771150163733,
+              "sharpe": 1.5924550115989091,
+              "volatilite_annualisee": 0.4734864712415224
+            }
+          },
+          "part_jours_exposition_max": 0.4734537493158183,
+          "rendement_annualise": 0.4105360087170704,
+          "rotation_annuelle": 20.43328282648812,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.15071470740401072,
+              "rendement_annualise": 0.4250226623265776,
+              "sharpe": 0.9382857019213698
+            },
+            "0.002": {
+              "frais_total": 0.5535406169143291,
+              "rendement_annualise": 0.38199943250030866,
+              "sharpe": 0.880440287842347
+            }
+          },
+          "sharpe": 0.9190071292288146,
+          "sharpe_intervalle": {
+            "bas": -0.1069114288155816,
+            "haut": 1.933281389460403,
+            "valeur": 0.9190071292288146
+          },
+          "sortino": 1.3185954279491054,
+          "valeur_finale": 5.594218573211925,
+          "volatilite_annualisee": 0.5299431516944509,
+          "volatilite_sur_cible": 0.9254942392142355
+        }
+      },
+      "var": {
+        "jours_exclus_non_valides": 30,
+        "modeles": {
+          "CNN-LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 68,
+            "jours": 1797,
+            "p_valeur": 0.013639121443339692,
+            "statistique": 6.084263492150399,
+            "taux": 0.037840845854201444
+          },
+          "GARCH(1,1)": {
+            "attendu": 0.050000000000000044,
+            "depassements": 64,
+            "jours": 1797,
+            "p_valeur": 0.0032449161955625267,
+            "statistique": 8.664373086378305,
+            "taux": 0.035614913745130775
+          },
+          "GRU": {
+            "attendu": 0.050000000000000044,
+            "depassements": 69,
+            "jours": 1797,
+            "p_valeur": 0.018834975792377192,
+            "statistique": 5.516772690123389,
+            "taux": 0.038397328881469114
+          },
+          "HAR-RV": {
+            "attendu": 0.050000000000000044,
+            "depassements": 78,
+            "jours": 1797,
+            "p_valeur": 0.1898796508179216,
+            "statistique": 1.7185511485220104,
+            "taux": 0.04340567612687813
+          },
+          "LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 68,
+            "jours": 1797,
+            "p_valeur": 0.013639121443339692,
+            "statistique": 6.084263492150399,
+            "taux": 0.037840845854201444
+          },
+          "Persistance": {
+            "attendu": 0.050000000000000044,
+            "depassements": 82,
+            "jours": 1797,
+            "p_valeur": 0.38877387584470047,
+            "statistique": 0.742773491517255,
+            "taux": 0.045631608235948806
+          },
+          "TFT": {
+            "attendu": 0.050000000000000044,
+            "depassements": 68,
+            "jours": 1797,
+            "p_valeur": 0.013639121443339692,
+            "statistique": 6.084263492150399,
+            "taux": 0.037840845854201444
+          },
+          "Transformer": {
+            "attendu": 0.050000000000000044,
+            "depassements": 69,
+            "jours": 1797,
+            "p_valeur": 0.018834975792377192,
+            "statistique": 5.516772690123389,
+            "taux": 0.038397328881469114
+          },
+          "XGBoost": {
+            "attendu": 0.050000000000000044,
+            "depassements": 70,
+            "jours": 1797,
+            "p_valeur": 0.02565049507947622,
+            "statistique": 4.979425817585138,
+            "taux": 0.038953811908736785
+          }
+        }
+      },
+      "vol_cible": 0.5726055649405059
+    },
+    "ETHUSDT": {
+      "difference_sharpe_retenu_moins_har": {
+        "bas": -0.12866881465440455,
+        "haut": 0.0383177490965096,
+        "valeur": -0.0455655249415472
+      },
+      "jours": 1827,
+      "jours_non_valides": 15,
+      "modele_retenu": "CNN-LSTM",
+      "strategies": {
+        "Achat simple": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.559702711532179,
+              "jours": 61,
+              "rendement_cumule": -0.05124073477279989,
+              "sharpe": 0.7844088779799392,
+              "volatilite_annualisee": 1.6957888925280897
+            },
+            "ftx": {
+              "drawdown_max": -0.32955775240457674,
+              "jours": 61,
+              "rendement_cumule": -0.2394368883886846,
+              "sharpe": -1.420180756336962,
+              "volatilite_annualisee": 0.8779018483641037
+            },
+            "terra_luna": {
+              "drawdown_max": -0.6615940747592359,
+              "jours": 61,
+              "rendement_cumule": -0.6072080860833398,
+              "sharpe": -4.648901503739745,
+              "volatilite_annualisee": 1.0700165552014897
+            }
+          },
+          "drawdown_max": -0.7930253453633337,
+          "exposition_moyenne": 1.0,
+          "frais_annuels_en_rendement": 0.00019978106185002738,
+          "frais_total": 0.001,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.6218832193582324,
+              "jours": 366,
+              "rendement_cumule": 4.695908795292669,
+              "sharpe": 2.2954063098913045,
+              "volatilite_annualisee": 0.9853313953914808
+            },
+            "2021": {
+              "drawdown_max": -0.572049503408451,
+              "jours": 365,
+              "rendement_cumule": 3.992029005187261,
+              "sharpe": 2.0205880676553165,
+              "volatilite_annualisee": 1.0922435140931719
+            },
+            "2022": {
+              "drawdown_max": -0.7400575194539575,
+              "jours": 365,
+              "rendement_cumule": -0.6746313478754051,
+              "sharpe": -0.8563914097552371,
+              "volatilite_annualisee": 0.8673373486735634
+            },
+            "2023": {
+              "drawdown_max": -0.2733129746491898,
+              "jours": 365,
+              "rendement_cumule": 0.9077107003419391,
+              "sharpe": 1.6106212674283864,
+              "volatilite_annualisee": 0.46882742066607824
+            },
+            "2024": {
+              "drawdown_max": -0.4525610116118872,
+              "jours": 366,
+              "rendement_cumule": 0.46273889397730605,
+              "sharpe": 0.9036907503680822,
+              "volatilite_annualisee": 0.6484626634172644
+            }
+          },
+          "part_jours_exposition_max": 1.0,
+          "rendement_annualise": 0.9145641135495448,
+          "rotation_annuelle": 0.19978106185002736,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.0005,
+              "rendement_annualise": 0.9147555134886443,
+              "sharpe": 1.2006634102112923
+            },
+            "0.002": {
+              "frais_total": 0.002,
+              "rendement_annualise": 0.9141810835833843,
+              "sharpe": 1.2003084386473168
+            }
+          },
+          "sharpe": 1.2005451728235197,
+          "sharpe_intervalle": {
+            "bas": 0.31860750204513505,
+            "haut": 2.156205178380764,
+            "valeur": 1.2005451728235197
+          },
+          "sortino": 1.779733982193872,
+          "valeur_finale": 25.816368999690297,
+          "volatilite_annualisee": 0.8444979424497924,
+          "volatilite_sur_cible": 1.1429864494914599
+        },
+        "CNN-LSTM": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.42928676663528875,
+              "jours": 61,
+              "rendement_cumule": 0.02308961531008835,
+              "sharpe": 0.7130242644658319,
+              "volatilite_annualisee": 1.112560447995017
+            },
+            "ftx": {
+              "drawdown_max": -0.3027521658380615,
+              "jours": 61,
+              "rendement_cumule": -0.2222577140405203,
+              "sharpe": -1.9187488405090232,
+              "volatilite_annualisee": 0.6650790093474948
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5466508747602623,
+              "jours": 61,
+              "rendement_cumule": -0.5110734115566362,
+              "sharpe": -5.3431884765015045,
+              "volatilite_annualisee": 0.7450195319782812
+            }
+          },
+          "drawdown_max": -0.7786855529080808,
+          "exposition_moyenne": 0.8711856302671399,
+          "frais_annuels_en_rendement": 0.018970706045908396,
+          "frais_total": 0.6938211621901635,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.47972223245824075,
+              "jours": 366,
+              "rendement_cumule": 3.5784506389221784,
+              "sharpe": 2.4694654942994645,
+              "volatilite_annualisee": 0.7243096074733857
+            },
+            "2021": {
+              "drawdown_max": -0.44025818002960315,
+              "jours": 365,
+              "rendement_cumule": 1.9190148869151717,
+              "sharpe": 1.8548603722905812,
+              "volatilite_annualisee": 0.7156783378722239
+            },
+            "2022": {
+              "drawdown_max": -0.7099584711704245,
+              "jours": 365,
+              "rendement_cumule": -0.6777224963157358,
+              "sharpe": -1.2597241950505171,
+              "volatilite_annualisee": 0.7006061070176635
+            },
+            "2023": {
+              "drawdown_max": -0.2724513592513965,
+              "jours": 365,
+              "rendement_cumule": 0.9117715209140267,
+              "sharpe": 1.6207397626639966,
+              "volatilite_annualisee": 0.46657379428410123
+            },
+            "2024": {
+              "drawdown_max": -0.48558502772412404,
+              "jours": 366,
+              "rendement_cumule": 0.28114820554055386,
+              "sharpe": 0.7084999127108713,
+              "volatilite_annualisee": 0.5948031146648487
+            }
+          },
+          "part_jours_exposition_max": 0.488232074438971,
+          "rendement_annualise": 0.60110575144698,
+          "rotation_annuelle": 18.970706045908393,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.35694162960230313,
+              "rendement_annualise": 0.6163671584312262,
+              "sharpe": 1.0665115732554205
+            },
+            "0.002": {
+              "frais_total": 1.3112142757497653,
+              "rendement_annualise": 0.5710097817323396,
+              "sharpe": 1.0226970760801892
+            }
+          },
+          "sharpe": 1.0519099063450688,
+          "sharpe_intervalle": {
+            "bas": 0.07169896335623661,
+            "haut": 2.066324478034605,
+            "valeur": 1.0519099063450688
+          },
+          "sortino": 1.5477905188983088,
+          "valeur_finale": 10.549216311416814,
+          "volatilite_annualisee": 0.6490094492255082,
+          "volatilite_sur_cible": 0.8784023841488211
+        },
+        "GARCH(1,1)": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4237094179104851,
+              "jours": 61,
+              "rendement_cumule": -0.01498611604691702,
+              "sharpe": 0.5062529948498582,
+              "volatilite_annualisee": 1.0762156866136858
+            },
+            "ftx": {
+              "drawdown_max": -0.2732612154407671,
+              "jours": 61,
+              "rendement_cumule": -0.20341361950239434,
+              "sharpe": -1.753424246818583,
+              "volatilite_annualisee": 0.6517332806849346
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5576158694270492,
+              "jours": 61,
+              "rendement_cumule": -0.5113979347939366,
+              "sharpe": -5.215619926637047,
+              "volatilite_annualisee": 0.7612257214219034
+            }
+          },
+          "drawdown_max": -0.7249031607898431,
+          "exposition_moyenne": 0.8872580558260503,
+          "frais_annuels_en_rendement": 0.00944150483144665,
+          "frais_total": 0.5633604953778761,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.48209436811813033,
+              "jours": 366,
+              "rendement_cumule": 4.8754886976718295,
+              "sharpe": 2.6806898258157674,
+              "volatilite_annualisee": 0.7756063423617034
+            },
+            "2021": {
+              "drawdown_max": -0.4772974218455225,
+              "jours": 365,
+              "rendement_cumule": 2.5779185874709833,
+              "sharpe": 1.9457321636855462,
+              "volatilite_annualisee": 0.8339502938646064
+            },
+            "2022": {
+              "drawdown_max": -0.6490922170801823,
+              "jours": 365,
+              "rendement_cumule": -0.6027588638995353,
+              "sharpe": -0.991077159615758,
+              "volatilite_annualisee": 0.688855105648401
+            },
+            "2023": {
+              "drawdown_max": -0.26721835764044566,
+              "jours": 365,
+              "rendement_cumule": 0.8988866590770019,
+              "sharpe": 1.6271873447024967,
+              "volatilite_annualisee": 0.4582227010563142
+            },
+            "2024": {
+              "drawdown_max": -0.46316359104111327,
+              "jours": 366,
+              "rendement_cumule": 0.3887673404970684,
+              "sharpe": 0.8352290079320719,
+              "volatilite_annualisee": 0.6152205641516008
+            }
+          },
+          "part_jours_exposition_max": 0.367816091954023,
+          "rendement_annualise": 0.8547160828342717,
+          "rotation_annuelle": 9.441504831446649,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.28587346574525807,
+              "rendement_annualise": 0.8634931696432049,
+              "sharpe": 1.2511225615571528
+            },
+            "0.002": {
+              "frais_total": 1.0940103406900634,
+              "rendement_annualise": 0.8372842906668703,
+              "sharpe": 1.230537446810341
+            }
+          },
+          "sharpe": 1.2442615314663965,
+          "sharpe_intervalle": {
+            "bas": 0.2986791126175263,
+            "haut": 2.24783722202056,
+            "valeur": 1.2442615314663965
+          },
+          "sortino": 1.8589876269036383,
+          "valeur_finale": 22.022022539549816,
+          "volatilite_annualisee": 0.6881145439564866,
+          "volatilite_sur_cible": 0.9313292074563221
+        },
+        "GRU": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.4061542143304525,
+              "jours": 61,
+              "rendement_cumule": 0.10923809957624786,
+              "sharpe": 1.1365725831032443,
+              "volatilite_annualisee": 1.1274014178235678
+            },
+            "ftx": {
+              "drawdown_max": -0.30420401156911536,
+              "jours": 61,
+              "rendement_cumule": -0.22399790194406888,
+              "sharpe": -1.8941101389884822,
+              "volatilite_annualisee": 0.6766885440758237
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5523336826392753,
+              "jours": 61,
+              "rendement_cumule": -0.5147845397624784,
+              "sharpe": -5.18855400904251,
+              "volatilite_annualisee": 0.7718498200171388
+            }
+          },
+          "drawdown_max": -0.7755811433293087,
+          "exposition_moyenne": 0.8744232890314061,
+          "frais_annuels_en_rendement": 0.019278352193785077,
+          "frais_total": 0.8857411948584658,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.45965959785058264,
+              "jours": 366,
+              "rendement_cumule": 4.320736256898805,
+              "sharpe": 2.6401540973046216,
+              "volatilite_annualisee": 0.737039686254327
+            },
+            "2021": {
+              "drawdown_max": -0.42788465571125667,
+              "jours": 365,
+              "rendement_cumule": 1.987035548580284,
+              "sharpe": 1.886084193791076,
+              "volatilite_annualisee": 0.7164000773166221
+            },
+            "2022": {
+              "drawdown_max": -0.7096935907195036,
+              "jours": 365,
+              "rendement_cumule": -0.6772268207484041,
+              "sharpe": -1.2409848273917747,
+              "volatilite_annualisee": 0.7065393577688922
+            },
+            "2023": {
+              "drawdown_max": -0.2726939592214763,
+              "jours": 365,
+              "rendement_cumule": 0.9000801410604597,
+              "sharpe": 1.6097685070096948,
+              "volatilite_annualisee": 0.4656870107740323
+            },
+            "2024": {
+              "drawdown_max": -0.48044239466766625,
+              "jours": 366,
+              "rendement_cumule": 0.30166448202986174,
+              "sharpe": 0.7341695881759883,
+              "volatilite_annualisee": 0.5987320352995378
+            }
+          },
+          "part_jours_exposition_max": 0.48659003831417624,
+          "rendement_annualise": 0.6612482452805923,
+          "rotation_annuelle": 19.27835219378508,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.45556271493243505,
+              "rendement_annualise": 0.6773408282734172,
+              "sharpe": 1.1192512718725136
+            },
+            "0.002": {
+              "frais_total": 1.6747731149401472,
+              "rendement_annualise": 0.6295207100658047,
+              "sharpe": 1.0750879893789707
+            }
+          },
+          "sharpe": 1.1045335796098643,
+          "sharpe_intervalle": {
+            "bas": 0.16911883349433507,
+            "haut": 2.1074998300535874,
+            "valeur": 1.1045335796098643
+          },
+          "sortino": 1.639320256247065,
+          "valeur_finale": 12.687630917975351,
+          "volatilite_annualisee": 0.6540463552603524,
+          "volatilite_sur_cible": 0.8852195888521126
+        },
+        "HAR-RV": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.42797074105995014,
+              "jours": 61,
+              "rendement_cumule": 0.07927566389565044,
+              "sharpe": 1.0137458827305095,
+              "volatilite_annualisee": 1.1924521786156081
+            },
+            "ftx": {
+              "drawdown_max": -0.3041899326464079,
+              "jours": 61,
+              "rendement_cumule": -0.2184712902413245,
+              "sharpe": -1.7825400865898609,
+              "volatilite_annualisee": 0.6902212304642841
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5561611400801185,
+              "jours": 61,
+              "rendement_cumule": -0.5203562237079524,
+              "sharpe": -5.170957575323808,
+              "volatilite_annualisee": 0.7855562189083948
+            }
+          },
+          "drawdown_max": -0.7790418594434035,
+          "exposition_moyenne": 0.8940076731831716,
+          "frais_annuels_en_rendement": 0.01835733050044379,
+          "frais_total": 0.8279068727702648,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.4835021859925934,
+              "jours": 366,
+              "rendement_cumule": 4.624461343216996,
+              "sharpe": 2.592220189638963,
+              "volatilite_annualisee": 0.788134105271104
+            },
+            "2021": {
+              "drawdown_max": -0.4739522814201962,
+              "jours": 365,
+              "rendement_cumule": 1.8791215461410733,
+              "sharpe": 1.7677551893306063,
+              "volatilite_annualisee": 0.7625269226130461
+            },
+            "2022": {
+              "drawdown_max": -0.711764428137557,
+              "jours": 365,
+              "rendement_cumule": -0.6769198995254009,
+              "sharpe": -1.2127393648933007,
+              "volatilite_annualisee": 0.7163872903262644
+            },
+            "2023": {
+              "drawdown_max": -0.27202988449518806,
+              "jours": 365,
+              "rendement_cumule": 0.8819727921834797,
+              "sharpe": 1.5910831589760979,
+              "volatilite_annualisee": 0.46492144203059355
+            },
+            "2024": {
+              "drawdown_max": -0.47055347816570336,
+              "jours": 366,
+              "rendement_cumule": 0.32394247049354563,
+              "sharpe": 0.7619996095249979,
+              "volatilite_annualisee": 0.6004088449975591
+            }
+          },
+          "part_jours_exposition_max": 0.5331143951833607,
+          "rendement_annualise": 0.6702542082553651,
+          "rotation_annuelle": 18.357330500443794,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.4252949092278609,
+              "rendement_annualise": 0.6856574495431329,
+              "sharpe": 1.1109923849562788
+            },
+            "0.002": {
+              "frais_total": 1.5692241189802467,
+              "rendement_annualise": 0.6398648737731898,
+              "sharpe": 1.0704332715509
+            }
+          },
+          "sharpe": 1.097475431286616,
+          "sharpe_intervalle": {
+            "bas": 0.1503052051656793,
+            "haut": 2.1039806162838857,
+            "valeur": 1.097475431286616
+          },
+          "sortino": 1.627403468220271,
+          "valeur_finale": 13.035677262647235,
+          "volatilite_annualisee": 0.6783201726206104,
+          "volatilite_sur_cible": 0.9180730073456159
+        },
+        "LSTM": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.42797965125773163,
+              "jours": 61,
+              "rendement_cumule": 0.06260236676240827,
+              "sharpe": 0.9304773708124192,
+              "volatilite_annualisee": 1.1679108404865675
+            },
+            "ftx": {
+              "drawdown_max": -0.3081027986201106,
+              "jours": 61,
+              "rendement_cumule": -0.22781751671445327,
+              "sharpe": -1.9242766740921877,
+              "volatilite_annualisee": 0.6800337316479613
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5601790191506437,
+              "jours": 61,
+              "rendement_cumule": -0.5239618004531068,
+              "sharpe": -5.2951166498407485,
+              "volatilite_annualisee": 0.7768386716249848
+            }
+          },
+          "drawdown_max": -0.781452481495958,
+          "exposition_moyenne": 0.8839345386841383,
+          "frais_annuels_en_rendement": 0.016839109640224066,
+          "frais_total": 0.7291824170248292,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.47595575989472894,
+              "jours": 366,
+              "rendement_cumule": 4.0638026519442105,
+              "sharpe": 2.5447027159300992,
+              "volatilite_annualisee": 0.7503016141999072
+            },
+            "2021": {
+              "drawdown_max": -0.45725904165996234,
+              "jours": 365,
+              "rendement_cumule": 2.1187294803309555,
+              "sharpe": 1.874936819670481,
+              "volatilite_annualisee": 0.7617197500413961
+            },
+            "2022": {
+              "drawdown_max": -0.7152182658280875,
+              "jours": 365,
+              "rendement_cumule": -0.6832371492481426,
+              "sharpe": -1.264312719109599,
+              "volatilite_annualisee": 0.7075518568657404
+            },
+            "2023": {
+              "drawdown_max": -0.27327104768874577,
+              "jours": 365,
+              "rendement_cumule": 0.9052309517019606,
+              "sharpe": 1.614690220547017,
+              "volatilite_annualisee": 0.46604833943493984
+            },
+            "2024": {
+              "drawdown_max": -0.4795436166208551,
+              "jours": 366,
+              "rendement_cumule": 0.29827618361113406,
+              "sharpe": 0.7307925249373955,
+              "volatilite_annualisee": 0.5946642580324845
+            }
+          },
+          "part_jours_exposition_max": 0.4849480021893815,
+          "rendement_annualise": 0.6529567757208155,
+          "rotation_annuelle": 16.839109640224066,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.37386371682647407,
+              "rendement_annualise": 0.6669343617302357,
+              "sharpe": 1.1022787526665165
+            },
+            "0.002": {
+              "frais_total": 1.3873160293166613,
+              "rendement_annualise": 0.6253489719381147,
+              "sharpe": 1.0644452297406584
+            }
+          },
+          "sharpe": 1.089670367496128,
+          "sharpe_intervalle": {
+            "bas": 0.13832077295026146,
+            "haut": 2.0823156454473866,
+            "valeur": 1.089670367496128
+          },
+          "sortino": 1.6057862307082482,
+          "valeur_finale": 12.37380987396725,
+          "volatilite_annualisee": 0.6667052624656421,
+          "volatilite_sur_cible": 0.9023527974411627
+        },
+        "Persistance": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.3926071065349239,
+              "jours": 61,
+              "rendement_cumule": 0.1447342501918618,
+              "sharpe": 1.2982052947181695,
+              "volatilite_annualisee": 1.0989664904334326
+            },
+            "ftx": {
+              "drawdown_max": -0.2983965003997715,
+              "jours": 61,
+              "rendement_cumule": -0.2190774063104155,
+              "sharpe": -1.9670576366159078,
+              "volatilite_annualisee": 0.643573755193047
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5236045631218069,
+              "jours": 61,
+              "rendement_cumule": -0.48621849533807293,
+              "sharpe": -4.982907142142833,
+              "volatilite_annualisee": 0.740653960739006
+            }
+          },
+          "drawdown_max": -0.7836680144262956,
+          "exposition_moyenne": 0.8596433688125765,
+          "frais_annuels_en_rendement": 0.033481886554796746,
+          "frais_total": 1.2695663203731442,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.44189196617487636,
+              "jours": 366,
+              "rendement_cumule": 4.67322231911112,
+              "sharpe": 2.696915602811481,
+              "volatilite_annualisee": 0.7471479400790831
+            },
+            "2021": {
+              "drawdown_max": -0.4711354188624327,
+              "jours": 365,
+              "rendement_cumule": 1.2651107027540363,
+              "sharpe": 1.5060099327508383,
+              "volatilite_annualisee": 0.7098140374038829
+            },
+            "2022": {
+              "drawdown_max": -0.711013610734154,
+              "jours": 365,
+              "rendement_cumule": -0.6783612026873591,
+              "sharpe": -1.3116717872992525,
+              "volatilite_annualisee": 0.6834449918471248
+            },
+            "2023": {
+              "drawdown_max": -0.26925967876066725,
+              "jours": 365,
+              "rendement_cumule": 0.8357410982512883,
+              "sharpe": 1.5507337843509152,
+              "volatilite_annualisee": 0.4593236436153937
+            },
+            "2024": {
+              "drawdown_max": -0.4540308903945167,
+              "jours": 366,
+              "rendement_cumule": 0.27227506879462604,
+              "sharpe": 0.701350439953459,
+              "volatilite_annualisee": 0.5722898810708335
+            }
+          },
+          "part_jours_exposition_max": 0.5232621784345922,
+          "rendement_annualise": 0.5729699951790597,
+          "rotation_annuelle": 33.48188655479674,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.6654052766085692,
+              "rendement_annualise": 0.5995299454627234,
+              "sharpe": 1.0516417374544835
+            },
+            "0.002": {
+              "frais_total": 2.3136926437118905,
+              "rendement_annualise": 0.5211557684253105,
+              "sharpe": 0.9736985594002016
+            }
+          },
+          "sharpe": 1.025668251914099,
+          "sharpe_intervalle": {
+            "bas": 0.06065211947273788,
+            "haut": 2.005306648382609,
+            "valeur": 1.025668251914099
+          },
+          "sortino": 1.5282493335607843,
+          "valeur_finale": 9.653395782102555,
+          "volatilite_annualisee": 0.6442999524061879,
+          "volatilite_sur_cible": 0.8720283117232672
+        },
+        "TFT": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.41007756891436375,
+              "jours": 61,
+              "rendement_cumule": 0.08167452792825625,
+              "sharpe": 1.0084428300649757,
+              "volatilite_annualisee": 1.1470173713745926
+            },
+            "ftx": {
+              "drawdown_max": -0.3136690406255137,
+              "jours": 61,
+              "rendement_cumule": -0.2304855537112469,
+              "sharpe": -1.8621720703739053,
+              "volatilite_annualisee": 0.7046329933520342
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5732163560150189,
+              "jours": 61,
+              "rendement_cumule": -0.5367633686722456,
+              "sharpe": -5.238602332227832,
+              "volatilite_annualisee": 0.8108146213959758
+            }
+          },
+          "drawdown_max": -0.788611204691825,
+          "exposition_moyenne": 0.8876928550866618,
+          "frais_annuels_en_rendement": 0.018946968092783463,
+          "frais_total": 0.8909632962265803,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.45627045369403096,
+              "jours": 366,
+              "rendement_cumule": 4.26172715136185,
+              "sharpe": 2.6444695498462383,
+              "volatilite_annualisee": 0.7299481414529498
+            },
+            "2021": {
+              "drawdown_max": -0.4381851286572511,
+              "jours": 365,
+              "rendement_cumule": 2.264994382517307,
+              "sharpe": 1.9194327276685375,
+              "volatilite_annualisee": 0.7715770747130979
+            },
+            "2022": {
+              "drawdown_max": -0.7217524183042034,
+              "jours": 365,
+              "rendement_cumule": -0.689595353946401,
+              "sharpe": -1.2359061361799122,
+              "volatilite_annualisee": 0.7282272439666789
+            },
+            "2023": {
+              "drawdown_max": -0.2724034502756775,
+              "jours": 365,
+              "rendement_cumule": 0.8982531963725005,
+              "sharpe": 1.6061933970338926,
+              "volatilite_annualisee": 0.4662962173871328
+            },
+            "2024": {
+              "drawdown_max": -0.4699247562479649,
+              "jours": 366,
+              "rendement_cumule": 0.2995617313248853,
+              "sharpe": 0.73120730433744,
+              "volatilite_annualisee": 0.5991110949960172
+            }
+          },
+          "part_jours_exposition_max": 0.5177887246852764,
+          "rendement_annualise": 0.6732968532314871,
+          "rotation_annuelle": 18.94696809278346,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.4582912032987774,
+              "rendement_annualise": 0.6892262533563336,
+              "sharpe": 1.1192088094853823
+            },
+            "0.002": {
+              "frais_total": 1.6842946258294265,
+              "rendement_annualise": 0.6418831467972823,
+              "sharpe": 1.0768384826043256
+            }
+          },
+          "sharpe": 1.1050889544113205,
+          "sharpe_intervalle": {
+            "bas": 0.17278501750227584,
+            "haut": 2.116220263205765,
+            "valeur": 1.1050889544113205
+          },
+          "sortino": 1.6405888826430797,
+          "valeur_finale": 13.154975062796119,
+          "volatilite_annualisee": 0.6697677751209538,
+          "volatilite_sur_cible": 0.9064977577666586
+        },
+        "Transformer": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.3982664405954879,
+              "jours": 61,
+              "rendement_cumule": 0.16228441367160884,
+              "sharpe": 1.3703937823898962,
+              "volatilite_annualisee": 1.1863302491075454
+            },
+            "ftx": {
+              "drawdown_max": -0.2905616278818359,
+              "jours": 61,
+              "rendement_cumule": -0.20652420046858422,
+              "sharpe": -1.7380555676740377,
+              "volatilite_annualisee": 0.6655708425841619
+            },
+            "terra_luna": {
+              "drawdown_max": -0.5492015108720252,
+              "jours": 61,
+              "rendement_cumule": -0.5138242138479722,
+              "sharpe": -5.294471362187707,
+              "volatilite_annualisee": 0.7564935499912748
+            }
+          },
+          "drawdown_max": -0.771238486737527,
+          "exposition_moyenne": 0.8889332969218965,
+          "frais_annuels_en_rendement": 0.018924761507680736,
+          "frais_total": 0.8556006994415495,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.4491536985786645,
+              "jours": 366,
+              "rendement_cumule": 4.226882541947006,
+              "sharpe": 2.6048130354817527,
+              "volatilite_annualisee": 0.7412867731202957
+            },
+            "2021": {
+              "drawdown_max": -0.46168634472398173,
+              "jours": 365,
+              "rendement_cumule": 2.2335318148077485,
+              "sharpe": 1.8874204166490318,
+              "volatilite_annualisee": 0.7859708090130707
+            },
+            "2022": {
+              "drawdown_max": -0.7068636724859456,
+              "jours": 365,
+              "rendement_cumule": -0.6732014914987143,
+              "sharpe": -1.223663752916741,
+              "volatilite_annualisee": 0.7065849770771894
+            },
+            "2023": {
+              "drawdown_max": -0.2714601035714328,
+              "jours": 365,
+              "rendement_cumule": 0.9242324177793093,
+              "sharpe": 1.6343035684226872,
+              "volatilite_annualisee": 0.4667257756456663
+            },
+            "2024": {
+              "drawdown_max": -0.481046386989296,
+              "jours": 366,
+              "rendement_cumule": 0.2893678517258955,
+              "sharpe": 0.7185977947888266,
+              "volatilite_annualisee": 0.5976186816909246
+            }
+          },
+          "part_jours_exposition_max": 0.5292829775588396,
+          "rendement_annualise": 0.6870111985524368,
+          "rotation_annuelle": 18.924761507680735,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.44010890283543114,
+              "rendement_annualise": 0.7030523234484358,
+              "sharpe": 1.1305994524664458
+            },
+            "0.002": {
+              "frais_total": 1.6174156845587693,
+              "rendement_annualise": 0.6553764857629627,
+              "sharpe": 1.0883141515604915
+            }
+          },
+          "sharpe": 1.1165074878924293,
+          "sharpe_intervalle": {
+            "bas": 0.19459372264104832,
+            "haut": 2.1270041816868477,
+            "valeur": 1.1165074878924293
+          },
+          "sortino": 1.6597343791352481,
+          "valeur_finale": 13.70358851788901,
+          "volatilite_annualisee": 0.6707220239329253,
+          "volatilite_sur_cible": 0.9077892866226828
+        },
+        "XGBoost": {
+          "crises": {
+            "covid": {
+              "drawdown_max": -0.40729789351660717,
+              "jours": 61,
+              "rendement_cumule": 0.1200941312863768,
+              "sharpe": 1.1930901312707445,
+              "volatilite_annualisee": 1.1575461672444405
+            },
+            "ftx": {
+              "drawdown_max": -0.3047911363863347,
+              "jours": 61,
+              "rendement_cumule": -0.22016053157107518,
+              "sharpe": -1.7208579086863278,
+              "volatilite_annualisee": 0.7133506195366578
+            },
+            "terra_luna": {
+              "drawdown_max": -0.587885672712608,
+              "jours": 61,
+              "rendement_cumule": -0.5552325360202494,
+              "sharpe": -5.273185614631437,
+              "volatilite_annualisee": 0.8455175858415199
+            }
+          },
+          "drawdown_max": -0.7866382602386449,
+          "exposition_moyenne": 0.8943895718117655,
+          "frais_annuels_en_rendement": 0.02170888965976477,
+          "frais_total": 0.9488227031566437,
+          "jours": 1827,
+          "par_annee": {
+            "2020": {
+              "drawdown_max": -0.4530635474346423,
+              "jours": 366,
+              "rendement_cumule": 4.048539924286829,
+              "sharpe": 2.521212754428557,
+              "volatilite_annualisee": 0.757675945468557
+            },
+            "2021": {
+              "drawdown_max": -0.47285140653952573,
+              "jours": 365,
+              "rendement_cumule": 2.2086128541635546,
+              "sharpe": 1.8674247852017738,
+              "volatilite_annualisee": 0.79300910177238
+            },
+            "2022": {
+              "drawdown_max": -0.7214619822714987,
+              "jours": 365,
+              "rendement_cumule": -0.6880906480200787,
+              "sharpe": -1.1974036631149856,
+              "volatilite_annualisee": 0.7405327201543729
+            },
+            "2023": {
+              "drawdown_max": -0.27218762755361237,
+              "jours": 365,
+              "rendement_cumule": 0.9066284878008664,
+              "sharpe": 1.621371375586462,
+              "volatilite_annualisee": 0.46400351640786125
+            },
+            "2024": {
+              "drawdown_max": -0.47175254521889354,
+              "jours": 366,
+              "rendement_cumule": 0.28265286248888244,
+              "sharpe": 0.7109190280604474,
+              "volatilite_annualisee": 0.5923284430832614
+            }
+          },
+          "part_jours_exposition_max": 0.5145046524356869,
+          "rendement_annualise": 0.652487902976209,
+          "rotation_annuelle": 21.70888965976477,
+          "sensibilite_frais": {
+            "0.0005": {
+              "frais_total": 0.4900021824262282,
+              "rendement_annualise": 0.6705251433660546,
+              "sharpe": 1.095239675762644
+            },
+            "0.002": {
+              "frais_total": 1.7796405780647762,
+              "rendement_annualise": 0.6169903507468681,
+              "sharpe": 1.0475294747611936
+            }
+          },
+          "sharpe": 1.0793400529407386,
+          "sharpe_intervalle": {
+            "bas": 0.14991484120681484,
+            "haut": 2.0614246693052105,
+            "valeur": 1.0793400529407386
+          },
+          "sortino": 1.5973195417023687,
+          "valeur_finale": 12.356251031040891,
+          "volatilite_annualisee": 0.6819360171978598,
+          "volatilite_sur_cible": 0.9229668752255947
+        }
+      },
+      "var": {
+        "jours_exclus_non_valides": 30,
+        "modeles": {
+          "CNN-LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 76,
+            "jours": 1797,
+            "p_valeur": 0.12400410647953901,
+            "statistique": 2.3660040456852585,
+            "taux": 0.042292710072342796
+          },
+          "GARCH(1,1)": {
+            "attendu": 0.050000000000000044,
+            "depassements": 67,
+            "jours": 1797,
+            "p_valeur": 0.009737359709855984,
+            "statistique": 6.682323857151005,
+            "taux": 0.03728436282693378
+          },
+          "GRU": {
+            "attendu": 0.050000000000000044,
+            "depassements": 72,
+            "jours": 1797,
+            "p_valeur": 0.04567550268144497,
+            "statistique": 3.993521722862397,
+            "taux": 0.04006677796327212
+          },
+          "HAR-RV": {
+            "attendu": 0.050000000000000044,
+            "depassements": 79,
+            "jours": 1797,
+            "p_valeur": 0.23091788321984272,
+            "statistique": 1.4351986687061071,
+            "taux": 0.0439621591541458
+          },
+          "LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 76,
+            "jours": 1797,
+            "p_valeur": 0.12400410647953901,
+            "statistique": 2.3660040456852585,
+            "taux": 0.042292710072342796
+          },
+          "Persistance": {
+            "attendu": 0.050000000000000044,
+            "depassements": 82,
+            "jours": 1797,
+            "p_valeur": 0.38877387584470047,
+            "statistique": 0.742773491517255,
+            "taux": 0.045631608235948806
+          },
+          "TFT": {
+            "attendu": 0.050000000000000044,
+            "depassements": 81,
+            "jours": 1797,
+            "p_valeur": 0.33032540386154996,
+            "statistique": 0.947621735062512,
+            "taux": 0.045075125208681135
+          },
+          "Transformer": {
+            "attendu": 0.050000000000000044,
+            "depassements": 84,
+            "jours": 1797,
+            "p_valeur": 0.5222463099459236,
+            "statistique": 0.4094548928188715,
+            "taux": 0.04674457429048414
+          },
+          "XGBoost": {
+            "attendu": 0.050000000000000044,
+            "depassements": 88,
+            "jours": 1797,
+            "p_valeur": 0.8407793185055285,
+            "statistique": 0.040359499293003864,
+            "taux": 0.04897050639955482
+          }
+        }
+      },
+      "vol_cible": 0.7388521034746547
+    }
+  },
+  "depend_de": {
+    "comparaison_modeles_sha256": "f35c646392950934a7725921780412ac3ec82f99156c0b144af440bcc8a5e6ea",
+    "volatilite_cible_sha256": "30d75e69781ab07f4e1a6fe6072d66bb220855bc9e14912d0ddca438b3849ef7"
+  },
+  "periode": [
+    "2020-01-01",
+    "2024-12-31"
+  ],
+  "qlike_moyenne_des_plis": {
+    "BTCUSDT": {
+      "CNN-LSTM": 0.30455404536107006,
+      "GARCH(1,1)": 0.43278339305127134,
+      "GRU": 0.30428544786593303,
+      "HAR-RV": 0.3440611369668022,
+      "LSTM": 0.3055776078889106,
+      "TFT": 0.32253081916390247,
+      "Transformer": 0.29710339205035613,
+      "XGBoost": 0.3209356207980398
+    },
+    "ETHUSDT": {
+      "CNN-LSTM": 0.24745143847910028,
+      "GARCH(1,1)": 0.4128316327567778,
+      "GRU": 0.2548250229571408,
+      "HAR-RV": 0.29260915150139877,
+      "LSTM": 0.2619920858132686,
+      "TFT": 0.25955570024152513,
+      "Transformer": 0.26052813149744913,
+      "XGBoost": 0.29253249278541826
+    }
+  }
+}

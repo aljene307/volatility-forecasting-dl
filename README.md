@@ -27,6 +27,7 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 - Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
 - Étape 5 — Baselines sur le développement (persistance, HAR-RV, GARCH, XGBoost ; 5 plis annuels) : [résultats](docs/RESULTATS_BASELINES.md) ; figures : [BTC](figures/figure_4_previsions_BTCUSDT.png), [ETH](figures/figure_4_previsions_ETHUSDT.png). Le test final reste fermé.
 - Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT ; entraînement `src/entrainer.py`, suivi `src/suivi.py`) : [comparaison de tous les modèles](docs/RESULTATS_DL.md) (`src/comparer.py`) ; figures : [BTC](figures/figure_5_deep_learning_BTCUSDT.png), [ETH](figures/figure_5_deep_learning_ETHUSDT.png) ; empreintes des poids : [manifeste](rapports/modeles_deep_learning.json). Le test final reste fermé.
+- Étape 7 — Stratégie de volatility targeting sur le développement (`src/strategie.py`) : [résultats](docs/STRATEGIE.md) ; figures : [BTC](figures/figure_6_strategie_BTCUSDT.png), [ETH](figures/figure_6_strategie_ETHUSDT.png). Le test final reste fermé.
 
 ## Règles et exceptions
 
@@ -67,6 +68,14 @@ Précision datée du 2026-11-19, écrite AVANT de lire les résultats du deep le
 Précision datée du 2026-11-19, écrite avant les contrôles de fuite sur les vraies données (section 14 des [règles](docs/REGLES.md)) :
 
 - seuil d'alerte de fuite (gain sur HAR-RV de plus de 20 %) écrit dans les règles ; test de l'avenir modifié des 5 réseaux sur les vraies données ; témoin « cible mélangée » (résultats : [contrôles de fuite](rapports/controles_fuite.json)).
+
+Précisions datées du 2026-11-19 pour la stratégie, écrites avant son calcul (section 15 des [règles](docs/REGLES.md)) :
+
+- jour non valide : aucune décision, l'exposition précédente reste en place ; exposition initiale nulle (l'entrée paie des frais) ; formules exactes des mesures, du bootstrap du Sharpe et de la VaR (jours non valides et leurs lendemains exclus).
+
+Sensibilité descriptive du 2026-11-19, décidée APRÈS avoir vu les gains par année (détails dans le [journal des choix](docs/CHOIX.md)) :
+
+- gain sur HAR-RV et Diebold-Mariano (p-valeurs brutes et ajustées par Holm) sans 2024, et calibration de HAR-RV par année ; sans effet sur le classement ni la sélection.
 
 Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
 

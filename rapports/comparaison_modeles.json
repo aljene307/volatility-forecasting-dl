@@ -865,6 +865,33 @@
           "moyenne_des_plis": 0.06721339228438852
         }
       },
+      "har_residus_par_pli": {
+        "pli 1": {
+          "annee": "2020",
+          "moyenne_residus_log": 0.01011042279117626,
+          "rapport_moyen_rv2_sur_h": 1.1084583458172836
+        },
+        "pli 2": {
+          "annee": "2021",
+          "moyenne_residus_log": 0.06221457021742989,
+          "rapport_moyen_rv2_sur_h": 1.2492416342280148
+        },
+        "pli 3": {
+          "annee": "2022",
+          "moyenne_residus_log": -0.01919802274796271,
+          "rapport_moyen_rv2_sur_h": 1.0579382181692885
+        },
+        "pli 4": {
+          "annee": "2023",
+          "moyenne_residus_log": -0.06764044208945022,
+          "rapport_moyen_rv2_sur_h": 1.0958979709147496
+        },
+        "pli 5": {
+          "annee": "2024",
+          "moyenne_residus_log": -0.022198552433177456,
+          "rapport_moyen_rv2_sur_h": 0.823607119277532
+        }
+      },
       "modeles": {
         "CNN-LSTM": {
           "crises": {
@@ -1983,6 +2010,146 @@
             "pli 5": 0.18161901435893468
           }
         }
+      },
+      "sensibilite_sans_2024": {
+        "classement_moyenne_des_plis": [
+          "Transformer",
+          "GRU",
+          "LSTM",
+          "CNN-LSTM",
+          "XGBoost",
+          "TFT",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ],
+        "diebold_mariano": {
+          "CNN-LSTM": {
+            "jours": 1446,
+            "moyenne_difference": -0.025034798342771534,
+            "p_valeur": 0.17368160979162298,
+            "p_valeur_holm": 0.521044829374869,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -1.3611401942605417
+          },
+          "GARCH(1,1)": {
+            "jours": 1446,
+            "moyenne_difference": 0.09768269423720866,
+            "p_valeur": 0.0024351997048781856,
+            "p_valeur_holm": 0.0170463979341473,
+            "retards_hac": 7,
+            "sens": "référence meilleure",
+            "significatif_holm": true,
+            "statistique": 3.036631209048879
+          },
+          "GRU": {
+            "jours": 1446,
+            "moyenne_difference": -0.028142410778563946,
+            "p_valeur": 0.018573831240209896,
+            "p_valeur_holm": 0.11144298744125938,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -2.3566424457824535
+          },
+          "LSTM": {
+            "jours": 1446,
+            "moyenne_difference": -0.026782418061416763,
+            "p_valeur": 0.05441032845423356,
+            "p_valeur_holm": 0.2449064126897043,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -1.9251208735459733
+          },
+          "TFT": {
+            "jours": 1446,
+            "moyenne_difference": -0.005746635063130662,
+            "p_valeur": 0.8375404467840416,
+            "p_valeur_holm": 1.0,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -0.20507751533414015
+          },
+          "Transformer": {
+            "jours": 1446,
+            "moyenne_difference": -0.03394765068391387,
+            "p_valeur": 0.04898128253794086,
+            "p_valeur_holm": 0.2449064126897043,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -1.9704167747788595
+          },
+          "XGBoost": {
+            "jours": 1446,
+            "moyenne_difference": -0.01612438205378271,
+            "p_valeur": 0.5203015604691943,
+            "p_valeur_holm": 1.0,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -0.6430378551457104
+          }
+        },
+        "gain_relatif_qlike": {
+          "CNN-LSTM": {
+            "jours_reunis": 0.06964305058525627,
+            "moyenne_des_plis": 0.06973359453694576
+          },
+          "GARCH(1,1)": {
+            "jours_reunis": -0.2717385905379298,
+            "moyenne_des_plis": -0.2726623539648201
+          },
+          "GRU": {
+            "jours_reunis": 0.0782879618444576,
+            "moyenne_des_plis": 0.07792688182427807
+          },
+          "HAR-RV": {
+            "jours_reunis": 0.0,
+            "moyenne_des_plis": 0.0
+          },
+          "LSTM": {
+            "jours_reunis": 0.07450466627726136,
+            "moyenne_des_plis": 0.07436369016670272
+          },
+          "TFT": {
+            "jours_reunis": 0.01598627601936216,
+            "moyenne_des_plis": 0.01513664374094018
+          },
+          "Transformer": {
+            "jours_reunis": 0.09443726773669249,
+            "moyenne_des_plis": 0.09391866985240589
+          },
+          "XGBoost": {
+            "jours_reunis": 0.04485561016519339,
+            "moyenne_des_plis": 0.0446921272926112
+          }
+        },
+        "jours": 1446,
+        "pli_exclu": "pli 5",
+        "qlike_jours_reunis": {
+          "CNN-LSTM": 0.33443823065851014,
+          "GARCH(1,1)": 0.45715572323849035,
+          "GRU": 0.33133061822271775,
+          "HAR-RV": 0.3594730290012817,
+          "LSTM": 0.3326906109398649,
+          "TFT": 0.35372639393815103,
+          "Transformer": 0.32552537831736783,
+          "XGBoost": 0.34334864694749895
+        },
+        "qlike_moyenne_des_plis": {
+          "CNN-LSTM": 0.33428093082248167,
+          "GARCH(1,1)": 0.45731712314638306,
+          "GRU": 0.33133676377009613,
+          "HAR-RV": 0.3593389257737285,
+          "LSTM": 0.33261715723265517,
+          "TFT": 0.3538997404720394,
+          "Transformer": 0.3255902918388675,
+          "XGBoost": 0.34327930476185886
+        }
       }
     },
     "ETHUSDT": {
@@ -2848,6 +3015,33 @@
         "XGBoost": {
           "jours_reunis": 0.000883183169673525,
           "moyenne_des_plis": 0.000261983316609077
+        }
+      },
+      "har_residus_par_pli": {
+        "pli 1": {
+          "annee": "2020",
+          "moyenne_residus_log": -0.0020991931737689793,
+          "rapport_moyen_rv2_sur_h": 1.0240999896557248
+        },
+        "pli 2": {
+          "annee": "2021",
+          "moyenne_residus_log": 0.05750718728218204,
+          "rapport_moyen_rv2_sur_h": 1.280844339369526
+        },
+        "pli 3": {
+          "annee": "2022",
+          "moyenne_residus_log": -0.015104132350264934,
+          "rapport_moyen_rv2_sur_h": 1.0344755701390012
+        },
+        "pli 4": {
+          "annee": "2023",
+          "moyenne_residus_log": -0.10482033417740191,
+          "rapport_moyen_rv2_sur_h": 0.9618955374015703
+        },
+        "pli 5": {
+          "annee": "2024",
+          "moyenne_residus_log": -0.032998218271635994,
+          "rapport_moyen_rv2_sur_h": 0.8796348654867261
         }
       },
       "modeles": {
@@ -3968,12 +4162,152 @@
             "pli 5": 0.15911239086123843
           }
         }
+      },
+      "sensibilite_sans_2024": {
+        "classement_moyenne_des_plis": [
+          "CNN-LSTM",
+          "GRU",
+          "TFT",
+          "LSTM",
+          "Transformer",
+          "HAR-RV",
+          "XGBoost",
+          "GARCH(1,1)"
+        ],
+        "diebold_mariano": {
+          "CNN-LSTM": {
+            "jours": 1446,
+            "moyenne_difference": -0.03422986194785196,
+            "p_valeur": 0.010863553843817509,
+            "p_valeur_holm": 0.06518132306290506,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -2.5503610100331944
+          },
+          "GARCH(1,1)": {
+            "jours": 1446,
+            "moyenne_difference": 0.13220214008072786,
+            "p_valeur": 0.0002915957765875802,
+            "p_valeur_holm": 0.002041170436113061,
+            "retards_hac": 7,
+            "sens": "référence meilleure",
+            "significatif_holm": true,
+            "statistique": 3.6315254973206215
+          },
+          "GRU": {
+            "jours": 1446,
+            "moyenne_difference": -0.027550120886813995,
+            "p_valeur": 0.05101916001826218,
+            "p_valeur_holm": 0.2550958000913109,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -1.952942963048971
+          },
+          "LSTM": {
+            "jours": 1446,
+            "moyenne_difference": -0.01822985656208528,
+            "p_valeur": 0.1851880528100902,
+            "p_valeur_holm": 0.7407522112403608,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -1.3255809917369854
+          },
+          "TFT": {
+            "jours": 1446,
+            "moyenne_difference": -0.021405980924104995,
+            "p_valeur": 0.29882371869650126,
+            "p_valeur_holm": 0.8964711560895038,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -1.0393331006625823
+          },
+          "Transformer": {
+            "jours": 1446,
+            "moyenne_difference": -0.017982481512996508,
+            "p_valeur": 0.36742596504229275,
+            "p_valeur_holm": 0.8964711560895038,
+            "retards_hac": 7,
+            "sens": "modèle meilleur",
+            "significatif_holm": false,
+            "statistique": -0.901588093136101
+          },
+          "XGBoost": {
+            "jours": 1446,
+            "moyenne_difference": 0.01029812516970775,
+            "p_valeur": 0.6946681778414813,
+            "p_valeur_holm": 0.8964711560895038,
+            "retards_hac": 7,
+            "sens": "référence meilleure",
+            "significatif_holm": false,
+            "statistique": 0.3926063171194358
+          }
+        },
+        "gain_relatif_qlike": {
+          "CNN-LSTM": {
+            "jours_reunis": 0.11416050151715555,
+            "moyenne_des_plis": 0.11359819048480524
+          },
+          "GARCH(1,1)": {
+            "jours_reunis": -0.44090924574132684,
+            "moyenne_des_plis": -0.4394897910066608
+          },
+          "GRU": {
+            "jours_reunis": 0.09188280169193967,
+            "moyenne_des_plis": 0.09132435680999189
+          },
+          "HAR-RV": {
+            "jours_reunis": 0.0,
+            "moyenne_des_plis": 0.0
+          },
+          "LSTM": {
+            "jours_reunis": 0.06079865501309921,
+            "moyenne_des_plis": 0.06004493324409212
+          },
+          "TFT": {
+            "jours_reunis": 0.07139139274021658,
+            "moyenne_des_plis": 0.07046269949653168
+          },
+          "Transformer": {
+            "jours_reunis": 0.059973630953410524,
+            "moyenne_des_plis": 0.05887879257806981
+          },
+          "XGBoost": {
+            "jours_reunis": -0.034345424350566346,
+            "moyenne_des_plis": -0.034671812125884945
+          }
+        },
+        "jours": 1446,
+        "pli_exclu": "pli 5",
+        "qlike_jours_reunis": {
+          "CNN-LSTM": 0.2656099380963693,
+          "GARCH(1,1)": 0.43204194012494906,
+          "GRU": 0.2722896791574072,
+          "HAR-RV": 0.2998398000442212,
+          "LSTM": 0.28160994348213597,
+          "TFT": 0.2784338191201162,
+          "Transformer": 0.2818573185312247,
+          "XGBoost": 0.31013792521392897
+        },
+        "qlike_moyenne_des_plis": {
+          "CNN-LSTM": 0.26576544563055426,
+          "GARCH(1,1)": 0.4315950640903567,
+          "GRU": 0.27244369839238614,
+          "HAR-RV": 0.29982502605213657,
+          "LSTM": 0.28182205237792785,
+          "TFT": 0.2786985453398851,
+          "Transformer": 0.28217169053349844,
+          "XGBoost": 0.3102205030260548
+        }
       }
     }
   },
   "depend_de": {
     "baselines_json_sha256": "c2017e1b5ccaec541bcc17432fbce6d0cc69dd26725160e0235e857ff13c3bb0",
-    "regles_sha256": "bc3ef1e878f1f582ed770d114c9e13ba6abf26007b3cc6b68f440fdb2c139929",
+    "regles_sha256": "7e19bd5408a540f0cf2a42e2538ae966b82e5451bcb8fff3a47fb41c26c0eade",
     "variables_empreinte_contenu": "bd18e8295196a8253be4e532b490ab4ccb1d729aecb1aaa76abdbe1a663c52a1"
   },
   "plis": [

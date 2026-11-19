@@ -480,6 +480,11 @@ def verifier_coherence(regles: dict) -> None:
     exiger(tm.get("methode") == "holm" and tm.get("significatif_selon") == "p_valeur_ajustee"
            and tm.get("p_valeurs_rapportees") == "brutes_et_ajustees",
            "Tests multiples : ajustement de Holm ; p-valeurs brutes et ajustées ; « significatif » selon la p-valeur ajustée.")
+    sp = regles.get("strategie", {}).get("precisions", {})
+    exiger(sp.get("date_precisions_strategie") == dt.date(2026, 11, 19),
+           "strategie.precisions.date_precisions_strategie doit être 2026-11-19.")
+    exiger(sp.get("jour_non_valide") == "pas_de_decision" and sp.get("exposition_initiale") == 0.0,
+           "Stratégie : aucune décision un jour non valide ; exposition initiale nulle.")
     cf = ev.get("controles_fuite", {})
     exiger(cf.get("date_controles_fuite") == dt.date(2026, 11, 19),
            "evaluation.controles_fuite.date_controles_fuite doit être 2026-11-19.")

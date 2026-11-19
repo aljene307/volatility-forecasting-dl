@@ -60,6 +60,34 @@ Sans effet sur le classement ni la sélection. Gain en moyenne des QLIKE moyens 
 | Transformer | −10,0 % | 17,4 % | 8,8 % | 18,0 % | 35,3 % |
 | TFT | −30,3 % | 13,7 % | −5,8 % | 19,8 % | 30,4 % |
 
+### Sensibilité sans 2024 (descriptif)
+
+Décidée APRÈS avoir vu les gains par année (écrit honnêtement dans `docs/CHOIX.md`) ; sans effet sur le classement ni la sélection. Mêmes calculs sans le pli 5 (1 446 jours évalués). Famille de Holm : les 7 comparaisons contre HAR-RV sans cette année.
+
+| Modèle | Gain avec toutes les années | Gain sans 2024 | Différence moyenne (DM) | p-valeur brute | p-valeur ajustée (Holm) | Significatif à 5 % (ajustée) |
+|---|---:|---:|---:|---:|---:|---|
+| GARCH(1,1) | −25,8 % | −27,3 % | 0,0977 | 0,0024 | 0,0170 | oui |
+| XGBoost | 6,7 % | 4,5 % | −0,0161 | 0,5203 | 1,0000 | non |
+| LSTM | 11,2 % | 7,4 % | −0,0268 | 0,0544 | 0,2449 | non |
+| GRU | 11,6 % | 7,8 % | −0,0281 | 0,0186 | 0,1114 | non |
+| CNN-LSTM | 11,5 % | 7,0 % | −0,0250 | 0,1737 | 0,5210 | non |
+| Transformer | 13,6 % | 9,4 % | −0,0339 | 0,0490 | 0,2449 | non |
+| TFT | 6,3 % | 1,5 % | −0,0057 | 0,8375 | 1,0000 | non |
+
+Gains en moyenne des QLIKE moyens par pli.
+
+### Résidus de HAR-RV par année (période évaluée, descriptif)
+
+Résidu = cible − prévision en log de la régression, avant la correction s² (qui relève volontairement la prévision pour viser la moyenne de RV² et non sa médiane) : une moyenne négative signifie un log prévu trop haut. Rapport RV²/h : variance réalisée sur variance prévue (correction comprise) ; sous 1, la variance prévue est trop haute en moyenne.
+
+| Année | Moyenne des résidus en log | Rapport moyen RV²/h |
+|---|---:|---:|
+| 2020 | 0,010 | 1,108 |
+| 2021 | 0,062 | 1,249 |
+| 2022 | −0,019 | 1,058 |
+| 2023 | −0,068 | 1,096 |
+| 2024 | −0,022 | 0,824 |
+
 ### Diebold-Mariano contre HAR-RV (plis réunis, QLIKE)
 
 Famille de Holm : les 7 comparaisons ci-dessous (test descriptif exclu). « Significatif » s'appuie sur la p-valeur ajustée.
@@ -181,6 +209,34 @@ Sans effet sur le classement ni la sélection. Gain en moyenne des QLIKE moyens 
 | Transformer | −17,8 % | −0,1 % | 11,0 % | 23,6 % | 34,0 % |
 | TFT | −19,0 % | 7,0 % | 7,6 % | 23,9 % | 30,6 % |
 
+### Sensibilité sans 2024 (descriptif)
+
+Décidée APRÈS avoir vu les gains par année (écrit honnêtement dans `docs/CHOIX.md`) ; sans effet sur le classement ni la sélection. Mêmes calculs sans le pli 5 (1 446 jours évalués). Famille de Holm : les 7 comparaisons contre HAR-RV sans cette année.
+
+| Modèle | Gain avec toutes les années | Gain sans 2024 | Différence moyenne (DM) | p-valeur brute | p-valeur ajustée (Holm) | Significatif à 5 % (ajustée) |
+|---|---:|---:|---:|---:|---:|---|
+| GARCH(1,1) | −41,1 % | −43,9 % | 0,1322 | 0,0003 | 0,0020 | oui |
+| XGBoost | 0,0 % | −3,5 % | 0,0103 | 0,6947 | 0,8965 | non |
+| LSTM | 10,5 % | 6,0 % | −0,0182 | 0,1852 | 0,7408 | non |
+| GRU | 12,9 % | 9,1 % | −0,0276 | 0,0510 | 0,2551 | non |
+| CNN-LSTM | 15,4 % | 11,4 % | −0,0342 | 0,0109 | 0,0652 | non |
+| Transformer | 11,0 % | 5,9 % | −0,0180 | 0,3674 | 0,8965 | non |
+| TFT | 11,3 % | 7,0 % | −0,0214 | 0,2988 | 0,8965 | non |
+
+Gains en moyenne des QLIKE moyens par pli.
+
+### Résidus de HAR-RV par année (période évaluée, descriptif)
+
+Résidu = cible − prévision en log de la régression, avant la correction s² (qui relève volontairement la prévision pour viser la moyenne de RV² et non sa médiane) : une moyenne négative signifie un log prévu trop haut. Rapport RV²/h : variance réalisée sur variance prévue (correction comprise) ; sous 1, la variance prévue est trop haute en moyenne.
+
+| Année | Moyenne des résidus en log | Rapport moyen RV²/h |
+|---|---:|---:|
+| 2020 | −0,002 | 1,024 |
+| 2021 | 0,058 | 1,281 |
+| 2022 | −0,015 | 1,034 |
+| 2023 | −0,105 | 0,962 |
+| 2024 | −0,033 | 0,880 |
+
 ### Diebold-Mariano contre HAR-RV (plis réunis, QLIKE)
 
 Famille de Holm : les 7 comparaisons ci-dessous (test descriptif exclu). « Significatif » s'appuie sur la p-valeur ajustée.
@@ -279,6 +335,10 @@ Chaque phrase ci-dessous est générée à partir des valeurs de `rapports/compa
 - BTC : le gain de CNN-LSTM sur HAR-RV est régulier : positif chaque année de 2020 à 2024 (robustesse, descriptif).
 - BTC : le gain de LSTM, GRU et Transformer sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2021, 2022, 2023 et 2024, négatif ou nul en 2020 (robustesse, descriptif).
 - BTC : le gain de TFT sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2021, 2023 et 2024, négatif ou nul en 2020 et 2022 (robustesse, descriptif).
+- BTC : sans 2024, aucun réseau ne fait significativement mieux que HAR-RV après ajustement de Holm (sensibilité décidée après avoir vu les résultats, descriptif).
+- BTC : sans 2024, LSTM, GRU, CNN-LSTM et Transformer perdent la significativité : leur avantage dépend en partie de 2024.
+- BTC : sans 2024, le modèle retenu (Transformer) a un QLIKE moyen par pli plus faible que celui de HAR-RV.
+- BTC : en 2024, la moyenne des résidus en log de HAR-RV est négative (log prévu trop haut), mais l'année où elle est la plus basse est 2023 ; le rapport moyen RV²/h y est sous 1 et c'est le plus bas des 5 années. Sur l'échelle de la variance (celle de QLIKE), HAR-RV surestime le plus en 2024 ; en log, non. Explication possible, non démontrée : la correction s², mesurée sur la validation interne du pli, relève trop la variance prévue cette année-là (descriptif).
 - BTC : pendant le Covid, le plus petit QLIKE (descriptif, sans test) est celui de CNN-LSTM.
 - BTC : pendant Terra-Luna, le plus petit QLIKE (descriptif, sans test) est celui de GRU.
 - BTC : pendant FTX, le plus petit QLIKE (descriptif, sans test) est celui de CNN-LSTM.
@@ -294,6 +354,10 @@ Chaque phrase ci-dessous est générée à partir des valeurs de `rapports/compa
 - ETH : le gain de LSTM, GRU, CNN-LSTM et TFT sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2021, 2022, 2023 et 2024, négatif ou nul en 2020 (robustesse, descriptif).
 - ETH : le gain de Transformer sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2022, 2023 et 2024, négatif ou nul en 2020 et 2021 (robustesse, descriptif).
 - ETH : pour les 5 réseaux, le plus grand gain annuel sur HAR-RV est en 2024 et le plus petit en 2020 (robustesse, descriptif). XGBoost a aussi son plus grand gain en 2024. Explication possible, non démontrée : HAR-RV est moins bon cette année-là, et l'écart ne tient pas seulement aux réseaux.
+- ETH : sans 2024, aucun réseau ne fait significativement mieux que HAR-RV après ajustement de Holm (sensibilité décidée après avoir vu les résultats, descriptif).
+- ETH : sans 2024, LSTM, GRU et CNN-LSTM perdent la significativité : leur avantage dépend en partie de 2024.
+- ETH : sans 2024, le modèle retenu (CNN-LSTM) a un QLIKE moyen par pli plus faible que celui de HAR-RV.
+- ETH : en 2024, la moyenne des résidus en log de HAR-RV est négative (log prévu trop haut), mais l'année où elle est la plus basse est 2023 ; le rapport moyen RV²/h y est sous 1 et c'est le plus bas des 5 années. Sur l'échelle de la variance (celle de QLIKE), HAR-RV surestime le plus en 2024 ; en log, non. Explication possible, non démontrée : la correction s², mesurée sur la validation interne du pli, relève trop la variance prévue cette année-là (descriptif).
 - ETH : pendant le Covid, le plus petit QLIKE (descriptif, sans test) est celui de CNN-LSTM.
 - ETH : pendant Terra-Luna, le plus petit QLIKE (descriptif, sans test) est celui de CNN-LSTM.
 - ETH : pendant FTX, le plus petit QLIKE (descriptif, sans test) est celui de CNN-LSTM.

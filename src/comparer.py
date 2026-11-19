@@ -198,6 +198,51 @@ def robustesse(table: pd.DataFrame, sortie: dict) -> dict:
             "gain_par_graine": par_graine, "gain_par_pli": par_pli}
 
 
+def sensibilite_sans_derniere_annee(table: pd.DataFrame, regles: dict) -> dict:
+    """Sensibilité descriptive décidée APRÈS avoir vu les gains par année : mêmes calculs sans le dernier pli (2024).
+    Sans effet sur le classement ni la sélection."""
+    plis = list(dict.fromkeys(table["pli"]))
+    exclu = plis[-1]
+    t = table[table["pli"] != exclu]
+    cible = t["cible"].to_numpy()
+    pertes_m = {m: B.pertes(cible, t[m].to_numpy())["qlike"] for m in SELECTIONNABLES}
+    reunis = {m: float(p.mean()) for m, p in pertes_m.items()}
+    moy_plis = {m: float(np.mean([B.pertes(g["cible"].to_numpy(), g[m].to_numpy())["qlike"].mean() for _, g in t.groupby("pli", sort=False)]))
+                for m in SELECTIONNABLES}
+    dm = {m: EV.diebold_mariano(pertes_m[m], pertes_m["HAR-RV"]) for m in SELECTIONNABLES if m != "HAR-RV"}
+    ajustees = EV.holm({m: x["p_valeur"] for m, x in dm.items()})
+    seuil = regles["evaluation"]["diebold_mariano"]["seuil"]
+    for m, x in dm.items():
+        x["p_valeur_holm"] = ajustees[m]
+        x["significatif_holm"] = ajustees[m] < seuil
+    return {"pli_exclu": exclu, "jours": int(len(t)), "qlike_jours_reunis": reunis, "qlike_moyenne_des_plis": moy_plis,
+            "gain_relatif_qlike": {m: {"jours_reunis": (reunis["HAR-RV"] - reunis[m]) / reunis["HAR-RV"],
+                                       "moyenne_des_plis": (moy_plis["HAR-RV"] - moy_plis[m]) / moy_plis["HAR-RV"]}
+                                   for m in SELECTIONNABLES},
+            "diebold_mariano": dm,
+            "classement_moyenne_des_plis": sorted(SELECTIONNABLES, key=lambda m: moy_plis[m])}
+
+
+def residus_har_par_pli(calcul: dict, table: pd.DataFrame) -> dict:
+    """Calibration de HAR-RV sur chaque pli évalué (descriptif) :
+    - moyenne des résidus en log : cible − prévision log de la régression (avant la correction s², qui relève
+      volontairement la prévision pour viser la moyenne de RV² et non sa médiane) ; négative : log trop haut ;
+    - rapport moyen RV²/h sur l'échelle de la variance (h = variance prévue, correction comprise) ; 1 si la variance
+      prévue est bien calibrée en moyenne, sous 1 si elle est trop haute."""
+    sortie = {}
+    for bloc in calcul["decoupages"]:
+        d, s = bloc["decoupage"], bloc["sortie"]
+        if "evaluation" not in s:
+            continue
+        G.refuser_si_test([dt.date.fromisoformat(x) for x in s["evaluation"]["date_cible"]], "résidus de HAR-RV")
+        cible = np.array(s["evaluation"]["cible"])
+        r = cible - np.array(s["evaluation"]["har_log"])
+        h = table.loc[(table["pli"] == d["nom"]).to_numpy(), "HAR-RV"].to_numpy()
+        sortie[d["nom"]] = {"annee": str(d["evaluation"][0])[:4], "moyenne_residus_log": float(r.mean()),
+                            "rapport_moyen_rv2_sur_h": float(np.mean(np.exp(2 * cible) / h))}
+    return sortie
+
+
 def verifier_alerte(resultats: dict, regles: dict) -> None:
     """Arrêt si un réseau bat HAR-RV de plus que le seuil des règles en QLIKE moyen (l'une ou l'autre définition)."""
     seuil = regles["evaluation"]["controles_fuite"]["seuil_alerte_gain_qlike"]
@@ -350,6 +395,27 @@ def rapport_markdown(rapport: dict, regles: dict) -> str:
                    "| Modèle | " + " | ".join(f"{p} ({annees[p]})" for p in annees) + " |", "|---|" + "---:|" * len(annees)]
         for m in [x for x in SELECTIONNABLES if x != "HAR-RV"]:
             lignes.append(f"| {m} | " + " | ".join(_n(100 * rb["gain_par_pli"][m][p], 1) + " %" for p in annees) + " |")
+        se = res["sensibilite_sans_2024"]
+        lignes += ["", f"### Sensibilité sans {annees[se['pli_exclu']]} (descriptif)", "",
+                   f"Décidée APRÈS avoir vu les gains par année (écrit honnêtement dans `docs/CHOIX.md`) ; sans effet sur le classement "
+                   f"ni la sélection. Mêmes calculs sans le {se['pli_exclu']} ({C.nombre_fr(se['jours'])} jours évalués). "
+                   "Famille de Holm : les 7 comparaisons contre HAR-RV sans cette année.", "",
+                   "| Modèle | Gain avec toutes les années | Gain sans " + annees[se["pli_exclu"]] + " | Différence moyenne (DM) | "
+                   "p-valeur brute | p-valeur ajustée (Holm) | Significatif à 5 % (ajustée) |", "|---|---:|---:|---:|---:|---:|---|"]
+        for m in [x for x in SELECTIONNABLES if x != "HAR-RV"]:
+            t = se["diebold_mariano"][m]
+            lignes.append(f"| {m} | {_n(100 * res['gain_relatif_qlike'][m]['moyenne_des_plis'], 1)} % | "
+                          f"{_n(100 * se['gain_relatif_qlike'][m]['moyenne_des_plis'], 1)} % | {_n(t['moyenne_difference'], 4)} | "
+                          f"{_p(t['p_valeur'])} | {_p(t['p_valeur_holm'])} | {'oui' if t['significatif_holm'] else 'non'} |")
+        lignes += ["", "Gains en moyenne des QLIKE moyens par pli.", "",
+                   "### Résidus de HAR-RV par année (période évaluée, descriptif)", "",
+                   "Résidu = cible − prévision en log de la régression, avant la correction s² (qui relève volontairement la prévision "
+                   "pour viser la moyenne de RV² et non sa médiane) : une moyenne négative signifie un log prévu trop haut. "
+                   "Rapport RV²/h : variance réalisée sur variance prévue (correction comprise) ; sous 1, la variance prévue est trop "
+                   "haute en moyenne.", "",
+                   "| Année | Moyenne des résidus en log | Rapport moyen RV²/h |", "|---|---:|---:|"]
+        for x in res["har_residus_par_pli"].values():
+            lignes.append(f"| {x['annee']} | {_n(x['moyenne_residus_log'])} | {_n(x['rapport_moyen_rv2_sur_h'])} |")
         lignes += ["", "### Diebold-Mariano contre HAR-RV (plis réunis, QLIKE)", "",
                    "Famille de Holm : les 7 comparaisons ci-dessous (test descriptif exclu). « Significatif » s'appuie sur la p-valeur ajustée.", "",
                    "| Modèle | Différence moyenne | Statistique (HLN) | p-valeur brute | p-valeur ajustée (Holm) | Sens | Significatif à 5 % (ajustée) |",
@@ -474,6 +540,41 @@ def lecture_des_resultats(rapport: dict, regles: dict) -> list[str]:
                           + (f" XGBoost a aussi son plus grand gain en {haut}. Explication possible, non démontrée : HAR-RV "
                              "est moins bon cette année-là, et l'écart ne tient pas seulement aux réseaux."
                              if annees[max(rb["gain_par_pli"]["XGBoost"], key=rb["gain_par_pli"]["XGBoost"].get)] == haut else ""))
+        se = res["sensibilite_sans_2024"]
+        an = annees[se["pli_exclu"]]
+        restent = [m for m in RESEAUX if se["diebold_mariano"][m]["significatif_holm"] and se["diebold_mariano"][m]["moyenne_difference"] < 0]
+        perdent = [m for m in mieux_sig if m not in restent]
+        if restent:
+            lignes.append(f"- {nom} : sans {an}, {_liste(restent)} {'fait' if len(restent) == 1 else 'font'} encore significativement "
+                          "mieux que HAR-RV après ajustement de Holm (sensibilité décidée après avoir vu les résultats, descriptif).")
+        else:
+            lignes.append(f"- {nom} : sans {an}, aucun réseau ne fait significativement mieux que HAR-RV après ajustement de Holm "
+                          "(sensibilité décidée après avoir vu les résultats, descriptif).")
+        if perdent:
+            lignes.append(f"- {nom} : sans {an}, {_liste(perdent)} {'perd' if len(perdent) == 1 else 'perdent'} la significativité : "
+                          f"{'son' if len(perdent) == 1 else 'leur'} avantage dépend en partie de {an}.")
+        g_sans = se["gain_relatif_qlike"][retenu]["moyenne_des_plis"]
+        if retenu in RESEAUX:
+            lignes.append(f"- {nom} : sans {an}, le modèle retenu ({retenu}) a un QLIKE moyen par pli "
+                          f"{'plus faible que' if g_sans > 0 else 'plus élevé que ou égal à'} celui de HAR-RV.")
+        hr = res["har_residus_par_pli"]
+        x = hr[se["pli_exclu"]]
+        plus_bas = min(hr, key=lambda p: hr[p]["moyenne_residus_log"])
+        plus_bas_rapport = min(hr, key=lambda p: hr[p]["rapport_moyen_rv2_sur_h"])
+        lignes.append(f"- {nom} : en {an}, la moyenne des résidus en log de HAR-RV est "
+                      f"{'négative (log prévu trop haut)' if x['moyenne_residus_log'] < 0 else 'positive ou nulle (log prévu pas trop haut)'}"
+                      + (" et c'est l'année où elle est la plus basse" if plus_bas == se["pli_exclu"] else
+                         f", mais l'année où elle est la plus basse est {hr[plus_bas]['annee']}")
+                      + f" ; le rapport moyen RV²/h y est {'sous' if x['rapport_moyen_rv2_sur_h'] < 1 else 'au-dessus de'} 1"
+                      + (" et c'est le plus bas des 5 années." if plus_bas_rapport == se["pli_exclu"] else
+                         f" (le plus bas : {hr[plus_bas_rapport]['annee']}).")
+                      + {(True, True): f" HAR-RV surestime donc davantage en {an} que les autres années, en log comme en variance (descriptif).",
+                         (False, True): f" Sur l'échelle de la variance (celle de QLIKE), HAR-RV surestime le plus en {an} ; en log, "
+                                        "non. Explication possible, non démontrée : la correction s², mesurée sur la validation interne "
+                                        "du pli, relève trop la variance prévue cette année-là (descriptif).",
+                         (True, False): f" En log, HAR-RV surestime le plus en {an}, mais pas sur l'échelle de la variance (descriptif).",
+                         (False, False): f" Ces mesures ne montrent pas que HAR-RV surestime davantage en {an} que les autres années "
+                                         "(descriptif)."}[(plus_bas == se["pli_exclu"], plus_bas_rapport == se["pli_exclu"])])
         q, r = mod[b]["reunis"], mod["HAR-RV"]["reunis"]
         if (q["qlike"] < r["qlike"]) != (q["rmse"] < r["rmse"]):
             lignes.append(f"- {nom} : {b} est {'meilleur' if q['qlike'] < r['qlike'] else 'moins bon'} que HAR-RV en QLIKE mais "
@@ -510,6 +611,8 @@ def executer(regles: dict) -> dict:
         res["controles"] = {"XGBoost": controles["xgboost_validation"], **controles_dl,
                             "ecart_baselines_publiees": verifier_baselines(res, publie["actifs"][actif]),
                             "jours_evalues": G.compter(table["date_cible"])}
+        res["sensibilite_sans_2024"] = sensibilite_sans_derniere_annee(table, regles)
+        res["har_residus_par_pli"] = residus_har_par_pli(calcul, table)
         res["reglage"] = json.loads((DOSSIER_DL / "reglage.json").read_text(encoding="utf-8"))[actif]
         rapport["actifs"][actif] = res
         tables[actif] = table

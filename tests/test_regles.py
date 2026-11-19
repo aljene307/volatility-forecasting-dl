@@ -311,6 +311,8 @@ def test_temoin_chevauchement_rejete(periode, extrait):
         ('significatif_selon = "p_valeur_ajustee"', 'significatif_selon = "p_valeur_brute"', "Holm"),
         ("date_tests_multiples = 2026-11-19", "date_tests_multiples = 2026-12-01", "date_tests_multiples"),
         ("seuil_alerte_gain_qlike = 0.20", "seuil_alerte_gain_qlike = 1.5", "Seuil d'alerte"),
+        ('jour_non_valide = "pas_de_decision"', 'jour_non_valide = "decision_normale"', "aucune décision"),
+        ("date_precisions_strategie = 2026-11-19", "date_precisions_strategie = 2026-12-01", "date_precisions_strategie"),
         ("avenir_modifie_ecarts_admis = 0", "avenir_modifie_ecarts_admis = 3", "aucun écart"),
         ("avenir_modifie_jour = 2024-07-01", "avenir_modifie_jour = 2025-03-01", "à l'intérieur de la période évaluée"),
         ('sorties_journalieres = "sorties/"', 'sorties_journalieres = "rapports/"', "sorties/"),

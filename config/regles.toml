@@ -411,6 +411,26 @@ var_volatilite = "sigma_journaliere"       # exception du 2026-11-14 : sigma jou
 var_loi = "normale"                        # même loi pour tous les modèles, appliquée à la volatilité prévue
 var_test = "Kupiec"                        # test du nombre de dépassements (sévère attendu : queues épaisses)
 
+[strategie.precisions]                     # précisions datées du 2026-11-19, écrites AVANT le calcul de la stratégie
+date_precisions_strategie = 2026-11-19
+periode = "developpement_5_plis"           # rendements des jours 2020-01-01 à 2024-12-31 ; le test final reste fermé
+rendement = "simple_cloture_a_cloture_serie_remplacee"  # seuls les prix des jours valides servent
+jour_non_valide = "pas_de_decision"        # l'exposition de la dernière clôture valide reste en place jusqu'à la clôture
+                                           # valide suivante (le mouvement sur deux jours est porté par une exposition
+                                           # décidée avant tout ce mouvement) ; aucun frais ce jour-là
+var_jours_exclus = "jour_non_valide_et_lendemain"  # rendement nul ou sur deux jours : pas un rendement à un jour
+exposition_initiale = 0.0                  # avant le 2020-01-01 : tout en liquidités ; l'entrée paie des frais (achat simple compris)
+frais_base = "valeur_du_portefeuille_avant_le_jour"  # frais = taux × |variation d'exposition| × valeur du portefeuille
+derive_du_poids = "ignoree"                # limite : entre deux rééquilibrages, le poids réel dérive avec le prix
+quantile_var = "loi_normale_exacte"        # 1,6448536... (arrondi 1,6449 dans les textes)
+sharpe = "moyenne / ecart_type des rendements journaliers x racine(365)"  # taux sans risque nul
+sortino = "moyenne / racine(moyenne(min(r, 0)^2)) x racine(365)"
+rendement_annualise = "geometrique, 365 jours"
+rotation_annuelle = "somme |variation d'exposition| x 365 / nombre de jours"
+bootstrap_sharpe = "blocs_mobiles_memes_indices_pour_la_difference"  # 20 jours, 1000 tirages, graine 42 (section evaluation.bootstrap)
+comparaisons_principales = ["modele_retenu", "HAR-RV", "achat_simple"]  # les autres modèles sont descriptifs
+cible_atteinte_tolerance = 0.10            # présentation seulement : volatilité réalisée à ±10 % de la cible = « proche de la cible »
+
 [explicabilite]
 shap_modeles = ["XGBoost", "LSTM"]         # contributions des variables par SHAP
 attention_modeles = ["Transformer", "TFT"] # poids d'attention

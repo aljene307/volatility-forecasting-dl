@@ -89,16 +89,47 @@ def holm(p_valeurs: dict[str, float]) -> dict[str, float]:
     return {nom: ajustees[nom] for nom in p_valeurs}
 
 
-def bootstrap_moyenne(valeurs, tirages: int, taille_bloc: int, graine: int, niveau: float = 0.95) -> dict:
-    """Intervalle de confiance de la moyenne par bootstrap à blocs mobiles (percentiles)."""
-    x = np.asarray(valeurs, dtype="float64")
-    n = len(x)
+def indices_blocs(n: int, tirages: int, taille_bloc: int, graine: int) -> np.ndarray:
+    """Indices des rééchantillonnages par blocs mobiles : (tirages, n), blocs de jours consécutifs à débuts tirés au hasard."""
     if n < taille_bloc:
         raise ValueError(f"Série trop courte ({n}) pour des blocs de {taille_bloc} jours.")
     rng = np.random.default_rng(graine)
     blocs = math.ceil(n / taille_bloc)
     debuts = rng.integers(0, n - taille_bloc + 1, size=(tirages, blocs))
-    indices = (debuts[:, :, None] + np.arange(taille_bloc)).reshape(tirages, -1)[:, :n]
+    return (debuts[:, :, None] + np.arange(taille_bloc)).reshape(tirages, -1)[:, :n]
+
+
+def bootstrap_statistique(series: list, statistique, regles: dict) -> dict:
+    """Intervalle (percentiles) d'une statistique de une ou plusieurs séries de même longueur, rééchantillonnées avec
+    les MÊMES indices de blocs (ce qui garde le lien jour par jour, par exemple pour une différence de Sharpe)."""
+    b = regles["evaluation"]["bootstrap"]
+    xs = [np.asarray(s, dtype="float64") for s in series]
+    indices = indices_blocs(len(xs[0]), b["tirages"], b["taille_bloc_jours"], b["graine"])
+    valeurs = np.array([statistique(*[x[i] for x in xs]) for i in indices])
+    alpha = (1 - b["niveau_confiance"]) / 2
+    return {"valeur": float(statistique(*xs)), "bas": float(np.quantile(valeurs, alpha)), "haut": float(np.quantile(valeurs, 1 - alpha))}
+
+
+def kupiec(depassements: int, jours: int, p: float) -> dict:
+    """Test de Kupiec (couverture inconditionnelle) : LR = −2 ln[(1−p)^(n−x) p^x / ((1−x/n)^(n−x) (x/n)^x)],
+    loi du khi-deux à 1 degré de liberté."""
+    x, n = int(depassements), int(jours)
+    if not 0 <= x <= n or n == 0:
+        raise ValueError(f"Comptages incohérents : {x} dépassements sur {n} jours.")
+    taux = x / n
+
+    def log_vraisemblance(q: float) -> float:
+        return (n - x) * (math.log(1 - q) if n > x else 0.0) + (x * math.log(q) if x > 0 else 0.0)
+
+    lr = -2 * (log_vraisemblance(p) - log_vraisemblance(taux))
+    return {"depassements": x, "jours": n, "taux": taux, "attendu": p, "statistique": float(max(lr, 0.0)),
+            "p_valeur": float(stats.chi2.sf(max(lr, 0.0), df=1))}
+
+
+def bootstrap_moyenne(valeurs, tirages: int, taille_bloc: int, graine: int, niveau: float = 0.95) -> dict:
+    """Intervalle de confiance de la moyenne par bootstrap à blocs mobiles (percentiles)."""
+    x = np.asarray(valeurs, dtype="float64")
+    indices = indices_blocs(len(x), tirages, taille_bloc, graine)
     moyennes = x[indices].mean(axis=1)
     alpha = (1 - niveau) / 2
     return {"moyenne": float(x.mean()), "bas": float(np.quantile(moyennes, alpha)),

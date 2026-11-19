@@ -517,3 +517,29 @@ Les règles de ces contrôles (découpage, jour J, critère d'arrêt) ont été 
   - gain pli par pli : le gain des réseaux n'est pas régulier ; il est négatif en 2020 pour presque tous les réseaux et le plus grand en 2024 (de l'ordre de 30 % en 2024 pour chacun des 5 réseaux, sur les deux actifs). XGBoost suit la même tendance. Le seuil d'alerte s'applique au QLIKE moyen, pas à une année seule : il n'est pas déclenché ; c'est signalé ici pour la lecture.
 - Décisions prises seul (à valider) : critère « régulier » = gain positif chaque année de 2020 à 2024 ; sinon « pas régulier », avec les années positives et négatives ; la phrase sur l'année du plus grand gain est donnée comme explication possible, non démontrée. Le gain par graine est mesuré avec la moyenne des QLIKE moyens par pli (définition appliquée par la règle de sélection).
 - Recherche des mots interdits : le numéro du dossier personnel du PC n'est plus cherché qu'en dehors d'un nombre (il apparaissait par hasard au milieu d'un taux d'apprentissage décimal) ; témoins : un chemin qui le contient est trouvé, un nombre décimal qui le contient ne l'est pas.
+
+## 2026-11-19 — Étape 7 : sensibilité sans 2024, puis stratégie de volatility targeting (développement)
+
+Le test final reste fermé. Chiffres lus dans `rapports/comparaison_modeles.json` et `rapports/strategie.json`, présentés dans `docs/RESULTATS_DL.md` et `docs/STRATEGIE.md` (générés).
+
+### Sensibilité sans 2024 (décidée APRÈS avoir vu les gains par année)
+
+- Dit honnêtement : cette analyse a été décidée après avoir vu que le gain des réseaux était le plus grand en 2024. Elle est descriptive et ne change ni le classement ni la sélection (le Transformer reste retenu pour BTC, le CNN-LSTM pour ETH).
+- Résultat : sans 2024, les gains des réseaux sur HAR-RV restent positifs mais plus petits, et **aucun réseau ne fait significativement mieux que HAR-RV après ajustement de Holm**, sur aucun des deux actifs. L'avantage significatif constaté sur les 5 années dépend donc en partie de 2024.
+- Calibration de HAR-RV par année : sur l'échelle de la variance (rapport moyen RV²/h), 2024 est l'année où HAR-RV surestime le plus, pour les deux actifs ; en log (avant la correction s²), non : l'année la plus basse est 2023.
+- Erreur corrigée avant le commit : une première version comparait la moyenne des résidus « après correction s² ». Cette mesure est négative par construction (la correction relève volontairement la prévision pour viser la moyenne de RV² et non sa médiane) et conduisait à une phrase fausse. Elle est remplacée par le rapport moyen RV²/h.
+
+### Stratégie : précisions écrites avant le calcul (section 15 des règles)
+
+- **Jours non valides** : 15 par actif entre 2020 et 2024, les mêmes pour BTC et ETH, exactement les jours sans prévision. Problème de définition : la série remplacée y donne un rendement nul, et le lendemain porte un rendement sur deux jours ; une décision « à la clôture » d'un jour incomplet n'a pas de sens. Solution retenue, la plus prudente : aucune décision un jour non valide, l'exposition de la dernière clôture valide reste en place ; le mouvement sur deux jours est donc porté par une exposition décidée avant tout ce mouvement. Pour la VaR, le jour non valide et son lendemain sont exclus (30 jours par actif).
+- Décisions prises seul (à valider), toutes écrites dans `config/regles.toml` avant le calcul et commitées avec les résultats : exposition initiale nulle (l'entrée paie des frais, achat simple compris) ; frais proportionnels à la valeur du portefeuille ; dérive du poids entre deux rééquilibrages ignorée (limite) ; quantile exact de la loi normale pour la VaR ; seuil de présentation de ±10 % pour dire « proche de la cible ».
+- Ajouté pendant le calcul : une colonne « frais par an » (coût moyen en points de rendement), parce que les frais totaux, exprimés en part du capital de départ, grossissent avec la valeur du portefeuille et se lisaient mal.
+- Erreur corrigée avant le commit : la première phrase générée sur Kupiec attribuait les rejets aux « queues épaisses » (trop de dépassements), alors que tous les taux de dépassement sont sous 5 % : la VaR est trop prudente. La phrase suit maintenant le sens des rejets.
+
+### Résultats (lus dans le rapport généré)
+
+- Les stratégies pilotées par HAR-RV et par le modèle retenu réduisent un peu le drawdown maximal par rapport à l'achat simple, mais ont un Sharpe plus bas que l'achat simple sur la période (marché très haussier).
+- La différence de Sharpe entre le modèle retenu et HAR-RV est négative pour les deux actifs, avec un intervalle bootstrap qui contient 0.
+- Le classement par Sharpe ne suit pas le classement par QLIKE (corrélation de rang négative pour les deux actifs ; GARCH(1,1) a le meilleur Sharpe). Explication possible, non démontrée : GARCH change moins souvent d'exposition (rotation plus faible, donc moins de frais).
+- VaR : taux de dépassement sous 5 % pour tous les modèles ; Kupiec rejette surtout pour trop PEU de dépassements.
+- Durée : environ 23 s pour la stratégie des deux actifs ; deux exécutions donnent des fichiers identiques.
