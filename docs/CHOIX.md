@@ -592,3 +592,11 @@ Calcul fait après le commit des règles et des attentes (96b896d). Aucune valeu
   - la stratégie de la vérification commence avec une exposition nulle au 2024-01-01, comme le test commencera au 2025-01-01 : ses expositions jour par jour doivent être identiques à celles de la stratégie du développement ; seuls les frais du premier jour diffèrent (entrée depuis 0 contre ajustement depuis l'exposition du 2023-12-31), c'est attendu et rapporté ;
   - `src/strategie.py` accepte des bougies déjà coupées (argument facultatif, sans effet sur le calcul par défaut : `strategie.json` ne change que par l'empreinte citée).
 - Essai de la chaîne sur 2024 sans les préconditions (avant le commit, garde fermée) : écart nul sur toutes les métriques, toutes les expositions et toutes les prévisions de validation ; modèles du test final : écart nul sur leur validation.
+
+### Mode `--verification` officiel (après le commit 24fe5b4, dépôt propre et poussé)
+
+- Résultat dans `rapports/verification_test_2024.json` : **conforme**. Préconditions passées ; 74 empreintes vérifiées (modèles et normalisations du test final et du pli 5) ; modèles du test final : écart nul sur leur validation ; 366 jours de 2024 par actif, aucun en crise.
+- QLIKE, RMSE, MAE et nombre de jours des 10 modèles (persistance, HAR-RV, HAR-J, GARCH, XGBoost, 5 réseaux), pour les deux actifs : **écart nul** avec les chiffres publiés pour 2024 (pli 5 de `rapports/comparaison_modeles.json`).
+- Stratégie : expositions jour par jour identiques (écart nul) à celles de la stratégie du développement ; volatilité, drawdown et Sharpe de 2024 ne diffèrent qu'à la 4e décimale, à cause des seuls frais d'entrée du premier jour, comme prévu.
+- Les verdicts H1 à H6 calculés sur 2024 ne sont qu'un essai du programme : ils ne disent rien du test final.
+- Durée : 25 s. Le fichier `rapports/test_final.json` n'existe pas : le test final reste fermé.
