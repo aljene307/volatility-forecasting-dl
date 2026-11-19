@@ -364,6 +364,18 @@ famille_portee = "plis_reunis"             # tests principaux du développement 
 p_valeurs_rapportees = "brutes_et_ajustees"
 significatif_selon = "p_valeur_ajustee"    # les phrases « significatif » de la lecture des résultats
 
+[evaluation.controles_fuite]               # précision datée du 2026-11-19, écrite AVANT les contrôles de fuite sur les vraies données
+date_controles_fuite = 2026-11-19
+seuil_alerte_gain_qlike = 0.20             # un réseau qui bat HAR-RV de plus de 20 % en QLIKE moyen : arrêt, recherche d'une fuite
+seuil_alerte_definitions = "les_deux"      # QLIKE sur les jours réunis ET moyenne des QLIKE moyens par pli
+avenir_modifie_decoupage = "pli 5"         # le plus grand découpage qui a une période évaluée (celle du test final est fermée)
+avenir_modifie_jour = 2024-07-01           # J au milieu de la période évaluée du pli 5 ; bougies après la fin de J × 10 avec bruit
+avenir_modifie_epoques = 2
+avenir_modifie_ecarts_admis = 0            # prévisions des origines <= J identiques au bit près, pour les 5 réseaux
+temoin_cible_melangee_modele = "LSTM"      # combinaison retenue, graine 0 des plis, 5 plis, chaque actif
+temoin_cible_melangee_graine = 42          # permutation des cibles de la fenêtre d'ajustement seulement
+temoin_cible_melangee_arret = "gain_sur_har_rv_positif_ou_nul"  # selon l'une ou l'autre définition : arrêt, fuite probable
+
 [evaluation.bootstrap]
 niveau_confiance = 0.95                    # intervalles de confiance à 95 %
 methode = "blocs"                          # bootstrap par blocs (garde la dépendance temporelle)

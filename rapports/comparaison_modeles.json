@@ -1,0 +1,4045 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "classement": {
+        "applique": [
+          "Transformer",
+          "GRU",
+          "CNN-LSTM",
+          "LSTM",
+          "XGBoost",
+          "TFT",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ],
+        "identiques": true,
+        "jours_reunis": [
+          "Transformer",
+          "GRU",
+          "CNN-LSTM",
+          "LSTM",
+          "XGBoost",
+          "TFT",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ],
+        "meilleur_reseau": "Transformer",
+        "modele_retenu": "Transformer",
+        "moyenne_des_plis": [
+          "Transformer",
+          "GRU",
+          "CNN-LSTM",
+          "LSTM",
+          "XGBoost",
+          "TFT",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ]
+      },
+      "controles": {
+        "CNN-LSTM": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              33,
+              37,
+              38
+            ],
+            "meilleure_epoque_par_graine": [
+              13,
+              17,
+              18
+            ],
+            "moyenne_residus_log": -0.029554390299479042,
+            "mse_log_validation_par_graine": [
+              0.12319875004124063,
+              0.1174161327800101,
+              0.11750264220411809
+            ],
+            "s2": 0.11684184972211979,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              33,
+              35,
+              41
+            ],
+            "meilleure_epoque_par_graine": [
+              13,
+              15,
+              21
+            ],
+            "moyenne_residus_log": -0.002168923430345013,
+            "mse_log_validation_par_graine": [
+              0.07794512976414947,
+              0.0805945416128758,
+              0.08152872260783799
+            ],
+            "s2": 0.0780477160246876,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              44,
+              27,
+              27
+            ],
+            "meilleure_epoque_par_graine": [
+              24,
+              7,
+              7
+            ],
+            "moyenne_residus_log": -0.018949353572375188,
+            "mse_log_validation_par_graine": [
+              0.07801802951251476,
+              0.0760496797815178,
+              0.07709095621367862
+            ],
+            "s2": 0.0745057576317758,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              30,
+              32,
+              34
+            ],
+            "meilleure_epoque_par_graine": [
+              10,
+              12,
+              14
+            ],
+            "moyenne_residus_log": -0.08880410188996592,
+            "mse_log_validation_par_graine": [
+              0.11193788366067602,
+              0.11386459619837744,
+              0.1150688739649484
+            ],
+            "s2": 0.10387337380744777,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              27,
+              28,
+              39
+            ],
+            "meilleure_epoque_par_graine": [
+              7,
+              8,
+              19
+            ],
+            "moyenne_residus_log": -0.056455415414213166,
+            "mse_log_validation_par_graine": [
+              0.17020118913124843,
+              0.16395540442928194,
+              0.16363659009737128
+            ],
+            "s2": 0.15518151192346408,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              32,
+              30,
+              29
+            ],
+            "meilleure_epoque_par_graine": [
+              12,
+              10,
+              9
+            ],
+            "moyenne_residus_log": 0.002595761518804932,
+            "mse_log_validation_par_graine": [
+              0.07202612930904699,
+              0.07106431345294237,
+              0.06837351333863348
+            ],
+            "s2": 0.06930722494859928,
+            "valeurs_finies": true
+          }
+        ],
+        "GRU": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              46,
+              51,
+              46
+            ],
+            "meilleure_epoque_par_graine": [
+              26,
+              31,
+              26
+            ],
+            "moyenne_residus_log": -0.026926415132358803,
+            "mse_log_validation_par_graine": [
+              0.11393336454560046,
+              0.11561131177170458,
+              0.1167782533012882
+            ],
+            "s2": 0.11343938192293299,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              37,
+              38,
+              48
+            ],
+            "meilleure_epoque_par_graine": [
+              17,
+              18,
+              28
+            ],
+            "moyenne_residus_log": -0.0690697281330434,
+            "mse_log_validation_par_graine": [
+              0.09551588829357148,
+              0.09115967105896301,
+              0.08423544511604879
+            ],
+            "s2": 0.08341328916453751,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              57,
+              52,
+              57
+            ],
+            "meilleure_epoque_par_graine": [
+              37,
+              32,
+              37
+            ],
+            "moyenne_residus_log": -0.020853789953683706,
+            "mse_log_validation_par_graine": [
+              0.07783451579918035,
+              0.07932097846091575,
+              0.07604593931096262
+            ],
+            "s2": 0.07535742111238557,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              54,
+              25,
+              42
+            ],
+            "meilleure_epoque_par_graine": [
+              34,
+              5,
+              22
+            ],
+            "moyenne_residus_log": -0.11752514514289894,
+            "mse_log_validation_par_graine": [
+              0.11963802657289449,
+              0.11974759775324788,
+              0.11653986510368322
+            ],
+            "s2": 0.10106503680211587,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              45,
+              37,
+              33
+            ],
+            "meilleure_epoque_par_graine": [
+              25,
+              17,
+              13
+            ],
+            "moyenne_residus_log": -0.05619434459545867,
+            "mse_log_validation_par_graine": [
+              0.15177297710095822,
+              0.16098382964686098,
+              0.15420212850065165
+            ],
+            "s2": 0.1507585838584795,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              36,
+              36,
+              44
+            ],
+            "meilleure_epoque_par_graine": [
+              16,
+              16,
+              24
+            ],
+            "moyenne_residus_log": 0.0013608242717105088,
+            "mse_log_validation_par_graine": [
+              0.06991653460892637,
+              0.06821419611369302,
+              0.06892323034560167
+            ],
+            "s2": 0.06788131294588132,
+            "valeurs_finies": true
+          }
+        ],
+        "LSTM": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              42,
+              45,
+              48
+            ],
+            "meilleure_epoque_par_graine": [
+              22,
+              25,
+              28
+            ],
+            "moyenne_residus_log": -0.06281465587907999,
+            "mse_log_validation_par_graine": [
+              0.11465225558354013,
+              0.11552160126548758,
+              0.11567392039115779
+            ],
+            "s2": 0.11026328111825025,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              36,
+              52,
+              51
+            ],
+            "meilleure_epoque_par_graine": [
+              16,
+              32,
+              31
+            ],
+            "moyenne_residus_log": -0.04363818848494354,
+            "mse_log_validation_par_graine": [
+              0.08522097670418226,
+              0.08370162255789251,
+              0.08312116142737602
+            ],
+            "s2": 0.07967554442921487,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              38,
+              64,
+              42
+            ],
+            "meilleure_epoque_par_graine": [
+              18,
+              44,
+              22
+            ],
+            "moyenne_residus_log": -0.03675326262169144,
+            "mse_log_validation_par_graine": [
+              0.07793760558701364,
+              0.07840332830725409,
+              0.07809106907109248
+            ],
+            "s2": 0.07534257799488156,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              67,
+              50,
+              36
+            ],
+            "meilleure_epoque_par_graine": [
+              47,
+              30,
+              16
+            ],
+            "moyenne_residus_log": -0.13707118320635073,
+            "mse_log_validation_par_graine": [
+              0.11893420980266792,
+              0.12347210015050802,
+              0.12816623736457422
+            ],
+            "s2": 0.0994813963398513,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              32,
+              43,
+              32
+            ],
+            "meilleure_epoque_par_graine": [
+              12,
+              23,
+              12
+            ],
+            "moyenne_residus_log": -0.07845289659808383,
+            "mse_log_validation_par_graine": [
+              0.1682234071723002,
+              0.16060934065150118,
+              0.16684683746362924
+            ],
+            "s2": 0.15644709651586974,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              43,
+              36,
+              46
+            ],
+            "meilleure_epoque_par_graine": [
+              23,
+              16,
+              26
+            ],
+            "moyenne_residus_log": -0.010060014780733696,
+            "mse_log_validation_par_graine": [
+              0.06752407129080713,
+              0.06720925928836151,
+              0.0684581800217439
+            ],
+            "s2": 0.06657663508839921,
+            "valeurs_finies": true
+          }
+        ],
+        "TFT": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              77,
+              74,
+              122
+            ],
+            "meilleure_epoque_par_graine": [
+              57,
+              54,
+              102
+            ],
+            "moyenne_residus_log": -0.021268962222587527,
+            "mse_log_validation_par_graine": [
+              0.12265626439859298,
+              0.13176702403180673,
+              0.11657636123459406
+            ],
+            "s2": 0.11367464729963189,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              57,
+              56,
+              47
+            ],
+            "meilleure_epoque_par_graine": [
+              37,
+              36,
+              27
+            ],
+            "moyenne_residus_log": -0.00657212523226837,
+            "mse_log_validation_par_graine": [
+              0.10165311886553642,
+              0.0876045795897506,
+              0.08929287949873572
+            ],
+            "s2": 0.08538683639813713,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              36,
+              47,
+              34
+            ],
+            "meilleure_epoque_par_graine": [
+              16,
+              27,
+              14
+            ],
+            "moyenne_residus_log": -0.05073975956624835,
+            "mse_log_validation_par_graine": [
+              0.08279766661402878,
+              0.0879290859575171,
+              0.0822184022643081
+            ],
+            "s2": 0.07956169122148955,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              64,
+              43,
+              54
+            ],
+            "meilleure_epoque_par_graine": [
+              44,
+              23,
+              34
+            ],
+            "moyenne_residus_log": -0.1198657019781512,
+            "mse_log_validation_par_graine": [
+              0.12202184358988724,
+              0.11868476024479414,
+              0.14897948567442174
+            ],
+            "s2": 0.111167495832562,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              29,
+              43,
+              55
+            ],
+            "meilleure_epoque_par_graine": [
+              9,
+              23,
+              35
+            ],
+            "moyenne_residus_log": -0.05466223432900751,
+            "mse_log_validation_par_graine": [
+              0.15719280461597496,
+              0.14823022454539544,
+              0.14264615897108412
+            ],
+            "s2": 0.1399280174744934,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              32,
+              64,
+              88
+            ],
+            "meilleure_epoque_par_graine": [
+              12,
+              44,
+              68
+            ],
+            "moyenne_residus_log": 0.016632276145589705,
+            "mse_log_validation_par_graine": [
+              0.07875788267344798,
+              0.07007916523254312,
+              0.06438799237068758
+            ],
+            "s2": 0.06665577183407112,
+            "valeurs_finies": true
+          }
+        ],
+        "Transformer": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              149,
+              132,
+              151
+            ],
+            "meilleure_epoque_par_graine": [
+              129,
+              112,
+              131
+            ],
+            "moyenne_residus_log": -0.0014030820805491153,
+            "mse_log_validation_par_graine": [
+              0.10953382261429846,
+              0.10867524406418279,
+              0.11204449078373202
+            ],
+            "s2": 0.10595419543113793,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              73,
+              65,
+              61
+            ],
+            "meilleure_epoque_par_graine": [
+              53,
+              45,
+              41
+            ],
+            "moyenne_residus_log": -0.07734198062371839,
+            "mse_log_validation_par_graine": [
+              0.0851768404523995,
+              0.0881172791032626,
+              0.09408901260256869
+            ],
+            "s2": 0.08165974507665134,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              42,
+              71,
+              71
+            ],
+            "meilleure_epoque_par_graine": [
+              22,
+              51,
+              51
+            ],
+            "moyenne_residus_log": -0.01873662179691404,
+            "mse_log_validation_par_graine": [
+              0.08190923157971505,
+              0.08345852669694183,
+              0.08567297288509453
+            ],
+            "s2": 0.08247667213621969,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              105,
+              44,
+              57
+            ],
+            "meilleure_epoque_par_graine": [
+              85,
+              24,
+              37
+            ],
+            "moyenne_residus_log": -0.10176494771812979,
+            "mse_log_validation_par_graine": [
+              0.1120741852114396,
+              0.12159299207130958,
+              0.13051093892827667
+            ],
+            "s2": 0.10899920791055134,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              68,
+              81,
+              92
+            ],
+            "meilleure_epoque_par_graine": [
+              48,
+              61,
+              72
+            ],
+            "moyenne_residus_log": -0.051436699174286435,
+            "mse_log_validation_par_graine": [
+              0.15544683361564202,
+              0.1498424825243385,
+              0.14812085790417584
+            ],
+            "s2": 0.14685273492389078,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              150,
+              164,
+              113
+            ],
+            "meilleure_epoque_par_graine": [
+              130,
+              144,
+              93
+            ],
+            "moyenne_residus_log": 0.007233250040507332,
+            "mse_log_validation_par_graine": [
+              0.06703732356288454,
+              0.059678940348143715,
+              0.06695760667153648
+            ],
+            "s2": 0.063149350000674,
+            "valeurs_finies": true
+          }
+        ],
+        "XGBoost": [
+          {
+            "arbres_par_graine": [
+              240,
+              258,
+              338
+            ],
+            "decoupage": "pli 1",
+            "moyenne_residus_log": -0.0195297214874956,
+            "s2": 0.12553006971152164
+          },
+          {
+            "arbres_par_graine": [
+              229,
+              215,
+              269
+            ],
+            "decoupage": "pli 2",
+            "moyenne_residus_log": -0.07257991010394588,
+            "s2": 0.08859782538502184
+          },
+          {
+            "arbres_par_graine": [
+              32,
+              46,
+              41
+            ],
+            "decoupage": "pli 3",
+            "moyenne_residus_log": 0.04097551714119737,
+            "s2": 0.08113434848157472
+          },
+          {
+            "arbres_par_graine": [
+              206,
+              185,
+              126
+            ],
+            "decoupage": "pli 4",
+            "moyenne_residus_log": -0.11916990153137356,
+            "s2": 0.13146475432626367
+          },
+          {
+            "arbres_par_graine": [
+              502,
+              287,
+              470
+            ],
+            "decoupage": "pli 5",
+            "moyenne_residus_log": -0.12987209186948928,
+            "s2": 0.1698595233525302
+          },
+          {
+            "arbres_par_graine": [
+              582,
+              624,
+              904
+            ],
+            "decoupage": "test final",
+            "moyenne_residus_log": -0.004597991227349324,
+            "s2": 0.08014153989675583
+          }
+        ],
+        "ecart_baselines_publiees": 0.0,
+        "jours_evalues": 1812
+      },
+      "diebold_mariano": {
+        "CNN-LSTM": {
+          "jours": 1812,
+          "moyenne_difference": -0.03963211447765571,
+          "p_valeur": 0.009691645891146999,
+          "p_valeur_holm": 0.029074937673440996,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -2.5893900733507698
+        },
+        "GARCH(1,1)": {
+          "jours": 1812,
+          "moyenne_difference": 0.08839449423179689,
+          "p_valeur": 0.0006538128907400804,
+          "p_valeur_holm": 0.003922877344440482,
+          "retards_hac": 7,
+          "sens": "référence meilleure",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": 3.4141938137534726
+        },
+        "GRU": {
+          "jours": 1812,
+          "moyenne_difference": -0.0400045650480553,
+          "p_valeur": 8.143674611233706e-05,
+          "p_valeur_holm": 0.0005700572227863594,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -3.9491384013910245
+        },
+        "LSTM": {
+          "jours": 1812,
+          "moyenne_difference": -0.03864876687925989,
+          "p_valeur": 0.0010120784862152408,
+          "p_valeur_holm": 0.0049758031828253686,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -3.2925122958782818
+        },
+        "TFT": {
+          "jours": 1812,
+          "moyenne_difference": -0.02193551247181052,
+          "p_valeur": 0.3335177994535536,
+          "p_valeur_holm": 0.49941711284948226,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": false,
+          "significatif_holm": false,
+          "statistique": -0.9673108904461397
+        },
+        "Transformer": {
+          "jours": 1812,
+          "moyenne_difference": -0.04724777925242784,
+          "p_valeur": 0.0009951606365650738,
+          "p_valeur_holm": 0.0049758031828253686,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -3.2972781871551597
+        },
+        "XGBoost": {
+          "jours": 1812,
+          "moyenne_difference": -0.023247387349463477,
+          "p_valeur": 0.24970855642474113,
+          "p_valeur_holm": 0.49941711284948226,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": false,
+          "significatif_holm": false,
+          "statistique": -1.151427107467068
+        }
+      },
+      "diebold_mariano_descriptif": {
+        "HAR-RV contre persistance": {
+          "jours": 1812,
+          "moyenne_difference": -0.06873700994020422,
+          "p_valeur": 7.565632787826043e-06,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "statistique": -4.4901608898962415
+        }
+      },
+      "gain_relatif_qlike": {
+        "CNN-LSTM": {
+          "jours_reunis": 0.11520414717082678,
+          "moyenne_des_plis": 0.11482578925949458
+        },
+        "GARCH(1,1)": {
+          "jours_reunis": -0.2569484988824412,
+          "moyenne_des_plis": -0.25786770591596864
+        },
+        "GRU": {
+          "jours_reunis": 0.11628680074335712,
+          "moyenne_des_plis": 0.11560645718818
+        },
+        "HAR-RV": {
+          "jours_reunis": 0.0,
+          "moyenne_des_plis": 0.0
+        },
+        "LSTM": {
+          "jours_reunis": 0.11234571473695942,
+          "moyenne_des_plis": 0.11185084551297289
+        },
+        "TFT": {
+          "jours_reunis": 0.06376298717280668,
+          "moyenne_des_plis": 0.06257701172735801
+        },
+        "Transformer": {
+          "jours_reunis": 0.13734165300618087,
+          "moyenne_des_plis": 0.13648081655027758
+        },
+        "XGBoost": {
+          "jours_reunis": 0.06757639527547152,
+          "moyenne_des_plis": 0.06721339228438852
+        }
+      },
+      "modeles": {
+        "CNN-LSTM": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.01970643710033833,
+              "qlike": 0.594975888943228,
+              "rmse": 0.039254861403681306
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.010894049818931014,
+              "qlike": 0.4829004219629004,
+              "rmse": 0.013859107356092939
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.011879700782869299,
+              "qlike": 0.21744593246457217,
+              "rmse": 0.015106399992692367
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00011020578436245156,
+              "moyenne": 0.00908572683564203,
+              "valeurs": [
+                0.00919449793708613,
+                0.008974140318801206,
+                0.009088542251038756
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0017227372589754368,
+              "moyenne": 0.3104235733522403,
+              "valeurs": [
+                0.309096243478268,
+                0.30980408973285906,
+                0.3123703868455938
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00014938738365386962,
+              "moyenne": 0.014705380078063891,
+              "valeurs": [
+                0.014777824842035724,
+                0.014533583334472442,
+                0.014804732057683505
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.011685875187674223,
+              "qlike": 0.3340305927090325,
+              "rmse": 0.01953128246677749
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.01077034744699726,
+              "qlike": 0.2701750091012723,
+              "rmse": 0.019320739613934608
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.009187899587095219,
+              "qlike": 0.2397048564329913,
+              "rmse": 0.01167844651615943
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006254113478656522,
+              "qlike": 0.49321326504663043,
+              "rmse": 0.009443692015188354
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.006822220447829207,
+              "qlike": 0.18564650351542347,
+              "rmse": 0.009080444456229764
+            }
+          },
+          "qlike_moyenne_des_plis": 0.30455404536107006,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.008927765667817663,
+            "mae_intervalle": {
+              "bas": 0.008065582844149146,
+              "haut": 0.010029897704714623,
+              "moyenne": 0.008927765667817663
+            },
+            "qlike": 0.3043842725269595,
+            "qlike_intervalle": {
+              "bas": 0.23761616870983454,
+              "haut": 0.4031618368089627,
+              "moyenne": 0.3043842725269595
+            },
+            "rmse": 0.014538524479185409,
+            "rmse_intervalle": {
+              "bas": 0.011459052747685322,
+              "haut": 0.01840968324310378,
+              "moyenne": 0.014538524479185409
+            }
+          }
+        },
+        "GARCH(1,1)": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.0368327061317224,
+              "qlike": 1.206849946962337,
+              "rmse": 0.0499267712105595
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.01782060244230637,
+              "qlike": 0.9608949643188224,
+              "rmse": 0.0211947066537622
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.015695205178505423,
+              "qlike": 0.37879078613074657,
+              "rmse": 0.020151312969515816
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.013946864032762038,
+              "qlike": 0.4819816146520434,
+              "rmse": 0.02322648384911519
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.012576161274214922,
+              "qlike": 0.4602004926072286,
+              "rmse": 0.022583381089257636
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.011954186245099778,
+              "qlike": 0.3863366526716335,
+              "rmse": 0.015307623635654079
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.009190609842054375,
+              "qlike": 0.5007497326546269,
+              "rmse": 0.011508809537214547
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.009161498972689374,
+              "qlike": 0.33464847267082437,
+              "rmse": 0.011998504772704288
+            }
+          },
+          "qlike_moyenne_des_plis": 0.43278339305127134,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.011351869650742544,
+            "mae_intervalle": {
+              "bas": 0.01006912462988608,
+              "haut": 0.012850981904830389,
+              "moyenne": 0.011351869650742544
+            },
+            "qlike": 0.43241088123641214,
+            "qlike_intervalle": {
+              "bas": 0.35560642292449385,
+              "haut": 0.5262709025126776,
+              "moyenne": 0.43241088123641214
+            },
+            "rmse": 0.017621464858645054,
+            "rmse_intervalle": {
+              "bas": 0.014064256558546906,
+              "haut": 0.021545584832715237,
+              "moyenne": 0.017621464858645054
+            }
+          }
+        },
+        "GRU": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.02184765376112093,
+              "qlike": 0.912933231862913,
+              "rmse": 0.04492153244585093
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.011300206873265274,
+              "qlike": 0.5474872673025526,
+              "rmse": 0.014523493777249027
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.011940963842921211,
+              "qlike": 0.206692364327189,
+              "rmse": 0.015320748302461006
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.0001101309339336216,
+              "moyenne": 0.009249411039475993,
+              "valeurs": [
+                0.009224207210704043,
+                0.009154066680788196,
+                0.00936995922693574
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0012533085092761747,
+              "moyenne": 0.30821396167703224,
+              "valeurs": [
+                0.30747464876519676,
+                0.30750619317815314,
+                0.3096610430877469
+              ]
+            },
+            "rmse": {
+              "ecart_type": 1.4406037763989803e-05,
+              "moyenne": 0.015171816262060914,
+              "valeurs": [
+                0.015155476854242254,
+                0.015177283793111387,
+                0.0151826881388291
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.011684244030243101,
+              "qlike": 0.36844421078753575,
+              "rmse": 0.021355093760446503
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.011069055812092953,
+              "qlike": 0.2720508851989582,
+              "rmse": 0.01897602625521935
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.009295399296326508,
+              "qlike": 0.24866559150986128,
+              "rmse": 0.011891563442358028
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.0066318214816084515,
+              "qlike": 0.4361863675840294,
+              "rmse": 0.009586788672754372
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.007013764186943185,
+              "qlike": 0.1960801842492808,
+              "rmse": 0.009333658706713818
+            }
+          },
+          "qlike_moyenne_des_plis": 0.30428544786593303,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.009122843186674535,
+            "mae_intervalle": {
+              "bas": 0.008284487186961686,
+              "haut": 0.010197368759757158,
+              "moyenne": 0.009122843186674535
+            },
+            "qlike": 0.30401182195655996,
+            "qlike_intervalle": {
+              "bas": 0.23912799588273378,
+              "haut": 0.3988477920036511,
+              "moyenne": 0.30401182195655996
+            },
+            "rmse": 0.015032851012689771,
+            "rmse_intervalle": {
+              "bas": 0.011602185363109896,
+              "haut": 0.0196649952529339,
+              "moyenne": 0.015032851012689771
+            }
+          }
+        },
+        "HAR-RV": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.01937773802496188,
+              "qlike": 0.8583751934652634,
+              "rmse": 0.04191823584013472
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.009130665668138423,
+              "qlike": 0.5325175207789362,
+              "rmse": 0.01416242898897229
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.012816592167489711,
+              "qlike": 0.2885787519466941,
+              "rmse": 0.01700383352763326
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.009702554529737383,
+              "qlike": 0.3445764799641378,
+              "rmse": 0.019846375251847254
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.010987590604675334,
+              "qlike": 0.3215634745228337,
+              "rmse": 0.01962834497082589
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.008864088786832881,
+              "qlike": 0.27580026170366806,
+              "rmse": 0.012385220022104782
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.0069072221117404435,
+              "qlike": 0.49541548690427434,
+              "rmse": 0.010033323613863469
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.00872285031711098,
+              "qlike": 0.28294998173909697,
+              "rmse": 0.011420175670391455
+            }
+          },
+          "qlike_moyenne_des_plis": 0.3440611369668022,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.009028832240979343,
+            "mae_intervalle": {
+              "bas": 0.00823585028327584,
+              "haut": 0.010086523817438011,
+              "moyenne": 0.009028832240979343
+            },
+            "qlike": 0.3440163870046153,
+            "qlike_intervalle": {
+              "bas": 0.2725339465020328,
+              "haut": 0.4421459860929442,
+              "moyenne": 0.3440163870046153
+            },
+            "rmse": 0.015218909003475724,
+            "rmse_intervalle": {
+              "bas": 0.011897199941466432,
+              "haut": 0.019382174629394157,
+              "moyenne": 0.015218909003475724
+            }
+          }
+        },
+        "LSTM": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.019595897080894473,
+              "qlike": 0.7378876938657247,
+              "rmse": 0.042207517732510864
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.010664038009271789,
+              "qlike": 0.5285556400579278,
+              "rmse": 0.01432295221362039
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.01340645142513245,
+              "qlike": 0.234918798566922,
+              "rmse": 0.01674541802368633
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 9.573558358474389e-05,
+              "moyenne": 0.009257070196841941,
+              "valeurs": [
+                0.009191675196324944,
+                0.009366955276378767,
+                0.009212580117822115
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.004799247059937145,
+              "moyenne": 0.31216114346449103,
+              "valeurs": [
+                0.31143199534945126,
+                0.31728324099668404,
+                0.3077681940473378
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.0001639597496131889,
+              "moyenne": 0.015136574815906046,
+              "valeurs": [
+                0.01499179934579751,
+                0.015314616925854868,
+                0.01510330817606576
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.011276525695112932,
+              "qlike": 0.34763634191885745,
+              "rmse": 0.020378608923279164
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.010517641253629159,
+              "qlike": 0.27558581675638555,
+              "rmse": 0.019172866368592344
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.009207130845798168,
+              "qlike": 0.24378962359385756,
+              "rmse": 0.012007840333661852
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.00721160905634264,
+              "qlike": 0.46345684666152015,
+              "rmse": 0.01027999549786986
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.0071312225945753815,
+              "qlike": 0.19741941051393228,
+              "rmse": 0.009422870144764546
+            }
+          },
+          "qlike_moyenne_des_plis": 0.3055776078889106,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.00905545548219809,
+            "mae_intervalle": {
+              "bas": 0.00822024097463132,
+              "haut": 0.010086457756334963,
+              "moyenne": 0.00905545548219809
+            },
+            "qlike": 0.30536762012535534,
+            "qlike_intervalle": {
+              "bas": 0.24020451202624876,
+              "haut": 0.39445106288454074,
+              "moyenne": 0.30536762012535534
+            },
+            "rmse": 0.014936101798035631,
+            "rmse_intervalle": {
+              "bas": 0.011643853844306258,
+              "haut": 0.01933008255841906,
+              "moyenne": 0.014936101798035631
+            }
+          }
+        },
+        "Persistance": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.024033164827951377,
+              "qlike": 0.700010809572894,
+              "rmse": 0.051162180951641684
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.00969258181827513,
+              "qlike": 0.5718436789811445,
+              "rmse": 0.015146929143618868
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.013930080087694476,
+              "qlike": 0.2751859463479014,
+              "rmse": 0.01899003938997122
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.012418869519786957,
+              "qlike": 0.3441852188422711,
+              "rmse": 0.024876961637400205
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.014938112165215322,
+              "qlike": 0.37571947314705,
+              "rmse": 0.025568742866044034
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.010738674891447022,
+              "qlike": 0.32936126227686574,
+              "rmse": 0.014946234939924034
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.008581062061147131,
+              "qlike": 0.6365324145798885,
+              "rmse": 0.013065260143401921
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.012053838779186202,
+              "qlike": 0.37675654759714067,
+              "rmse": 0.0167866614211221
+            }
+          },
+          "qlike_moyenne_des_plis": 0.4125109832886432,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.01173485953323063,
+            "mae_intervalle": {
+              "bas": 0.010611472031799376,
+              "haut": 0.013126878863374554,
+              "moyenne": 0.01173485953323063
+            },
+            "qlike": 0.41275339694481944,
+            "qlike_intervalle": {
+              "bas": 0.33882317979418913,
+              "haut": 0.5183309185043632,
+              "moyenne": 0.41275339694481944
+            },
+            "rmse": 0.019697792160960858,
+            "rmse_intervalle": {
+              "bas": 0.015730681978836338,
+              "haut": 0.024407417916006695,
+              "moyenne": 0.019697792160960858
+            }
+          }
+        },
+        "TFT": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.02075541045072625,
+              "qlike": 1.3632305731304188,
+              "rmse": 0.047104664141409625
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.013197788562834281,
+              "qlike": 0.6210072113473267,
+              "rmse": 0.016345528093301087
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.014292184810818514,
+              "qlike": 0.28062643388991015,
+              "rmse": 0.01802501312658332
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00047268222035948303,
+              "moyenne": 0.009634996214166677,
+              "valeurs": [
+                0.009311006496034854,
+                0.009416594598022032,
+                0.010177387548443148
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.017340861951030403,
+              "moyenne": 0.340075594090736,
+              "valeurs": [
+                0.32818322643324876,
+                0.33207064223706806,
+                0.3599729136018912
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00043659818676537564,
+              "moyenne": 0.015952042013664413,
+              "valeurs": [
+                0.01567496992345485,
+                0.01572582983148496,
+                0.01645532628605343
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.011776731078545724,
+              "qlike": 0.4489940773423523,
+              "rmse": 0.022312336297497824
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.010588987151639886,
+              "qlike": 0.27749632166943,
+              "rmse": 0.019151224001073955
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.010658920887479318,
+              "qlike": 0.2917895796783236,
+              "rmse": 0.013313644195189786
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006849999323084875,
+              "qlike": 0.3973189831980516,
+              "rmse": 0.009515165825130406
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.006445586920796983,
+              "qlike": 0.1970551339313546,
+              "rmse": 0.009121145084725267
+            }
+          },
+          "qlike_moyenne_des_plis": 0.32253081916390247,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.009249727816833678,
+            "mae_intervalle": {
+              "bas": 0.008339582998399807,
+              "haut": 0.010466130598770775,
+              "moyenne": 0.009249727816833678
+            },
+            "qlike": 0.3220808745328047,
+            "qlike_intervalle": {
+              "bas": 0.24879328507003023,
+              "haut": 0.4368605830107495,
+              "moyenne": 0.3220808745328047
+            },
+            "rmse": 0.015547404698368286,
+            "rmse_intervalle": {
+              "bas": 0.01173281277598612,
+              "haut": 0.020617007537597033,
+              "moyenne": 0.015547404698368286
+            }
+          }
+        },
+        "Transformer": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.02302170798784982,
+              "qlike": 0.9970789390624727,
+              "rmse": 0.045491734786391264
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.011339064512799016,
+              "qlike": 0.5547282965015319,
+              "rmse": 0.014690773462791535
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.013312176175875195,
+              "qlike": 0.23755109964513607,
+              "rmse": 0.016498563441803584
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00025627046855691724,
+              "moyenne": 0.009128512445155779,
+              "valeurs": [
+                0.009133224244551213,
+                0.009382394525203891,
+                0.00886991856571223
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.004115934488032126,
+              "moyenne": 0.30038693580372816,
+              "valeurs": [
+                0.3011816490689577,
+                0.3040475638715926,
+                0.29593159447063416
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00022259052645729117,
+              "moyenne": 0.01523703063297037,
+              "valeurs": [
+                0.015355525857196075,
+                0.015375306953193094,
+                0.014980259088521942
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.011716116008858255,
+              "qlike": 0.37898809520772114,
+              "rmse": 0.021472397433723842
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.010796070132680665,
+              "qlike": 0.26545725223914385,
+              "rmse": 0.019052335926521273
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.00937371675996733,
+              "qlike": 0.2514469619647881,
+              "rmse": 0.012146705069915144
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006564773733844042,
+              "qlike": 0.4064688579438169,
+              "rmse": 0.00947549085646522
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.006678613216635132,
+              "qlike": 0.18315579289631065,
+              "rmse": 0.009108379771750837
+            }
+          },
+          "qlike_moyenne_des_plis": 0.29710339205035613,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.009009666336975374,
+            "mae_intervalle": {
+              "bas": 0.008110612416677284,
+              "haut": 0.010070983135450596,
+              "moyenne": 0.009009666336975374
+            },
+            "qlike": 0.2967686077521874,
+            "qlike_intervalle": {
+              "bas": 0.23620832063465583,
+              "haut": 0.38090848669895877,
+              "moyenne": 0.2967686077521874
+            },
+            "rmse": 0.015083904763079825,
+            "rmse_intervalle": {
+              "bas": 0.011540148509267647,
+              "haut": 0.019680953663824934,
+              "moyenne": 0.015083904763079825
+            }
+          }
+        },
+        "XGBoost": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.01833145029667392,
+              "qlike": 0.9024814993029375,
+              "rmse": 0.04282940251527528
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.011875938633471127,
+              "qlike": 0.6327212032215217,
+              "rmse": 0.015644596271043264
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.01176722413196071,
+              "qlike": 0.35200580059691905,
+              "rmse": 0.018569982543954297
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 2.1741462781256764e-05,
+              "moyenne": 0.009203109894719954,
+              "valeurs": [
+                0.00921801487803239,
+                0.00921315232541883,
+                0.009178162480708641
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.002153471862578525,
+              "moyenne": 0.32204038848061134,
+              "valeurs": [
+                0.3211721579986359,
+                0.32045656592881555,
+                0.32449244151438256
+              ]
+            },
+            "rmse": {
+              "ecart_type": 5.351031814604496e-05,
+              "moyenne": 0.015176726268276442,
+              "valeurs": [
+                0.01521788040830626,
+                0.015196062939214938,
+                0.015116235457308128
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.010332571682953802,
+              "qlike": 0.36435576163435246,
+              "rmse": 0.0203718135662546
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.010720401617952246,
+              "qlike": 0.2892883949914448,
+              "rmse": 0.018887830654022577
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.009128458872741522,
+              "qlike": 0.3000522975803995,
+              "rmse": 0.01292576057446984
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.008054887508289837,
+              "qlike": 0.41942076484123864,
+              "rmse": 0.010645610013439498
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.007683948463607906,
+              "qlike": 0.2315608849427636,
+              "rmse": 0.010052060101711452
+            }
+          },
+          "qlike_moyenne_des_plis": 0.3209356207980398,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.00917432479171687,
+            "mae_intervalle": {
+              "bas": 0.00844518603212219,
+              "haut": 0.010115261930037032,
+              "moyenne": 0.00917432479171687
+            },
+            "qlike": 0.3207689996551518,
+            "qlike_intervalle": {
+              "bas": 0.26316021632427194,
+              "haut": 0.396224163508821,
+              "moyenne": 0.3207689996551518
+            },
+            "rmse": 0.015149430023337386,
+            "rmse_intervalle": {
+              "bas": 0.01186129266628457,
+              "haut": 0.01948978941726885,
+              "moyenne": 0.015149430023337386
+            }
+          }
+        }
+      },
+      "reglage": {
+        "CNN-LSTM": {
+          "combinaison": {
+            "couches": 2,
+            "dropout": 0.0,
+            "filtres": 32,
+            "lot": 32,
+            "noyau": 5,
+            "taille_cachee": 64,
+            "taux_apprentissage": 0.0009595449662719518,
+            "weight_decay": 0.00013046563604508194
+          },
+          "numero": 10,
+          "scores": [
+            0.1157809867560854,
+            0.1259845116960169,
+            0.12239486327815133,
+            0.12403468024513371,
+            0.1144740311602087,
+            0.1276613845505489,
+            0.12333644656046304,
+            0.12118422475526111,
+            0.12489497884662584,
+            0.12401736296944912,
+            0.11273752802847355,
+            0.12087778737156374
+          ],
+          "tirages_ecartes": 0
+        },
+        "GRU": {
+          "combinaison": {
+            "couches": 1,
+            "dropout": 0.3,
+            "lot": 64,
+            "taille_cachee": 32,
+            "taux_apprentissage": 0.002715430450064821,
+            "weight_decay": 0.0004779289783449201
+          },
+          "numero": 5,
+          "scores": [
+            0.11718804901926304,
+            0.1175727426311435,
+            0.1201959211479259,
+            0.12063098204796352,
+            0.1192689717189245,
+            0.11530147231674641,
+            0.1214161474822436,
+            0.11983293528381263,
+            0.12007410418521289,
+            0.1315004588762498,
+            0.1183007554504216,
+            0.11817869605373693
+          ],
+          "tirages_ecartes": 0
+        },
+        "LSTM": {
+          "combinaison": {
+            "couches": 1,
+            "dropout": 0.3,
+            "lot": 64,
+            "taille_cachee": 32,
+            "taux_apprentissage": 0.002715430450064821,
+            "weight_decay": 0.0004779289783449201
+          },
+          "numero": 5,
+          "scores": [
+            0.1179407532281674,
+            0.11710421157091215,
+            0.1208686811887669,
+            0.12665959048798783,
+            0.11847971321919311,
+            0.11193394070672895,
+            0.12564969180105476,
+            0.11646458613277684,
+            0.11608454503849776,
+            0.1185874955437795,
+            0.12294477813263328,
+            0.12258244672737542
+          ],
+          "tirages_ecartes": 0
+        },
+        "TFT": {
+          "combinaison": {
+            "dropout": 0.1,
+            "hidden_continuous_size": 8,
+            "hidden_size": 32,
+            "lot": 32,
+            "taux_apprentissage": 0.00021635783270058332,
+            "tetes_attention": 2,
+            "weight_decay": 2.0485933406128127e-05
+          },
+          "numero": 7,
+          "scores": [
+            0.1347541205016724,
+            0.11330660324832459,
+            0.11596067137525853,
+            0.12061735713742658,
+            0.11787745387479688,
+            0.12298864518213583,
+            0.12096252873108426,
+            0.11086524861841673,
+            0.1312895118775903,
+            0.11551811416331874,
+            0.1266138039574838,
+            0.1334523315606654
+          ],
+          "tirages_ecartes": 3
+        },
+        "Transformer": {
+          "combinaison": {
+            "couches": 2,
+            "d_model": 32,
+            "dimension_feed_forward": 64,
+            "dropout": 0.3,
+            "lot": 64,
+            "taux_apprentissage": 0.0002893366209839078,
+            "tetes": 4,
+            "weight_decay": 0.00031389139069626
+          },
+          "numero": 8,
+          "scores": [
+            0.10956634687652463,
+            0.1256549301243695,
+            0.11020752418592882,
+            0.10605788574164322,
+            0.11082146363715434,
+            0.11317741016545001,
+            0.11170150146182829,
+            0.10945372666650754,
+            0.10565865590356269,
+            0.10916122641799399,
+            0.11912455259589355,
+            0.1135384458573277
+          ],
+          "tirages_ecartes": 0
+        }
+      },
+      "robustesse": {
+        "definition": "gain sur HAR-RV, moyenne des QLIKE moyens par pli ; pli par pli : QLIKE moyen du pli",
+        "gain_par_graine": {
+          "CNN-LSTM": {
+            "effet_ensemble": 0.017512161830577105,
+            "gain_de_la_moyenne_des_graines": 0.11482578925949458,
+            "graines": [
+              0.10106796089767908,
+              0.09929328048375494,
+              0.0915796409053184
+            ],
+            "minimum": 0.0915796409053184,
+            "moyenne_des_graines_seules": 0.09731362742891747
+          },
+          "GRU": {
+            "effet_ensemble": 0.012199639152445,
+            "gain_de_la_moyenne_des_graines": 0.11560645718818,
+            "graines": [
+              0.10564722180832972,
+              0.10533849087084832,
+              0.09923474142802699
+            ],
+            "minimum": 0.09923474142802699,
+            "moyenne_des_graines_seules": 0.103406818035735
+          },
+          "LSTM": {
+            "effet_ensemble": 0.019752936582870015,
+            "gain_de_la_moyenne_des_graines": 0.11185084551297289,
+            "graines": [
+              0.09437699704771815,
+              0.0772389506109622,
+              0.10467777913162826
+            ],
+            "minimum": 0.0772389506109622,
+            "moyenne_des_graines_seules": 0.09209790893010288
+          },
+          "TFT": {
+            "effet_ensemble": 0.052622604604411434,
+            "gain_de_la_moyenne_des_graines": 0.06257701172735801,
+            "graines": [
+              0.04464916450557561,
+              0.03347101238266267,
+              -0.04825695551939855
+            ],
+            "minimum": -0.04825695551939855,
+            "moyenne_des_graines_seules": 0.009954407122946575
+          },
+          "Transformer": {
+            "effet_ensemble": 0.010548910261053646,
+            "gain_de_la_moyenne_des_graines": 0.13648081655027758,
+            "graines": [
+              0.12375364458362595,
+              0.11510665315819718,
+              0.13893542112584872
+            ],
+            "minimum": 0.11510665315819718,
+            "moyenne_des_graines_seules": 0.12593190628922393
+          },
+          "XGBoost": {
+            "effet_ensemble": 0.0036923584007590576,
+            "gain_de_la_moyenne_des_graines": 0.06721339228438852,
+            "graines": [
+              0.06608436433911384,
+              0.06806491408603554,
+              0.05641382322573901
+            ],
+            "minimum": 0.05641382322573901,
+            "moyenne_des_graines_seules": 0.06352103388362947
+          }
+        },
+        "gain_par_pli": {
+          "CNN-LSTM": {
+            "pli 1": 0.0306053601110641,
+            "pli 2": 0.1598081545107586,
+            "pli 3": 0.13087516686064368,
+            "pli 4": 0.004445201887823552,
+            "pli 5": 0.3438893249811031
+          },
+          "GARCH(1,1)": {
+            "pli 1": -0.3987652746995564,
+            "pli 2": -0.4311342209811536,
+            "pli 3": -0.40078421349262744,
+            "pli 4": -0.010767216389792063,
+            "pli 5": -0.18271247311617655
+          },
+          "GRU": {
+            "pli 1": -0.06926686007670052,
+            "pli 2": 0.15397454389789433,
+            "pli 3": 0.09838522279199814,
+            "pli 4": 0.11955443639913778,
+            "pli 5": 0.30701467784478326
+          },
+          "LSTM": {
+            "pli 1": -0.008880066204861377,
+            "pli 2": 0.14298159277783068,
+            "pli 3": 0.1160645675681198,
+            "pli 4": 0.06450876302324665,
+            "pli 5": 0.30228159302032004
+          },
+          "TFT": {
+            "pli 1": -0.30303170253837947,
+            "pli 2": 0.13704029326960934,
+            "pli 3": -0.05797426686938808,
+            "pli 4": 0.19800855302122852,
+            "pli 5": 0.30356901696832217
+          },
+          "Transformer": {
+            "pli 1": -0.09986640773382081,
+            "pli 2": 0.17447946277774723,
+            "pli 3": 0.08830049539636119,
+            "pli 4": 0.1795394599314252,
+            "pli 5": 0.3526919783822595
+          },
+          "XGBoost": {
+            "pli 1": -0.05740171723929966,
+            "pli 2": 0.10036923372370472,
+            "pli 3": -0.08793333163254526,
+            "pli 4": 0.15339593547611408,
+            "pli 5": 0.18161901435893468
+          }
+        }
+      }
+    },
+    "ETHUSDT": {
+      "classement": {
+        "applique": [
+          "CNN-LSTM",
+          "GRU",
+          "TFT",
+          "Transformer",
+          "LSTM",
+          "XGBoost",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ],
+        "identiques": true,
+        "jours_reunis": [
+          "CNN-LSTM",
+          "GRU",
+          "TFT",
+          "Transformer",
+          "LSTM",
+          "XGBoost",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ],
+        "meilleur_reseau": "CNN-LSTM",
+        "modele_retenu": "CNN-LSTM",
+        "moyenne_des_plis": [
+          "CNN-LSTM",
+          "GRU",
+          "TFT",
+          "Transformer",
+          "LSTM",
+          "XGBoost",
+          "HAR-RV",
+          "GARCH(1,1)"
+        ]
+      },
+      "controles": {
+        "CNN-LSTM": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              36,
+              45,
+              40
+            ],
+            "meilleure_epoque_par_graine": [
+              16,
+              25,
+              20
+            ],
+            "moyenne_residus_log": -0.006502281771548683,
+            "mse_log_validation_par_graine": [
+              0.11126563623603583,
+              0.10920029926396073,
+              0.11160488348944664
+            ],
+            "s2": 0.10967827672524251,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              31,
+              32,
+              45
+            ],
+            "meilleure_epoque_par_graine": [
+              11,
+              12,
+              25
+            ],
+            "moyenne_residus_log": -0.028689261947244242,
+            "mse_log_validation_par_graine": [
+              0.07005305072265258,
+              0.07301050857829731,
+              0.07115495462319175
+            ],
+            "s2": 0.06850168361587197,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              46,
+              35,
+              35
+            ],
+            "meilleure_epoque_par_graine": [
+              26,
+              15,
+              15
+            ],
+            "moyenne_residus_log": -0.01362066636750154,
+            "mse_log_validation_par_graine": [
+              0.06841929900103737,
+              0.07061911240426294,
+              0.06902189487066206
+            ],
+            "s2": 0.06724644808006927,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              37,
+              29,
+              40
+            ],
+            "meilleure_epoque_par_graine": [
+              17,
+              9,
+              20
+            ],
+            "moyenne_residus_log": -0.029582849663448128,
+            "mse_log_validation_par_graine": [
+              0.08843473054738568,
+              0.08662557619602211,
+              0.08503965129082292
+            ],
+            "s2": 0.08446638725226488,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              46,
+              47,
+              51
+            ],
+            "meilleure_epoque_par_graine": [
+              26,
+              27,
+              31
+            ],
+            "moyenne_residus_log": -0.03781905872102613,
+            "mse_log_validation_par_graine": [
+              0.12493886454172456,
+              0.1261347629640912,
+              0.11699516381591889
+            ],
+            "s2": 0.1186402051515274,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              44,
+              35,
+              36
+            ],
+            "meilleure_epoque_par_graine": [
+              24,
+              15,
+              16
+            ],
+            "moyenne_residus_log": -0.016372258726223478,
+            "mse_log_validation_par_graine": [
+              0.060839327495496615,
+              0.06148081500982774,
+              0.06039532425963732
+            ],
+            "s2": 0.05945229132936443,
+            "valeurs_finies": true
+          }
+        ],
+        "GRU": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              32,
+              32,
+              39
+            ],
+            "meilleure_epoque_par_graine": [
+              12,
+              12,
+              19
+            ],
+            "moyenne_residus_log": -0.017481725766486766,
+            "mse_log_validation_par_graine": [
+              0.10994468369593988,
+              0.10912510625460362,
+              0.10894732892902387
+            ],
+            "s2": 0.10852941536263236,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              41,
+              47,
+              40
+            ],
+            "meilleure_epoque_par_graine": [
+              21,
+              27,
+              20
+            ],
+            "moyenne_residus_log": -0.03608021508292242,
+            "mse_log_validation_par_graine": [
+              0.07332503976015375,
+              0.07315642885645186,
+              0.07287774462087797
+            ],
+            "s2": 0.07091228168875445,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              38,
+              25,
+              55
+            ],
+            "meilleure_epoque_par_graine": [
+              18,
+              5,
+              35
+            ],
+            "moyenne_residus_log": -0.03822791424476264,
+            "mse_log_validation_par_graine": [
+              0.07189278871694985,
+              0.0705614910511573,
+              0.07119815995440684
+            ],
+            "s2": 0.06858533702480445,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              52,
+              36,
+              32
+            ],
+            "meilleure_epoque_par_graine": [
+              32,
+              16,
+              12
+            ],
+            "moyenne_residus_log": -0.04282305362860907,
+            "mse_log_validation_par_graine": [
+              0.08775989519490102,
+              0.08798713945282914,
+              0.08892619540622673
+            ],
+            "s2": 0.08524391583428416,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              50,
+              40,
+              44
+            ],
+            "meilleure_epoque_par_graine": [
+              30,
+              20,
+              24
+            ],
+            "moyenne_residus_log": -0.03173560489176924,
+            "mse_log_validation_par_graine": [
+              0.12293284714497066,
+              0.12435884736817387,
+              0.12151151894455442
+            ],
+            "s2": 0.12087738866596763,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              61,
+              60,
+              51
+            ],
+            "meilleure_epoque_par_graine": [
+              41,
+              40,
+              31
+            ],
+            "moyenne_residus_log": 0.0035991000823249633,
+            "mse_log_validation_par_graine": [
+              0.06176363224539206,
+              0.06104186423357216,
+              0.061561755804152504
+            ],
+            "s2": 0.05959738485052908,
+            "valeurs_finies": true
+          }
+        ],
+        "LSTM": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              42,
+              45,
+              51
+            ],
+            "meilleure_epoque_par_graine": [
+              22,
+              25,
+              31
+            ],
+            "moyenne_residus_log": -0.016767951567672062,
+            "mse_log_validation_par_graine": [
+              0.10921431313747187,
+              0.11171762068742154,
+              0.11091049953095676
+            ],
+            "s2": 0.10971930713214202,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              41,
+              37,
+              39
+            ],
+            "meilleure_epoque_par_graine": [
+              21,
+              17,
+              19
+            ],
+            "moyenne_residus_log": -0.04609977248883721,
+            "mse_log_validation_par_graine": [
+              0.06871607844042761,
+              0.07334066294449006,
+              0.07399062612418732
+            ],
+            "s2": 0.06898931100995401,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              31,
+              30,
+              48
+            ],
+            "meilleure_epoque_par_graine": [
+              11,
+              10,
+              28
+            ],
+            "moyenne_residus_log": -0.03413012087140039,
+            "mse_log_validation_par_graine": [
+              0.07018113047014439,
+              0.0717426814674222,
+              0.06818054584335109
+            ],
+            "s2": 0.06834659873724858,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              43,
+              34,
+              47
+            ],
+            "meilleure_epoque_par_graine": [
+              23,
+              14,
+              27
+            ],
+            "moyenne_residus_log": -0.030894674803893744,
+            "mse_log_validation_par_graine": [
+              0.08747195237555061,
+              0.08667711679170075,
+              0.08654964328041732
+            ],
+            "s2": 0.08509572989967416,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              54,
+              63,
+              31
+            ],
+            "meilleure_epoque_par_graine": [
+              34,
+              43,
+              11
+            ],
+            "moyenne_residus_log": -0.05214208532267774,
+            "mse_log_validation_par_graine": [
+              0.12275322523679195,
+              0.1238637974219954,
+              0.12812393623844526
+            ],
+            "s2": 0.12101371371970421,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              79,
+              67,
+              73
+            ],
+            "meilleure_epoque_par_graine": [
+              59,
+              47,
+              53
+            ],
+            "moyenne_residus_log": -0.003530108533185076,
+            "mse_log_validation_par_graine": [
+              0.054927093050600326,
+              0.05766830724727081,
+              0.058013949251670735
+            ],
+            "s2": 0.05569657152135347,
+            "valeurs_finies": true
+          }
+        ],
+        "TFT": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              40,
+              42,
+              32
+            ],
+            "meilleure_epoque_par_graine": [
+              20,
+              22,
+              12
+            ],
+            "moyenne_residus_log": -0.0005510835458906783,
+            "mse_log_validation_par_graine": [
+              0.11013955449264275,
+              0.1134855536479218,
+              0.11677776284258196
+            ],
+            "s2": 0.10930732416547681,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              36,
+              31,
+              39
+            ],
+            "meilleure_epoque_par_graine": [
+              16,
+              11,
+              19
+            ],
+            "moyenne_residus_log": 0.002544521357989208,
+            "mse_log_validation_par_graine": [
+              0.06906506726199572,
+              0.07114618773502972,
+              0.06738454485154663
+            ],
+            "s2": 0.06724081058342182,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              25,
+              34,
+              25
+            ],
+            "meilleure_epoque_par_graine": [
+              5,
+              14,
+              5
+            ],
+            "moyenne_residus_log": 0.0034225728735706477,
+            "mse_log_validation_par_graine": [
+              0.07223017417928704,
+              0.06911113753359827,
+              0.07079755862365403
+            ],
+            "s2": 0.06801605703860043,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              47,
+              45,
+              28
+            ],
+            "meilleure_epoque_par_graine": [
+              27,
+              25,
+              8
+            ],
+            "moyenne_residus_log": -0.0029780020398459998,
+            "mse_log_validation_par_graine": [
+              0.08539596430973806,
+              0.09119539823535755,
+              0.09045669063783572
+            ],
+            "s2": 0.08507442161735997,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              42,
+              36,
+              54
+            ],
+            "meilleure_epoque_par_graine": [
+              22,
+              16,
+              34
+            ],
+            "moyenne_residus_log": -0.08205777222988152,
+            "mse_log_validation_par_graine": [
+              0.1276994778202834,
+              0.13702784195952158,
+              0.12994198790349767
+            ],
+            "s2": 0.11817892232225267,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              34,
+              71,
+              49
+            ],
+            "meilleure_epoque_par_graine": [
+              14,
+              51,
+              29
+            ],
+            "moyenne_residus_log": 0.014897617113847355,
+            "mse_log_validation_par_graine": [
+              0.06580292541137868,
+              0.06323165604750422,
+              0.06610749822428456
+            ],
+            "s2": 0.0627646754768845,
+            "valeurs_finies": true
+          }
+        ],
+        "Transformer": [
+          {
+            "decoupage": "pli 1",
+            "epoques_par_graine": [
+              33,
+              40,
+              27
+            ],
+            "meilleure_epoque_par_graine": [
+              13,
+              20,
+              7
+            ],
+            "moyenne_residus_log": 0.00827537127881372,
+            "mse_log_validation_par_graine": [
+              0.10968451496701587,
+              0.10994988430218788,
+              0.10931482117439634
+            ],
+            "s2": 0.10744401461758837,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 2",
+            "epoques_par_graine": [
+              47,
+              47,
+              42
+            ],
+            "meilleure_epoque_par_graine": [
+              27,
+              27,
+              22
+            ],
+            "moyenne_residus_log": -0.0092614768532507,
+            "mse_log_validation_par_graine": [
+              0.07117966893067547,
+              0.06710235325118007,
+              0.06694739690610449
+            ],
+            "s2": 0.06650505260291842,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 3",
+            "epoques_par_graine": [
+              38,
+              28,
+              34
+            ],
+            "meilleure_epoque_par_graine": [
+              18,
+              8,
+              14
+            ],
+            "moyenne_residus_log": -0.005389166765733488,
+            "mse_log_validation_par_graine": [
+              0.07153594748332222,
+              0.07495167515610382,
+              0.06979386133273482
+            ],
+            "s2": 0.07095633870272848,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 4",
+            "epoques_par_graine": [
+              37,
+              37,
+              50
+            ],
+            "meilleure_epoque_par_graine": [
+              17,
+              17,
+              30
+            ],
+            "moyenne_residus_log": -0.04144918726140255,
+            "mse_log_validation_par_graine": [
+              0.0889120962358352,
+              0.08998937278597804,
+              0.08880616739430834
+            ],
+            "s2": 0.08625129594204138,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "pli 5",
+            "epoques_par_graine": [
+              44,
+              40,
+              37
+            ],
+            "meilleure_epoque_par_graine": [
+              24,
+              20,
+              17
+            ],
+            "moyenne_residus_log": -0.05045962427557881,
+            "mse_log_validation_par_graine": [
+              0.12096287632122557,
+              0.12395837744866889,
+              0.12744011043815712
+            ],
+            "s2": 0.1195029766666307,
+            "valeurs_finies": true
+          },
+          {
+            "decoupage": "test final",
+            "epoques_par_graine": [
+              55,
+              47,
+              62
+            ],
+            "meilleure_epoque_par_graine": [
+              35,
+              27,
+              42
+            ],
+            "moyenne_residus_log": 0.0012317298559506053,
+            "mse_log_validation_par_graine": [
+              0.05610488731964513,
+              0.06155905970962536,
+              0.06088921962997563
+            ],
+            "s2": 0.05780720139753055,
+            "valeurs_finies": true
+          }
+        ],
+        "XGBoost": [
+          {
+            "arbres_par_graine": [
+              345,
+              413,
+              432
+            ],
+            "decoupage": "pli 1",
+            "moyenne_residus_log": 0.008057774486683577,
+            "s2": 0.1056845175822026
+          },
+          {
+            "arbres_par_graine": [
+              101,
+              99,
+              110
+            ],
+            "decoupage": "pli 2",
+            "moyenne_residus_log": -0.014893331983651292,
+            "s2": 0.08263253930327433
+          },
+          {
+            "arbres_par_graine": [
+              32,
+              35,
+              28
+            ],
+            "decoupage": "pli 3",
+            "moyenne_residus_log": -0.0017453063971425418,
+            "s2": 0.07392585595011543
+          },
+          {
+            "arbres_par_graine": [
+              338,
+              284,
+              268
+            ],
+            "decoupage": "pli 4",
+            "moyenne_residus_log": -0.0728475531616265,
+            "s2": 0.09732709005919209
+          },
+          {
+            "arbres_par_graine": [
+              426,
+              409,
+              578
+            ],
+            "decoupage": "pli 5",
+            "moyenne_residus_log": -0.13905288963177825,
+            "s2": 0.12900784512528454
+          },
+          {
+            "arbres_par_graine": [
+              940,
+              915,
+              1026
+            ],
+            "decoupage": "test final",
+            "moyenne_residus_log": -0.005643748677701544,
+            "s2": 0.0743796276545468
+          }
+        ],
+        "ecart_baselines_publiees": 0.0,
+        "jours_evalues": 1812
+      },
+      "diebold_mariano": {
+        "CNN-LSTM": {
+          "jours": 1812,
+          "moyenne_difference": -0.04540384628598434,
+          "p_valeur": 7.441163211686309e-05,
+          "p_valeur_holm": 0.0004464697927011785,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -3.9708697461640172
+        },
+        "GARCH(1,1)": {
+          "jours": 1812,
+          "moyenne_difference": 0.12045259357953748,
+          "p_valeur": 4.079030722666503e-05,
+          "p_valeur_holm": 0.0002855321505866552,
+          "retards_hac": 7,
+          "sens": "référence meilleure",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": 4.113080268716925
+        },
+        "GRU": {
+          "jours": 1812,
+          "moyenne_difference": -0.03802216685676068,
+          "p_valeur": 0.0012864895742554765,
+          "p_valeur_holm": 0.006432447871277383,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -3.2240326649101574
+        },
+        "LSTM": {
+          "jours": 1812,
+          "moyenne_difference": -0.030923426787534167,
+          "p_valeur": 0.00764648524096647,
+          "p_valeur_holm": 0.03058594096386588,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": true,
+          "statistique": -2.6702844842172917
+        },
+        "TFT": {
+          "jours": 1812,
+          "moyenne_difference": -0.03339497597079932,
+          "p_valeur": 0.04731991885507861,
+          "p_valeur_holm": 0.14195975656523582,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": false,
+          "statistique": -1.984777358839088
+        },
+        "Transformer": {
+          "jours": 1812,
+          "moyenne_difference": -0.032487004236056605,
+          "p_valeur": 0.04757122830111241,
+          "p_valeur_holm": 0.14195975656523582,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": true,
+          "significatif_holm": false,
+          "statistique": -1.9825266457999462
+        },
+        "XGBoost": {
+          "jours": 1812,
+          "moyenne_difference": -0.000258374583147425,
+          "p_valeur": 0.9902723513420121,
+          "p_valeur_holm": 0.9902723513420121,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "significatif_brut": false,
+          "significatif_holm": false,
+          "statistique": -0.012193785061510773
+        }
+      },
+      "diebold_mariano_descriptif": {
+        "HAR-RV contre persistance": {
+          "jours": 1812,
+          "moyenne_difference": -0.05674221678383773,
+          "p_valeur": 4.757385283734746e-05,
+          "retards_hac": 7,
+          "sens": "modèle meilleur",
+          "statistique": -4.077107582501439
+        }
+      },
+      "gain_relatif_qlike": {
+        "CNN-LSTM": {
+          "jours_reunis": 0.1552006872725631,
+          "moyenne_des_plis": 0.15432775355996553
+        },
+        "GARCH(1,1)": {
+          "jours_reunis": -0.41173439777672943,
+          "moyenne_des_plis": -0.41086370893907037
+        },
+        "GRU": {
+          "jours_reunis": 0.1299684258155662,
+          "moyenne_des_plis": 0.12912832134738383
+        },
+        "HAR-RV": {
+          "jours_reunis": 0.0,
+          "moyenne_des_plis": 0.0
+        },
+        "LSTM": {
+          "jours_reunis": 0.10570331553011143,
+          "moyenne_des_plis": 0.10463468258265943
+        },
+        "TFT": {
+          "jours_reunis": 0.11415163353063092,
+          "moyenne_des_plis": 0.11296109875673395
+        },
+        "Transformer": {
+          "jours_reunis": 0.11104797935189603,
+          "moyenne_des_plis": 0.10963778760623034
+        },
+        "XGBoost": {
+          "jours_reunis": 0.000883183169673525,
+          "moyenne_des_plis": 0.000261983316609077
+        }
+      },
+      "modeles": {
+        "CNN-LSTM": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.019939082372528182,
+              "qlike": 0.3798750617348762,
+              "rmse": 0.03518942398536505
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.010704909919944551,
+              "qlike": 0.35564453429312853,
+              "rmse": 0.015597975265172358
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.012828244207183011,
+              "qlike": 0.1818846275494523,
+              "rmse": 0.0184991703555055
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.0002960397149708101,
+              "moyenne": 0.010520434367629408,
+              "valeurs": [
+                0.01042103700878181,
+                0.010853381412680602,
+                0.010286884681425815
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.004536811337433367,
+              "moyenne": 0.25192691308663656,
+              "valeurs": [
+                0.2530577031689173,
+                0.2557913761079882,
+                0.24693165998300415
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00020955925525715317,
+              "moyenne": 0.017570720757951273,
+              "valeurs": [
+                0.017753132564105625,
+                0.017617208468362757,
+                0.017341821241385443
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.01406200491192493,
+              "qlike": 0.2704091340306202,
+              "rmse": 0.02036925112556986
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.014220032114640594,
+              "qlike": 0.2886789881299056,
+              "rmse": 0.026638357557253915
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.009461397377456191,
+              "qlike": 0.18333139409612745,
+              "rmse": 0.01346160772523378
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006268547586123958,
+              "qlike": 0.3206422662655639,
+              "rmse": 0.009018578438398412
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.007954785057833737,
+              "qlike": 0.17419540987328438,
+              "rmse": 0.011129333497928037
+            }
+          },
+          "qlike_moyenne_des_plis": 0.24745143847910028,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.010367440387921012,
+            "mae_intervalle": {
+              "bas": 0.009323206522622189,
+              "haut": 0.011769288831870131,
+              "moyenne": 0.010367440387921012
+            },
+            "qlike": 0.24714541418375938,
+            "qlike_intervalle": {
+              "bas": 0.19528805340957645,
+              "haut": 0.3204112203824314,
+              "moyenne": 0.24714541418375938
+            },
+            "rmse": 0.017332714140304177,
+            "rmse_intervalle": {
+              "bas": 0.013422286234282493,
+              "haut": 0.022447420629872754,
+              "moyenne": 0.017332714140304177
+            }
+          }
+        },
+        "GARCH(1,1)": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.02944420530299538,
+              "qlike": 0.5021930957061338,
+              "rmse": 0.04379420985386234
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.02244236403941658,
+              "qlike": 0.7009751531109774,
+              "rmse": 0.025741869144760208
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.019485445146559536,
+              "qlike": 0.3565224106591793,
+              "rmse": 0.025386246610604443
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.014215564508661372,
+              "qlike": 0.28720002992878224,
+              "rmse": 0.02223157692106645
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.014726747048209735,
+              "qlike": 0.45231539543962523,
+              "rmse": 0.0292755764321525
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.014540034465502581,
+              "qlike": 0.3150092618878651,
+              "rmse": 0.018510461113803268
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.016808910914328054,
+              "qlike": 0.6718555691051542,
+              "rmse": 0.0184726590664122
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.0123248131096093,
+              "qlike": 0.3377779074224622,
+              "rmse": 0.015238905370512285
+            }
+          },
+          "qlike_moyenne_des_plis": 0.4128316327567778,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.014521253882587706,
+            "mae_intervalle": {
+              "bas": 0.013161238011866663,
+              "haut": 0.01616656814544609,
+              "moyenne": 0.014521253882587706
+            },
+            "qlike": 0.41300185404928114,
+            "qlike_intervalle": {
+              "bas": 0.34060458480393463,
+              "haut": 0.5047054725362511,
+              "moyenne": 0.41300185404928114
+            },
+            "rmse": 0.0212585652990155,
+            "rmse_intervalle": {
+              "bas": 0.017397724951366024,
+              "haut": 0.02639477803209535,
+              "moyenne": 0.0212585652990155
+            }
+          }
+        },
+        "GRU": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.021361159758988717,
+              "qlike": 0.5065979630269293,
+              "rmse": 0.04279156220387909
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.012510292046424917,
+              "qlike": 0.3800303253328283,
+              "rmse": 0.016757990162530413
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.014073686158869014,
+              "qlike": 0.20485034485925463,
+              "rmse": 0.02001148988000628
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 7.01418458695775e-05,
+              "moyenne": 0.010757357314957193,
+              "valeurs": [
+                0.010771859149368247,
+                0.010819114738849153,
+                0.010681098056654176
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0050829905611610455,
+              "moyenne": 0.2569982048581261,
+              "valeurs": [
+                0.25196220881531584,
+                0.25690548440802724,
+                0.26212692135103516
+              ]
+            },
+            "rmse": {
+              "ecart_type": 4.618237605479801e-05,
+              "moyenne": 0.018038193825806768,
+              "valeurs": [
+                0.017993525886627497,
+                0.018035300959186235,
+                0.018085754631606568
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.013785381261496006,
+              "qlike": 0.28303477258544335,
+              "rmse": 0.022266775078844028
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.014657801372587213,
+              "qlike": 0.2887434027546117,
+              "rmse": 0.026538442170207434
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.010214477510468343,
+              "qlike": 0.1947768515823422,
+              "rmse": 0.014156507099594042
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006797704972444573,
+              "qlike": 0.32321976664714736,
+              "rmse": 0.009280753554548174
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.008017162183213687,
+              "qlike": 0.18435032121615968,
+              "rmse": 0.011537418532580772
+            }
+          },
+          "qlike_moyenne_des_plis": 0.2548250229571408,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.01067011448384181,
+            "mae_intervalle": {
+              "bas": 0.009650770042065743,
+              "haut": 0.012003239525797713,
+              "moyenne": 0.01067011448384181
+            },
+            "qlike": 0.25452709361298304,
+            "qlike_intervalle": {
+              "bas": 0.20583665310215382,
+              "haut": 0.3227031349343355,
+              "moyenne": 0.25452709361298304
+            },
+            "rmse": 0.01794582035845146,
+            "rmse_intervalle": {
+              "bas": 0.013804709195511303,
+              "haut": 0.022953015651808625,
+              "moyenne": 0.01794582035845146
+            }
+          }
+        },
+        "HAR-RV": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.021496033838979967,
+              "qlike": 0.47639402566406325,
+              "rmse": 0.04161533631713839
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.012420001373602737,
+              "qlike": 0.41591296474173417,
+              "rmse": 0.017835199901289206
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.015271449318184619,
+              "qlike": 0.2473624945200228,
+              "rmse": 0.021428378522774166
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.012253903445727285,
+              "qlike": 0.2562195302243121,
+              "rmse": 0.02121698883001747
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.012900529846430059,
+              "qlike": 0.331875621911624,
+              "rmse": 0.026346393720830693
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.010506449093461545,
+              "qlike": 0.21980822293703672,
+              "rmse": 0.015016642949919263
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.007476572588672986,
+              "qlike": 0.39139672913557344,
+              "rmse": 0.010296747134084036
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.00977901969111163,
+              "qlike": 0.26374565329844746,
+              "rmse": 0.013233308747652541
+            }
+          },
+          "qlike_moyenne_des_plis": 0.29260915150139877,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.010570438850317904,
+            "mae_intervalle": {
+              "bas": 0.009595126904372761,
+              "haut": 0.0118771110208927,
+              "moyenne": 0.010570438850317904
+            },
+            "qlike": 0.29254926046974367,
+            "qlike_intervalle": {
+              "bas": 0.22857333945219427,
+              "haut": 0.37947660502895886,
+              "moyenne": 0.29254926046974367
+            },
+            "rmse": 0.018126134836061705,
+            "rmse_intervalle": {
+              "bas": 0.013955613093952901,
+              "haut": 0.022997142922086964,
+              "moyenne": 0.018126134836061705
+            }
+          }
+        },
+        "LSTM": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.020543748046618224,
+              "qlike": 0.5354447439709148,
+              "rmse": 0.04289380163190563
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.012192114193474117,
+              "qlike": 0.37763054892139963,
+              "rmse": 0.01681615745036119
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.01500629792551888,
+              "qlike": 0.22078334664291874,
+              "rmse": 0.020667069865415277
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00023770458494804946,
+              "moyenne": 0.010395942952256884,
+              "valeurs": [
+                0.010357208649056414,
+                0.010179984350863518,
+                0.01065063585685072
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.009812587706390994,
+              "moyenne": 0.26514802205407834,
+              "valeurs": [
+                0.25467959832857845,
+                0.26662777576375746,
+                0.274136692069899
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00027478870770064726,
+              "moyenne": 0.01807782955442727,
+              "valeurs": [
+                0.017777031132769766,
+                0.018140769826169977,
+                0.01831568770434207
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.013365037437707008,
+              "qlike": 0.28674655704931384,
+              "rmse": 0.022075242667081486
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.0130746315445565,
+              "qlike": 0.3202622330075811,
+              "rmse": 0.026781478181301454
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.01029801568023189,
+              "qlike": 0.19686052023945355,
+              "rmse": 0.014321380603038728
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006547816586609816,
+              "qlike": 0.3234188992153629,
+              "rmse": 0.009159305240502673
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.00824720356214376,
+              "qlike": 0.18267221955463162,
+              "rmse": 0.011435764747104279
+            }
+          },
+          "qlike_moyenne_des_plis": 0.2619920858132686,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.010286497567191017,
+            "mae_intervalle": {
+              "bas": 0.009259640252104209,
+              "haut": 0.011653606568228718,
+              "moyenne": 0.010286497567191017
+            },
+            "qlike": 0.2616258336822096,
+            "qlike_intervalle": {
+              "bas": 0.2027312294379122,
+              "haut": 0.3410110353796937,
+              "moyenne": 0.2616258336822096
+            },
+            "rmse": 0.01797125833512508,
+            "rmse_intervalle": {
+              "bas": 0.013489815415456803,
+              "haut": 0.023285181088183934,
+              "moyenne": 0.01797125833512508
+            }
+          }
+        },
+        "Persistance": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.027193603809009384,
+              "qlike": 0.41564332504312657,
+              "rmse": 0.05291445374835416
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.012751004806357649,
+              "qlike": 0.5219469660665623,
+              "rmse": 0.01894953790750849
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.01623020548176547,
+              "qlike": 0.21447084559762347,
+              "rmse": 0.02377844531710922
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.014885676167506261,
+              "qlike": 0.2839009855676196,
+              "rmse": 0.027043156055291513
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.01757655231645324,
+              "qlike": 0.38443475398111693,
+              "rmse": 0.033347615984238
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.012325504227820196,
+              "qlike": 0.25934059146035254,
+              "rmse": 0.01751709534694226
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.008266286618670734,
+              "qlike": 0.4913541469886525,
+              "rmse": 0.01256583488813359
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.01234719703148089,
+              "qlike": 0.32720027837202903,
+              "rmse": 0.017924205569843126
+            }
+          },
+          "qlike_moyenne_des_plis": 0.3492461512739541,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.013060632359517921,
+            "mae_intervalle": {
+              "bas": 0.011723560646675532,
+              "haut": 0.014982952088477216,
+              "moyenne": 0.013060632359517921
+            },
+            "qlike": 0.3492914772535815,
+            "qlike_intervalle": {
+              "bas": 0.2760017586870773,
+              "haut": 0.45097787780617316,
+              "moyenne": 0.3492914772535815
+            },
+            "rmse": 0.022874436665868587,
+            "rmse_intervalle": {
+              "bas": 0.017659697997972304,
+              "haut": 0.029184012938102487,
+              "moyenne": 0.022874436665868587
+            }
+          }
+        },
+        "TFT": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.020449643370417814,
+              "qlike": 0.6067904174370368,
+              "rmse": 0.044239963142280306
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.011954716361512083,
+              "qlike": 0.37499393080930427,
+              "rmse": 0.01745627050007665
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.014189167037669058,
+              "qlike": 0.24389763582793747,
+              "rmse": 0.021360352267666725
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.0006208534225139533,
+              "moyenne": 0.010685799701223533,
+              "valeurs": [
+                0.010033278542546339,
+                0.010754920094367479,
+                0.011269200466756779
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.012053773856037607,
+              "moyenne": 0.2682745158021531,
+              "valeurs": [
+                0.25648289902362426,
+                0.2677662790257639,
+                0.2805743693570713
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.0005063067438937123,
+              "moyenne": 0.018626128945829327,
+              "valeurs": [
+                0.018060590023266758,
+                0.018780559737130238,
+                0.01903723707709098
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.0140188697957653,
+              "qlike": 0.3049914053681949,
+              "rmse": 0.023045727892408715
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.012969269963712867,
+              "qlike": 0.3086084149166158,
+              "rmse": 0.02677335353350355
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.009840252985029439,
+              "qlike": 0.20321093960767705,
+              "rmse": 0.0146207173216838
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.00706120746911154,
+              "qlike": 0.29798342146705253,
+              "rmse": 0.009473135409696463
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.008033159838545651,
+              "qlike": 0.1829843198480853,
+              "rmse": 0.011459461844780354
+            }
+          },
+          "qlike_moyenne_des_plis": 0.25955570024152513,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.010362489880274257,
+            "mae_intervalle": {
+              "bas": 0.00926933197481422,
+              "haut": 0.011840986553008947,
+              "moyenne": 0.010362489880274257
+            },
+            "qlike": 0.2591542844989444,
+            "qlike_intervalle": {
+              "bas": 0.2063609581862797,
+              "haut": 0.3270517166128823,
+              "moyenne": 0.2591542844989444
+            },
+            "rmse": 0.018291002939209836,
+            "rmse_intervalle": {
+              "bas": 0.013782053313419862,
+              "haut": 0.023621299145201096,
+              "moyenne": 0.018291002939209836
+            }
+          }
+        },
+        "Transformer": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.019812660714434393,
+              "qlike": 0.5487961974658634,
+              "rmse": 0.043234720776936755
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.011332353936985496,
+              "qlike": 0.38717553673718946,
+              "rmse": 0.01609298234792583
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.015028468563654987,
+              "qlike": 0.2056853234528924,
+              "rmse": 0.020437730093499758
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.000213002202797968,
+              "moyenne": 0.010479686160984845,
+              "valeurs": [
+                0.010427237148711408,
+                0.010714013440362198,
+                0.010297807893880932
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.011751641433917133,
+              "moyenne": 0.2668299645963524,
+              "valeurs": [
+                0.2665240031063855,
+                0.27873159918194035,
+                0.25523429150073135
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00033241125094446433,
+              "moyenne": 0.0183591486349093,
+              "valeurs": [
+                0.018332080932781665,
+                0.01870426617734019,
+                0.018041098794606053
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.01399661833103983,
+              "qlike": 0.30189797233722543,
+              "rmse": 0.02273747230413688
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.013071264422800787,
+              "qlike": 0.3321194240377855,
+              "rmse": 0.027183433527172843
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.010002863697466351,
+              "qlike": 0.19568613358946305,
+              "rmse": 0.014123712136128569
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.006927510126713524,
+              "qlike": 0.29898323216951983,
+              "rmse": 0.009459637704123234
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.007674156868581273,
+              "qlike": 0.1739538953532518,
+              "rmse": 0.011039212940343974
+            }
+          },
+          "qlike_moyenne_des_plis": 0.26052813149744913,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.010311685231731474,
+            "mae_intervalle": {
+              "bas": 0.00919673113090703,
+              "haut": 0.011718176135061289,
+              "moyenne": 0.010311685231731474
+            },
+            "qlike": 0.2600622562336871,
+            "qlike_intervalle": {
+              "bas": 0.20670918598254595,
+              "haut": 0.3273210619532326,
+              "moyenne": 0.2600622562336871
+            },
+            "rmse": 0.01820212682045481,
+            "rmse_intervalle": {
+              "bas": 0.013709578411050543,
+              "haut": 0.023566275810019358,
+              "moyenne": 0.01820212682045481
+            }
+          }
+        },
+        "XGBoost": {
+          "crises": {
+            "covid": {
+              "jours": 59,
+              "mae": 0.019764544045544848,
+              "qlike": 0.5196381426527592,
+              "rmse": 0.04282207570564929
+            },
+            "ftx": {
+              "jours": 61,
+              "mae": 0.0144922166617872,
+              "qlike": 0.4797874232161366,
+              "rmse": 0.01935133468375388
+            },
+            "terra_luna": {
+              "jours": 61,
+              "mae": 0.01457387045073383,
+              "qlike": 0.3223644411532589,
+              "rmse": 0.02345552577162466
+            }
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 1.971045600531227e-05,
+              "moyenne": 0.011248952053208796,
+              "valeurs": [
+                0.011247360258826519,
+                0.01123008576031539,
+                0.011269410140484479
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0007713557866105041,
+              "moyenne": 0.2925788021323219,
+              "valeurs": [
+                0.29258755434370004,
+                0.29180310748113136,
+                0.2933457445721343
+              ]
+            },
+            "rmse": {
+              "ecart_type": 6.597666040601043e-06,
+              "moyenne": 0.0190271115051116,
+              "valeurs": [
+                0.019028870132998137,
+                0.019019812719371462,
+                0.019032651662965205
+              ]
+            }
+          },
+          "par_pli": {
+            "pli 1": {
+              "jours": 358,
+              "mae": 0.013552564465004727,
+              "qlike": 0.2982937052164743,
+              "rmse": 0.022822779072055856
+            },
+            "pli 2": {
+              "jours": 359,
+              "mae": 0.013290969659366105,
+              "qlike": 0.3358551417048404,
+              "rmse": 0.027445036051090492
+            },
+            "pli 3": {
+              "jours": 365,
+              "mae": 0.011010230611842134,
+              "qlike": 0.2474253932285341,
+              "rmse": 0.01587033688905726
+            },
+            "pli 4": {
+              "jours": 364,
+              "mae": 0.009067397746199708,
+              "qlike": 0.3593077719543704,
+              "rmse": 0.011265849604625426
+            },
+            "pli 5": {
+              "jours": 366,
+              "mae": 0.009358702887038533,
+              "qlike": 0.2217804518228722,
+              "rmse": 0.012844941694149714
+            }
+          },
+          "qlike_moyenne_des_plis": 0.29253249278541826,
+          "reunis": {
+            "jours": 1812,
+            "mae": 0.011240523397229193,
+            "mae_intervalle": {
+              "bas": 0.010143728763588588,
+              "haut": 0.012645517841561853,
+              "moyenne": 0.011240523397229193
+            },
+            "qlike": 0.29229088588659635,
+            "qlike_intervalle": {
+              "bas": 0.23960212544687137,
+              "haut": 0.3581403455558483,
+              "moyenne": 0.29229088588659635
+            },
+            "rmse": 0.019018434286677814,
+            "rmse_intervalle": {
+              "bas": 0.01460298202521301,
+              "haut": 0.024314480812028794,
+              "moyenne": 0.019018434286677814
+            }
+          }
+        }
+      },
+      "reglage": {
+        "CNN-LSTM": {
+          "combinaison": {
+            "couches": 1,
+            "dropout": 0.3,
+            "filtres": 32,
+            "lot": 32,
+            "noyau": 3,
+            "taille_cachee": 64,
+            "taux_apprentissage": 0.0010717589973807439,
+            "weight_decay": 1.9166024706981744e-06
+          },
+          "numero": 0,
+          "scores": [
+            0.11113395359638217,
+            0.12292738562138333,
+            0.11760214018266278,
+            0.11615416700432844,
+            0.11155108015402743,
+            0.11897174780232761,
+            0.1183724319205658,
+            0.1159528885627391,
+            0.12002166074259195,
+            0.11310010589896782,
+            0.11455750387657351,
+            0.11472877467165646
+          ],
+          "tirages_ecartes": 0
+        },
+        "GRU": {
+          "combinaison": {
+            "couches": 1,
+            "dropout": 0.3,
+            "lot": 64,
+            "taille_cachee": 32,
+            "taux_apprentissage": 0.002715430450064821,
+            "weight_decay": 0.0004779289783449201
+          },
+          "numero": 5,
+          "scores": [
+            0.10887624685644436,
+            0.11085964686110199,
+            0.11045511358179218,
+            0.11143361570411231,
+            0.11035217124611135,
+            0.10706304310958505,
+            0.11183963828573663,
+            0.11028600039302576,
+            0.10900341627869356,
+            0.11027469158735387,
+            0.11074877654919575,
+            0.11112348282719214
+          ],
+          "tirages_ecartes": 0
+        },
+        "LSTM": {
+          "combinaison": {
+            "couches": 1,
+            "dropout": 0.3,
+            "lot": 64,
+            "taille_cachee": 32,
+            "taux_apprentissage": 0.00185461273136293,
+            "weight_decay": 0.00012362436879527074
+          },
+          "numero": 0,
+          "scores": [
+            0.11005230426879806,
+            0.11181994022769412,
+            0.1208786631289457,
+            0.11114781597974996,
+            0.11166499818802483,
+            0.1137973990049117,
+            0.1205066904556203,
+            0.11061146435132324,
+            0.11786955206871114,
+            0.11526316440994981,
+            0.11176678281917485,
+            0.11333850065033033
+          ],
+          "tirages_ecartes": 0
+        },
+        "TFT": {
+          "combinaison": {
+            "dropout": 0.2,
+            "hidden_continuous_size": 16,
+            "hidden_size": 32,
+            "lot": 64,
+            "taux_apprentissage": 0.0014491465021655345,
+            "tetes_attention": 4,
+            "weight_decay": 2.4229301715750384e-06
+          },
+          "numero": 1,
+          "scores": [
+            0.11554627647904092,
+            0.10804732492537936,
+            0.11540764020452533,
+            0.11956123065870176,
+            0.12572792827653959,
+            0.11990016988623373,
+            0.11716177378544215,
+            0.12115738715261501,
+            0.1179149738964273,
+            0.1198257114632072,
+            0.12059357890656179,
+            0.13699277088545805
+          ],
+          "tirages_ecartes": 3
+        },
+        "Transformer": {
+          "combinaison": {
+            "couches": 2,
+            "d_model": 32,
+            "dimension_feed_forward": 64,
+            "dropout": 0.3,
+            "lot": 64,
+            "taux_apprentissage": 0.0016417940088574825,
+            "tetes": 4,
+            "weight_decay": 2.1391566866988715e-05
+          },
+          "numero": 2,
+          "scores": [
+            0.10901612037038566,
+            0.11158452185691715,
+            0.10497279195681965,
+            0.11574370354642896,
+            0.10505896725969155,
+            0.10997057489112096,
+            0.10857806030323251,
+            0.11115666837065372,
+            0.11036460687505027,
+            0.10706075199457019,
+            0.11271592283317929,
+            0.10930032849904744
+          ],
+          "tirages_ecartes": 0
+        }
+      },
+      "robustesse": {
+        "definition": "gain sur HAR-RV, moyenne des QLIKE moyens par pli ; pli par pli : QLIKE moyen du pli",
+        "gain_par_graine": {
+          "CNN-LSTM": {
+            "effet_ensemble": 0.01636104475436642,
+            "gain_de_la_moyenne_des_graines": 0.15432775355996553,
+            "graines": [
+              0.1341221555796007,
+              0.1246358970827708,
+              0.15514207375442576
+            ],
+            "minimum": 0.1246358970827708,
+            "moyenne_des_graines_seules": 0.1379667088055991
+          },
+          "GRU": {
+            "effet_ensemble": 0.008439017017881356,
+            "gain_de_la_moyenne_des_graines": 0.12912832134738383,
+            "graines": [
+              0.1379388240469754,
+              0.1210891819693106,
+              0.10303990697222142
+            ],
+            "minimum": 0.10303990697222142,
+            "moyenne_des_graines_seules": 0.12068930432950248
+          },
+          "LSTM": {
+            "effet_ensemble": 0.012063817581105502,
+            "gain_de_la_moyenne_des_graines": 0.10463468258265943,
+            "graines": [
+              0.12868289018275403,
+              0.08735744432903247,
+              0.061672260492875296
+            ],
+            "minimum": 0.061672260492875296,
+            "moyenne_des_graines_seules": 0.09257086500155393
+          },
+          "TFT": {
+            "effet_ensemble": 0.03125858495247791,
+            "gain_de_la_moyenne_des_graines": 0.11296109875673395,
+            "graines": [
+              0.12231055816675991,
+              0.0832759080152923,
+              0.039521075230715914
+            ],
+            "minimum": 0.039521075230715914,
+            "moyenne_des_graines_seules": 0.08170251380425604
+          },
+          "Transformer": {
+            "effet_ensemble": 0.023265612125324547,
+            "gain_de_la_moyenne_des_graines": 0.10963778760623034,
+            "graines": [
+              0.08740885976171184,
+              0.045425903610541135,
+              0.1262817630704644
+            ],
+            "minimum": 0.045425903610541135,
+            "moyenne_des_graines_seules": 0.0863721754809058
+          },
+          "XGBoost": {
+            "effet_ensemble": 0.0009834969669351603,
+            "gain_de_la_moyenne_des_graines": 0.000261983316609077,
+            "graines": [
+              -0.0007463572442649521,
+              0.0018868596307612812,
+              -0.0033050433374745797
+            ],
+            "minimum": -0.0033050433374745797,
+            "moyenne_des_graines_seules": -0.0007215136503260835
+          }
+        },
+        "gain_par_pli": {
+          "CNN-LSTM": {
+            "pli 1": -0.0553806487502556,
+            "pli 2": 0.1301591045853357,
+            "pli 3": 0.1659484270129327,
+            "pli 4": 0.18077428246852142,
+            "pli 5": 0.33953258491744864
+          },
+          "GARCH(1,1)": {
+            "pli 1": -0.1209138884820673,
+            "pli 2": -0.3629063588167782,
+            "pli 3": -0.43310954284953374,
+            "pli 4": -0.7165589773552614,
+            "pli 5": -0.2806956368689112
+          },
+          "GRU": {
+            "pli 1": -0.10465729266483065,
+            "pli 2": 0.12996501191792298,
+            "pli 3": 0.1138782299416736,
+            "pli 4": 0.17418889176462868,
+            "pli 5": 0.30102991685116476
+          },
+          "LSTM": {
+            "pli 1": -0.11914402777288796,
+            "pli 2": 0.03499319665948666,
+            "pli 3": 0.10439874537430958,
+            "pli 4": 0.1736801175378861,
+            "pli 5": 0.30739249246346945
+          },
+          "TFT": {
+            "pli 1": -0.19035190292162577,
+            "pli 2": 0.07010821361625684,
+            "pli 3": 0.07550801834248895,
+            "pli 4": 0.23866655164653677,
+            "pli 5": 0.3062091543134355
+          },
+          "Transformer": {
+            "pli 1": -0.17827853354084014,
+            "pli 2": -0.0007346189658558531,
+            "pli 3": 0.10974152388504302,
+            "pli 4": 0.2361120829245435,
+            "pli 5": 0.34044829487138406
+          },
+          "XGBoost": {
+            "pli 1": -0.16421142820505366,
+            "pli 2": -0.011990997622223921,
+            "pli 3": -0.12564211621604446,
+            "pli 4": 0.0819857571423085,
+            "pli 5": 0.15911239086123843
+          }
+        }
+      }
+    }
+  },
+  "depend_de": {
+    "baselines_json_sha256": "c2017e1b5ccaec541bcc17432fbce6d0cc69dd26725160e0235e857ff13c3bb0",
+    "regles_sha256": "bc3ef1e878f1f582ed770d114c9e13ba6abf26007b3cc6b68f440fdb2c139929",
+    "variables_empreinte_contenu": "bd18e8295196a8253be4e532b490ab4ccb1d729aecb1aaa76abdbe1a663c52a1"
+  },
+  "plis": [
+    [
+      "2020-01-01",
+      "2020-12-31"
+    ],
+    [
+      "2021-01-01",
+      "2021-12-31"
+    ],
+    [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    [
+      "2024-01-01",
+      "2024-12-31"
+    ]
+  ],
+  "temps_phase_plis": {
+    "estime_s": 51689.466720074415,
+    "par_modele": {
+      "CNN-LSTM": {
+        "epoques": 1306,
+        "temps_estime_s": 3445.1370000257157,
+        "temps_par_epoque_estime_s": 0.9569825000071432,
+        "temps_par_epoque_reel_s": 0.4278201422664165,
+        "temps_reel_s": 558.73310579994
+      },
+      "GRU": {
+        "epoques": 1559,
+        "temps_estime_s": 7939.279799954966,
+        "temps_par_epoque_estime_s": 2.2053554999874905,
+        "temps_par_epoque_reel_s": 0.23755936523411597,
+        "temps_reel_s": 370.3550503999868
+      },
+      "LSTM": {
+        "epoques": 1658,
+        "temps_estime_s": 2625.183360069059,
+        "temps_par_epoque_estime_s": 0.729217600019183,
+        "temps_par_epoque_reel_s": 0.12632612587455025,
+        "temps_reel_s": 209.4487167000043
+      },
+      "TFT": {
+        "epoques": 1732,
+        "temps_estime_s": 29393.526599986944,
+        "temps_par_epoque_estime_s": 8.164868499996373,
+        "temps_par_epoque_reel_s": 4.269373059526534,
+        "temps_reel_s": 7394.554139099957
+      },
+      "Transformer": {
+        "epoques": 2434,
+        "temps_estime_s": 8286.33996003773,
+        "temps_par_epoque_estime_s": 2.3017611000104807,
+        "temps_par_epoque_reel_s": 0.7933402395234074,
+        "temps_reel_s": 1930.9901429999736
+      }
+    },
+    "rapport": 0.20244126741853136,
+    "reel_s": 10464.081154999862,
+    "unites": 180
+  },
+  "version": "comparaison-1"
+}

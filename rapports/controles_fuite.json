@@ -1,0 +1,266 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "avenir_modifie": {
+        "decoupage": "pli 5",
+        "epoques": 2,
+        "jour_j": "2024-07-01",
+        "modeles": {
+          "CNN-LSTM": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "GRU": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "LSTM": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "TFT": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "Transformer": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          }
+        }
+      },
+      "cible_melangee": {
+        "diebold_mariano_contre_har_rv": {
+          "jours": 1812,
+          "moyenne_difference": 0.31515266799298125,
+          "p_valeur": 1.1805644806711494e-06,
+          "retards_hac": 7,
+          "sens": "référence meilleure",
+          "statistique": 4.875427052162119
+        },
+        "gain_sur_har_rv": {
+          "jours_reunis": -0.9160978368997089,
+          "moyenne_des_plis": -0.9175616505477808
+        },
+        "graine_permutation": 42,
+        "jours": 1812,
+        "modele": "LSTM",
+        "par_pli": {
+          "pli 1": {
+            "ecart_type_prevision_log_evaluation": 0.09987179862382178,
+            "epoques": 29,
+            "meilleure_epoque": 9,
+            "moyenne_residus_log_validation": 0.04782170059003948,
+            "mse_log_validation": 0.17835037650144,
+            "part_des_cibles_deplacees": 0.9933035714285714,
+            "qlike_har_rv": 0.3445764799641378,
+            "qlike_temoin": 0.7000859780564718,
+            "s2": 0.17606346145411664
+          },
+          "pli 2": {
+            "ecart_type_prevision_log_evaluation": 0.07218886043170382,
+            "epoques": 29,
+            "meilleure_epoque": 9,
+            "moyenne_residus_log_validation": -0.20552454647912438,
+            "mse_log_validation": 0.2590956149420589,
+            "part_des_cibles_deplacees": 1.0,
+            "qlike_har_rv": 0.3215634745228337,
+            "qlike_temoin": 0.7203412828058428,
+            "s2": 0.21685527573660918
+          },
+          "pli 3": {
+            "ecart_type_prevision_log_evaluation": 0.04045150253408039,
+            "epoques": 21,
+            "meilleure_epoque": 1,
+            "moyenne_residus_log_validation": 0.11588692707176566,
+            "mse_log_validation": 0.10440102290685627,
+            "part_des_cibles_deplacees": 0.9991408934707904,
+            "qlike_har_rv": 0.27580026170366806,
+            "qlike_temoin": 0.49393202772461936,
+            "s2": 0.09097124304071957
+          },
+          "pli 4": {
+            "ecart_type_prevision_log_evaluation": 0.03165459567967726,
+            "epoques": 28,
+            "meilleure_epoque": 8,
+            "moyenne_residus_log_validation": -0.23583536739813343,
+            "mse_log_validation": 0.3338289836833698,
+            "part_des_cibles_deplacees": 1.0,
+            "qlike_har_rv": 0.49541548690427434,
+            "qlike_temoin": 0.903305903906635,
+            "s2": 0.2782106631675571
+          },
+          "pli 5": {
+            "ecart_type_prevision_log_evaluation": 0.02332965978363949,
+            "epoques": 26,
+            "meilleure_epoque": 6,
+            "moyenne_residus_log_validation": -0.5797732711129298,
+            "mse_log_validation": 0.5969671006051385,
+            "part_des_cibles_deplacees": 0.9994711792702274,
+            "qlike_har_rv": 0.28294998173909697,
+            "qlike_temoin": 0.4811270159634677,
+            "s2": 0.2608300547081518
+          }
+        },
+        "qlike_jours_reunis": {
+          "HAR-RV": 0.3440163870046153,
+          "Persistance": 0.41275339694481944,
+          "temoin": 0.6591690549975965
+        },
+        "qlike_moyenne_des_plis": {
+          "HAR-RV": 0.3440611369668022,
+          "Persistance": 0.4125109832886432,
+          "temoin": 0.6597584416914073
+        }
+      }
+    },
+    "ETHUSDT": {
+      "avenir_modifie": {
+        "decoupage": "pli 5",
+        "epoques": 2,
+        "jour_j": "2024-07-01",
+        "modeles": {
+          "CNN-LSTM": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "GRU": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "LSTM": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "TFT": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          },
+          "Transformer": {
+            "ecarts": 0,
+            "previsions_apres_j": 182,
+            "previsions_apres_j_modifiees": 182,
+            "previsions_comparees": 368
+          }
+        }
+      },
+      "cible_melangee": {
+        "diebold_mariano_contre_har_rv": {
+          "jours": 1812,
+          "moyenne_difference": 0.43191571715258364,
+          "p_valeur": 2.910036704064368e-07,
+          "retards_hac": 7,
+          "sens": "référence meilleure",
+          "statistique": 5.148581630224902
+        },
+        "gain_sur_har_rv": {
+          "jours_reunis": -1.476386289471594,
+          "moyenne_des_plis": -1.478976740439155
+        },
+        "graine_permutation": 42,
+        "jours": 1812,
+        "modele": "LSTM",
+        "par_pli": {
+          "pli 1": {
+            "ecart_type_prevision_log_evaluation": 0.03459192847831068,
+            "epoques": 22,
+            "meilleure_epoque": 2,
+            "moyenne_residus_log_validation": -0.15002294969285354,
+            "mse_log_validation": 0.19211570070834255,
+            "part_des_cibles_deplacees": 0.9933035714285714,
+            "qlike_har_rv": 0.2562195302243121,
+            "qlike_temoin": 0.5465929514452936,
+            "s2": 0.1696088152737981
+          },
+          "pli 2": {
+            "ecart_type_prevision_log_evaluation": 0.12864198662039952,
+            "epoques": 34,
+            "meilleure_epoque": 14,
+            "moyenne_residus_log_validation": -0.07384075259259211,
+            "mse_log_validation": 0.19186629040033867,
+            "part_des_cibles_deplacees": 1.0,
+            "qlike_har_rv": 0.331875621911624,
+            "qlike_temoin": 1.1290409339969272,
+            "s2": 0.1864138336568983
+          },
+          "pli 3": {
+            "ecart_type_prevision_log_evaluation": 0.054738253052028965,
+            "epoques": 26,
+            "meilleure_epoque": 6,
+            "moyenne_residus_log_validation": -0.0037460771129888175,
+            "mse_log_validation": 0.09557881787839602,
+            "part_des_cibles_deplacees": 0.9991408934707904,
+            "qlike_har_rv": 0.21980822293703672,
+            "qlike_temoin": 0.4195596595131035,
+            "s2": 0.09556478478465956
+          },
+          "pli 4": {
+            "ecart_type_prevision_log_evaluation": 0.02893154103937558,
+            "epoques": 22,
+            "meilleure_epoque": 2,
+            "moyenne_residus_log_validation": -0.15477258532928068,
+            "mse_log_validation": 0.2536492580983268,
+            "part_des_cibles_deplacees": 1.0,
+            "qlike_har_rv": 0.39139672913557344,
+            "qlike_temoin": 1.0016571292622944,
+            "s2": 0.22969470492881736
+          },
+          "pli 5": {
+            "ecart_type_prevision_log_evaluation": 0.025684240177806683,
+            "epoques": 24,
+            "meilleure_epoque": 4,
+            "moyenne_residus_log_validation": -0.781021627919327,
+            "mse_log_validation": 0.8439602871851644,
+            "part_des_cibles_deplacees": 0.9994711792702274,
+            "qlike_har_rv": 0.26374565329844746,
+            "qlike_temoin": 0.5300057288404026,
+            "s2": 0.23396550390740878
+          }
+        },
+        "qlike_jours_reunis": {
+          "HAR-RV": 0.29254926046974367,
+          "Persistance": 0.3492914772535815,
+          "temoin": 0.7244649776223274
+        },
+        "qlike_moyenne_des_plis": {
+          "HAR-RV": 0.29260915150139877,
+          "Persistance": 0.3492461512739541,
+          "temoin": 0.7253712806116044
+        }
+      }
+    }
+  },
+  "depend_de": {
+    "reglage_json_sha256": "63e5d0e98dd08067b7d603b5c55e6b24aba5e9c1ea56316e65833111051f7473",
+    "variables_empreinte_contenu": "bd18e8295196"
+  },
+  "regles": {
+    "avenir_modifie_decoupage": "pli 5",
+    "avenir_modifie_ecarts_admis": "0",
+    "avenir_modifie_epoques": "2",
+    "avenir_modifie_jour": "2024-07-01",
+    "date_controles_fuite": "2026-11-19",
+    "seuil_alerte_definitions": "les_deux",
+    "seuil_alerte_gain_qlike": "0.2",
+    "temoin_cible_melangee_arret": "gain_sur_har_rv_positif_ou_nul",
+    "temoin_cible_melangee_graine": "42",
+    "temoin_cible_melangee_modele": "LSTM"
+  }
+}

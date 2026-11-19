@@ -480,6 +480,18 @@ def verifier_coherence(regles: dict) -> None:
     exiger(tm.get("methode") == "holm" and tm.get("significatif_selon") == "p_valeur_ajustee"
            and tm.get("p_valeurs_rapportees") == "brutes_et_ajustees",
            "Tests multiples : ajustement de Holm ; p-valeurs brutes et ajustées ; « significatif » selon la p-valeur ajustée.")
+    cf = ev.get("controles_fuite", {})
+    exiger(cf.get("date_controles_fuite") == dt.date(2026, 11, 19),
+           "evaluation.controles_fuite.date_controles_fuite doit être 2026-11-19.")
+    seuil_alerte = cf.get("seuil_alerte_gain_qlike")
+    exiger(isinstance(seuil_alerte, float) and 0 < seuil_alerte <= 1,
+           f"Seuil d'alerte de fuite : un gain relatif entre 0 et 1 attendu, reçu {seuil_alerte!r}.")
+    exiger(cf.get("avenir_modifie_ecarts_admis") == 0, "Test de l'avenir modifié : aucun écart admis.")
+    if not problemes:
+        pli = next((d for d in decoupages(regles) if d["nom"] == cf.get("avenir_modifie_decoupage")), None)
+        j = cf.get("avenir_modifie_jour")
+        exiger(pli is not None and pli["evaluation"][0] < j < pli["evaluation"][1],
+               "Test de l'avenir modifié : J doit être à l'intérieur de la période évaluée du découpage choisi.")
 
     if problemes:
         raise ErreurRegles("Règles incohérentes :\n- " + "\n- ".join(problemes))

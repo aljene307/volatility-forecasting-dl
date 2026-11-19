@@ -2,7 +2,7 @@
 
 Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'ether, à partir de bougies de 5 minutes. Il compare des modèles de deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT) à des références classiques (HAR-RV, GARCH) et à XGBoost, avec un découpage chronologique strict. Les prévisions pilotent ensuite une stratégie simple de gestion du risque.
 
-**Statut : en construction.** Aucun résultat n'est encore disponible.
+**Statut : en construction.** Les résultats du développement (2020 à 2024) sont disponibles ; le test final reste fermé.
 
 ## Données et licence
 
@@ -26,7 +26,7 @@ Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'eth
 
 - Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
 - Étape 5 — Baselines sur le développement (persistance, HAR-RV, GARCH, XGBoost ; 5 plis annuels) : [résultats](docs/RESULTATS_BASELINES.md) ; figures : [BTC](figures/figure_4_previsions_BTCUSDT.png), [ETH](figures/figure_4_previsions_ETHUSDT.png). Le test final reste fermé.
-- Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT) : **en cours**. Le code est écrit et testé (`src/entrainer.py`, suivi avec `src/suivi.py`) ; le long calcul (réglage, puis plis) reste à lancer.
+- Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT ; entraînement `src/entrainer.py`, suivi `src/suivi.py`) : [comparaison de tous les modèles](docs/RESULTATS_DL.md) (`src/comparer.py`) ; figures : [BTC](figures/figure_5_deep_learning_BTCUSDT.png), [ETH](figures/figure_5_deep_learning_ETHUSDT.png) ; empreintes des poids : [manifeste](rapports/modeles_deep_learning.json). Le test final reste fermé.
 
 ## Règles et exceptions
 
@@ -63,6 +63,10 @@ Précision et rectification datées du 2026-11-16, décidées APRÈS avoir vu le
 Précision datée du 2026-11-19, écrite AVANT de lire les résultats du deep learning (section 13 des [règles](docs/REGLES.md)) :
 
 - tests multiples : les p-valeurs de Diebold-Mariano contre HAR-RV (GARCH, XGBoost et les 5 réseaux, par actif) sont rapportées brutes et ajustées par la méthode de Holm ; « significatif » s'appuie sur la p-valeur ajustée.
+
+Précision datée du 2026-11-19, écrite avant les contrôles de fuite sur les vraies données (section 14 des [règles](docs/REGLES.md)) :
+
+- seuil d'alerte de fuite (gain sur HAR-RV de plus de 20 %) écrit dans les règles ; test de l'avenir modifié des 5 réseaux sur les vraies données ; témoin « cible mélangée » (résultats : [contrôles de fuite](rapports/controles_fuite.json)).
 
 Précisions datées du 2026-11-15, écrites avant le calcul des variables (détail et raisons dans les [règles](docs/REGLES.md)) :
 

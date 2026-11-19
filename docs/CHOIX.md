@@ -484,3 +484,36 @@ La phase B (réglage, puis plis) est terminée. Cette entrée est écrite et com
 - **Combinaisons au bord des espaces de recherche** : dropout 0,3 (le maximum) retenu 8 fois sur 10, sans être systématiquement le meilleur (des tirages à 0,3 se classent aussi 11e ou 12e sur 12) ; taux d'apprentissage du LSTM et du GRU sur BTC à 97 % de l'intervalle en échelle log (près de 3e-3) ; taille maximale retenue pour le TFT (hidden_size 32) et le CNN-LSTM (64 neurones, 32 filtres) sur les deux actifs. Piste d'amélioration : des espaces plus larges. Les espaces ne sont PAS modifiés (ils sont écrits d'avance).
 - Aucune MSE NaN ; aucune meilleure époque inférieure à 6 ; aucune unité au plafond de 200 époques.
 - Durée réelle du réglage : 54,5 min contre 9,6 h estimées (rapport 0,095). L'estimation supposait 100 époques par unité (67 en moyenne en réalité) et des temps mesurés sur 2 441 exemples (448 dans le premier découpage).
+
+## 2026-11-19 — Étape 6, phase C : évaluation du deep learning et comparaison de tous les modèles
+
+Les chiffres sont lus dans `rapports/comparaison_modeles.json` et présentés dans `docs/RESULTATS_DL.md`, tous deux générés par `src/comparer.py`. Ce script n'entraîne rien : il relit les unités déjà calculées (baselines et réseaux, dans `sorties/`, ignoré par Git). Aucune prévision n'a été faite sur le test final ; les 30 modèles du test final (5 réseaux × 3 graines × 2 actifs) sont enregistrés, avec leurs empreintes dans `rapports/modeles_deep_learning.json`.
+
+### Décisions prises seul (à valider)
+
+- **Seuil d'alerte de 20 %** : il venait de la consigne de l'étape. Il a d'abord été écrit comme constante dans `src/comparer.py`, puis déplacé dans `config/regles.toml` (section `evaluation.controles_fuite`, précision du 2026-11-19, sans effet sur les calculs). Il est vérifié avec les deux définitions du QLIKE moyen, AVANT toute écriture de fichier. Résultat : aucun réseau ne dépasse le seuil (le plus grand gain est lu dans le rapport généré).
+- **Baselines relues, pas recalculées** : leurs métriques sont recalculées à partir de leurs unités de reprise et comparées à `rapports/baselines.json` ; écart maximal : 0 (tolérance 1e-9).
+- **Cible des réseaux** : reprise dans les unités des baselines, avec un contrôle que les dates de validation et d'évaluation des réseaux sont exactement les mêmes (témoin : une date décalée est détectée).
+- **Meilleur réseau de la figure** : le premier réseau du classement appliqué (moyenne des QLIKE moyens par pli).
+- **Manifeste des poids** : empreinte de chaque fichier de poids recalculée et comparée à celle enregistrée dans l'unité au moment de l'entraînement ; le manifeste contient aussi les empreintes des normalisations et de `reglage.json`.
+- **Temps de la phase « plis »** : repris du journal du calcul (fixé une fois le calcul terminé), donc le JSON reste identique d'une exécution à l'autre (vérifié : deux exécutions, fichiers identiques octet par octet).
+- **Phrase sur le biais de validation** : la lecture des résultats signale un réseau dès qu'une moyenne des résidus en log sur la validation interne dépasse 0,1 en valeur absolue. Ce seuil de 0,1 est un choix de présentation, pris seul, sans effet sur aucun calcul.
+- **README** : la phrase « Aucun résultat n'est encore disponible », devenue fausse depuis l'étape 5, est remplacée.
+
+### Contrôles
+
+- Aucune prévision non finie ; aucune unité au plafond de 200 époques. Quelques graines ont leur meilleure époque très tôt (5 au plus tôt : GRU BTC pli 4, TFT ETH pli 3), sans MSE de validation anormale par rapport aux autres graines.
+- Méthode de Holm : vérifiée à la main et identique à celle de statsmodels (20 tirages de 7 p-valeurs) ; témoin : p-valeurs ajustées différentes des brutes.
+- Aucune date de 2025 ou 2026 dans les fichiers générés ; la garde du test aveugle est appelée sur chaque série.
+
+### Contrôles de fuite sur les vraies données (précision du 2026-11-19, section 14 des règles)
+
+Les règles de ces contrôles (découpage, jour J, critère d'arrêt) ont été écrites dans `config/regles.toml` AVANT de les lancer ; dit honnêtement, elles sont commitées dans le même commit que les résultats, avec l'accord donné pour ce commit. Résultats lus dans `rapports/controles_fuite.json`, généré par `src/controles_fuite.py` (environ 2 minutes pour les deux actifs, sur secteur).
+
+- **Avenir modifié (point 1)** : pli 5, J = 2024-07-01, 2 époques, pour les 5 réseaux et les 2 actifs : **0 écart** sur 368 prévisions des origines ≤ J (validation interne et première moitié de la période évaluée). Contrôle d'effet : les 182 prévisions après J ont toutes changé. Le premier lancement s'est arrêté sur une erreur de programmation de ma part (mauvais argument passé à la vérification), après les 5 réseaux de BTC (déjà 0 écart) ; corrigée, puis tout relancé.
+- **Témoin « cible mélangée » (point 2)** : LSTM, combinaison retenue, graine 0, 5 plis, cibles d'ajustement permutées. Gain sur HAR-RV en moyenne par pli : **−91,8 % pour BTC et −147,9 % pour ETH** (jours réunis : −91,6 % et −147,6 %) : bien moins bon que HAR-RV, comme attendu. Le témoin ne montre aucun chemin par lequel la cible atteindrait le réseau sans passer par l'apprentissage.
+- **Robustesse (point 3, descriptif, sans effet sur le classement ni la sélection)**, dans `docs/RESULTATS_DL.md` :
+  - gain de chaque graine seule : pour ETH, chaque graine de chaque réseau bat HAR-RV ; pour BTC aussi, sauf une graine du TFT. L'effet d'ensemble (gain de la moyenne des graines moins la moyenne des gains des graines seules) va de 0,8 à 2,3 points pour le LSTM, le GRU, le CNN-LSTM et le Transformer, et il est le plus grand pour le TFT ;
+  - gain pli par pli : le gain des réseaux n'est pas régulier ; il est négatif en 2020 pour presque tous les réseaux et le plus grand en 2024 (de l'ordre de 30 % en 2024 pour chacun des 5 réseaux, sur les deux actifs). XGBoost suit la même tendance. Le seuil d'alerte s'applique au QLIKE moyen, pas à une année seule : il n'est pas déclenché ; c'est signalé ici pour la lecture.
+- Décisions prises seul (à valider) : critère « régulier » = gain positif chaque année de 2020 à 2024 ; sinon « pas régulier », avec les années positives et négatives ; la phrase sur l'année du plus grand gain est donnée comme explication possible, non démontrée. Le gain par graine est mesuré avec la moyenne des QLIKE moyens par pli (définition appliquée par la règle de sélection).
+- Recherche des mots interdits : le numéro du dossier personnel du PC n'est plus cherché qu'en dehors d'un nombre (il apparaissait par hasard au milieu d'un taux d'apprentissage décimal) ; témoins : un chemin qui le contient est trouvé, un nombre décimal qui le contient ne l'est pas.

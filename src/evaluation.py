@@ -75,6 +75,20 @@ def diebold_mariano(perte_modele, perte_reference, retards: int | None = None) -
             "retards_hac": retards, "sens": "modèle meilleur" if d.mean() < 0 else "référence meilleure"}
 
 
+def holm(p_valeurs: dict[str, float]) -> dict[str, float]:
+    """P-valeurs ajustées par la méthode de Holm (section 13 des règles).
+
+    Rangées de la plus petite à la plus grande, la k-ième (k = 1 à m) est multipliée par (m − k + 1) ;
+    on garde la plus grande valeur rencontrée jusque-là (ordre conservé), plafonnée à 1.
+    """
+    m = len(p_valeurs)
+    ajustees, maximum = {}, 0.0
+    for k, (nom, p) in enumerate(sorted(p_valeurs.items(), key=lambda x: x[1])):
+        maximum = max(maximum, min(1.0, (m - k) * p))
+        ajustees[nom] = maximum
+    return {nom: ajustees[nom] for nom in p_valeurs}
+
+
 def bootstrap_moyenne(valeurs, tirages: int, taille_bloc: int, graine: int, niveau: float = 0.95) -> dict:
     """Intervalle de confiance de la moyenne par bootstrap à blocs mobiles (percentiles)."""
     x = np.asarray(valeurs, dtype="float64")
