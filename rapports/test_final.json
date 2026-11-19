@@ -1,0 +1,1767 @@
+{
+  "actifs": {
+    "BTCUSDT": {
+      "diebold_mariano": {
+        "CNN-LSTM": {
+          "jours": 669,
+          "moyenne_difference": -0.08402275359937307,
+          "p_valeur": 2.9276795040714626e-07,
+          "p_valeur_holm_7_descriptif": 5.344157874666404e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.180899242669931
+        },
+        "GARCH(1,1)": {
+          "jours": 669,
+          "moyenne_difference": 0.08078493307692898,
+          "p_valeur": 1.321584487178942e-08,
+          "p_valeur_holm_7_descriptif": 6.60792243589471e-08,
+          "retards_hac": 6,
+          "sens": "référence meilleure",
+          "statistique": 5.754844118970657
+        },
+        "GRU": {
+          "jours": 669,
+          "moyenne_difference": -0.08628626568913707,
+          "p_valeur": 7.43064360469206e-08,
+          "p_valeur_holm_7_descriptif": 2.229193081407618e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.441329682610461
+        },
+        "LSTM": {
+          "jours": 669,
+          "moyenne_difference": -0.087527159962427,
+          "p_valeur": 1.4706107595662844e-09,
+          "p_valeur_holm_7_descriptif": 8.823664557397706e-09,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -6.1336297290068025
+        },
+        "TFT": {
+          "jours": 669,
+          "moyenne_difference": -0.07738722102344477,
+          "p_valeur": 2.672078937333202e-07,
+          "p_valeur_holm_7_descriptif": 5.344157874666404e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.198597694440457
+        },
+        "Transformer": {
+          "jours": 669,
+          "moyenne_difference": -0.08663303829652298,
+          "p_valeur": 3.6475223196363005e-08,
+          "p_valeur_holm_7_descriptif": 1.4590089278545202e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.572347909480124
+        },
+        "XGBoost": {
+          "jours": 669,
+          "moyenne_difference": -0.06379885818266583,
+          "p_valeur": 3.91425592863113e-12,
+          "p_valeur_holm_7_descriptif": 2.739979150041791e-11,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -7.069977281319273
+        }
+      },
+      "diebold_mariano_contre_har_j": {
+        "Transformer": {
+          "jours": 669,
+          "moyenne_difference": -0.02282941945707833,
+          "p_valeur": 0.04828279003302763,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -1.978499190184547
+        }
+      },
+      "diebold_mariano_descriptif": {
+        "HAR-J contre HAR-RV": {
+          "jours": 669,
+          "moyenne_difference": -0.06380361883944463,
+          "p_valeur": 2.930054109807397e-34,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -12.923179882762502
+        },
+        "HAR-RV contre persistance": {
+          "jours": 669,
+          "moyenne_difference": -0.10023191525481777,
+          "p_valeur": 1.8955804718213276e-16,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -8.444784442281874
+        }
+      },
+      "gain_sur_har_j": {
+        "CNN-LSTM": 0.09852605476994468,
+        "GARCH(1,1)": -0.7045672208215702,
+        "GRU": 0.10955594891608286,
+        "HAR-J": 0.0,
+        "HAR-RV": -0.31090938949348157,
+        "LSTM": 0.11560271692003232,
+        "Persistance": -0.7993306443764753,
+        "TFT": 0.06619169161512974,
+        "Transformer": 0.11124574115070082,
+        "XGBoost": -2.319825927765967e-05
+      },
+      "gain_sur_har_rv": {
+        "CNN-LSTM": 0.31232932462374596,
+        "GARCH(1,1)": -0.300293700299296,
+        "GRU": 0.320743250280652,
+        "HAR-J": 0.2371707701427121,
+        "HAR-RV": 0.0,
+        "LSTM": 0.32535590166023043,
+        "Persistance": -0.37258200970832417,
+        "TFT": 0.2876637272804326,
+        "Transformer": 0.3220322731896044,
+        "XGBoost": 0.2371530738324533
+      },
+      "jours": 669,
+      "jours_en_crise": 0,
+      "modele_retenu": "Transformer",
+      "modeles": {
+        "CNN-LSTM": {
+          "jours": 669,
+          "mae": 0.004657048269785474,
+          "mae_intervalle": {
+            "bas": 0.004119999730482421,
+            "haut": 0.005297433045308768,
+            "moyenne": 0.004657048269785474
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.0002022882589549558,
+              "moyenne": 0.0047195893855351825,
+              "valeurs": [
+                0.004801307437386417,
+                0.004489225320857936,
+                0.004868235398361194
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.00597375656920908,
+              "moyenne": 0.1886158739247937,
+              "valeurs": [
+                0.19232493553962554,
+                0.19179800014374002,
+                0.1817246860910155
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.0001309159548864507,
+              "moyenne": 0.006958569402941287,
+              "valeurs": [
+                0.007093167266490493,
+                0.006831675600667427,
+                0.006950865341665943
+              ]
+            }
+          },
+          "qlike": 0.18499698606353837,
+          "qlike_intervalle": {
+            "bas": 0.12957112533641077,
+            "haut": 0.2798405430751507,
+            "moyenne": 0.18499698606353837
+          },
+          "rmse": 0.0068870495770993675,
+          "rmse_intervalle": {
+            "bas": 0.005488512606838295,
+            "haut": 0.008558840498976908,
+            "moyenne": 0.0068870495770993675
+          }
+        },
+        "GARCH(1,1)": {
+          "jours": 669,
+          "mae": 0.007616413675339645,
+          "mae_intervalle": {
+            "bas": 0.006853536673044962,
+            "haut": 0.008570574149007823,
+            "moyenne": 0.007616413675339645
+          },
+          "qlike": 0.34980467273984045,
+          "qlike_intervalle": {
+            "bas": 0.29971222492449795,
+            "haut": 0.4197980954327955,
+            "moyenne": 0.34980467273984045
+          },
+          "rmse": 0.010127965366164006,
+          "rmse_intervalle": {
+            "bas": 0.008945276884207832,
+            "haut": 0.011494891950807764,
+            "moyenne": 0.010127965366164006
+          }
+        },
+        "GRU": {
+          "jours": 669,
+          "mae": 0.004574965202390897,
+          "mae_intervalle": {
+            "bas": 0.004052464004014629,
+            "haut": 0.005192599196214831,
+            "moyenne": 0.004574965202390897
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00019347553203379912,
+              "moyenne": 0.004631522539063358,
+              "valeurs": [
+                0.004852941042276938,
+                0.004546565303334062,
+                0.0044950612715790724
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0024300493843263373,
+              "moyenne": 0.1860736919614058,
+              "valeurs": [
+                0.18455859798648508,
+                0.18478587646372233,
+                0.18887660143401008
+              ]
+            },
+            "rmse": {
+              "ecart_type": 5.378658301792465e-05,
+              "moyenne": 0.006886562195547695,
+              "valeurs": [
+                0.006938914904268877,
+                0.0068314481161571294,
+                0.006889323566217079
+              ]
+            }
+          },
+          "qlike": 0.18273347397377443,
+          "qlike_intervalle": {
+            "bas": 0.1261997717918441,
+            "haut": 0.2813170653657268,
+            "moyenne": 0.18273347397377443
+          },
+          "rmse": 0.006812598329269251,
+          "rmse_intervalle": {
+            "bas": 0.005366778952068173,
+            "haut": 0.008511160073591937,
+            "moyenne": 0.006812598329269251
+          }
+        },
+        "HAR-J": {
+          "jours": 669,
+          "mae": 0.005144706945997042,
+          "mae_intervalle": {
+            "bas": 0.004514644640946857,
+            "haut": 0.005888990254730471,
+            "moyenne": 0.005144706945997042
+          },
+          "qlike": 0.20521612082346685,
+          "qlike_intervalle": {
+            "bas": 0.15443658773797164,
+            "haut": 0.2821904160728892,
+            "moyenne": 0.20521612082346685
+          },
+          "rmse": 0.0073929407394267834,
+          "rmse_intervalle": {
+            "bas": 0.0060196401891748465,
+            "haut": 0.008960877393882068,
+            "moyenne": 0.0073929407394267834
+          }
+        },
+        "HAR-RV": {
+          "jours": 669,
+          "mae": 0.006061285434867687,
+          "mae_intervalle": {
+            "bas": 0.005374519305459797,
+            "haut": 0.006835583404860286,
+            "moyenne": 0.006061285434867687
+          },
+          "qlike": 0.2690197396629115,
+          "qlike_intervalle": {
+            "bas": 0.2165660698515929,
+            "haut": 0.3418412593867466,
+            "moyenne": 0.2690197396629115
+          },
+          "rmse": 0.008598702970455233,
+          "rmse_intervalle": {
+            "bas": 0.007329598967492349,
+            "haut": 0.010106397316945081,
+            "moyenne": 0.008598702970455233
+          }
+        },
+        "LSTM": {
+          "jours": 669,
+          "mae": 0.004728307175677673,
+          "mae_intervalle": {
+            "bas": 0.004238261659605772,
+            "haut": 0.00535090679124886,
+            "moyenne": 0.004728307175677673
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.000146026009928154,
+              "moyenne": 0.0047856538363189,
+              "valeurs": [
+                0.004643197141456807,
+                0.004778759439672031,
+                0.004935004927827864
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.003230211553747489,
+              "moyenne": 0.1842716836671683,
+              "valeurs": [
+                0.18093225830219858,
+                0.1873803005701666,
+                0.18450249212913974
+              ]
+            },
+            "rmse": {
+              "ecart_type": 7.491540045017759e-05,
+              "moyenne": 0.006957178555817063,
+              "valeurs": [
+                0.006914854007134975,
+                0.0069130048396264425,
+                0.00704367682068977
+              ]
+            }
+          },
+          "qlike": 0.18149257970048446,
+          "qlike_intervalle": {
+            "bas": 0.12955817860348626,
+            "haut": 0.27269199059557186,
+            "moyenne": 0.18149257970048446
+          },
+          "rmse": 0.006891722822296166,
+          "rmse_intervalle": {
+            "bas": 0.005481095451180716,
+            "haut": 0.008531142791956112,
+            "moyenne": 0.006891722822296166
+          }
+        },
+        "Persistance": {
+          "jours": 669,
+          "mae": 0.007941932431857915,
+          "mae_intervalle": {
+            "bas": 0.00700768273198335,
+            "haut": 0.009094346382670556,
+            "moyenne": 0.007941932431857915
+          },
+          "qlike": 0.3692516549177292,
+          "qlike_intervalle": {
+            "bas": 0.30678796770681893,
+            "haut": 0.44150656092401774,
+            "moyenne": 0.3692516549177292
+          },
+          "rmse": 0.01154415482778446,
+          "rmse_intervalle": {
+            "bas": 0.009593334982548003,
+            "haut": 0.013823676353294475,
+            "moyenne": 0.01154415482778446
+          }
+        },
+        "TFT": {
+          "jours": 669,
+          "mae": 0.004710505588695202,
+          "mae_intervalle": {
+            "bas": 0.004174004159538205,
+            "haut": 0.005357861256503424,
+            "moyenne": 0.004710505588695202
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00020250331354831807,
+              "moyenne": 0.004884612384169654,
+              "valeurs": [
+                0.005117570672696967,
+                0.00478560947671109,
+                0.004750657003100908
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.004494230046495948,
+              "moyenne": 0.2005078447446749,
+              "valeurs": [
+                0.1956273305609727,
+                0.20142050906100042,
+                0.20447569461205164
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00011893568216782513,
+              "moyenne": 0.007285644348478878,
+              "valeurs": [
+                0.007422312080398168,
+                0.00720559959947167,
+                0.007229021365566794
+              ]
+            }
+          },
+          "qlike": 0.19163251863946673,
+          "qlike_intervalle": {
+            "bas": 0.13700633784926758,
+            "haut": 0.2815209409279857,
+            "moyenne": 0.19163251863946673
+          },
+          "rmse": 0.00708053657368544,
+          "rmse_intervalle": {
+            "bas": 0.005696618252116513,
+            "haut": 0.00869413977591443,
+            "moyenne": 0.00708053657368544
+          }
+        },
+        "Transformer": {
+          "jours": 669,
+          "mae": 0.00445356304544196,
+          "mae_intervalle": {
+            "bas": 0.003911365273411935,
+            "haut": 0.005101058707684099,
+            "moyenne": 0.00445356304544196
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 9.875973996502042e-05,
+              "moyenne": 0.004540965540240119,
+              "valeurs": [
+                0.0045364802316815245,
+                0.004641891515011327,
+                0.004444524874027507
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0033757512930161072,
+              "moyenne": 0.1867275377428171,
+              "valeurs": [
+                0.18654754512377475,
+                0.18344538358340642,
+                0.19018968452127022
+              ]
+            },
+            "rmse": {
+              "ecart_type": 8.750293232768481e-05,
+              "moyenne": 0.006998109171212674,
+              "valeurs": [
+                0.007066202497498912,
+                0.007028709529287862,
+                0.006899415486851247
+              ]
+            }
+          },
+          "qlike": 0.18238670136638852,
+          "qlike_intervalle": {
+            "bas": 0.12787708646906262,
+            "haut": 0.2680259305371758,
+            "moyenne": 0.18238670136638852
+          },
+          "rmse": 0.0068968572530581015,
+          "rmse_intervalle": {
+            "bas": 0.005451133007729067,
+            "haut": 0.008598298729878958,
+            "moyenne": 0.0068968572530581015
+          }
+        },
+        "XGBoost": {
+          "jours": 669,
+          "mae": 0.005065719707886986,
+          "mae_intervalle": {
+            "bas": 0.004430023153484472,
+            "haut": 0.005836668435317756,
+            "moyenne": 0.005065719707886986
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 2.5158775618223004e-05,
+              "moyenne": 0.00507973659829809,
+              "valeurs": [
+                0.005108764935457181,
+                0.005064232115656399,
+                0.00506621274378069
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0012877160468725906,
+              "moyenne": 0.20614316190278906,
+              "valeurs": [
+                0.20751980057392658,
+                0.20594152736687987,
+                0.2049681577675607
+              ]
+            },
+            "rmse": {
+              "ecart_type": 1.6377509176474556e-05,
+              "moyenne": 0.00748109097493698,
+              "valeurs": [
+                0.007490766459861082,
+                0.007462181574774497,
+                0.00749032489017536
+              ]
+            }
+          },
+          "qlike": 0.20522088148024567,
+          "qlike_intervalle": {
+            "bas": 0.1557108609489766,
+            "haut": 0.28593308457142563,
+            "moyenne": 0.20522088148024567
+          },
+          "rmse": 0.007462145451707692,
+          "rmse_intervalle": {
+            "bas": 0.006066461876799107,
+            "haut": 0.00907470517859473,
+            "moyenne": 0.007462145451707692
+          }
+        }
+      },
+      "reproduction_validation": {
+        "CNN-LSTM": 0.0,
+        "GRU": 0.0,
+        "HAR-J": 0.0,
+        "HAR-RV": 0.0,
+        "LSTM": 0.0,
+        "Persistance": 0.0,
+        "TFT": 0.0,
+        "Transformer": 0.0,
+        "XGBoost": 0.0
+      },
+      "strategie": {
+        "Achat simple": {
+          "drawdown_max": -0.5297176591351058,
+          "exposition_moyenne": 1.0,
+          "frais_annuels_en_rendement": 0.0005455904334828102,
+          "frais_total": 0.001,
+          "jours": 669,
+          "part_jours_exposition_max": 1.0,
+          "rendement_annualise": -0.09770194410038335,
+          "rotation_annuelle": 0.5455904334828101,
+          "sharpe": -0.024797821186360872,
+          "sharpe_intervalle": {
+            "bas": -1.356286397366335,
+            "haut": 1.2767951370628174,
+            "valeur": -0.024797821186360872
+          },
+          "sortino": -0.03564408804953568,
+          "valeur_finale": 0.8282512394203649,
+          "volatilite_annualisee": 0.42952666781051946,
+          "volatilite_sur_cible": 0.7501266039130228
+        },
+        "CNN-LSTM": {
+          "drawdown_max": -0.5167825866688283,
+          "exposition_moyenne": 0.9757590957845741,
+          "frais_annuels_en_rendement": 0.007003269263873971,
+          "frais_total": 0.011495973518419342,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8624813153961136,
+          "rendement_annualise": -0.08407154508297832,
+          "rotation_annuelle": 7.00326926387397,
+          "sharpe": -0.026800619065521232,
+          "sharpe_intervalle": {
+            "bas": -1.4998478826625932,
+            "haut": 1.33431858022172,
+            "valeur": -0.026800619065521232
+          },
+          "sortino": -0.03863926541941863,
+          "valeur_finale": 0.8513280159424611,
+          "volatilite_annualisee": 0.3937153622416314,
+          "volatilite_sur_cible": 0.6875856372135306
+        },
+        "GARCH(1,1)": {
+          "drawdown_max": -0.5410259506088311,
+          "exposition_moyenne": 0.9779018826468167,
+          "frais_annuels_en_rendement": 0.0020104433253141786,
+          "frais_total": 0.003206811094132332,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8609865470852018,
+          "rendement_annualise": -0.10761826042614209,
+          "rotation_annuelle": 2.0104433253141782,
+          "sharpe": -0.07034823226474193,
+          "sharpe_intervalle": {
+            "bas": -1.5048526483587117,
+            "haut": 1.3165685084841894,
+            "valeur": -0.07034823226474193
+          },
+          "sortino": -0.09966928433581591,
+          "valeur_finale": 0.8116438151698794,
+          "volatilite_annualisee": 0.41173455753458604,
+          "volatilite_sur_cible": 0.719054411525612
+        },
+        "GRU": {
+          "drawdown_max": -0.5231655595181716,
+          "exposition_moyenne": 0.9772976855547367,
+          "frais_annuels_en_rendement": 0.007188728757113425,
+          "frais_total": 0.01184815652751062,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8579970104633782,
+          "rendement_annualise": -0.08981362356999079,
+          "rotation_annuelle": 7.188728757113424,
+          "sharpe": -0.0409544035574297,
+          "sharpe_intervalle": {
+            "bas": -1.5377996993930152,
+            "haut": 1.324553741086133,
+            "valeur": -0.0409544035574297
+          },
+          "sortino": -0.05892095717460861,
+          "valeur_finale": 0.8415713360680667,
+          "volatilite_annualisee": 0.39530728719753483,
+          "volatilite_sur_cible": 0.6903657795198123
+        },
+        "HAR-RV": {
+          "drawdown_max": -0.5192264613781952,
+          "exposition_moyenne": 0.9758630190927219,
+          "frais_annuels_en_rendement": 0.0076689422975577464,
+          "frais_total": 0.013120855049310421,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8355754857997011,
+          "rendement_annualise": -0.0838071789344873,
+          "rotation_annuelle": 7.668942297557747,
+          "sharpe": -0.019077490503295397,
+          "sharpe_intervalle": {
+            "bas": -1.4753871999231478,
+            "haut": 1.3409850694172387,
+            "valeur": -0.019077490503295397
+          },
+          "sortino": -0.02744912449080307,
+          "valeur_finale": 0.851778445279146,
+          "volatilite_annualisee": 0.4002103539397453,
+          "volatilite_sur_cible": 0.6989285093331697
+        },
+        "LSTM": {
+          "drawdown_max": -0.5154409949653249,
+          "exposition_moyenne": 0.975132713300099,
+          "frais_annuels_en_rendement": 0.00760290755281441,
+          "frais_total": 0.012512953501461487,
+          "jours": 669,
+          "part_jours_exposition_max": 0.85949177877429,
+          "rendement_annualise": -0.08819795557918908,
+          "rotation_annuelle": 7.602907552814412,
+          "sharpe": -0.03989235116240616,
+          "sharpe_intervalle": {
+            "bas": -1.5232128586496654,
+            "haut": 1.32658117531572,
+            "valeur": -0.03989235116240616
+          },
+          "sortino": -0.05744612599852763,
+          "valeur_finale": 0.844311438931015,
+          "volatilite_annualisee": 0.3922178774919195,
+          "volatilite_sur_cible": 0.684970425554057
+        },
+        "Persistance": {
+          "drawdown_max": -0.4970044362523921,
+          "exposition_moyenne": 0.9451496974843805,
+          "frais_annuels_en_rendement": 0.019495274708025284,
+          "frais_total": 0.033590262278707414,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7324364723467862,
+          "rendement_annualise": -0.0720162123949607,
+          "rotation_annuelle": 19.49527470802529,
+          "sharpe": -0.008860326678224322,
+          "sharpe_intervalle": {
+            "bas": -1.4725771452216607,
+            "haut": 1.358799816546827,
+            "valeur": -0.008860326678224322
+          },
+          "sortino": -0.012789972873894832,
+          "valeur_finale": 0.8719780139203668,
+          "volatilite_annualisee": 0.37848042820553746,
+          "volatilite_sur_cible": 0.660979304741584
+        },
+        "TFT": {
+          "drawdown_max": -0.531118111827694,
+          "exposition_moyenne": 0.9797625555923136,
+          "frais_annuels_en_rendement": 0.006621421118183863,
+          "frais_total": 0.01086118599099373,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8714499252615845,
+          "rendement_annualise": -0.09245364482343021,
+          "rotation_annuelle": 6.621421118183863,
+          "sharpe": -0.04276664185742449,
+          "sharpe_intervalle": {
+            "bas": -1.5205024507659792,
+            "haut": 1.3329121072451318,
+            "valeur": -0.04276664185742449
+          },
+          "sortino": -0.061374820895059364,
+          "valeur_finale": 0.8371026865036957,
+          "volatilite_annualisee": 0.4001458244742945,
+          "volatilite_sur_cible": 0.6988158148897312
+        },
+        "Transformer": {
+          "drawdown_max": -0.5241948151427405,
+          "exposition_moyenne": 0.9778860435900638,
+          "frais_annuels_en_rendement": 0.007472926455002183,
+          "frais_total": 0.012076200735233718,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8684603886397608,
+          "rendement_annualise": -0.09500425495417564,
+          "rotation_annuelle": 7.472926455002183,
+          "sharpe": -0.054759795875913946,
+          "sharpe_intervalle": {
+            "bas": -1.5338524536706155,
+            "haut": 1.316517766731801,
+            "valeur": -0.054759795875913946
+          },
+          "sortino": -0.0785879651809777,
+          "valeur_finale": 0.8327956496639078,
+          "volatilite_annualisee": 0.39582025322074,
+          "volatilite_sur_cible": 0.6912616248531674
+        },
+        "XGBoost": {
+          "drawdown_max": -0.5333065382164905,
+          "exposition_moyenne": 0.9762532775250924,
+          "frais_annuels_en_rendement": 0.007175048307242103,
+          "frais_total": 0.011585473664357724,
+          "jours": 669,
+          "part_jours_exposition_max": 0.8535127055306427,
+          "rendement_annualise": -0.1225406932847648,
+          "rotation_annuelle": 7.175048307242104,
+          "sharpe": -0.13505983677633082,
+          "sharpe_intervalle": {
+            "bas": -1.5973960711909378,
+            "haut": 1.2284954726890773,
+            "valeur": -0.13505983677633082
+          },
+          "sortino": -0.19166925724992084,
+          "valeur_finale": 0.7869407996409427,
+          "volatilite_annualisee": 0.39396779066117443,
+          "volatilite_sur_cible": 0.6880264789290128
+        },
+        "difference_sharpe_retenu_moins_har": {
+          "bas": -0.15288332728179804,
+          "haut": 0.07315536858334717,
+          "valeur": -0.035682305372618545
+        }
+      },
+      "var": {
+        "jours_exclus_non_valides": 0,
+        "modeles": {
+          "CNN-LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 26,
+            "jours": 669,
+            "p_valeur": 0.1697309850466424,
+            "statistique": 1.8853177023234196,
+            "taux": 0.03886397608370702
+          },
+          "GARCH(1,1)": {
+            "attendu": 0.050000000000000044,
+            "depassements": 22,
+            "jours": 669,
+            "p_valeur": 0.03071817992115477,
+            "statistique": 4.668643554227657,
+            "taux": 0.03288490284005979
+          },
+          "GRU": {
+            "attendu": 0.050000000000000044,
+            "depassements": 25,
+            "jours": 669,
+            "p_valeur": 0.11729639181536085,
+            "statistique": 2.453054863112527,
+            "taux": 0.03736920777279522
+          },
+          "HAR-RV": {
+            "attendu": 0.050000000000000044,
+            "depassements": 27,
+            "jours": 669,
+            "p_valeur": 0.2371202831969183,
+            "statistique": 1.3976330161046349,
+            "taux": 0.04035874439461883
+          },
+          "LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 21,
+            "jours": 669,
+            "p_valeur": 0.018062497807267586,
+            "statistique": 5.5900774208952555,
+            "taux": 0.03139013452914798
+          },
+          "Persistance": {
+            "attendu": 0.050000000000000044,
+            "depassements": 27,
+            "jours": 669,
+            "p_valeur": 0.2371202831969183,
+            "statistique": 1.3976330161046349,
+            "taux": 0.04035874439461883
+          },
+          "TFT": {
+            "attendu": 0.050000000000000044,
+            "depassements": 27,
+            "jours": 669,
+            "p_valeur": 0.2371202831969183,
+            "statistique": 1.3976330161046349,
+            "taux": 0.04035874439461883
+          },
+          "Transformer": {
+            "attendu": 0.050000000000000044,
+            "depassements": 28,
+            "jours": 669,
+            "p_valeur": 0.32043880736838193,
+            "statistique": 0.9871546144040622,
+            "taux": 0.04185351270553064
+          },
+          "XGBoost": {
+            "attendu": 0.050000000000000044,
+            "depassements": 31,
+            "jours": 669,
+            "p_valeur": 0.660078399263394,
+            "statistique": 0.19342837332325757,
+            "taux": 0.04633781763826607
+          }
+        }
+      }
+    },
+    "ETHUSDT": {
+      "diebold_mariano": {
+        "CNN-LSTM": {
+          "jours": 669,
+          "moyenne_difference": -0.07061610058342235,
+          "p_valeur": 9.979102378008827e-08,
+          "p_valeur_holm_7_descriptif": 6.574585122186333e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.386235830565032
+        },
+        "GARCH(1,1)": {
+          "jours": 669,
+          "moyenne_difference": 0.048024527552349,
+          "p_valeur": 0.0020179561354666175,
+          "p_valeur_holm_7_descriptif": 0.0020179561354666175,
+          "retards_hac": 6,
+          "sens": "référence meilleure",
+          "statistique": 3.099792244721125
+        },
+        "GRU": {
+          "jours": 669,
+          "moyenne_difference": -0.05586944961680101,
+          "p_valeur": 0.00045479844416404335,
+          "p_valeur_holm_7_descriptif": 0.0009095968883280867,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -3.523576699985366
+        },
+        "LSTM": {
+          "jours": 669,
+          "moyenne_difference": -0.06771834311864146,
+          "p_valeur": 7.927565262209765e-07,
+          "p_valeur_holm_7_descriptif": 3.171026104883906e-06,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -4.984419227268541
+        },
+        "TFT": {
+          "jours": 669,
+          "moyenne_difference": -0.06642290179513075,
+          "p_valeur": 9.39226446026619e-08,
+          "p_valeur_holm_7_descriptif": 6.574585122186333e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.397598599948657
+        },
+        "Transformer": {
+          "jours": 669,
+          "moyenne_difference": -0.0679004273405998,
+          "p_valeur": 9.605521960942064e-08,
+          "p_valeur_holm_7_descriptif": 6.574585122186333e-07,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -5.393391663928389
+        },
+        "XGBoost": {
+          "jours": 669,
+          "moyenne_difference": -0.044491540091069606,
+          "p_valeur": 3.5974981136331077e-06,
+          "p_valeur_holm_7_descriptif": 1.0792494340899323e-05,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -4.672625465692528
+        }
+      },
+      "diebold_mariano_contre_har_j": {
+        "CNN-LSTM": {
+          "jours": 669,
+          "moyenne_difference": -0.028869914878155507,
+          "p_valeur": 0.0009246637793576401,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -3.327402371586455
+        }
+      },
+      "diebold_mariano_descriptif": {
+        "HAR-J contre HAR-RV": {
+          "jours": 669,
+          "moyenne_difference": -0.041746185705266864,
+          "p_valeur": 1.3647550186504573e-12,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -7.2257294229115745
+        },
+        "HAR-RV contre persistance": {
+          "jours": 669,
+          "moyenne_difference": -0.08058695763770111,
+          "p_valeur": 1.3451312074163643e-12,
+          "retards_hac": 6,
+          "sens": "modèle meilleur",
+          "statistique": -7.227851142299425
+        }
+      },
+      "gain_sur_har_j": {
+        "CNN-LSTM": 0.13889208963772537,
+        "GARCH(1,1)": -0.431883571712696,
+        "GRU": 0.06794649881916733,
+        "HAR-J": 0.0,
+        "HAR-RV": -0.20083935098112374,
+        "LSTM": 0.12495108595810346,
+        "Persistance": -0.5885402150497003,
+        "TFT": 0.11871876580112221,
+        "Transformer": 0.12582708639608844,
+        "XGBoost": 0.013207798119583515
+      },
+      "gain_sur_har_rv": {
+        "CNN-LSTM": 0.282911648707446,
+        "GARCH(1,1)": -0.1924022730790774,
+        "GRU": 0.22383164707309477,
+        "HAR-J": 0.1672491418748325,
+        "HAR-RV": 0.0,
+        "LSTM": 0.2713022659301147,
+        "Persistance": -0.32285822724897606,
+        "TFT": 0.26611229597127783,
+        "Transformer": 0.2720317560465647,
+        "XGBoost": 0.17824794709285963
+      },
+      "jours": 669,
+      "jours_en_crise": 0,
+      "modele_retenu": "CNN-LSTM",
+      "modeles": {
+        "CNN-LSTM": {
+          "jours": 669,
+          "mae": 0.0071172932974473265,
+          "mae_intervalle": {
+            "bas": 0.0063983874229248195,
+            "haut": 0.007922929863499975,
+            "moyenne": 0.0071172932974473265
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00030755894658193505,
+              "moyenne": 0.007206573627901957,
+              "valeurs": [
+                0.007151788992233942,
+                0.007537843369039558,
+                0.00693008852243237
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0038886028687566227,
+              "moyenne": 0.181550064839781,
+              "valeurs": [
+                0.18280927821469903,
+                0.1846530200778931,
+                0.17718789622675093
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00032743096358929665,
+              "moyenne": 0.01031752617160075,
+              "valeurs": [
+                0.01025186197822612,
+                0.01067281322048815,
+                0.010027903316087978
+              ]
+            }
+          },
+          "qlike": 0.17898868206179575,
+          "qlike_intervalle": {
+            "bas": 0.1402793401324538,
+            "haut": 0.22551564837799723,
+            "moyenne": 0.17898868206179575
+          },
+          "rmse": 0.010193364403168337,
+          "rmse_intervalle": {
+            "bas": 0.008700712238890611,
+            "haut": 0.011963403880575627,
+            "moyenne": 0.010193364403168337
+          }
+        },
+        "GARCH(1,1)": {
+          "jours": 669,
+          "mae": 0.010387430852413136,
+          "mae_intervalle": {
+            "bas": 0.009380426287573474,
+            "haut": 0.011699721596312846,
+            "moyenne": 0.010387430852413136
+          },
+          "qlike": 0.2976293101975671,
+          "qlike_intervalle": {
+            "bas": 0.25344424802839793,
+            "haut": 0.3465139460658319,
+            "moyenne": 0.2976293101975671
+          },
+          "rmse": 0.013742988236639785,
+          "rmse_intervalle": {
+            "bas": 0.012270302608359445,
+            "haut": 0.015440829171173932,
+            "moyenne": 0.013742988236639785
+          }
+        },
+        "GRU": {
+          "jours": 669,
+          "mae": 0.007103536196366296,
+          "mae_intervalle": {
+            "bas": 0.0063675394003467785,
+            "haut": 0.007918718540649397,
+            "moyenne": 0.007103536196366296
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00037577074418793425,
+              "moyenne": 0.007269818726975284,
+              "valeurs": [
+                0.0072329344727104965,
+                0.007662671478994381,
+                0.006913850229220974
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.01449664446086512,
+              "moyenne": 0.19841331442851837,
+              "valeurs": [
+                0.190633888224062,
+                0.2151390353436062,
+                0.18946701971788685
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00036254968711330786,
+              "moyenne": 0.010522661718624366,
+              "valeurs": [
+                0.010341733551132696,
+                0.010940067730366654,
+                0.010286183874373751
+              ]
+            }
+          },
+          "qlike": 0.1937353330284171,
+          "qlike_intervalle": {
+            "bas": 0.14903937862305247,
+            "haut": 0.2518291941184781,
+            "moyenne": 0.1937353330284171
+          },
+          "rmse": 0.010324917074174067,
+          "rmse_intervalle": {
+            "bas": 0.008795318471279649,
+            "haut": 0.012131381795704074,
+            "moyenne": 0.010324917074174067
+          }
+        },
+        "HAR-J": {
+          "jours": 669,
+          "mae": 0.007548169346403622,
+          "mae_intervalle": {
+            "bas": 0.006673742377204676,
+            "haut": 0.008536533289093875,
+            "moyenne": 0.007548169346403622
+          },
+          "qlike": 0.2078585969399513,
+          "qlike_intervalle": {
+            "bas": 0.16114586725200084,
+            "haut": 0.2590329185175598,
+            "moyenne": 0.2078585969399513
+          },
+          "rmse": 0.010851730020655218,
+          "rmse_intervalle": {
+            "bas": 0.009136385960664144,
+            "haut": 0.01275003714557467,
+            "moyenne": 0.010851730020655218
+          }
+        },
+        "HAR-RV": {
+          "jours": 669,
+          "mae": 0.008422055882546813,
+          "mae_intervalle": {
+            "bas": 0.0074847445430330315,
+            "haut": 0.009477540690891888,
+            "moyenne": 0.008422055882546813
+          },
+          "qlike": 0.2496047826452181,
+          "qlike_intervalle": {
+            "bas": 0.19825697311729362,
+            "haut": 0.3052972277588266,
+            "moyenne": 0.2496047826452181
+          },
+          "rmse": 0.011949300400234425,
+          "rmse_intervalle": {
+            "bas": 0.01034524508992445,
+            "haut": 0.013721328435889421,
+            "moyenne": 0.011949300400234425
+          }
+        },
+        "LSTM": {
+          "jours": 669,
+          "mae": 0.0070263010578553,
+          "mae_intervalle": {
+            "bas": 0.006312761412550435,
+            "haut": 0.007820273737837698,
+            "moyenne": 0.0070263010578553
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 9.323193992151765e-05,
+              "moyenne": 0.007119853772711983,
+              "valeurs": [
+                0.007171268852067612,
+                0.007012234317950523,
+                0.007176058148117811
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.0027441968655250357,
+              "moyenne": 0.1842819781425121,
+              "valeurs": [
+                0.18741255368615706,
+                0.18229214471836655,
+                0.18314123602301263
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00011433435226647362,
+              "moyenne": 0.010276183055657957,
+              "valeurs": [
+                0.010370810760774164,
+                0.010149141277148376,
+                0.01030859712905133
+              ]
+            }
+          },
+          "qlike": 0.18188643952657665,
+          "qlike_intervalle": {
+            "bas": 0.1429703700589396,
+            "haut": 0.22807486082409517,
+            "moyenne": 0.18188643952657665
+          },
+          "rmse": 0.010173999710021147,
+          "rmse_intervalle": {
+            "bas": 0.008759832745847065,
+            "haut": 0.011804493146780046,
+            "moyenne": 0.010173999710021147
+          }
+        },
+        "Persistance": {
+          "jours": 669,
+          "mae": 0.010803847043824694,
+          "mae_intervalle": {
+            "bas": 0.00955316908615732,
+            "haut": 0.012275154887398498,
+            "moyenne": 0.010803847043824694
+          },
+          "qlike": 0.3301917402829192,
+          "qlike_intervalle": {
+            "bas": 0.26818870862858013,
+            "haut": 0.3923039406075798,
+            "moyenne": 0.3301917402829192
+          },
+          "rmse": 0.015428580477811009,
+          "rmse_intervalle": {
+            "bas": 0.01319921896800258,
+            "haut": 0.017886285122825665,
+            "moyenne": 0.015428580477811009
+          }
+        },
+        "TFT": {
+          "jours": 669,
+          "mae": 0.007063869999466674,
+          "mae_intervalle": {
+            "bas": 0.006318930838016157,
+            "haut": 0.007892341165175995,
+            "moyenne": 0.007063869999466674
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00022136991110840686,
+              "moyenne": 0.007227461735712236,
+              "valeurs": [
+                0.007140229689597113,
+                0.00747915842856416,
+                0.007062997088975434
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.005318749029723848,
+              "moyenne": 0.1879464022681233,
+              "valeurs": [
+                0.19120031751095543,
+                0.1908303334655031,
+                0.18180855582791147
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.00030799743385894455,
+              "moyenne": 0.010624938492605124,
+              "valeurs": [
+                0.010449586825749745,
+                0.010980571904694017,
+                0.01044465674737161
+              ]
+            }
+          },
+          "qlike": 0.18318188085008735,
+          "qlike_intervalle": {
+            "bas": 0.14299428285940396,
+            "haut": 0.23127084898175393,
+            "moyenne": 0.18318188085008735
+          },
+          "rmse": 0.010388839513523233,
+          "rmse_intervalle": {
+            "bas": 0.008785650024768627,
+            "haut": 0.012193136165070612,
+            "moyenne": 0.010388839513523233
+          }
+        },
+        "Transformer": {
+          "jours": 669,
+          "mae": 0.006975528680499835,
+          "mae_intervalle": {
+            "bas": 0.00625482441274677,
+            "haut": 0.00780062725698901,
+            "moyenne": 0.006975528680499835
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 0.00015737415765397478,
+              "moyenne": 0.0071095377162869915,
+              "valeurs": [
+                0.0069314355615686055,
+                0.0071673423160719205,
+                0.00722983527122045
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.004761674554327363,
+              "moyenne": 0.1873791312348938,
+              "valeurs": [
+                0.19036671223164375,
+                0.18188792727251207,
+                0.18988275420052564
+              ]
+            },
+            "rmse": {
+              "ecart_type": 0.0001590494853507869,
+              "moyenne": 0.010353730595337363,
+              "valeurs": [
+                0.01021697062977972,
+                0.010315953747644215,
+                0.010528267408588154
+              ]
+            }
+          },
+          "qlike": 0.18170435530461831,
+          "qlike_intervalle": {
+            "bas": 0.14192823205555702,
+            "haut": 0.2243313635336322,
+            "moyenne": 0.18170435530461831
+          },
+          "rmse": 0.010146799502454805,
+          "rmse_intervalle": {
+            "bas": 0.008632967911530703,
+            "haut": 0.011807884195832476,
+            "moyenne": 0.010146799502454805
+          }
+        },
+        "XGBoost": {
+          "jours": 669,
+          "mae": 0.007809816653338904,
+          "mae_intervalle": {
+            "bas": 0.00696555092051771,
+            "haut": 0.008828146998562254,
+            "moyenne": 0.007809816653338904
+          },
+          "par_graine": {
+            "mae": {
+              "ecart_type": 1.99233594715573e-05,
+              "moyenne": 0.00781478368745567,
+              "valeurs": [
+                0.007795046393948443,
+                0.00783488804065242,
+                0.007814416627766147
+              ]
+            },
+            "qlike": {
+              "ecart_type": 0.00026611537438437906,
+              "moyenne": 0.2053408336648821,
+              "valeurs": [
+                0.20559044016974592,
+                0.20506082140165832,
+                0.20537123942324198
+              ]
+            },
+            "rmse": {
+              "ecart_type": 1.588770382299868e-05,
+              "moyenne": 0.011059883075382457,
+              "valeurs": [
+                0.011044703525388768,
+                0.011058550682522822,
+                0.011076395018235779
+              ]
+            }
+          },
+          "qlike": 0.20511324255414853,
+          "qlike_intervalle": {
+            "bas": 0.16150251409102132,
+            "haut": 0.25742177785256354,
+            "moyenne": 0.20511324255414853
+          },
+          "rmse": 0.011052284868462922,
+          "rmse_intervalle": {
+            "bas": 0.009501183056544299,
+            "haut": 0.012872068972522285,
+            "moyenne": 0.011052284868462922
+          }
+        }
+      },
+      "reproduction_validation": {
+        "CNN-LSTM": 0.0,
+        "GRU": 0.0,
+        "HAR-J": 0.0,
+        "HAR-RV": 0.0,
+        "LSTM": 0.0,
+        "Persistance": 0.0,
+        "TFT": 0.0,
+        "Transformer": 0.0,
+        "XGBoost": 0.0
+      },
+      "strategie": {
+        "Achat simple": {
+          "drawdown_max": -0.6755345017766718,
+          "exposition_moyenne": 1.0,
+          "frais_annuels_en_rendement": 0.0005455904334828102,
+          "frais_total": 0.001,
+          "jours": 669,
+          "part_jours_exposition_max": 1.0,
+          "rendement_annualise": -0.19292827198859397,
+          "rotation_annuelle": 0.5455904334828101,
+          "sharpe": 0.02754673123587412,
+          "sharpe_intervalle": {
+            "bas": -1.457247936181992,
+            "haut": 1.4839743057036587,
+            "valeur": 0.02754673123587412
+          },
+          "sortino": 0.04100387204871787,
+          "valeur_finale": 0.6751206909982068,
+          "volatilite_annualisee": 0.6865098066493845,
+          "volatilite_sur_cible": 0.9291572744002269
+        },
+        "CNN-LSTM": {
+          "drawdown_max": -0.6547827978842953,
+          "exposition_moyenne": 0.9521836770782627,
+          "frais_annuels_en_rendement": 0.014853486605404613,
+          "frais_total": 0.023414749501559754,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7399103139013453,
+          "rendement_annualise": -0.16468049388508776,
+          "rotation_annuelle": 14.853486605404612,
+          "sharpe": 0.020342763513208385,
+          "sharpe_intervalle": {
+            "bas": -1.5422595011218099,
+            "haut": 1.542253978046056,
+            "valeur": 0.020342763513208385
+          },
+          "sortino": 0.030526665588846646,
+          "valeur_finale": 0.7190605997104184,
+          "volatilite_annualisee": 0.6249281801233939,
+          "volatilite_sur_cible": 0.8458095702570213
+        },
+        "GARCH(1,1)": {
+          "drawdown_max": -0.6579473485407721,
+          "exposition_moyenne": 0.9509083674537431,
+          "frais_annuels_en_rendement": 0.005000975160712439,
+          "frais_total": 0.007659351504303958,
+          "jours": 669,
+          "part_jours_exposition_max": 0.6860986547085202,
+          "rendement_annualise": -0.16811204114394473,
+          "rotation_annuelle": 5.00097516071244,
+          "sharpe": 0.029728080185338946,
+          "sharpe_intervalle": {
+            "bas": -1.4949330519506683,
+            "haut": 1.549011515329708,
+            "valeur": 0.029728080185338946
+          },
+          "sortino": 0.044338459024527134,
+          "valeur_finale": 0.7136556416484153,
+          "volatilite_annualisee": 0.6410237124156198,
+          "volatilite_sur_cible": 0.8675940819563618
+        },
+        "GRU": {
+          "drawdown_max": -0.6531296702040609,
+          "exposition_moyenne": 0.953900892180654,
+          "frais_annuels_en_rendement": 0.013836834732191668,
+          "frais_total": 0.021871339596791207,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7548579970104634,
+          "rendement_annualise": -0.15708920830949713,
+          "rotation_annuelle": 13.836834732191665,
+          "sharpe": 0.03622913029997014,
+          "sharpe_intervalle": {
+            "bas": -1.5220173112590027,
+            "haut": 1.5564357029556115,
+            "valeur": 0.03622913029997014
+          },
+          "sortino": 0.054367286454263315,
+          "valeur_finale": 0.7310832753190443,
+          "volatilite_annualisee": 0.6263828838195251,
+          "volatilite_sur_cible": 0.8477784401963367
+        },
+        "HAR-RV": {
+          "drawdown_max": -0.6509405451005619,
+          "exposition_moyenne": 0.9566023796827798,
+          "frais_annuels_en_rendement": 0.012009253970706653,
+          "frais_total": 0.01971184781251185,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7204783258594918,
+          "rendement_annualise": -0.11774563742552013,
+          "rotation_annuelle": 12.009253970706656,
+          "sharpe": 0.11736869870839264,
+          "sharpe_intervalle": {
+            "bas": -1.4211507955446376,
+            "haut": 1.6269723941781296,
+            "valeur": 0.11736869870839264
+          },
+          "sortino": 0.17766307958277372,
+          "valeur_finale": 0.7948408326976528,
+          "volatilite_annualisee": 0.6370380853773768,
+          "volatilite_sur_cible": 0.8621997316939757
+        },
+        "LSTM": {
+          "drawdown_max": -0.6501081959126634,
+          "exposition_moyenne": 0.9532905435967076,
+          "frais_annuels_en_rendement": 0.01427323988107043,
+          "frais_total": 0.022832304112793113,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7608370702541106,
+          "rendement_annualise": -0.1524113454005016,
+          "rotation_annuelle": 14.273239881070431,
+          "sharpe": 0.04523996620676332,
+          "sharpe_intervalle": {
+            "bas": -1.516965440315431,
+            "haut": 1.567822458776491,
+            "valeur": 0.04523996620676332
+          },
+          "sortino": 0.06801265200785132,
+          "valeur_finale": 0.738536911730983,
+          "volatilite_annualisee": 0.6266762289285079,
+          "volatilite_sur_cible": 0.8481754683804662
+        },
+        "Persistance": {
+          "drawdown_max": -0.6174163321598881,
+          "exposition_moyenne": 0.9175229698457273,
+          "frais_annuels_en_rendement": 0.02757693608588581,
+          "frais_total": 0.0460923564668515,
+          "jours": 669,
+          "part_jours_exposition_max": 0.6307922272047832,
+          "rendement_annualise": -0.08596951891144444,
+          "rotation_annuelle": 27.57693608588581,
+          "sharpe": 0.14993857923895548,
+          "sharpe_intervalle": {
+            "bas": -1.3511387313461496,
+            "haut": 1.5903883502588823,
+            "valeur": 0.14993857923895548
+          },
+          "sortino": 0.2289111309984048,
+          "valeur_finale": 0.8480974108525154,
+          "volatilite_annualisee": 0.606104135309268,
+          "volatilite_sur_cible": 0.8203321509932733
+        },
+        "TFT": {
+          "drawdown_max": -0.6670627421589521,
+          "exposition_moyenne": 0.9618240547030863,
+          "frais_annuels_en_rendement": 0.01196224399299656,
+          "frais_total": 0.018812587702960095,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7698056801195815,
+          "rendement_annualise": -0.1648095438418128,
+          "rotation_annuelle": 11.962243992996559,
+          "sharpe": 0.03207587475103002,
+          "sharpe_intervalle": {
+            "bas": -1.5307305447854753,
+            "haut": 1.5714985858241581,
+            "valeur": 0.03207587475103002
+          },
+          "sortino": 0.04805220849910668,
+          "valeur_finale": 0.7188570005212392,
+          "volatilite_annualisee": 0.6373597546246089,
+          "volatilite_sur_cible": 0.8626350952068077
+        },
+        "Transformer": {
+          "drawdown_max": -0.6628232582558893,
+          "exposition_moyenne": 0.957971216625343,
+          "frais_annuels_en_rendement": 0.0147808291405025,
+          "frais_total": 0.023314342428488594,
+          "jours": 669,
+          "part_jours_exposition_max": 0.757847533632287,
+          "rendement_annualise": -0.16673829960375774,
+          "rotation_annuelle": 14.780829140502501,
+          "sharpe": 0.02453936457158712,
+          "sharpe_intervalle": {
+            "bas": -1.5427337104984644,
+            "haut": 1.5435012142113878,
+            "valeur": 0.02453936457158712
+          },
+          "sortino": 0.03686233375641114,
+          "valeur_finale": 0.7158171687149801,
+          "volatilite_annualisee": 0.6334922885867234,
+          "volatilite_sur_cible": 0.8574006700495973
+        },
+        "XGBoost": {
+          "drawdown_max": -0.6567971071795925,
+          "exposition_moyenne": 0.9490743189190413,
+          "frais_annuels_en_rendement": 0.015700426427899067,
+          "frais_total": 0.02443144668488086,
+          "jours": 669,
+          "part_jours_exposition_max": 0.7249626307922272,
+          "rendement_annualise": -0.16209120531120758,
+          "rotation_annuelle": 15.700426427899066,
+          "sharpe": 0.025625328236883852,
+          "sharpe_intervalle": {
+            "bas": -1.542436022359293,
+            "haut": 1.5501930129113124,
+            "valeur": 0.025625328236883852
+          },
+          "sortino": 0.038551104836886355,
+          "valeur_finale": 0.7231511970565802,
+          "volatilite_annualisee": 0.6253807613933463,
+          "volatilite_sur_cible": 0.8464221167569554
+        },
+        "difference_sharpe_retenu_moins_har": {
+          "bas": -0.17057348523223045,
+          "haut": -0.03201472822670852,
+          "valeur": -0.09702593519518427
+        }
+      },
+      "var": {
+        "jours_exclus_non_valides": 0,
+        "modeles": {
+          "CNN-LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 31,
+            "jours": 669,
+            "p_valeur": 0.660078399263394,
+            "statistique": 0.19342837332325757,
+            "taux": 0.04633781763826607
+          },
+          "GARCH(1,1)": {
+            "attendu": 0.050000000000000044,
+            "depassements": 25,
+            "jours": 669,
+            "p_valeur": 0.11729639181536085,
+            "statistique": 2.453054863112527,
+            "taux": 0.03736920777279522
+          },
+          "GRU": {
+            "attendu": 0.050000000000000044,
+            "depassements": 33,
+            "jours": 669,
+            "p_valeur": 0.9362388000302002,
+            "statistique": 0.006399689380998552,
+            "taux": 0.04932735426008968
+          },
+          "HAR-RV": {
+            "attendu": 0.050000000000000044,
+            "depassements": 30,
+            "jours": 669,
+            "p_valeur": 0.5336535201730673,
+            "statistique": 0.3874297831781348,
+            "taux": 0.04484304932735426
+          },
+          "LSTM": {
+            "attendu": 0.050000000000000044,
+            "depassements": 33,
+            "jours": 669,
+            "p_valeur": 0.9362388000302002,
+            "statistique": 0.006399689380998552,
+            "taux": 0.04932735426008968
+          },
+          "Persistance": {
+            "attendu": 0.050000000000000044,
+            "depassements": 33,
+            "jours": 669,
+            "p_valeur": 0.9362388000302002,
+            "statistique": 0.006399689380998552,
+            "taux": 0.04932735426008968
+          },
+          "TFT": {
+            "attendu": 0.050000000000000044,
+            "depassements": 32,
+            "jours": 669,
+            "p_valeur": 0.7956232000507399,
+            "statistique": 0.06708908374378098,
+            "taux": 0.04783258594917788
+          },
+          "Transformer": {
+            "attendu": 0.050000000000000044,
+            "depassements": 33,
+            "jours": 669,
+            "p_valeur": 0.9362388000302002,
+            "statistique": 0.006399689380998552,
+            "taux": 0.04932735426008968
+          },
+          "XGBoost": {
+            "attendu": 0.050000000000000044,
+            "depassements": 32,
+            "jours": 669,
+            "p_valeur": 0.7956232000507399,
+            "statistique": 0.06708908374378098,
+            "taux": 0.04783258594917788
+          }
+        }
+      }
+    }
+  },
+  "attentes_sha256": "8449844485a36599b0131adacccabc8284846382f2b8db16931065e2773203e1",
+  "commit_du_code": "f5259b64d018a61445fd7f9617414fc783d29d64",
+  "decoupage": "test final",
+  "empreintes_verifiees": 42,
+  "hypotheses": {
+    "H1": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "modele_retenu": "Transformer",
+        "moyenne_difference": -0.08663303829652298,
+        "p_valeur": 3.6475223196363005e-08,
+        "p_valeur_holm_2_actifs": 7.295044639272601e-08,
+        "statistique": -5.572347909480124
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "modele_retenu": "CNN-LSTM",
+        "moyenne_difference": -0.07061610058342235,
+        "p_valeur": 9.979102378008827e-08,
+        "p_valeur_holm_2_actifs": 9.979102378008827e-08,
+        "statistique": -5.386235830565032
+      }
+    },
+    "H2": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "qlike_har_rv": 0.2690197396629115,
+        "qlike_persistance": 0.3692516549177292
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "qlike_har_rv": 0.2496047826452181,
+        "qlike_persistance": 0.3301917402829192
+      }
+    },
+    "H3": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "qlike_garch": 0.34980467273984045,
+        "qlike_har_rv": 0.2690197396629115
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "qlike_garch": 0.2976293101975671,
+        "qlike_har_rv": 0.2496047826452181
+      }
+    },
+    "H4": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "p_valeur_kupiec": 0.2371202831969183,
+        "taux": 0.04035874439461883
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "p_valeur_kupiec": 0.5336535201730673,
+        "taux": 0.04484304932735426
+      }
+    },
+    "H5": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "drawdown_achat": -0.5297176591351058,
+        "drawdown_retenu": -0.5241948151427405,
+        "volatilite_achat": 0.42952666781051946,
+        "volatilite_retenu": 0.39582025322074
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "drawdown_achat": -0.6755345017766718,
+        "drawdown_retenu": -0.6547827978842953,
+        "volatilite_achat": 0.6865098066493845,
+        "volatilite_retenu": 0.6249281801233939
+      }
+    },
+    "H6": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "gain_sur_har_j": 0.11124574115070082,
+        "gain_sur_har_rv": 0.3220322731896044
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "gain_sur_har_j": 0.13889208963772537,
+        "gain_sur_har_rv": 0.282911648707446
+      }
+    },
+    "H7": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "modele_retenu": "Transformer",
+        "moyenne_difference": -0.02282941945707833,
+        "p_valeur": 0.04828279003302763,
+        "p_valeur_holm_2_actifs": 0.04828279003302763,
+        "statistique": -1.978499190184547
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "modele_retenu": "CNN-LSTM",
+        "moyenne_difference": -0.028869914878155507,
+        "p_valeur": 0.0009246637793576401,
+        "p_valeur_holm_2_actifs": 0.0018493275587152802,
+        "statistique": -3.327402371586455
+      }
+    },
+    "prevision": {
+      "BTCUSDT": {
+        "dans_l_intervalle": false,
+        "gain": 0.3220322731896044
+      },
+      "ETHUSDT": {
+        "dans_l_intervalle": false,
+        "gain": 0.282911648707446
+      }
+    },
+    "prevision_har_j": {
+      "BTCUSDT": {
+        "dans_l_intervalle": false,
+        "gain": 0.11124574115070082
+      },
+      "ETHUSDT": {
+        "dans_l_intervalle": false,
+        "gain": 0.13889208963772537
+      }
+    }
+  },
+  "mode": "test final",
+  "modeles_test_final_reproduction_validation": {
+    "BTCUSDT": {
+      "CNN-LSTM": 0.0,
+      "GRU": 0.0,
+      "HAR-J": 0.0,
+      "HAR-RV": 0.0,
+      "LSTM": 0.0,
+      "Persistance": 0.0,
+      "TFT": 0.0,
+      "Transformer": 0.0,
+      "XGBoost": 0.0
+    },
+    "ETHUSDT": {
+      "CNN-LSTM": 0.0,
+      "GRU": 0.0,
+      "HAR-J": 0.0,
+      "HAR-RV": 0.0,
+      "LSTM": 0.0,
+      "Persistance": 0.0,
+      "TFT": 0.0,
+      "Transformer": 0.0,
+      "XGBoost": 0.0
+    }
+  },
+  "ouvert_le": "2026-11-19T20:12:22",
+  "periode": [
+    "2025-01-01",
+    "2026-10-31"
+  ],
+  "regles_sha256": "9243476b604bf55d44e939d1b1e7bea528d74d2d4bc1ae9e0b8039cdc1b50e87"
+}
