@@ -570,3 +570,25 @@ Commit séparé, poussé AVANT le calcul de HAR-J et avant l'écriture du progra
 - **HAR-J** (`modeles.har_j`) : déclaré avant l'ouverture, à cause de l'explicabilité (les réseaux s'appuient sur le jour de la semaine). Descriptif : hors de la sélection et hors de la famille de Holm principale. Décision prise seul (à valider) : lundi comme modalité de référence.
 - **Attentes** (`config/attentes_test.toml`, `docs/ATTENTES_TEST.md`) : le texte des hypothèses H1 à H6 et de la prévision est celui de la consigne. Décisions prises seul (à valider), pour rendre chaque verdict calculable sans ambiguïté : H1 est jugée pour chaque actif (moyenne de d négative et p-valeur ajustée sous 0,05) ; H2, H3 et H6 sont jugées sur les QLIKE moyens du test (Diebold-Mariano rapporté à titre descriptif pour H2 et H3) ; H5 demande les deux conditions à la fois ; la famille de Holm sur 7 comparaisons est rapportée à titre descriptif sur le test (la précision du 2026-11-19 sur Holm renvoyait la règle du test final à ce moment).
 - **Ouverture** (`test_final`) : un seul chemin (`src/ouvrir_test.py`), quatre préconditions, aucun réentraînement, résultats en création exclusive, vérification sur 2024 dans un fichier différent. Décision prise seul (à valider) : les données sont coupées à la fin de la période évaluée, dans les deux modes (en vérification, aucune bougie de 2025 n'entre dans le calcul).
+
+## 2026-11-19 — Étape 9A : HAR-J sur le développement et programme d'ouverture (test toujours fermé)
+
+Calcul fait après le commit des règles et des attentes (96b896d). Aucune valeur de 2025-2026 n'a été lue ni affichée.
+
+### HAR-J (descriptif)
+
+- Calculé par `src/har_j.py` sur les 5 plis et le découpage du test final (sans aucune prévision sur le test) ; intégré à `src/comparer.py` comme modèle descriptif. Résultats dans `docs/RESULTATS_DL.md`, section « HAR-J ».
+- HAR-J fait mieux que HAR-RV de 9,9 % (BTC) et 7,5 % (ETH) en QLIKE moyen par pli : le seul ajout du jour de la semaine de la cible apporte une grande partie de ce que les réseaux gagnaient sur HAR-RV. Le gain des réseaux sur HAR-J reste positif pour tous sur ETH et pour tous sauf le TFT sur BTC, mais il est plus petit (le modèle retenu : 4,2 % pour le Transformer sur BTC, 8,6 % pour le CNN-LSTM sur ETH, contre 13,6 % et 15,4 % sur HAR-RV).
+- Contrôle : les 2 720 valeurs déjà publiées dans `rapports/comparaison_modeles.json` sont inchangées après l'ajout de HAR-J (comparaison valeur par valeur) ; les fichiers qui citent son empreinte (`strategie.json`, `explicabilite.json`) ont été régénérés, et seule cette empreinte y change.
+- Modèle HAR-J du test final enregistré dans `sorties/` ; empreinte dans `rapports/modele_har_j.json`.
+
+### Programme d'ouverture (`src/ouvrir_test.py`)
+
+- Deux modes, une seule chaîne : `--verification` (2024, modèles du pli 5, garde fermée) et `--ouvrir` (test final, une seule fois, après accord explicite). Sans option, le programme n'ouvre rien.
+- Garde (`src/garde.py`) : une seule porte privée, qui ne s'ouvre que si elle est appelée par la fonction `_chaine_sur_le_test_ouvert` de `src/ouvrir_test.py`, et seulement pendant ce bloc ; testée avec des témoins (appel depuis un test refusé ; fonction du même nom ailleurs refusée ; porte refermée après le bloc ; aucun autre fichier de `src/` ne l'utilise). Le test « aucune option de contournement » de la garde passe toujours.
+- Décisions prises seul (à valider) :
+  - en plus des préconditions écrites, le programme vérifie que le modèle retenu des attentes est celui de la règle de sélection, et il contrôle AVANT toute ouverture que les modèles du test final, chargés depuis leurs fichiers, redonnent exactement leurs prévisions de validation (2024-07-01 à 2024-12-31, développement). Ce contrôle a été ajouté parce que la vérification sur 2024 n'utilise pas ces fichiers : un défaut de chargement (par exemple d'un XGBoost enregistré) ne serait apparu qu'à l'ouverture ;
+  - en vérification, les XGBoost du pli 5 (jamais enregistrés) sont ré-entraînés à l'identique ; tous les autres modèles sont chargés ;
+  - la stratégie de la vérification commence avec une exposition nulle au 2024-01-01, comme le test commencera au 2025-01-01 : ses expositions jour par jour doivent être identiques à celles de la stratégie du développement ; seuls les frais du premier jour diffèrent (entrée depuis 0 contre ajustement depuis l'exposition du 2023-12-31), c'est attendu et rapporté ;
+  - `src/strategie.py` accepte des bougies déjà coupées (argument facultatif, sans effet sur le calcul par défaut : `strategie.json` ne change que par l'empreinte citée).
+- Essai de la chaîne sur 2024 sans les préconditions (avant le commit, garde fermée) : écart nul sur toutes les métriques, toutes les expositions et toutes les prévisions de validation ; modèles du test final : écart nul sur leur validation.

@@ -48,7 +48,7 @@ BASELINES_SELECTIONNABLES = ["HAR-RV", "GARCH(1,1)", "XGBoost"]
 RESEAUX = list(T.MODELES)
 SELECTIONNABLES = BASELINES_SELECTIONNABLES + RESEAUX
 REGLES_MODELES = ["XGBoost"] + RESEAUX                 # modèles réglés, avec 3 graines
-TOUS = ["Persistance"] + SELECTIONNABLES
+TOUS = ["Persistance", "HAR-RV", "HAR-J"] + SELECTIONNABLES[1:]   # persistance et HAR-J : descriptifs
 TOLERANCE = 1e-9
 
 
@@ -128,6 +128,28 @@ def ajouter_reseaux(table: pd.DataFrame, calcul: dict, actif: str, regles: dict,
     return table, controles
 
 
+def ajouter_har_j(table: pd.DataFrame, calcul: dict, actif: str, regles: dict, cle: str) -> tuple[pd.DataFrame, list]:
+    """Variance prévue de HAR-J (descriptif), avec s² mesuré sur la validation interne, comme HAR-RV."""
+    import har_j as HJ
+    table = table.copy()
+    controles = []
+    for bloc in calcul["decoupages"]:
+        d, s = bloc["decoupage"], bloc["sortie"]
+        u = _unite(HJ.DOSSIER_REPRISE, HJ.identifiant(actif, d, cle))
+        if u["validation"]["date_cible"] != s["validation"]["date_cible"]:
+            raise ErreurComparaison(f"{actif} HAR-J {d['nom']} : dates de validation différentes de celles des baselines.")
+        s2, biais = B.s2_et_biais(np.array(s["validation"]["cible"]), np.array(u["validation"]["prevision_log"]))
+        controles.append({"decoupage": d["nom"], "s2": s2, "moyenne_residus_log": biais, "coefficients": u["coefficients"],
+                          "noms": u["noms"]})
+        if "evaluation" not in s:
+            continue
+        if u["evaluation"]["date_cible"] != s["evaluation"]["date_cible"]:
+            raise ErreurComparaison(f"{actif} HAR-J {d['nom']} : dates d'évaluation différentes de celles des baselines.")
+        G.refuser_si_test([dt.date.fromisoformat(x) for x in u["evaluation"]["date_cible"]], "HAR-J")
+        table.loc[(table["pli"] == d["nom"]).to_numpy(), "HAR-J"] = EV.variance_depuis_log(u["evaluation"]["prevision_log"], s2)
+    return table, controles
+
+
 # --- Résultats --------------------------------------------------------------------------------
 
 def _stat(valeurs: list[float]) -> dict:
@@ -168,7 +190,12 @@ def resultats_actif(table: pd.DataFrame, regles: dict) -> dict:
     sortie["gain_relatif_qlike"] = {m: {
         "jours_reunis": (h["reunis"]["qlike"] - sortie["modeles"][m]["reunis"]["qlike"]) / h["reunis"]["qlike"],
         "moyenne_des_plis": (h["qlike_moyenne_des_plis"] - sortie["modeles"][m]["qlike_moyenne_des_plis"]) / h["qlike_moyenne_des_plis"]}
-        for m in SELECTIONNABLES}
+        for m in SELECTIONNABLES + ["HAR-J"]}
+    j = sortie["modeles"]["HAR-J"]
+    sortie["gain_sur_har_j"] = {m: {
+        "jours_reunis": (j["reunis"]["qlike"] - sortie["modeles"][m]["reunis"]["qlike"]) / j["reunis"]["qlike"],
+        "moyenne_des_plis": (j["qlike_moyenne_des_plis"] - sortie["modeles"][m]["qlike_moyenne_des_plis"]) / j["qlike_moyenne_des_plis"]}
+        for m in ["HAR-RV"] + REGLES_MODELES}
     sortie["robustesse"] = robustesse(table, sortie)
     jours_reunis = sorted(SELECTIONNABLES, key=lambda m: sortie["modeles"][m]["reunis"]["qlike"])
     par_pli = sorted(SELECTIONNABLES, key=lambda m: sortie["modeles"][m]["qlike_moyenne_des_plis"])
@@ -366,7 +393,8 @@ def rapport_markdown(rapport: dict, regles: dict) -> str:
         for m in TOUS:
             r = res["modeles"][m]["reunis"]
             g = res["gain_relatif_qlike"].get(m)
-            lignes.append(f"| {m}{' (descriptive)' if m == 'Persistance' else ''} | {_n(r['qlike'])} [{_n(r['qlike_intervalle']['bas'])} ; "
+            role = {"Persistance": " (descriptive)", "HAR-J": " (descriptif)"}.get(m, "")
+            lignes.append(f"| {m}{role} | {_n(r['qlike'])} [{_n(r['qlike_intervalle']['bas'])} ; "
                           f"{_n(r['qlike_intervalle']['haut'])}] | {_n(res['modeles'][m]['qlike_moyenne_des_plis'])} | "
                           f"{'—' if g is None else _n(100 * g['moyenne_des_plis'], 1) + ' %'} | "
                           f"{_n(r['rmse'], 4)} [{_n(r['rmse_intervalle']['bas'], 4)} ; {_n(r['rmse_intervalle']['haut'], 4)}] | "
@@ -379,6 +407,15 @@ def rapport_markdown(rapport: dict, regles: dict) -> str:
             lignes.append(f"| {m} | {_n(pg['qlike']['moyenne'])} ({_n(pg['qlike']['ecart_type'], 4)}) | "
                           f"{_n(res['modeles'][m]['reunis']['qlike'])} | {_n(pg['rmse']['moyenne'], 4)} ({_n(pg['rmse']['ecart_type'], 4)}) | "
                           f"{_n(pg['mae']['moyenne'], 4)} ({_n(pg['mae']['ecart_type'], 4)}) |")
+        gj = res["gain_sur_har_j"]
+        lignes += ["", "### HAR-J (descriptif) : HAR-RV + jour de la semaine de la cible", "",
+                   "Déclaré le 2026-11-19, avant l'ouverture du test final ; hors de la sélection et hors de la famille de Holm. "
+                   "Gains en moyenne des QLIKE moyens par pli (positif : le modèle fait mieux).", "",
+                   "| Modèle | Gain sur HAR-RV | Gain sur HAR-J |", "|---|---:|---:|",
+                   f"| HAR-J | {_n(100 * res['gain_relatif_qlike']['HAR-J']['moyenne_des_plis'], 1)} % | — |"]
+        for m in ["HAR-RV"] + REGLES_MODELES:
+            g_har = "—" if m == "HAR-RV" else _n(100 * res["gain_relatif_qlike"][m]["moyenne_des_plis"], 1) + " %"
+            lignes.append(f"| {m} | {g_har} | {_n(100 * gj[m]['moyenne_des_plis'], 1)} % |")
         rb = res["robustesse"]
         annees = {p: a for p, a in zip(res["modeles"]["HAR-RV"]["par_pli"], [x[0][:4] for x in rapport["plis"]])}
         lignes += ["", "### Robustesse (descriptif) : gain sur HAR-RV de chaque graine seule", "",
@@ -540,6 +577,16 @@ def lecture_des_resultats(rapport: dict, regles: dict) -> list[str]:
                           + (f" XGBoost a aussi son plus grand gain en {haut}. Explication possible, non démontrée : HAR-RV "
                              "est moins bon cette année-là, et l'écart ne tient pas seulement aux réseaux."
                              if annees[max(rb["gain_par_pli"]["XGBoost"], key=rb["gain_par_pli"]["XGBoost"].get)] == haut else ""))
+        g_hj = res["gain_relatif_qlike"]["HAR-J"]["moyenne_des_plis"]
+        lignes.append(f"- {nom} : HAR-J (HAR-RV + jour de la semaine de la cible) a un QLIKE moyen par pli "
+                      f"{'plus faible' if g_hj > 0 else 'plus élevé ou égal'} que HAR-RV ({_n(100 * g_hj, 1)} % de gain ; descriptif).")
+        plus_petit = [m for m in RESEAUX if res["gain_sur_har_j"][m]["moyenne_des_plis"] < res["gain_relatif_qlike"][m]["moyenne_des_plis"]]
+        if plus_petit:
+            lignes.append(f"- {nom} : le gain de {_liste(plus_petit)} est plus petit sur HAR-J que sur HAR-RV : une partie de "
+                          "l'avantage des réseaux sur HAR-RV vient du jour de la semaine (descriptif).")
+        restent = [m for m in RESEAUX if res["gain_sur_har_j"][m]["moyenne_des_plis"] > 0]
+        lignes.append(f"- {nom} : " + (f"{_liste(restent)} {'garde' if len(restent) == 1 else 'gardent'} un QLIKE moyen par pli plus "
+                                       "faible que HAR-J (descriptif)." if restent else "aucun réseau ne fait mieux que HAR-J (descriptif)."))
         se = res["sensibilite_sans_2024"]
         an = annees[se["pli_exclu"]]
         restent = [m for m in RESEAUX if se["diebold_mariano"][m]["significatif_holm"] and se["diebold_mariano"][m]["moyenne_difference"] < 0]
@@ -607,8 +654,9 @@ def executer(regles: dict) -> dict:
         calcul = calcul_baselines(actif, regles, cle)
         table, controles = B.series_evaluation(calcul, regles)
         table, controles_dl = ajouter_reseaux(table, calcul, actif, regles, cle)
+        table, controles_har_j = ajouter_har_j(table, calcul, actif, regles, cle)
         res = resultats_actif(table, regles)
-        res["controles"] = {"XGBoost": controles["xgboost_validation"], **controles_dl,
+        res["controles"] = {"XGBoost": controles["xgboost_validation"], **controles_dl, "HAR-J": controles_har_j,
                             "ecart_baselines_publiees": verifier_baselines(res, publie["actifs"][actif]),
                             "jours_evalues": G.compter(table["date_cible"])}
         res["sensibilite_sans_2024"] = sensibilite_sans_derniere_annee(table, regles)

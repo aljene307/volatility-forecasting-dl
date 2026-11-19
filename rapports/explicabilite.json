@@ -2466,7 +2466,7 @@
     }
   },
   "depend_de": {
-    "comparaison_modeles_sha256": "f35c646392950934a7725921780412ac3ec82f99156c0b144af440bcc8a5e6ea",
+    "comparaison_modeles_sha256": "3f2277b3e71eaad4f1f45219e9339bb3b8e826ac7409e94c218c8f6885c24f84",
     "modeles_deep_learning_sha256": "ddb7cd30523801c46a2380ecbe7f83ae4535bfe283a38bb5cc842c0d5249ba73"
   },
   "periode": [

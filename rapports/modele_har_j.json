@@ -1,0 +1,11 @@
+{
+  "description": "Empreinte SHA-256 du modèle HAR-J du test final (enregistré dans sorties/, ignoré par Git) ; aucune prévision n'a été faite sur le test.",
+  "modeles": {
+    "BTCUSDT": {
+      "har_j.json": "5f2e9e506eabb78ae2eb8e23bdc49eabaae8869bc807823f4acbb3d70c82046e"
+    },
+    "ETHUSDT": {
+      "har_j.json": "cc253f53726f28c4de4c5a403c9b542fec9f1c33b77cfdf68e295ef5873dfd7d"
+    }
+  }
+}

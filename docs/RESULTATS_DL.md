@@ -16,6 +16,7 @@ Fichier généré par `src/comparer.py` à partir de `rapports/comparaison_model
 |---|---|---:|---:|---|---|
 | Persistance (descriptive) | 0,413 [0,339 ; 0,518] | 0,413 | — | 0,0197 [0,0157 ; 0,0244] | 0,0117 [0,0106 ; 0,0131] |
 | HAR-RV | 0,344 [0,273 ; 0,442] | 0,344 | 0,0 % | 0,0152 [0,0119 ; 0,0194] | 0,0090 [0,0082 ; 0,0101] |
+| HAR-J (descriptif) | 0,310 [0,242 ; 0,404] | 0,310 | 9,9 % | 0,0147 [0,0113 ; 0,0188] | 0,0085 [0,0077 ; 0,0095] |
 | GARCH(1,1) | 0,432 [0,356 ; 0,526] | 0,433 | −25,8 % | 0,0176 [0,0141 ; 0,0215] | 0,0114 [0,0101 ; 0,0129] |
 | XGBoost | 0,321 [0,263 ; 0,396] | 0,321 | 6,7 % | 0,0151 [0,0119 ; 0,0195] | 0,0092 [0,0084 ; 0,0101] |
 | LSTM | 0,305 [0,240 ; 0,394] | 0,306 | 11,2 % | 0,0149 [0,0116 ; 0,0193] | 0,0091 [0,0082 ; 0,0101] |
@@ -34,6 +35,21 @@ Fichier généré par `src/comparer.py` à partir de `rapports/comparaison_model
 | CNN-LSTM | 0,310 (0,0017) | 0,304 | 0,0147 (0,0001) | 0,0091 (0,0001) |
 | Transformer | 0,300 (0,0041) | 0,297 | 0,0152 (0,0002) | 0,0091 (0,0003) |
 | TFT | 0,340 (0,0173) | 0,322 | 0,0160 (0,0004) | 0,0096 (0,0005) |
+
+### HAR-J (descriptif) : HAR-RV + jour de la semaine de la cible
+
+Déclaré le 2026-11-19, avant l'ouverture du test final ; hors de la sélection et hors de la famille de Holm. Gains en moyenne des QLIKE moyens par pli (positif : le modèle fait mieux).
+
+| Modèle | Gain sur HAR-RV | Gain sur HAR-J |
+|---|---:|---:|
+| HAR-J | 9,9 % | — |
+| HAR-RV | — | −11,0 % |
+| XGBoost | 6,7 % | −3,5 % |
+| LSTM | 11,2 % | 1,5 % |
+| GRU | 11,6 % | 1,9 % |
+| CNN-LSTM | 11,5 % | 1,8 % |
+| Transformer | 13,6 % | 4,2 % |
+| TFT | 6,3 % | −4,0 % |
 
 ### Robustesse (descriptif) : gain sur HAR-RV de chaque graine seule
 
@@ -110,6 +126,7 @@ Test descriptif HAR-RV contre persistance (hors famille) : différence −0,0687
 |---|---:|---:|---:|---:|---:|
 | Persistance | 0,344 | 0,376 | 0,329 | 0,637 | 0,377 |
 | HAR-RV | 0,345 | 0,322 | 0,276 | 0,495 | 0,283 |
+| HAR-J | 0,330 | 0,311 | 0,246 | 0,441 | 0,223 |
 | GARCH(1,1) | 0,482 | 0,460 | 0,386 | 0,501 | 0,335 |
 | XGBoost | 0,364 | 0,289 | 0,300 | 0,419 | 0,232 |
 | LSTM | 0,348 | 0,276 | 0,244 | 0,463 | 0,197 |
@@ -124,6 +141,7 @@ Test descriptif HAR-RV contre persistance (hors famille) : différence −0,0687
 |---|---:|---:|---:|
 | Persistance | 0,700 | 0,275 | 0,572 |
 | HAR-RV | 0,858 | 0,289 | 0,533 |
+| HAR-J | 0,795 | 0,258 | 0,492 |
 | GARCH(1,1) | 1,207 | 0,379 | 0,961 |
 | XGBoost | 0,902 | 0,352 | 0,633 |
 | LSTM | 0,738 | 0,235 | 0,529 |
@@ -165,6 +183,7 @@ Figure : `figures/figure_5_deep_learning_BTCUSDT.png`.
 |---|---|---:|---:|---|---|
 | Persistance (descriptive) | 0,349 [0,276 ; 0,451] | 0,349 | — | 0,0229 [0,0177 ; 0,0292] | 0,0131 [0,0117 ; 0,0150] |
 | HAR-RV | 0,293 [0,229 ; 0,379] | 0,293 | 0,0 % | 0,0181 [0,0140 ; 0,0230] | 0,0106 [0,0096 ; 0,0119] |
+| HAR-J (descriptif) | 0,270 [0,209 ; 0,354] | 0,271 | 7,5 % | 0,0177 [0,0136 ; 0,0225] | 0,0101 [0,0091 ; 0,0114] |
 | GARCH(1,1) | 0,413 [0,341 ; 0,505] | 0,413 | −41,1 % | 0,0213 [0,0174 ; 0,0264] | 0,0145 [0,0132 ; 0,0162] |
 | XGBoost | 0,292 [0,240 ; 0,358] | 0,293 | 0,0 % | 0,0190 [0,0146 ; 0,0243] | 0,0112 [0,0101 ; 0,0126] |
 | LSTM | 0,262 [0,203 ; 0,341] | 0,262 | 10,5 % | 0,0180 [0,0135 ; 0,0233] | 0,0103 [0,0093 ; 0,0117] |
@@ -183,6 +202,21 @@ Figure : `figures/figure_5_deep_learning_BTCUSDT.png`.
 | CNN-LSTM | 0,252 (0,0045) | 0,247 | 0,0176 (0,0002) | 0,0105 (0,0003) |
 | Transformer | 0,267 (0,0118) | 0,260 | 0,0184 (0,0003) | 0,0105 (0,0002) |
 | TFT | 0,268 (0,0121) | 0,259 | 0,0186 (0,0005) | 0,0107 (0,0006) |
+
+### HAR-J (descriptif) : HAR-RV + jour de la semaine de la cible
+
+Déclaré le 2026-11-19, avant l'ouverture du test final ; hors de la sélection et hors de la famille de Holm. Gains en moyenne des QLIKE moyens par pli (positif : le modèle fait mieux).
+
+| Modèle | Gain sur HAR-RV | Gain sur HAR-J |
+|---|---:|---:|
+| HAR-J | 7,5 % | — |
+| HAR-RV | — | −8,1 % |
+| XGBoost | 0,0 % | −8,1 % |
+| LSTM | 10,5 % | 3,2 % |
+| GRU | 12,9 % | 5,8 % |
+| CNN-LSTM | 15,4 % | 8,6 % |
+| Transformer | 11,0 % | 3,7 % |
+| TFT | 11,3 % | 4,1 % |
 
 ### Robustesse (descriptif) : gain sur HAR-RV de chaque graine seule
 
@@ -259,6 +293,7 @@ Test descriptif HAR-RV contre persistance (hors famille) : différence −0,0567
 |---|---:|---:|---:|---:|---:|
 | Persistance | 0,284 | 0,384 | 0,259 | 0,491 | 0,327 |
 | HAR-RV | 0,256 | 0,332 | 0,220 | 0,391 | 0,264 |
+| HAR-J | 0,251 | 0,320 | 0,200 | 0,361 | 0,221 |
 | GARCH(1,1) | 0,287 | 0,452 | 0,315 | 0,672 | 0,338 |
 | XGBoost | 0,298 | 0,336 | 0,247 | 0,359 | 0,222 |
 | LSTM | 0,287 | 0,320 | 0,197 | 0,323 | 0,183 |
@@ -273,6 +308,7 @@ Test descriptif HAR-RV contre persistance (hors famille) : différence −0,0567
 |---|---:|---:|---:|
 | Persistance | 0,416 | 0,214 | 0,522 |
 | HAR-RV | 0,476 | 0,247 | 0,416 |
+| HAR-J | 0,449 | 0,223 | 0,389 |
 | GARCH(1,1) | 0,502 | 0,357 | 0,701 |
 | XGBoost | 0,520 | 0,322 | 0,480 |
 | LSTM | 0,535 | 0,221 | 0,378 |
@@ -335,6 +371,9 @@ Chaque phrase ci-dessous est générée à partir des valeurs de `rapports/compa
 - BTC : le gain de CNN-LSTM sur HAR-RV est régulier : positif chaque année de 2020 à 2024 (robustesse, descriptif).
 - BTC : le gain de LSTM, GRU et Transformer sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2021, 2022, 2023 et 2024, négatif ou nul en 2020 (robustesse, descriptif).
 - BTC : le gain de TFT sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2021, 2023 et 2024, négatif ou nul en 2020 et 2022 (robustesse, descriptif).
+- BTC : HAR-J (HAR-RV + jour de la semaine de la cible) a un QLIKE moyen par pli plus faible que HAR-RV (9,9 % de gain ; descriptif).
+- BTC : le gain de LSTM, GRU, CNN-LSTM, Transformer et TFT est plus petit sur HAR-J que sur HAR-RV : une partie de l'avantage des réseaux sur HAR-RV vient du jour de la semaine (descriptif).
+- BTC : LSTM, GRU, CNN-LSTM et Transformer gardent un QLIKE moyen par pli plus faible que HAR-J (descriptif).
 - BTC : sans 2024, aucun réseau ne fait significativement mieux que HAR-RV après ajustement de Holm (sensibilité décidée après avoir vu les résultats, descriptif).
 - BTC : sans 2024, LSTM, GRU, CNN-LSTM et Transformer perdent la significativité : leur avantage dépend en partie de 2024.
 - BTC : sans 2024, le modèle retenu (Transformer) a un QLIKE moyen par pli plus faible que celui de HAR-RV.
@@ -354,6 +393,9 @@ Chaque phrase ci-dessous est générée à partir des valeurs de `rapports/compa
 - ETH : le gain de LSTM, GRU, CNN-LSTM et TFT sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2021, 2022, 2023 et 2024, négatif ou nul en 2020 (robustesse, descriptif).
 - ETH : le gain de Transformer sur HAR-RV n'est pas régulier (concentré sur certaines années) : positif en 2022, 2023 et 2024, négatif ou nul en 2020 et 2021 (robustesse, descriptif).
 - ETH : pour les 5 réseaux, le plus grand gain annuel sur HAR-RV est en 2024 et le plus petit en 2020 (robustesse, descriptif). XGBoost a aussi son plus grand gain en 2024. Explication possible, non démontrée : HAR-RV est moins bon cette année-là, et l'écart ne tient pas seulement aux réseaux.
+- ETH : HAR-J (HAR-RV + jour de la semaine de la cible) a un QLIKE moyen par pli plus faible que HAR-RV (7,5 % de gain ; descriptif).
+- ETH : le gain de LSTM, GRU, CNN-LSTM, Transformer et TFT est plus petit sur HAR-J que sur HAR-RV : une partie de l'avantage des réseaux sur HAR-RV vient du jour de la semaine (descriptif).
+- ETH : LSTM, GRU, CNN-LSTM, Transformer et TFT gardent un QLIKE moyen par pli plus faible que HAR-J (descriptif).
 - ETH : sans 2024, aucun réseau ne fait significativement mieux que HAR-RV après ajustement de Holm (sensibilité décidée après avoir vu les résultats, descriptif).
 - ETH : sans 2024, LSTM, GRU et CNN-LSTM perdent la significativité : leur avantage dépend en partie de 2024.
 - ETH : sans 2024, le modèle retenu (CNN-LSTM) a un QLIKE moyen par pli plus faible que celui de HAR-RV.

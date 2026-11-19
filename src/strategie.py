@@ -132,7 +132,7 @@ def var_kupiec(sigma: np.ndarray, rendement: np.ndarray, utilisable: np.ndarray,
 
 # --- Calcul par actif -------------------------------------------------------------------------
 
-def donnees_strategie(actif: str, regles: dict) -> tuple[pd.DataFrame, list[dt.date]]:
+def donnees_strategie(actif: str, regles: dict, bougies: pd.DataFrame | None = None) -> tuple[pd.DataFrame, list[dt.date]]:
     """Table journalière des jours évalués : rendement simple, validité du jour et de la veille, σ̂ de chaque modèle."""
     cle = T._cle_donnees(regles)
     calcul = K.calcul_baselines(actif, regles, cle)
@@ -142,7 +142,9 @@ def donnees_strategie(actif: str, regles: dict) -> tuple[pd.DataFrame, list[dt.d
     debut, fin = plis[0][0], plis[-1][1]
     jours = [debut + dt.timedelta(days=k) for k in range((fin - debut).days + 1)]
     G.refuser_si_test(jours, "stratégie")
-    _, journalier = B.donnees_actif(V.lire_bougies(C.DOSSIER_TRAITE / f"{actif}_5m.parquet"), regles)
+    if bougies is None:
+        bougies = V.lire_bougies(C.DOSSIER_TRAITE / f"{actif}_5m.parquet")
+    _, journalier = B.donnees_actif(bougies, regles)
     veilles = [debut - dt.timedelta(days=1)] + jours
     j = journalier.loc[veilles]
     if j["rendement"].loc[jours].isna().any():
@@ -156,8 +158,8 @@ def donnees_strategie(actif: str, regles: dict) -> tuple[pd.DataFrame, list[dt.d
     return sortie, jours
 
 
-def calculer_actif(actif: str, regles: dict, vol_cible: float, retenu: str) -> tuple[dict, dict]:
-    d, jours = donnees_strategie(actif, regles)
+def calculer_actif(actif: str, regles: dict, vol_cible: float, retenu: str, bougies: pd.DataFrame | None = None) -> tuple[dict, dict]:
+    d, jours = donnees_strategie(actif, regles, bougies)
     decalage = regles["strategie"]["decalage_execution_jours"]
     r = d.loc[jours, "rendement"].to_numpy()
     origines = list(d.index[:-1])                                    # jours de décision : veille de chaque jour de cible
