@@ -650,3 +650,19 @@ Section `api` de `config/regles.toml` et section 18 des règles, commitées et p
   - un seul fil de calcul par session onnxruntime ;
   - `requirements-api.txt` donne toutes les dépendances de l'API en versions exactes (résolution vérifiée à vide : exactement ces paquets) ; httpx, utile aux seuls tests, est dans `requirements-dev.txt` ;
   - la réponse donne aussi la prévision de chaque graine et s², pour la transparence.
+
+## 2026-11-19 — Étape 10B : application Streamlit
+
+- **Vérification de licence de l'exemple synthétique de l'API** : il est produit par `exemple_synthetique` dans `src/exporter_onnx.py`, au hasard avec une graine fixe (`default_rng(7)`), à partir d'une marche aléatoire de la RV ; cette fonction ne lit aucun fichier, ni donnée Binance ni série dérivée. Les ordres de grandeur (RV de départ, log-volume, plage du RSI, etc.) sont des constantes choisies à la main, pas calculées sur les données. Aucun remplacement nécessaire.
+- **Installation** : un essai à blanc de Streamlit dans `.venv` n'ajoutait que des paquets nouveaux (aucune version existante changée) : Streamlit 1.67.0 est installé dans `.venv`, sans environnement séparé ; `pip check` : aucun conflit. `app/requirements.txt` donne Streamlit et toutes ses dépendances en versions exactes (Python 3.11) ; résolution vérifiée à vide : exactement ces paquets.
+- **Application** (`app/`) : huit pages avec `st.navigation` (tous les imports avant), fichiers précalculés lus avec `st.cache_data`, nombres au format français, couleurs des figures, mention « Données : Binance Vision, CC BY-NC-SA 4.0 » sur chaque page ; aucun tableau de série journalière dérivée.
+- **Tests** (`tests/test_app.py`, AppTest) : chaque page s'affiche sans exception et porte la mention de licence ; nombres affichés égaux à ceux du JSON (avec un témoin : une valeur fausse n'apparaît pas) ; l'application complète démarre sans fichier de secrets ; la démonstration affiche « L'API ne répond pas… » quand l'API est absente ; lecture du CSV validée (deux formats, et refus clairs pour 29 lignes, une colonne absente, une valeur non numérique).
+- **Essai réel** : API et application lancées en local ; la page d'accueil répond ; la démonstration envoie l'exemple synthétique à l'API et affiche la volatilité, l'exposition et la VaR ; un CSV au format français (« ; » et virgule décimale) est accepté.
+- **Erreurs corrigées** : la première lecture du CSV ne relisait pas les nombres au bit près (lecture par défaut de pandas) ; corrigé avec `float_precision="round_trip"`, comme à l'étape de conversion. Le module d'outils de l'application s'appelait d'abord `commun`, comme `src/commun.py` : les deux se masquaient quand toute la suite de tests tournait (14 échecs) ; renommé `app/outils_app.py`, ce qui évite aussi le conflit au déploiement.
+- Décisions prises seul (à valider) :
+  - les pages sont dans `app/vues/` (et non `app/pages/`, que Streamlit lirait automatiquement comme des pages) ;
+  - délai d'attente de l'API : 90 s, avec le message de réveil, puis un message clair en cas d'échec ;
+  - le CSV accepte « , » avec point décimal ou « ; » avec virgule décimale ; le jour de la semaine et l'actif sont choisis dans la page ; un modèle de fichier téléchargeable contient les valeurs SYNTHÉTIQUES de l'exemple (aucune donnée de marché) ;
+  - les tableaux sont affichés avec `st.table` (sans bouton de téléchargement) ;
+  - les phrases d'explication et la liste des limites sont conditionnées par les valeurs des JSON (par exemple, les réseaux plus mauvais que HAR-RV pendant le Covid sont listés à partir des QLIKE par crise) ;
+  - les identifiants des commits de règles cités dans la page « Données et méthode » sont écrits dans le code (ce sont des identifiants, pas des résultats).

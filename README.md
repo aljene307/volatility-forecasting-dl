@@ -77,6 +77,23 @@ Invoke-RestMethod -Uri http://127.0.0.1:8000/prevoir -Method Post -ContentType "
 
 La documentation interactive est à l'adresse http://127.0.0.1:8000/docs. Une requête invalide renvoie une erreur 422 en français, champ par champ (par exemple « jours[5].rv_7 : valeur manquante »). Export des modèles : `src/exporter_onnx.py` ; mesure de la mémoire et du temps de réponse : `api/mesurer.py`.
 
+## Application (lancement en local sous Windows)
+
+L'application Streamlit (`app/streamlit_app.py`, en français) présente le projet : accueil et verdicts du test final, données et méthode, exploration, résultats, stratégie, explicabilité, démonstration et limites. Elle ne fait aucun calcul lourd : tout est lu dans les fichiers précalculés du dépôt (dossiers rapports, figures et config), sans aucun chiffre tapé à la main, et aucune série journalière dérivée n'y est téléchargeable. La page « Démonstration » envoie l'exemple synthétique, ou un fichier CSV que vous fournissez, à l'API.
+
+Dans PowerShell, depuis le dossier du projet, avec deux fenêtres :
+
+```powershell
+# Fenêtre 1 : l'API (voir la section « API »)
+.venv\Scripts\python -m uvicorn api.app:app --port 8000
+
+# Fenêtre 2 : l'application
+.venv\Scripts\python -m pip install -r app\requirements.txt
+.venv\Scripts\python -m streamlit run app\streamlit_app.py
+```
+
+Puis ouvrir http://localhost:8501 dans le navigateur. L'adresse de l'API vaut http://127.0.0.1:8000 par défaut ; elle peut être remplacée par `st.secrets["API_URL"]` ou par la variable d'environnement `API_URL` (par exemple `$env:API_URL = "https://…"` avant de lancer l'application). L'application fonctionne sans fichier de secrets.
+
 ## Règles et exceptions
 
 Les règles ont été écrites et commitées avant tout téléchargement de données et tout calcul (commit 31b9dae). Les précisions apportées ensuite sont des exceptions datées, expliquées dans le [journal des choix](docs/CHOIX.md) :

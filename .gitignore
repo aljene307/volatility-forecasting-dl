@@ -3,6 +3,11 @@
 
 # Environnement virtuel Python
 .venv/
+.venv-app/
+
+# Secrets de Streamlit (adresse de l'API, etc.) : jamais commités
+.streamlit/secrets.toml
+app/.streamlit/secrets.toml
 
 # Fichiers compilés et caches Python
 __pycache__/
