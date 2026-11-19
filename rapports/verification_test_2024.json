@@ -66,6 +66,16 @@
           "statistique": -4.1222240850012675
         }
       },
+      "diebold_mariano_contre_har_j": {
+        "Transformer": {
+          "jours": 366,
+          "moyenne_difference": -0.039821917213658124,
+          "p_valeur": 0.0007100101558461325,
+          "retards_hac": 5,
+          "sens": "modèle meilleur",
+          "statistique": -3.414809762589034
+        }
+      },
       "diebold_mariano_descriptif": {
         "HAR-J contre HAR-RV": {
           "jours": 366,
@@ -859,6 +869,16 @@
           "statistique": -2.82529272617672
         }
       },
+      "diebold_mariano_contre_har_j": {
+        "CNN-LSTM": {
+          "jours": 366,
+          "moyenne_difference": -0.04637433103715261,
+          "p_valeur": 0.0020558945429155675,
+          "retards_hac": 5,
+          "sens": "modèle meilleur",
+          "statistique": -3.104346667138478
+        }
+      },
       "diebold_mariano_descriptif": {
         "HAR-J contre HAR-RV": {
           "jours": 366,
@@ -1587,8 +1607,8 @@
       }
     }
   },
-  "attentes_sha256": "30f3b46a43e6a403c1cbcb696522667ea44c9e262e405b780106e3c25fcbcaa0",
-  "commit_du_code": "24fe5b4501ef5a20afbf7489fe5bf84880b775ff",
+  "attentes_sha256": "8449844485a36599b0131adacccabc8284846382f2b8db16931065e2773203e1",
+  "commit_du_code": "0359186cb6fa9a3e5f638a1fca8a39f289a6d9f5",
   "decoupage": "pli 5",
   "empreintes_verifiees": 74,
   "hypotheses": {
@@ -1674,6 +1694,24 @@
         "gain_sur_har_rv": 0.33953258491744864
       }
     },
+    "H7": {
+      "BTCUSDT": {
+        "confirmee": true,
+        "modele_retenu": "Transformer",
+        "moyenne_difference": -0.039821917213658124,
+        "p_valeur": 0.0007100101558461325,
+        "p_valeur_holm_2_actifs": 0.001420020311692265,
+        "statistique": -3.414809762589034
+      },
+      "ETHUSDT": {
+        "confirmee": true,
+        "modele_retenu": "CNN-LSTM",
+        "moyenne_difference": -0.04637433103715261,
+        "p_valeur": 0.0020558945429155675,
+        "p_valeur_holm_2_actifs": 0.0020558945429155675,
+        "statistique": -3.104346667138478
+      }
+    },
     "prevision": {
       "BTCUSDT": {
         "dans_l_intervalle": false,
@@ -1682,6 +1720,16 @@
       "ETHUSDT": {
         "dans_l_intervalle": false,
         "gain": 0.33953258491744864
+      }
+    },
+    "prevision_har_j": {
+      "BTCUSDT": {
+        "dans_l_intervalle": false,
+        "gain": 0.1785914708426177
+      },
+      "ETHUSDT": {
+        "dans_l_intervalle": false,
+        "gain": 0.21024792814161686
       }
     }
   },
