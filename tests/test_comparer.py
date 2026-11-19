@@ -84,6 +84,19 @@ def test_robustesse_gain_par_graine_et_par_pli_a_la_main():
     assert pli["pli B"] == pytest.approx((h_har - q(np.full(n, 1 / 3))) / h_har, abs=1e-12) and pli["pli B"] < 0
 
 
+def test_bloc_harj_du_readme_identique_au_json():
+    """Aucun chiffre tapé à la main : le bloc HAR-J du README est exactement celui généré depuis le JSON."""
+    import json
+    rapport = json.loads(K.CHEMIN_JSON.read_text(encoding="utf-8"))
+    assert K.bloc_readme_har_j(rapport) in (RACINE / "README.md").read_text(encoding="utf-8")
+
+
+def test_part_expliquee_par_har_j_a_la_main():
+    res = {"modeles": {"HAR-RV": {"qlike_moyenne_des_plis": 0.30}, "HAR-J": {"qlike_moyenne_des_plis": 0.27},
+                       "X": {"qlike_moyenne_des_plis": 0.26}}}
+    assert K.part_expliquee_par_har_j(res, "X") == pytest.approx(0.75, abs=1e-12)
+
+
 # --- Assemblage des graines des réseaux sur des unités synthétiques ---------------------------
 
 D = dt.date.fromisoformat

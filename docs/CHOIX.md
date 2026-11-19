@@ -600,3 +600,10 @@ Calcul fait après le commit des règles et des attentes (96b896d). Aucune valeu
 - Stratégie : expositions jour par jour identiques (écart nul) à celles de la stratégie du développement ; volatilité, drawdown et Sharpe de 2024 ne diffèrent qu'à la 4e décimale, à cause des seuls frais d'entrée du premier jour, comme prévu.
 - Les verdicts H1 à H6 calculés sur 2024 ne sont qu'un essai du programme : ils ne disent rien du test final.
 - Durée : 25 s. Le fichier `rapports/test_final.json` n'existe pas : le test final reste fermé.
+
+## 2026-11-19 — Ajout de H7 aux attentes, avant l'ouverture du test
+
+- **Dit honnêtement** : H7 et la seconde prévision chiffrée ont été décidées APRÈS avoir vu les résultats de HAR-J sur le développement, et AVANT toute ouverture du test. H1 reste l'hypothèse principale ; la règle de sélection ne change pas. Texte dans `config/attentes_test.toml` (sections `H7` et `prevision_har_j`) et `docs/ATTENTES_TEST.md`.
+- **Conclusion descriptive sur HAR-J** (développement, QLIKE moyen par pli, chiffres lus dans `rapports/comparaison_modeles.json`) : HAR-J fait 9,9 % (BTC) et 7,5 % (ETH) de mieux que HAR-RV ; le modèle retenu fait 13,6 % (Transformer, BTC) et 15,4 % (CNN-LSTM, ETH) de mieux que HAR-RV, mais seulement 4,2 % et 8,6 % de mieux que HAR-J. Le jour de la semaine de la cible, ajouté seul à HAR-RV, comble environ 72 % (BTC) et 49 % (ETH) de l'écart entre HAR-RV et le modèle retenu. Part = (QLIKE de HAR-RV − QLIKE de HAR-J) / (QLIKE de HAR-RV − QLIKE du modèle retenu).
+- Le README reçoit cette conclusion dans un bloc GÉNÉRÉ par `src/comparer.py` à partir du JSON (aucun chiffre tapé à la main) ; un test vérifie que le bloc du README est exactement celui que donne le JSON.
+- `src/ouvrir_test.py` calcule et juge H7 (Diebold-Mariano du modèle retenu contre HAR-J, Holm sur les 2 actifs) et la seconde prévision ; testé avec des résultats fictifs et des témoins (modèle retenu moins bon que HAR-J ; aucun écart net).

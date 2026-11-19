@@ -325,6 +325,7 @@ def chaine(regles: dict, decoupage: dict) -> dict:
         for mm, t in dm.items():
             t["p_valeur_holm_7_descriptif"] = holm7[mm]
         res["diebold_mariano"] = dm
+        res["diebold_mariano_contre_har_j"] = {retenu: EV.diebold_mariano(pertes[retenu]["qlike"], pertes["HAR-J"]["qlike"])}   # H7
         res["diebold_mariano_descriptif"] = {"HAR-RV contre persistance": EV.diebold_mariano(ref, pertes["Persistance"]["qlike"]),
                                              "HAR-J contre HAR-RV": EV.diebold_mariano(pertes["HAR-J"]["qlike"], ref)}
         res["strategie"], res["var"] = strategie(table, jb, decoupage, regles, vol_cible[actif]["valeur_annualisee"], retenu)
@@ -391,7 +392,18 @@ def hypotheses(sortie: dict, attentes: dict, regles: dict) -> dict:
     pr = attentes["prevision"]
     prevision = {a: {"gain": r["gain_sur_har_rv"][r["modele_retenu"]],
                      "dans_l_intervalle": pr["gain_min"] <= r["gain_sur_har_rv"][r["modele_retenu"]] <= pr["gain_max"]} for a, r in actifs.items()}
-    return {"H1": h1, "H2": h2, "H3": h3, "H4": h4, "H5": h5, "H6": h6, "prevision": prevision}
+    # H7 (secondaire, ajoutée le 2026-11-19) : modèle retenu contre HAR-J, Holm sur les 2 actifs
+    dm7 = {a: r["diebold_mariano_contre_har_j"][r["modele_retenu"]] for a, r in actifs.items()}
+    holm7 = EV.holm({a: t["p_valeur"] for a, t in dm7.items()})
+    h7 = {a: {"modele_retenu": actifs[a]["modele_retenu"], "moyenne_difference": dm7[a]["moyenne_difference"],
+              "statistique": dm7[a]["statistique"], "p_valeur": dm7[a]["p_valeur"], "p_valeur_holm_2_actifs": holm7[a],
+              "confirmee": dm7[a]["moyenne_difference"] < 0 and holm7[a] < attentes["H7"]["seuil"]} for a in actifs}
+    pj = attentes["prevision_har_j"]
+    prevision_har_j = {a: {"gain": r["gain_sur_har_j"][r["modele_retenu"]],
+                           "dans_l_intervalle": pj["gain_min"] <= r["gain_sur_har_j"][r["modele_retenu"]] <= pj["gain_max"]}
+                       for a, r in actifs.items()}
+    return {"H1": h1, "H2": h2, "H3": h3, "H4": h4, "H5": h5, "H6": h6, "H7": h7, "prevision": prevision,
+            "prevision_har_j": prevision_har_j}
 
 
 # --- Vérification sur 2024 --------------------------------------------------------------------------
@@ -496,6 +508,10 @@ def main(arguments: list[str]) -> int:
         for a, x in v["actifs"].items():
             print(f"{a} | écart maximal des métriques : {x['ecart_max_metriques']:.3g} | écart maximal des expositions : "
                   f"{x['ecart_max_expositions']:.3g} | conforme : {'oui' if x['conforme'] else 'non'}")
+        for a, h in rapport["hypotheses"]["H7"].items():
+            print(f"{a} | H7 sur 2024 (vérification seulement, pas le test) : moyenne de d {h['moyenne_difference']:.4f}, p-valeur "
+                  f"{h['p_valeur']:.4g}, p-valeur Holm {h['p_valeur_holm_2_actifs']:.4g}, confirmée : {'oui' if h['confirmee'] else 'non'} ; "
+                  f"gain sur HAR-J {100 * rapport['hypotheses']['prevision_har_j'][a]['gain']:.1f} %")
         print("Vérification " + ("CONFORME" if v["conforme"] else "NON CONFORME") + " (rapports/verification_test_2024.json).")
         return 0 if v["conforme"] else 1
     print("Test final ouvert ; résultats dans rapports/test_final.json.")

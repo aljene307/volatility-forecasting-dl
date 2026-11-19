@@ -26,6 +26,18 @@ Gain attendu du modèle retenu sur HAR-RV entre 0 % et 15 % ; significativité i
 
 Gain = (QLIKE de HAR-RV − QLIKE du modèle retenu) / QLIKE de HAR-RV, sur tous les jours du test.
 
+## Ajout du 2026-11-19 : H7 et seconde prévision chiffrée
+
+Dit honnêtement : cet ajout a été décidé APRÈS avoir vu les résultats de HAR-J sur le développement (HAR-J explique une grande partie de l'avantage des réseaux sur HAR-RV), et AVANT toute ouverture du test. H1 reste l'hypothèse principale ; la règle de sélection ne change pas.
+
+| | Énoncé | Comment on juge |
+|---|---|---|
+| H7 (secondaire) | Pour chaque actif, QLIKE(modèle retenu) < QLIKE(HAR-J) sur le test | Diebold-Mariano bilatéral (d = QLIKE du modèle retenu − QLIKE de HAR-J ; Newey-West, Harvey-Leybourne-Newbold, Student à T − 1), p-valeurs ajustées par Holm sur les 2 actifs, seuil 5 %. Confirmée pour un actif si la moyenne de d est négative et la p-valeur ajustée est sous 0,05. |
+
+Prévision chiffrée : gain attendu du modèle retenu sur HAR-J entre 0 % et 9 % ; probablement non significatif.
+
+Gain = (QLIKE de HAR-J − QLIKE du modèle retenu) / QLIKE de HAR-J, sur tous les jours du test.
+
 ## Rapporté à titre descriptif
 
 - Les 7 comparaisons contre HAR-RV de chaque actif (GARCH, XGBoost, les 5 réseaux), avec les p-valeurs brutes et ajustées par Holm sur 7.

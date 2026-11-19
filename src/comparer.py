@@ -640,6 +640,43 @@ def lecture_des_resultats(rapport: dict, regles: dict) -> list[str]:
     return lignes + [""]
 
 
+# --- Bloc généré du README : conclusion descriptive sur HAR-J ------------------------------------------
+
+DEBUT_BLOC_README = "<!-- début du bloc généré par src/comparer.py : HAR-J -->"
+FIN_BLOC_README = "<!-- fin du bloc généré par src/comparer.py : HAR-J -->"
+
+
+def part_expliquee_par_har_j(res: dict, modele: str) -> float:
+    """Part de l'écart de QLIKE moyen par pli entre HAR-RV et `modele` que HAR-J comble à lui seul :
+    (QLIKE HAR-RV − QLIKE HAR-J) / (QLIKE HAR-RV − QLIKE du modèle)."""
+    q = {m: res["modeles"][m]["qlike_moyenne_des_plis"] for m in ("HAR-RV", "HAR-J", modele)}
+    return (q["HAR-RV"] - q["HAR-J"]) / (q["HAR-RV"] - q[modele])
+
+
+def bloc_readme_har_j(rapport: dict) -> str:
+    lignes = [DEBUT_BLOC_README,
+              "  Conclusion descriptive sur HAR-J (développement, QLIKE moyen par pli ; chiffres lus dans `rapports/comparaison_modeles.json`) :"]
+    for actif, res in rapport["actifs"].items():
+        retenu = res["classement"]["modele_retenu"]
+        g = res["gain_relatif_qlike"]
+        lignes.append(f"  - {actif.replace('USDT', '')} : HAR-J fait {_n(100 * g['HAR-J']['moyenne_des_plis'], 1)} % de mieux que HAR-RV ; "
+                      f"le modèle retenu ({retenu}) fait {_n(100 * g[retenu]['moyenne_des_plis'], 1)} % de mieux que HAR-RV, mais "
+                      f"seulement {_n(100 * res['gain_sur_har_j'][retenu]['moyenne_des_plis'], 1)} % de mieux que HAR-J. Le jour de la "
+                      f"semaine de la cible, ajouté seul à HAR-RV, comble {_n(100 * part_expliquee_par_har_j(res, retenu), 0)} % de l'écart "
+                      "entre HAR-RV et le modèle retenu.")
+    lignes.append(FIN_BLOC_README)
+    return "\n".join(lignes)
+
+
+def mettre_a_jour_readme(chemin: Path, bloc: str) -> None:
+    texte = chemin.read_text(encoding="utf-8")
+    if texte.count(DEBUT_BLOC_README) != 1 or texte.count(FIN_BLOC_README) != 1:
+        raise ErreurComparaison("README : marqueurs du bloc généré absents ou en double.")
+    avant, reste = texte.split(DEBUT_BLOC_README)
+    _, apres = reste.split(FIN_BLOC_README)
+    C.ecrire_texte(chemin, avant + bloc + apres)
+
+
 # --- Exécution ---------------------------------------------------------------------------------
 
 def executer(regles: dict) -> dict:
@@ -673,6 +710,7 @@ def executer(regles: dict) -> dict:
     C.ecrire_texte(CHEMIN_MANIFESTE, C.texte_json(manifeste_poids(regles, cle)))
     C.ecrire_texte(CHEMIN_JSON, C.texte_json(rapport))
     C.ecrire_texte(CHEMIN_MD, rapport_markdown(rapport, regles))
+    mettre_a_jour_readme(C.RACINE / "README.md", bloc_readme_har_j(rapport))
     return rapport
 
 

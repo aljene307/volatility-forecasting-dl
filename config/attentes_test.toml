@@ -55,6 +55,23 @@ gain_definition = "(QLIKE de HAR-RV − QLIKE du modèle retenu) / QLIKE de HAR-
 gain_min = 0.0
 gain_max = 0.15
 
+[H7]                                             # précision datée du 2026-11-19, décidée APRÈS les résultats de HAR-J
+type = "secondaire"                              # sur le développement et AVANT toute ouverture du test
+date_ajout = 2026-11-19
+raison = "sur le développement, HAR-J explique une grande partie de l'avantage des réseaux sur HAR-RV"
+enonce = "pour chaque actif, QLIKE(modèle retenu) < QLIKE(HAR-J) sur le test"
+test = "Diebold-Mariano bilatéral, d = QLIKE(modèle retenu) − QLIKE(HAR-J), Newey-West, Harvey-Leybourne-Newbold, Student à T − 1"
+ajustement = "Holm sur les 2 actifs"
+seuil = 0.05
+confirmee_si = "moyenne de d < 0 et p-valeur ajustée < 0,05 (jugée pour chaque actif)"
+remarque = "H1 reste l'hypothèse principale ; la règle de sélection ne change pas"
+
+[prevision_har_j]                                # même précision datée du 2026-11-19
+texte = "gain attendu du modèle retenu sur HAR-J entre 0 % et 9 % ; probablement non significatif"
+gain_definition = "(QLIKE de HAR-J − QLIKE du modèle retenu) / QLIKE de HAR-J, sur tous les jours du test"
+gain_min = 0.0
+gain_max = 0.09
+
 [descriptif]
 famille_holm_7 = "les 7 comparaisons contre HAR-RV de chaque actif (GARCH, XGBoost, 5 réseaux) sont aussi rapportées, brutes et ajustées par Holm sur 7, à titre descriptif"
 har_j = "HAR-J (HAR-RV + jour de la semaine de la cible) : descriptif, hors sélection et hors Holm principal"

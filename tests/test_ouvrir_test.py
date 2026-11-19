@@ -95,6 +95,53 @@ def test_manifestes_reels_complets_pour_le_test_final_et_le_pli_5():
     assert len(O.empreintes_attendues(REGLES, pli5)) == 2 * (5 * 3 + 1)
 
 
+# --- Verdicts : H7 (modèle retenu contre HAR-J, Holm sur les 2 actifs) -----------------------------
+
+def _sortie_synthetique(decalage_retenu: dict) -> dict:
+    """Résultats fictifs pour 2 actifs : pertes QLIKE de HAR-J et du modèle retenu (HAR-J + décalage)."""
+    import numpy as np
+    import evaluation as EV
+    rng = np.random.default_rng(0)
+    actifs = {}
+    for k, (a, dec) in enumerate(decalage_retenu.items()):
+        har_j = rng.gamma(2.0, 0.15, 600)
+        retenu = har_j + dec + rng.normal(0, 0.02, 600)
+        modele = "Transformer" if k == 0 else "CNN-LSTM"
+        dm = EV.diebold_mariano(retenu, har_j)
+        actifs[a] = {"modele_retenu": modele, "diebold_mariano": {modele: dm}, "diebold_mariano_contre_har_j": {modele: dm},
+                     "modeles": {m: {"qlike": 0.3} for m in ("HAR-RV", "Persistance", "GARCH(1,1)")},
+                     "var": {"modeles": {"HAR-RV": {"p_valeur": 0.5, "taux": 0.05}}},
+                     "strategie": {modele: {"volatilite_annualisee": 0.5, "drawdown_max": -0.3},
+                                   "Achat simple": {"volatilite_annualisee": 0.6, "drawdown_max": -0.4}},
+                     "gain_sur_har_rv": {modele: 0.1}, "gain_sur_har_j": {modele: float(-dec / har_j.mean())}}
+    return {"actifs": actifs}
+
+
+def test_h7_confirmee_si_le_modele_retenu_bat_nettement_har_j():
+    import tomllib
+    attentes = tomllib.loads(O.CHEMIN_ATTENTES.read_text(encoding="utf-8"))
+    h = O.hypotheses(_sortie_synthetique({"BTCUSDT": -0.015, "ETHUSDT": -0.015}), attentes, REGLES)   # gain d'environ 5 %
+    assert all(x["confirmee"] for x in h["H7"].values())
+    assert all(x["p_valeur_holm_2_actifs"] >= x["p_valeur"] for x in h["H7"].values())
+    assert all(x["dans_l_intervalle"] for x in h["prevision_har_j"].values())
+
+
+def test_temoin_h7_refusee_si_le_modele_retenu_fait_moins_bien_ou_sans_ecart_net():
+    import tomllib
+    attentes = tomllib.loads(O.CHEMIN_ATTENTES.read_text(encoding="utf-8"))
+    h = O.hypotheses(_sortie_synthetique({"BTCUSDT": 0.03, "ETHUSDT": 0.0}), attentes, REGLES)
+    assert not h["H7"]["BTCUSDT"]["confirmee"] and h["H7"]["BTCUSDT"]["moyenne_difference"] > 0     # moins bien que HAR-J
+    assert not h["H7"]["ETHUSDT"]["confirmee"] and h["H7"]["ETHUSDT"]["p_valeur_holm_2_actifs"] >= 0.05  # aucun écart net
+    assert not h["prevision_har_j"]["BTCUSDT"]["dans_l_intervalle"]
+
+
+def test_attentes_contiennent_h7_et_h1_reste_principale():
+    import tomllib
+    attentes = tomllib.loads(O.CHEMIN_ATTENTES.read_text(encoding="utf-8"))
+    assert attentes["H1"]["type"] == "principale" and attentes["H7"]["type"] == "secondaire"
+    assert (attentes["prevision_har_j"]["gain_min"], attentes["prevision_har_j"]["gain_max"]) == (0.0, 0.09)
+
+
 # --- La garde reste fermée hors de src/ouvrir_test.py ---------------------------------------------
 
 def test_garde_fermee_hors_du_script():
