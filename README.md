@@ -106,6 +106,10 @@ Précisions datées du 2026-11-19, écrites AVANT l'ouverture du test final (sec
 
 - modèle descriptif HAR-J (HAR-RV + jour de la semaine de la cible) ; [attentes du test final](docs/ATTENTES_TEST.md) (hypothèses H1 à H6 et prévision chiffrée) ; un seul chemin d'ouverture, avec ses préconditions et un mode de vérification sur 2024.
 
+Précisions datées du 2026-11-19 pour l'API, écrites et commitées avant son code (section 18 des [règles](docs/REGLES.md)) :
+
+- modèles retenus du test final servis en ONNX, sans torch ni pandas ; entrées fournies par l'utilisateur ; aucune donnée Binance téléchargée ni diffusée ; exemple synthétique seulement.
+
 Sensibilité descriptive du 2026-11-19, décidée APRÈS avoir vu les gains par année (détails dans le [journal des choix](docs/CHOIX.md)) :
 
 - gain sur HAR-RV et Diebold-Mariano (p-valeurs brutes et ajustées par Holm) sans 2024, et calibration de HAR-RV par année ; sans effet sur le classement ni la sélection.

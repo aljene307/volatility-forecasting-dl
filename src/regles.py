@@ -485,6 +485,12 @@ def verifier_coherence(regles: dict) -> None:
            "strategie.precisions.date_precisions_strategie doit être 2026-11-19.")
     exiger(sp.get("jour_non_valide") == "pas_de_decision" and sp.get("exposition_initiale") == 0.0,
            "Stratégie : aucune décision un jour non valide ; exposition initiale nulle.")
+    api = regles.get("api", {})
+    exiger(api.get("donnees_binance") == "aucune" and api.get("exemple") == "synthetique_seulement",
+           "API : aucune donnée Binance téléchargée ni diffusée ; exemple synthétique seulement.")
+    exiger(api.get("tolerance_torch_log", 1) <= 1e-5 and api.get("tolerance_onnxruntime", 1) <= 1e-9,
+           "API : tolérances de 1e-5 (contre torch, en log) et 1e-9 (contre onnxruntime) au plus.")
+    exiger(set(api.get("dependances_interdites", [])) >= {"torch", "pandas"}, "API : sans torch ni pandas.")
     hj = regles.get("modeles", {}).get("har_j", {})
     exiger(hj.get("role") == "descriptif" and hj.get("jour_reference") == 0,
            "HAR-J : modèle descriptif (hors sélection et hors Holm principal), lundi en référence.")

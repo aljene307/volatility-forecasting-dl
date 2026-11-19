@@ -315,3 +315,18 @@ Espaces :
 | Données | coupées à la fin de la période évaluée | Aucune bougie postérieure n'entre dans le calcul. |
 | Résultats | `rapports/test_final.json`, en création exclusive (refus si le fichier existe), avec l'identifiant du commit du code | Le test ne peut pas être recalculé en silence. |
 | Vérification | mode `--verification` : exactement la même chaîne, sur 2024 (pli 5) avec les modèles du pli 5, écrite dans `rapports/verification_test_2024.json` ; elle doit redonner les chiffres déjà publiés pour 2024 (écart nul ou inférieur à 1e-9) | Prouver que la chaîne calcule juste avant de l'appliquer au test. |
+
+## 18. API légère (précisions datées du 2026-11-19, écrites et commitées AVANT le code)
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Modèles servis | les modèles retenus (Transformer pour BTC, CNN-LSTM pour ETH), leurs 3 graines du découpage du test final, exportées en ONNX avec l'ancien exportateur de torch (`dynamo=False`), avec leurs normalisations JSON et s² | Servir exactement les modèles évalués sur le test, sans torch. |
+| Prévision | moyenne des log des 3 graines, puis σ̂ = racine(exp(2ŷ + 2s²)), avec s² mesuré sur la validation interne du découpage du test final | La même règle que dans tout le projet. |
+| Entrées | fournies par l'utilisateur : 30 jours consécutifs des 13 variables continues (non normalisées) et le jour de la semaine du dernier jour | L'API ne calcule rien à partir de données de marché. |
+| Sorties | volatilité prévue journalière et annualisée, exposition de la stratégie (règles de la section 9), VaR à 1 jour à 95 % | Les trois usages du projet. |
+| Données Binance | aucune : l'API ne télécharge et ne diffuse aucune donnée Binance ; l'exemple de démonstration est synthétique et indiqué comme tel | Règle de licence (CC BY-NC-SA 4.0 et conditions Vision). |
+| Licence des modèles | fichiers ONNX et paramètres : œuvres dérivées sous CC BY-NC-SA 4.0, avec la mention « Données : Binance Vision » | Ils sont appris sur ces données. |
+| Démarrage | vérification des empreintes du manifeste ; refus de démarrer si un fichier est altéré | Servir les modèles exacts. |
+| Erreurs | 422, en français, champ par champ | Une erreur doit dire quoi corriger. |
+| Exactitude | sur la validation interne du test final (2024-H2, développement) : prévisions de l'API à 1e-5 près de celles de torch, en log ; prévision moyenne à 1e-9 près de onnxruntime appelé directement ; vérifié par un client HTTP de test | L'export ne doit rien changer aux prévisions. |
+| Ressources | sans torch ni pandas ; mémoire mesurée en fonctionnement, à comparer à 512 Mo | Contrainte de l'hébergement visé. |

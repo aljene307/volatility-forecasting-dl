@@ -627,3 +627,11 @@ Calcul fait après le commit des règles et des attentes (96b896d). Aucune valeu
   - rapport et section du README générés depuis `rapports/test_final.json` seul (`src/resultats_test.py`), avec un test d'égalité et un témoin ; un verdict « confirmé de justesse » est écrit quand la p-valeur ajustée est au-dessus de la moitié du seuil ;
   - figures produites par un mode `--figures` ajouté au programme d'ouverture après l'ouverture (code commité et poussé avant de l'exécuter), et non par un autre chemin ;
   - la phrase « Le test final reste fermé » des étapes 5 à 8 du README est conservée : elle décrit l'état à chacune de ces étapes ; le statut en tête du README est mis à jour.
+
+## 2026-11-19 — Étape 10A : règles de l'API, écrites et commitées avant le code
+
+Section `api` de `config/regles.toml` et section 18 des règles, commitées et poussées AVANT tout code d'API.
+
+- Modèles servis : les modèles retenus, 3 graines du découpage du test final, en ONNX (ancien exportateur), avec normalisations et s² ; prévision comme dans le projet ; aucune donnée Binance téléchargée ni diffusée ; exemple synthétique seulement.
+- Installé dans `.venv` (autorisé sans arrêt) : fastapi 0.165.0, uvicorn 0.54.0, httpx 0.28.1 (pour le client de test), avec leurs dépendances ; un essai à blanc (`pip install --dry-run`) a montré qu'aucun paquet déjà installé n'était mis à jour ; `pip check` : aucun conflit.
+- Décision prise seul (à valider) : l'utilisateur donne le jour de la semaine du DERNIER jour (lundi = 0) ; les 30 jours étant consécutifs, le jour de la semaine de chacun s'en déduit.

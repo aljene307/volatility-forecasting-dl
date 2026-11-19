@@ -338,6 +338,27 @@ preconditions = ["depot_propre", "commit_local_egal_origin_main", "attentes_dans
 donnees_coupees_apres = "fin_de_la_periode_evaluee"  # aucune bougie postérieure n'entre dans le calcul
 reentrainement = false                     # modèles du découpage du test final, chargés et vérifiés par empreinte
 
+[api]                                      # précisions datées du 2026-11-19, écrites et commitées AVANT le code de l'API
+date_precisions_api = 2026-11-19
+modeles_servis = { BTCUSDT = "Transformer", ETHUSDT = "CNN-LSTM" }   # les modèles retenus par la règle de sélection
+decoupage = "test final"                   # les 3 graines du découpage du test final (ajustement jusqu'au 2024-06-30)
+format = "onnx"
+exportateur = "ancien_exportateur_torch_onnx"  # torch.onnx.export avec dynamo=False
+prevision = "moyenne des log des 3 graines ; sigma = racine(exp(2 y + 2 s2))"
+s2 = "validation_interne_du_decoupage_du_test_final"  # pour la prévision moyenne, comme dans le projet
+entrees = "30 jours consécutifs des 13 variables continues (non normalisées) et le jour de la semaine du dernier jour"
+sorties = ["volatilite_journaliere", "volatilite_annualisee", "exposition", "var_1_jour_95"]
+exposition_et_var = "règles de la section strategie (volatilité cible du projet, bornes 0 et 1, quantile normal à 95 %)"
+donnees_binance = "aucune"                 # l'API ne télécharge et ne diffuse aucune donnée Binance (licence)
+exemple = "synthetique_seulement"          # exemple de démonstration indiqué comme synthétique
+licence_modeles = "CC BY-NC-SA 4.0 ; Données : Binance Vision"
+demarrage = "refus si une empreinte du manifeste diffère"
+erreurs = "422, en français, champ par champ"
+tolerance_torch_log = 1e-5                 # prévisions de l'API contre torch, en log, sur la validation 2024-H2
+tolerance_onnxruntime = 1e-9               # prévision moyenne de l'API contre onnxruntime appelé directement
+memoire_max_mo = 512                       # contrainte de l'hébergement visé
+dependances_interdites = ["torch", "pandas"]
+
 [modeles.transformer]
 type = "encodeur"                          # encodeur seul
 implementation = "manuelle"                # codé à la main, sans modèle tout prêt
