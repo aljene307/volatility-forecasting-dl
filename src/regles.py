@@ -485,6 +485,15 @@ def verifier_coherence(regles: dict) -> None:
            "strategie.precisions.date_precisions_strategie doit être 2026-11-19.")
     exiger(sp.get("jour_non_valide") == "pas_de_decision" and sp.get("exposition_initiale") == 0.0,
            "Stratégie : aucune décision un jour non valide ; exposition initiale nulle.")
+    xp = regles.get("explicabilite", {}).get("precisions", {})
+    exiger(xp.get("date_precisions_explicabilite") == dt.date(2026, 11, 19),
+           "explicabilite.precisions.date_precisions_explicabilite doit être 2026-11-19.")
+    exiger(xp.get("periode") == "developpement_5_plis", "Explicabilité : développement seulement, le test final reste fermé.")
+    exiger(isinstance(xp.get("additivite_tolerance_reseaux"), float) and 0 < xp["additivite_tolerance_reseaux"] < 0.2
+           and xp.get("additivite_arret") is True,
+           "Explicabilité : tolérance d'additivité des réseaux entre 0 et 0,2, avec arrêt au-delà.")
+    exiger(xp.get("fidelite_repetitions", 0) >= 20 and xp.get("fidelite_graine") == 42,
+           "Fidélité : au moins 20 répétitions, graine 42.")
     cf = ev.get("controles_fuite", {})
     exiger(cf.get("date_controles_fuite") == dt.date(2026, 11, 19),
            "evaluation.controles_fuite.date_controles_fuite doit être 2026-11-19.")

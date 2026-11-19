@@ -435,3 +435,34 @@ cible_atteinte_tolerance = 0.10            # présentation seulement : volatilit
 shap_modeles = ["XGBoost", "LSTM"]         # contributions des variables par SHAP
 attention_modeles = ["Transformer", "TFT"] # poids d'attention
 regle_fidelite = "permuter la variable la mieux classée par SHAP doit dégrader le QLIKE de validation plus que permuter la moins bien classée"
+
+[explicabilite.precisions]                 # précisions datées du 2026-11-19, écrites et commitées AVANT tout calcul d'explicabilité
+date_precisions_explicabilite = 2026-11-19
+periode = "developpement_5_plis"           # jours évalués de 2020 à 2024 ; le test final reste fermé
+shap_modeles_ajoutes = "modele_retenu_par_actif"  # extension descriptive : Transformer (BTC) et CNN-LSTM (ETH), en plus d'XGBoost et du LSTM
+shap_methode_reseaux = "GradientExplainer"  # gradients espérés ; DeepExplainer ne gère pas les couches LSTM ni l'attention de torch
+shap_tirages_reseaux = 1000                # mesuré sur données aléatoires : erreur d'additivité ~3,7 % (contre ~8 % avec 200)
+shap_fond_reseaux = 100                    # séquences tirées dans la fenêtre d'ajustement du pli (graine 42)
+shap_graine = 42
+shap_methode_xgboost = "TreeExplainer_tree_path_dependent"  # exact, sans fond ; modèles des plis ré-entraînés à l'identique
+reproduction_tolerance = 1e-9              # modèles rechargés ou ré-entraînés : prévisions identiques à celles des unités
+additivite_tolerance_reseaux = 0.06        # moyenne |prévision − base − somme des φ| / moyenne |prévision − base|, par modèle et pli
+additivite_tolerance_xgboost = 1e-4        # écart absolu maximal (calcul en float32)
+additivite_arret = true                    # au-delà : arrêt avant toute écriture de résultat
+unite_contributions = "log_rv"             # réseaux : φ × écart-type de la cible du pli (même unité qu'XGBoost)
+importance = "moyenne_des_valeurs_absolues_puis_somme"  # moyenne |φ| sur les jours ; somme sur les retards (variable) ou sur les variables (retard)
+jour_semaine = "somme_des_7_colonnes"      # une seule variable « jour de la semaine »
+agregation = "moyenne_des_3_graines_puis_des_5_plis"
+retard = "1 = jour J (dernier jour de la séquence, veille de la cible), 30 = jour J-29"
+attention_transformer = "ligne du jour J, moyenne sur les têtes et les couches"
+attention_crises = "jours évalués dont la date de cible est dans une crise, contre les autres jours évalués"
+attention_tft = "interpret_output de pytorch-forecasting : importance des variables de l'encodeur et attention par retard"
+fidelite_echantillon = "validation_interne_de_chaque_pli"
+fidelite_classement = "importance SHAP du pli (moyenne des 3 graines)"
+fidelite_prevision = "moyenne des log des 3 graines, s2 de la validation sans permutation"
+fidelite_permutation = "la variable entière (ses 30 jours) est permutée entre les jours de validation"
+fidelite_repetitions = 20
+fidelite_graine = 42
+fidelite_conclusion = "fidele_sur_k_plis_sur_5"
+temoin_bruit = "variable de bruit pur classée dernière, et dégradation par permutation inférieure à 1 % de celle de la meilleure variable"
+limite_attention = "l'attention montre où le modèle regarde, pas nécessairement pourquoi il décide"

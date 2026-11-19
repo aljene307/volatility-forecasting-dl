@@ -543,3 +543,12 @@ Le test final reste fermé. Chiffres lus dans `rapports/comparaison_modeles.json
 - Le classement par Sharpe ne suit pas le classement par QLIKE (corrélation de rang négative pour les deux actifs ; GARCH(1,1) a le meilleur Sharpe). Explication possible, non démontrée : GARCH change moins souvent d'exposition (rotation plus faible, donc moins de frais).
 - VaR : taux de dépassement sous 5 % pour tous les modèles ; Kupiec rejette surtout pour trop PEU de dépassements.
 - Durée : environ 23 s pour la stratégie des deux actifs ; deux exécutions donnent des fichiers identiques.
+
+## 2026-11-19 — Étape 8 : règles de l'explicabilité, écrites et commitées avant tout calcul
+
+Retour à la méthode stricte : ces règles (`explicabilite.precisions` dans `config/regles.toml`, section 16 des règles) sont commitées et poussées dans un commit séparé, AVANT tout calcul d'explicabilité sur les vraies données.
+
+- **Choix de la méthode pour les réseaux : GradientExplainer.** DeepExplainer de shap ne sait pas propager ses règles à travers les couches LSTM ni à travers l'attention écrite à la main avec torch. GradientExplainer (gradients espérés) n'a besoin que du gradient : il fonctionne avec le LSTM, le CNN-LSTM et le Transformer. C'est une approximation par tirages : l'additivité n'est vérifiée qu'à une tolérance près.
+- **Mesure faite avant d'écrire les règles, sur des données ALÉATOIRES seulement** (aucune vraie donnée lue ; 365 séquences à expliquer, fond de 100, réseaux aux configurations retenues, 2 fils) : erreur relative moyenne d'additivité de 7,6 à 9,0 % avec 200 tirages, de 3,6 à 3,7 % avec 1000 tirages ; temps de 113 à 192 s par modèle avec 1000 tirages. D'où 1000 tirages et une tolérance de 0,06.
+- **Temps estimé** : 60 modèles à expliquer par SHAP (2 actifs × 2 réseaux × 5 plis × 3 graines), soit environ 2,5 heures, avec la reprise après interruption ; XGBoost, l'attention et la fidélité sont rapides.
+- Décisions prises seul (à valider) : contributions des réseaux remises en unités de log(RV) (× écart-type de la cible du pli) pour être comparables à XGBoost ; importance = moyenne des valeurs absolues puis somme ; XGBoost expliqué par TreeExplainer exact, sans fond, sur ses modèles des plis ré-entraînés à l'identique (ils n'avaient pas été enregistrés), avec un contrôle de reproduction à 1e-9 ; pour la fidélité, la même suite de 20 permutations sert à la meilleure et à la moins bonne variable (comparaison appariée) ; seuil du témoin de bruit : moins de 1 % de la dégradation de la meilleure variable.

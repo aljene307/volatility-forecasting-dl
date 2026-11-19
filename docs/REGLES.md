@@ -284,3 +284,21 @@ Espaces :
 | VaR | quantile exact de la loi normale (1,6448536…) × σ̂ journalière ; jours exclus : jour non valide et son lendemain (rendement nul ou sur deux jours) | Comparer une VaR à un jour à un vrai rendement à un jour. |
 | Comparaisons | principales : modèle retenu, HAR-RV, achat simple ; autres modèles : descriptifs | La sélection est faite par QLIKE ; la stratégie ne choisit rien. |
 | Présentation | volatilité réalisée à ±10 % de la cible = « proche de la cible » | Seuil de présentation, sans effet sur aucun calcul. |
+
+## 16. Explicabilité (précisions datées du 2026-11-19, écrites et commitées AVANT tout calcul)
+
+| Règle | Valeur | Raison |
+|---|---|---|
+| Période | jours évalués des 5 plis (2020 à 2024) ; le test final reste fermé | Expliquer sans rien regarder du test. |
+| Modèles SHAP | XGBoost et LSTM (règle d'origine), plus le modèle retenu de chaque actif : Transformer (BTC) et CNN-LSTM (ETH) ; extension descriptive décidée avant le calcul | Expliquer aussi les modèles choisis par la règle de sélection. |
+| Méthode pour les réseaux | GradientExplainer de shap (gradients espérés), 1000 tirages ; fond de 100 séquences tirées dans la fenêtre d'ajustement du pli (graine 42) | DeepExplainer ne gère pas les couches LSTM ni l'attention écrites avec torch ; GradientExplainer fonctionne avec tout réseau dérivable. Mesuré sur des données aléatoires : erreur d'additivité d'environ 3,7 % avec 1000 tirages, 8 % avec 200. |
+| Méthode pour XGBoost | TreeExplainer (calcul exact sur les arbres, sans fond), sur les modèles des plis ré-entraînés à l'identique | Méthode exacte pour les arbres. Les modèles des plis n'avaient pas été enregistrés : on les ré-entraîne avec les mêmes graines. |
+| Reproduction | modèles rechargés (réseaux) ou ré-entraînés (XGBoost) : prévisions identiques à celles des unités du calcul, à 1e-9 près | On explique exactement les modèles évalués. |
+| Additivité | réseaux : moyenne de \|prévision − base − somme des contributions\| divisée par la moyenne de \|prévision − base\| ≤ 0,06, par modèle et pli ; XGBoost : écart maximal ≤ 1e-4 (float32) ; au-delà, arrêt avant toute écriture | SHAP répartit l'écart à la valeur de base entre les entrées : la somme doit le retrouver. GradientExplainer est une approximation par tirages, d'où la tolérance. |
+| Importance | contributions en unités de log(RV) (réseaux : × écart-type de la cible du pli) ; moyenne des valeurs absolues sur les jours, puis somme sur les 30 retards (par variable) ou sur les variables (par retard) ; jour de la semaine = somme de ses 7 colonnes ; moyenne des 3 graines, puis des 5 plis | Même unité pour tous les modèles ; une seule valeur par variable et par retard. |
+| Retard | 1 = jour J (veille de la cible), 30 = jour J − 29 | Le retard compte les jours avant la cible. |
+| Attention du Transformer | ligne du jour J des poids d'attention, moyenne sur les têtes et les couches, par retard ; jours de crise (date de cible dans une crise) comparés aux autres jours évalués | La prévision part du jour J : c'est sa ligne d'attention qui compte. |
+| TFT | importance des variables de l'encodeur et attention par retard (interpret_output de pytorch-forecasting) | Outils prévus par le TFT. |
+| Fidélité (règle d'origine, précisée) | sur la validation interne de chaque pli : la variable la mieux classée et la moins bien classée par SHAP (importance du pli) sont permutées entre les jours (la variable entière, sur ses 30 jours), 20 répétitions, graine 42 ; prévision = moyenne des log des 3 graines avec le s² de la validation sans permutation ; dégradation = QLIKE moyen permuté − QLIKE sans permutation ; fidèle si la meilleure dégrade plus que la moins bonne ; conclusion « fidèle sur k plis sur 5 » | Vérifier que le classement SHAP correspond au comportement réel du modèle. |
+| Témoin de fidélité | une variable de bruit pur ajoutée à un petit modèle sur données synthétiques doit être classée dernière, et sa permutation doit dégrader le QLIKE de moins de 1 % de la dégradation due à la meilleure variable | Montrer que la méthode sait reconnaître une variable inutile. |
+| Limite | l'attention montre où le modèle regarde, pas nécessairement pourquoi il décide | Une attention forte n'est pas une preuve de cause. |

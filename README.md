@@ -73,6 +73,10 @@ Précisions datées du 2026-11-19 pour la stratégie, écrites avant son calcul 
 
 - jour non valide : aucune décision, l'exposition précédente reste en place ; exposition initiale nulle (l'entrée paie des frais) ; formules exactes des mesures, du bootstrap du Sharpe et de la VaR (jours non valides et leurs lendemains exclus).
 
+Précisions datées du 2026-11-19 pour l'explicabilité, écrites et commitées avant tout calcul (section 16 des [règles](docs/REGLES.md)) :
+
+- SHAP sur XGBoost, le LSTM et le modèle retenu de chaque actif (GradientExplainer pour les réseaux, TreeExplainer pour XGBoost) ; attention du Transformer et du TFT ; règle de fidélité précisée, avec un témoin ; limite : l'attention montre où le modèle regarde, pas nécessairement pourquoi il décide.
+
 Sensibilité descriptive du 2026-11-19, décidée APRÈS avoir vu les gains par année (détails dans le [journal des choix](docs/CHOIX.md)) :
 
 - gain sur HAR-RV et Diebold-Mariano (p-valeurs brutes et ajustées par Holm) sans 2024, et calibration de HAR-RV par année ; sans effet sur le classement ni la sélection.
