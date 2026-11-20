@@ -3,12 +3,16 @@ vers un fichier existant et suivi par Git."""
 
 import re
 import subprocess
+import sys
 from pathlib import Path
 
+import pytest
+
 RACINE = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(RACINE / "src"))
 LIEN = re.compile(r"\]\(([^)\s#]+)(?:#[^)]*)?\)")
 CODE = re.compile(r"`([^`\n]+)`")
-DOSSIERS_DU_PROJET = ("src/", "docs/", "tests/", "data/", "config/", "rapports/")
+DOSSIERS_DU_PROJET = ("src/", "docs/", "tests/", "data/", "config/", "rapports/", "api/", "app/", "figures/")
 
 
 def liens_relatifs(texte: str) -> list[str]:
@@ -60,3 +64,20 @@ def test_temoin_chemin_cite_casse_detecte():
              "Une commande comme `git status` ou un mot comme `.venv` n'est pas un chemin du projet.")
     assert chemins_cites(texte) == ["src/qualite.py", "src/inexistant.py", "data/manifeste_brut.json"]
     assert references_cassees(chemins_cites(texte), fichiers_suivis()) == ["src/inexistant.py"]
+
+
+def test_blocs_generes_du_readme_a_jour():
+    """Résumé, In English, limites et durées : le README commité est exactement ce que src/readme.py écrit."""
+    import readme as G
+    texte = (RACINE / "README.md").read_text(encoding="utf-8")
+    assert G.readme_a_jour(texte) == texte, "README pas à jour : relancer src/readme.py"
+
+
+def test_temoin_bloc_modifie_a_la_main_detecte():
+    import readme as G
+    texte = (RACINE / "README.md").read_text(encoding="utf-8")
+    debut, _ = G.marqueurs("résumé")
+    modifie = texte.replace(debut + "\n", debut + "\nChiffre tapé à la main : 99 %.\n", 1)
+    assert modifie != texte and G.readme_a_jour(modifie) != modifie
+    with pytest.raises(ValueError):
+        G.readme_a_jour(texte.replace(debut, "", 1))          # marqueur supprimé : refus

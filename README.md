@@ -1,26 +1,31 @@
-# Prévision de la volatilité des cryptomonnaies par deep learning
+# Prévoir la volatilité de BTC et d'ETH par deep learning
 
-Ce projet prévoit la volatilité réalisée du lendemain du bitcoin et de l'ether, à partir de bougies de 5 minutes. Il compare des modèles de deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT) à des références classiques (HAR-RV, GARCH) et à XGBoost, avec un découpage chronologique strict. Les prévisions pilotent ensuite une stratégie simple de gestion du risque.
+Ce projet éducatif prévoit, chaque soir, la volatilité réalisée du lendemain du bitcoin et de l'ether, à partir de bougies de 5 minutes de Binance. Il compare des réseaux de neurones (LSTM, GRU, CNN-LSTM, Transformer, TFT) à des modèles classiques (HAR-RV, HAR-J, GARCH) et à XGBoost, avec un découpage chronologique strict et des règles publiées avant chaque calcul. Ce qu'on a trouvé, en trois phrases générées depuis les résultats :
 
-**Statut : en construction.** Les résultats du développement (2020 à 2024) sont disponibles ; le test final a été ouvert une seule fois le 2026-11-19 et ses résultats sont publiés tels quels (section « Résultats du test final » ci-dessous).
+<!-- début du bloc généré par src/readme.py : résumé -->
+Sur le test final (2025-01-01 au 2026-10-31), le modèle retenu fait mieux que HAR-RV de 32,2 % (BTC, Transformer) et de 28,3 % (ETH, CNN-LSTM) en QLIKE, de façon significative (H1 confirmée pour les deux actifs). Mais une grande part vient du jour de la semaine : face à HAR-J (HAR-RV + jour de la semaine), le gain n'est plus que de 11,1 % (BTC) et de 13,9 % (ETH) ; ce seul ajout comble 74 % (BTC) et 59 % (ETH) de l'écart entre HAR-RV et le modèle retenu. La stratégie de pilotage par la volatilité n'en profite pas : différence de Sharpe avec HAR-RV et intervalle à 95 % (BTC : −0,04 [−0,15 ; 0,07] ; ETH : −0,10 [−0,17 ; −0,03]).
+<!-- fin du bloc généré par src/readme.py : résumé -->
+
+<!-- début du bloc généré par src/readme.py : In English -->
+### In English
+
+On the final test (2025-01-01 to 2026-10-31), the selected model beats HAR-RV by 32.2% (BTC, Transformer) and 28.3% (ETH, CNN-LSTM) in QLIKE, significantly (H1 confirmed for both assets). But a large part comes from the day of the week: against HAR-J (HAR-RV + day of the week), the gain shrinks to 11.1% (BTC) and 13.9% (ETH); this single addition closes 74% (BTC) and 59% (ETH) of the gap between HAR-RV and the selected model. The volatility-targeting strategy does not benefit: Sharpe ratio difference with HAR-RV and 95% interval (BTC: -0.04 [-0.15, 0.07]; ETH: -0.10 [-0.17, -0.03]). Educational, non-commercial project; data: Binance Vision, CC BY-NC-SA 4.0.
+<!-- fin du bloc généré par src/readme.py : In English -->
+
+**En ligne**
+
+- API de prévision : https://volatilite-api.onrender.com (documentation interactive : https://volatilite-api.onrender.com/docs). Service gratuit : il s'endort sans requête, la première réponse peut donc prendre du temps.
+- Application : *adresse ajoutée après son déploiement.*
+- Synthèse en PDF : [docs/synthese.pdf](docs/synthese.pdf).
 
 ## Données et licence
 
-- Source : bougies mensuelles de 5 minutes de Binance spot (data.binance.vision), pour BTCUSDT et ETHUSDT, de 2018-01 à 2026-10.
-- Les données sont fournies par Binance sous la licence CC BY-NC-SA 4.0 et les conditions « Vision Dataset Terms ». Elles sont utilisées ici dans un cadre éducatif et non commercial.
-  - Conditions : https://github.com/binance/binance-public-data/blob/master/TERMS_AND_CONDITIONS.md
-  - Page officielle : https://data.binance.vision/terms-of-use.html
-- Le code de ce dépôt est sous licence MIT (le code seul).
-- Tout ce qui est dérivé des données (graphiques, résultats, modèles entraînés, fichiers ONNX) est sous licence CC BY-NC-SA 4.0, avec la mention « Données : Binance Vision ».
-- Aucune donnée brute ni aucune série journalière dérivée n'est stockée dans ce dépôt. Seuls sont commités les manifestes (noms, tailles et empreintes SHA-256 des fichiers) et le rapport de qualité, qui ne contient que des comptages.
-- API : elle ne télécharge et ne diffuse aucune donnée Binance ; l'utilisateur fournit lui-même ses données, et l'exemple de démonstration est synthétique (voir la section « API »).
-- Pour reconstruire les données : `src/telecharger.py`, puis `src/convertir.py`, puis `src/qualite.py`, puis `src/variables.py`, puis `src/exploration.py`.
+- Source : bougies mensuelles de 5 minutes de Binance spot ([data.binance.vision](https://data.binance.vision)), pour BTCUSDT et ETHUSDT ; période fixée dans [`config/regles.toml`](config/regles.toml).
+- Les données sont fournies par Binance sous licence CC BY-NC-SA 4.0 et selon les conditions « Vision Dataset Terms » ; elles sont utilisées ici dans un cadre éducatif et non commercial. Détails et liens : [LICENSE-DONNEES.md](LICENSE-DONNEES.md).
+- **Aucune donnée brute ni aucune série journalière dérivée n'est dans ce dépôt.** Seuls sont commités les manifestes (noms, tailles et empreintes SHA-256 des fichiers) et des résultats agrégés. Chacun télécharge les données lui-même (voir « Reproduction complète ») et peut vérifier qu'il a exactement les mêmes fichiers.
+- L'API ne télécharge et ne diffuse aucune donnée Binance : l'utilisateur fournit ses données, et l'exemple de démonstration est synthétique (valeurs tirées au hasard).
 
-## Documentation
-
-- [Règles du projet](docs/REGLES.md) : chaque règle, sa valeur et sa raison.
-- [Journal des choix](docs/CHOIX.md) : chaque décision, avec sa raison et ses mesures.
-- [Qualité des données](docs/QUALITE_DONNEES.md) : comptages générés par le contrôle de qualité.
+## Résultats clés
 
 <!-- début du bloc généré par src/resultats_test.py : test final -->
 ## Résultats du test final
@@ -40,63 +45,234 @@ Test ouvert une seule fois le 2026-11-19 (code du commit `f5259b6`), sur les dat
 | Gain du modèle retenu sur HAR-J (prévu : 0 % à 9 %) | 11,1 % | 13,9 % |
 <!-- fin du bloc généré par src/resultats_test.py : test final -->
 
-## Avancement
+Le rôle du jour de la semaine sur le développement (HAR-J = HAR-RV + jour de la semaine de la cible) :
 
-- Étape 4 — Volatilité réalisée, variables, cible et analyse exploratoire (développement seulement) : [analyse exploratoire](docs/EXPLORATION.md) ; figures : [RV annualisée](figures/figure_1_rv_annualisee.png), [autocorrélation de log(RV)](figures/figure_2_autocorrelation_log_rv.png), [histogrammes](figures/figure_3_histogrammes_rv.png).
-- Étape 5 — Baselines sur le développement (persistance, HAR-RV, GARCH, XGBoost ; 5 plis annuels) : [résultats](docs/RESULTATS_BASELINES.md) ; figures : [BTC](figures/figure_4_previsions_BTCUSDT.png), [ETH](figures/figure_4_previsions_ETHUSDT.png). Le test final reste fermé.
-- Étape 6 — Deep learning (LSTM, GRU, CNN-LSTM, Transformer, TFT ; entraînement `src/entrainer.py`, suivi `src/suivi.py`) : [comparaison de tous les modèles](docs/RESULTATS_DL.md) (`src/comparer.py`) ; figures : [BTC](figures/figure_5_deep_learning_BTCUSDT.png), [ETH](figures/figure_5_deep_learning_ETHUSDT.png) ; empreintes des poids : [manifeste](rapports/modeles_deep_learning.json). Le test final reste fermé.
-- Étape 7 — Stratégie de volatility targeting sur le développement (`src/strategie.py`) : [résultats](docs/STRATEGIE.md) ; figures : [BTC](figures/figure_6_strategie_BTCUSDT.png), [ETH](figures/figure_6_strategie_ETHUSDT.png). Le test final reste fermé.
-- Étape 8 — Explicabilité sur le développement (SHAP, attention, fidélité ; `src/explicabilite.py`) : [résultats](docs/EXPLICABILITE.md) ; figures : importance des variables ([BTC](figures/figure_7_importance_variables_BTCUSDT.png), [ETH](figures/figure_7_importance_variables_ETHUSDT.png)), importance par retard ([BTC](figures/figure_8_importance_retards_BTCUSDT.png), [ETH](figures/figure_8_importance_retards_ETHUSDT.png)), [attention du Transformer](figures/figure_9_attention_transformer.png). Le test final reste fermé.
-- Étape 9 — Test final : **ouvert une seule fois le 2026-11-19** ; [résultats du test final](docs/RESULTATS_TEST.md) (`src/resultats_test.py`, depuis `rapports/test_final.json`) ; figures : prévisions ([BTC](figures/figure_10_test_previsions_BTCUSDT.png), [ETH](figures/figure_10_test_previsions_ETHUSDT.png)), stratégie ([BTC](figures/figure_11_test_strategie_BTCUSDT.png), [ETH](figures/figure_11_test_strategie_ETHUSDT.png)). Préparation : [attentes écrites avant l'ouverture](docs/ATTENTES_TEST.md) ; modèle descriptif HAR-J (`src/har_j.py`, résultats dans la [comparaison](docs/RESULTATS_DL.md)) ; programme d'ouverture `src/ouvrir_test.py`, vérifié sur 2024 ; [attentes](docs/ATTENTES_TEST.md) complétées le 2026-11-19 par H7 (modèle retenu contre HAR-J), décidée après les résultats de HAR-J et avant l'ouverture.
 <!-- début du bloc généré par src/comparer.py : HAR-J -->
   Conclusion descriptive sur HAR-J (développement, QLIKE moyen par pli ; chiffres lus dans `rapports/comparaison_modeles.json`) :
   - BTC : HAR-J fait 9,9 % de mieux que HAR-RV ; le modèle retenu (Transformer) fait 13,6 % de mieux que HAR-RV, mais seulement 4,2 % de mieux que HAR-J. Le jour de la semaine de la cible, ajouté seul à HAR-RV, comble 72 % de l'écart entre HAR-RV et le modèle retenu.
   - ETH : HAR-J fait 7,5 % de mieux que HAR-RV ; le modèle retenu (CNN-LSTM) fait 15,4 % de mieux que HAR-RV, mais seulement 8,6 % de mieux que HAR-J. Le jour de la semaine de la cible, ajouté seul à HAR-RV, comble 49 % de l'écart entre HAR-RV et le modèle retenu.
 <!-- fin du bloc généré par src/comparer.py : HAR-J -->
 
-## API (lancement en local sous Windows)
+Autres résultats : [baselines](docs/RESULTATS_BASELINES.md), [deep learning](docs/RESULTATS_DL.md), [stratégie](docs/STRATEGIE.md), [explicabilité](docs/EXPLICABILITE.md), [analyse exploratoire](docs/EXPLORATION.md), [qualité des données](docs/QUALITE_DONNEES.md), [contrôles de fuite](rapports/controles_fuite.json).
 
-L'API (`api/app.py`) sert les modèles retenus du test final (Transformer pour BTC, CNN-LSTM pour ETH, 3 graines chacun) au format ONNX, sans torch ni pandas. Elle reçoit 30 jours consécutifs des 13 variables du projet (non normalisées) et le jour de la semaine du dernier jour (lundi = 0), et renvoie la volatilité prévue du lendemain (journalière et annualisée), l'exposition de la stratégie et la VaR à 1 jour à 95 %. **Elle ne télécharge et ne diffuse aucune donnée Binance** : les données viennent de l'utilisateur. Les fichiers ONNX et leurs paramètres (`api/modeles/`) sont des œuvres dérivées sous licence CC BY-NC-SA 4.0 (Données : Binance Vision) ; leurs empreintes sont vérifiées au démarrage.
+### L'application
 
-Dans PowerShell, depuis le dossier du projet :
+| Accueil | Résultats (BTC) | Démonstration (après envoi à l'API) |
+|---|---|---|
+| ![Page d'accueil de l'application](docs/captures/01_accueil.png) | ![Page des résultats pour BTC](docs/captures/04_resultats_btc.png) | ![Page de démonstration après envoi de l'exemple synthétique](docs/captures/09_demonstration_apres_envoi.png) |
+
+Toutes les captures : dossier [docs/captures](docs/captures/01_accueil.png) (toutes les pages, dont une vue sur téléphone).
+
+## Limites
+
+Chaque limite est générée depuis les fichiers de résultats (les mêmes phrases que la page « Limites » de l'application) :
+
+<!-- début du bloc généré par src/readme.py : limites -->
+- **Une seule période de test** (du 2025-01-01 au 2026-10-31), sans aucune crise définie : le test ne dit rien d'une nouvelle crise.
+- **Covid** : pendant cette crise, 3 réseaux sur 5 (BTC) ; 4 réseaux sur 5 (ETH) ont un QLIKE plus élevé que HAR-RV (descriptif) : les réseaux ne sont pas toujours meilleurs quand le marché change brutalement.
+- **H7 de justesse (BTC)** : le modèle retenu bat HAR-J avec une p-valeur ajustée de 0,0483, pour un seuil de 0,05.
+- **Prévisions chiffrées trop prudentes** (BTC et ETH) : les gains observés sur le test dépassent les intervalles écrits avant l'ouverture ; notre jugement a priori était mal calibré.
+- **Stratégie peu améliorée** : sur le test, la différence de Sharpe entre le modèle retenu et HAR-RV vaut −0,04 [−0,15 ; 0,07] (BTC) ; −0,10 [−0,17 ; −0,03] (ETH) : une meilleure prévision ne donne pas une meilleure stratégie.
+- **Une seule graine par combinaison au réglage** : le choix est en partie dû au hasard ; plus petit écart entre la 1re et la 2e combinaison : Transformer sur ETH, 0,1050 contre 0,1051 en MSE de validation.
+- **Combinaisons au bord des espaces de recherche** : 10 combinaisons retenues sur 10 ont au moins un réglage à la plus grande valeur permise (le plus fréquent : dropout = 0,3, 7 fois). Des espaces plus larges auraient pu aider ; ils n'ont pas été modifiés.
+- **TFT sans intervalles de quantiles** : il est entraîné en erreur quadratique comme les autres modèles, pour une comparaison équitable.
+- **SHAP ne suffit pas toujours** : XGBoost n'est fidèle que sur 2 plis sur 5 (BTC) ; l'attention est presque uniforme (au plus 3,6 % par retard).
+- **Part du jour de la semaine** : une partie de l'avantage des réseaux vient du jour de la semaine (HAR-J), une information simple qu'un modèle linéaire peut aussi utiliser.
+<!-- fin du bloc généré par src/readme.py : limites -->
+
+## Installation sous Windows
+
+Il faut [Git](https://git-scm.com/download/win) et Python 3.11 (installateur de [python.org](https://www.python.org/downloads/windows/), qui ajoute le lanceur `py`). Toutes les commandes ci-dessous sont pour Windows PowerShell 5.1 ; elles se copient **une par une**, et chacune peut être relancée sans erreur si le dossier ou l'environnement existe déjà.
 
 ```powershell
-# 1. Dépendances de l'API (déjà présentes dans le .venv du projet)
-.venv\Scripts\python -m pip install -r requirements-api.txt
+if (-not (Test-Path volatility-forecasting-dl)) { git clone https://github.com/aljene307/volatility-forecasting-dl.git }
+```
 
-# 2. Lancer l'API (laisser cette fenêtre ouverte)
-.venv\Scripts\python -m uvicorn api.app:app --port 8000
+```powershell
+cd volatility-forecasting-dl
+```
 
-# 3. Dans une deuxième fenêtre PowerShell : état de l'API
+```powershell
+if (-not (Test-Path .venv)) { py -3.11 -m venv .venv }
+```
+
+```powershell
+.venv\Scripts\python -m pip install -r requirements-api.txt -r app\requirements.txt -r requirements-dev.txt
+```
+
+Le projet utilise toujours `.venv\Scripts\python` : il n'est pas nécessaire d'« activer » l'environnement.
+
+## Reproduction rapide (sans données, quelques minutes)
+
+Régénère tous les documents à partir des fichiers de résultats commités, vérifie qu'ils sont identiques à ceux du dépôt, puis lance les tests qui ne demandent pas les données.
+
+```powershell
+.venv\Scripts\python src\resultats_test.py
+```
+
+```powershell
+.venv\Scripts\python src\readme.py
+```
+
+```powershell
+.venv\Scripts\python src\synthese.py
+```
+
+```powershell
+git diff --exit-code
+```
+
+La dernière commande n'affiche rien si tout est identique (un écart serait affiché ligne par ligne). Puis les tests :
+
+```powershell
+.venv\Scripts\python -m pytest tests\test_readme.py tests\test_resultats_test.py tests\test_synthese.py tests\test_api.py tests\test_app.py -q
+```
+
+Un test de l'application ouvre un vrai navigateur ; il est sauté si Chromium de Playwright n'est pas installé (installation facultative : `.venv\Scripts\python -m playwright install chromium-headless-shell`). Les tests qui demandent les données locales sont sautés.
+
+## Lancer l'API et l'application sur ce poste
+
+Fenêtre PowerShell 1, l'API (laisser la fenêtre ouverte) :
+
+```powershell
+.venv\Scripts\python -m uvicorn api.app:app --host 127.0.0.1 --port 8000
+```
+
+Fenêtre PowerShell 2, dans le dossier du projet, vérifier l'API puis envoyer l'exemple synthétique :
+
+```powershell
 Invoke-RestMethod http://127.0.0.1:8000/health
+```
 
-# 4. Prévision avec l'exemple de démonstration SYNTHÉTIQUE (valeurs tirées au hasard, aucune donnée de marché)
+```powershell
 $corps = (Get-Content api\exemple_synthetique.json -Raw -Encoding UTF8 | ConvertFrom-Json).requete | ConvertTo-Json -Depth 5
+```
+
+```powershell
 Invoke-RestMethod -Uri http://127.0.0.1:8000/prevoir -Method Post -ContentType "application/json" -Body $corps
 ```
 
-Déploiement : le fichier `render.yaml` décrit le service web de l'API sur Render (offre gratuite, région Frankfurt, Python 3.11.9, contrôle de santé sur `/health`), sans aucun secret. Une fois le service en ligne, `.venv\Scripts\python api\verifier_en_ligne.py https://adresse-du-service` vérifie l'état et la mémoire, puis compare la prévision en ligne à la prévision locale sur l'exemple synthétique (le service gratuit s'endort sans requête : le script attend jusqu'à 120 s son réveil).
-
-La documentation interactive est à l'adresse http://127.0.0.1:8000/docs. Une requête invalide renvoie une erreur 422 en français, champ par champ (par exemple « jours[5].rv_7 : valeur manquante »). Export des modèles : `src/exporter_onnx.py` ; mesure de la mémoire et du temps de réponse : `api/mesurer.py`.
-
-## Application (lancement en local sous Windows)
-
-L'application Streamlit (`app/streamlit_app.py`, en français) présente le projet : accueil et verdicts du test final, données et méthode, exploration, résultats, stratégie, explicabilité, démonstration et limites. Elle ne fait aucun calcul lourd : tout est lu dans les fichiers précalculés du dépôt (dossiers rapports, figures et config), sans aucun chiffre tapé à la main, et aucune série journalière dérivée n'y est téléchargeable. La page « Démonstration » envoie l'exemple synthétique, ou un fichier CSV que vous fournissez, à l'API.
-
-Dans PowerShell, depuis le dossier du projet, avec deux fenêtres :
+Puis l'application (elle utilise l'API en ligne par défaut ; la ligne `$env:API_URL` la fait utiliser l'API locale) :
 
 ```powershell
-# Fenêtre 1 : l'API (voir la section « API »)
-.venv\Scripts\python -m uvicorn api.app:app --port 8000
+$env:API_URL = "http://127.0.0.1:8000"
+```
 
-# Fenêtre 2 : l'application
-.venv\Scripts\python -m pip install -r app\requirements.txt
+```powershell
 .venv\Scripts\python -m streamlit run app\streamlit_app.py --server.address 127.0.0.1
 ```
 
-Puis ouvrir http://127.0.0.1:8501 dans le navigateur. L'option `--server.address 127.0.0.1` limite l'application à ce poste : sans elle, Streamlit écoute aussi sur le réseau local. L'adresse de l'API vaut https://volatilite-api.onrender.com par défaut (l'API en ligne) ; elle peut être remplacée par `st.secrets["API_URL"]` ou par la variable d'environnement `API_URL` (par exemple `$env:API_URL = "https://…"` avant de lancer l'application). L'application fonctionne sans fichier de secrets.
+Ouvrir ensuite http://127.0.0.1:8501 dans le navigateur. L'option `--server.address 127.0.0.1` limite l'application à ce poste (sans elle, Streamlit écoute aussi sur le réseau local). L'adresse de l'API se règle aussi par `st.secrets["API_URL"]` ; l'application fonctionne sans fichier de secrets.
 
-## Règles et exceptions
+L'API (`api/app.py`) sert les modèles retenus du test final au format ONNX, sans torch ni pandas ; elle reçoit une fenêtre de jours des variables du projet (format décrit dans sa documentation interactive) et renvoie la volatilité prévue du lendemain, l'exposition de la stratégie et la VaR à 1 jour. Une requête invalide renvoie une erreur 422 en français, champ par champ. Le déploiement sur Render est décrit par `render.yaml` (sans aucun secret) ; `api/verifier_en_ligne.py` compare l'API en ligne à la prévision locale.
+
+## Reproduction complète (avec les données, plusieurs heures)
+
+Installe les bibliothèques de calcul (dont torch), télécharge les données, vérifie leurs empreintes, puis relance tout le calcul. Chaque script reprend là où il s'était arrêté s'il est interrompu. Les calculs refusent de démarrer sur batterie.
+
+```powershell
+.venv\Scripts\python -m pip install -r requirements.txt
+```
+
+```powershell
+.venv\Scripts\python src\telecharger.py
+```
+
+```powershell
+git diff --exit-code -- data/manifeste_brut.json
+```
+
+Cette dernière commande n'affiche rien si les fichiers téléchargés ont exactement les empreintes SHA-256 du dépôt. Ensuite, dans cet ordre :
+
+```powershell
+.venv\Scripts\python src\convertir.py
+```
+
+```powershell
+.venv\Scripts\python src\qualite.py
+```
+
+```powershell
+.venv\Scripts\python src\variables.py
+```
+
+```powershell
+.venv\Scripts\python src\exploration.py
+```
+
+```powershell
+.venv\Scripts\python src\baselines.py
+```
+
+```powershell
+.venv\Scripts\python src\entrainer.py reglage
+```
+
+```powershell
+.venv\Scripts\python src\entrainer.py plis
+```
+
+```powershell
+.venv\Scripts\python src\har_j.py
+```
+
+```powershell
+.venv\Scripts\python src\comparer.py
+```
+
+```powershell
+.venv\Scripts\python src\controles_fuite.py
+```
+
+```powershell
+.venv\Scripts\python src\strategie.py
+```
+
+```powershell
+.venv\Scripts\python src\explicabilite.py
+```
+
+```powershell
+.venv\Scripts\python src\exporter_onnx.py
+```
+
+Le test final a déjà été ouvert, une seule fois : `src/ouvrir_test.py` refuse d'écraser `rapports/test_final.json`. Durées et mémoire mesurées :
+
+<!-- début du bloc généré par src/readme.py : durées -->
+- Durée réelle de la phase des plis du deep learning (5 réseaux, 2 actifs) : 2 h 54 min (`rapports/comparaison_modeles.json`, clé `temps_phase_plis`).
+- Pic de mémoire mesuré à l'entraînement : 0,55 Go (`rapports/mesures_entrainement.json`).
+- Les autres durées (téléchargement, réglage, explicabilité) sont dans le [journal des choix](docs/CHOIX.md) : une reprise après interruption rendrait fausse une durée écrite dans un fichier de résultats.
+<!-- fin du bloc généré par src/readme.py : durées -->
+
+## Structure du dépôt
+
+| Dossier ou fichier | Contenu |
+|---|---|
+| [`config/regles.toml`](config/regles.toml) | Toutes les règles (variables, modèles, seuils, périodes), écrites avant les calculs |
+| src/ | Le calcul, du téléchargement au test final, et les générateurs de documents |
+| api/ | L'API FastAPI et ses modèles ONNX (dossier api/modeles) |
+| app/ | L'application Streamlit (pages dans le dossier app/vues) |
+| rapports/ | Résultats agrégés en JSON, lus par les documents, l'application et la synthèse |
+| figures/ | Figures générées (en français) |
+| docs/ | Règles, journal des choix, résultats, captures et synthèse |
+| data/ | Manifestes seulement (empreintes) ; les données téléchargées restent sur le poste |
+| tests/ | Tests automatiques, chacun avec un témoin qui doit échouer |
+
+## Méthode
+
+- **Cible** : volatilité réalisée journalière (racine de la somme des carrés des log-rendements de 5 minutes, jour défini en UTC) ; les variables d'un jour J n'utilisent que le passé, jusqu'à la clôture de J.
+- **Découpage** : chronologique strict, walk-forward en plis annuels sur le développement, puis un test final ouvert une seule fois, avec des attentes chiffrées écrites et publiées avant ([attentes](docs/ATTENTES_TEST.md)).
+- **Évaluation** : QLIKE, test de Diebold-Mariano (erreurs HAC, ajustement de Holm), intervalles par bootstrap par blocs ; HAR-RV et GARCH(1,1) comme références.
+- **Stratégie** : pilotage de l'exposition par la volatilité prévue, décision appliquée le lendemain, frais inclus.
+- **Traçabilité** : [règles](docs/REGLES.md) commitées avant chaque calcul ; [journal des choix](docs/CHOIX.md), avec chaque décision, ses mesures et les erreurs corrigées ouvertement ; empreintes SHA-256 des données et des modèles.
+
+## Licences
+
+- Code : licence MIT, voir [LICENSE](LICENSE).
+- Données Binance Vision et fichiers qui en sont dérivés (figures, captures, résultats, synthèse, modèles) : CC BY-NC-SA 4.0, voir [LICENSE-DONNEES.md](LICENSE-DONNEES.md). Attribution : « Données : Binance Vision, CC BY-NC-SA 4.0 — projet volatility-forecasting-dl, Mohamed Aljene ».
+
+<details>
+<summary>Règles et exceptions datées (historique complet)</summary>
 
 Les règles ont été écrites et commitées avant tout téléchargement de données et tout calcul (commit 31b9dae). Les précisions apportées ensuite sont des exceptions datées, expliquées dans le [journal des choix](docs/CHOIX.md) :
 
@@ -172,3 +348,5 @@ Précisions datées du 2026-11-16, écrites avant tout entraînement (section 11
 - recherche aléatoire dans des espaces écrits d'avance, avec le même nombre de combinaisons valides pour chaque modèle réglé ;
 - reprise après interruption avec des graines dérivées de l'identifiant de chaque calcul ;
 - mesures sur des données aléatoires pour fixer les fils de calcul, le seuil de mémoire et le budget, avec une règle de suivi de la durée.
+
+</details>
