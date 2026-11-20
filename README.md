@@ -15,7 +15,7 @@ On the final test (2025-01-01 to 2026-10-31), the selected model beats HAR-RV by
 **En ligne**
 
 - API de prévision : https://volatilite-api.onrender.com (documentation interactive : https://volatilite-api.onrender.com/docs). Service gratuit : il s'endort sans requête, la première réponse peut donc prendre du temps.
-- Application : *adresse ajoutée après son déploiement.*
+- Application : https://volatility-forecasting-dl.streamlit.app (Streamlit Community Cloud ; elle utilise l'API ci-dessus et peut, elle aussi, mettre un moment à se réveiller).
 - Synthèse en PDF : [docs/synthese.pdf](docs/synthese.pdf).
 
 ## Données et licence
