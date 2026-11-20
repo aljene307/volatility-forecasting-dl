@@ -666,3 +666,25 @@ Section `api` de `config/regles.toml` et section 18 des règles, commitées et p
   - les tableaux sont affichés avec `st.table` (sans bouton de téléchargement) ;
   - les phrases d'explication et la liste des limites sont conditionnées par les valeurs des JSON (par exemple, les réseaux plus mauvais que HAR-RV pendant le Covid sont listés à partir des QLIKE par crise) ;
   - les identifiants des commits de règles cités dans la page « Données et méthode » sont écrits dans le code (ce sont des identifiants, pas des résultats).
+
+## 2026-11-20 — Revue de l'application par captures, et corrections
+
+- **Outil** : Playwright 1.65.2 (avec greenlet 3.5.6) installé dans `.venv` après un essai à blanc (aucune bibliothèque existante changée ; `pip check` : aucun conflit), ajouté à `requirements-dev.txt` ; navigateur Chromium de Playwright (headless shell 1255) téléchargé dans le dossier de Playwright, hors du projet ; Chromium sans profil, sans affichage, contexte vierge. Le premier téléchargement, interrompu par la fin d'une session, a été relancé et a abouti. Captures dans `captures_brutes/` (ignoré par Git, rien n'est commité).
+- **Exposition sur le réseau local, dite honnêtement** : lors du premier lancement des captures, Streamlit a été démarré sans `--server.address` ; pendant environ 6 minutes, l'application (lecture seule, aucune donnée sensible) écoutait sur toutes les interfaces, donc était joignable depuis le réseau local, et Streamlit a affiché dans la console l'adresse IP publique du poste (elle n'a été écrite dans aucun fichier). Correction : toutes les commandes locales (README, script de captures, test en navigateur) lancent Streamlit avec `--server.address 127.0.0.1`. L'adresse n'est pas fixée dans `config.toml`, pour ne pas empêcher Streamlit Cloud de servir l'application.
+- **Corrections après la revue** (critique validée) :
+  1. page par défaut servie à l'adresse « / » (plus de fenêtre « Page not found ») ;
+  2. graphique des résultats : les 10 étiquettes affichées (le modèle retenu marqué « retenu »), axe au format français et resserré autour des valeurs ;
+  3. Accueil : encadré « Ce qu'on a trouvé » (3 phrases générées depuis `rapports/test_final.json`), phrase « Comment c'est prouvé » avec un lien vers les attentes, bloc repliable « In English » généré par la même fonction et depuis les mêmes valeurs, énoncés courts des hypothèses, pourcentages avec une espace insécable ;
+  4. Résultats : onglet « Test final » en premier, tableaux dans l'ordre des modèles ;
+  5. Explicabilité : découverte HAR-J en haut, importance des variables en graphique, un modèle à la fois (remplace la figure 7 illisible dans la page), attention tracée pour l'actif choisi, fidélité résumée avec le détail repliable, colonnes sans doublon ;
+  6. Démonstration : résultat affiché juste sous le bouton utilisé, consigne en français au-dessus de la zone d'envoi, adresse de l'API non affichée quand elle est locale ;
+  7. bouton « Deploy » retiré (`client.toolbarMode = "minimal"`) et statistiques d'usage désactivées ;
+  8. détails : « 1 840 », schéma du parcours vertical et lisible, « Jour J du test de l'avenir modifié », Stratégie avec un seul tableau de constat et le titre « Pilotage par la volatilité (volatility targeting) », Limites résumées et fusionnées, plus de « −0,0 % ».
+- **Limite écrite** : les textes internes de la zone d'envoi de fichier de Streamlit (« Upload », « 200MB per file ») restent en anglais ; aucune astuce CSS fragile n'est utilisée ; la page le signale en français.
+- **Tests ajoutés** : la page par défaut à l'adresse « / » dans un vrai navigateur, sans « Page not found » ; le résumé anglais utilise les mêmes valeurs que le français (avec un témoin) ; le format « 0,0 % » sans signe.
+- **Erreurs corrigées pendant la revue** : le script de captures mesurait d'abord une hauteur qui suivait celle de la fenêtre (captures très allongées, avec un grand vide) ; il mesure maintenant le bas réel du contenu et attend une hauteur stable. Les couleurs de la légende de l'attention étaient inversées par rapport à la figure 9 (ordre alphabétique d'Altair) ; l'ordre est maintenant fixé.
+- Décisions prises seul (à valider) :
+  - `config.toml` est placé à la racine (`.streamlit/config.toml`) et non dans `app/.streamlit/` : Streamlit lit ce fichier dans le dossier de lancement (la racine du projet, en local comme sur Streamlit Cloud) ; dans `app/.streamlit/`, il serait ignoré. Vérifié sur les captures : le bouton « Deploy » a disparu ;
+  - la part expliquée par le jour de la semaine, dans l'encadré de l'Accueil, est calculée sur le test final (74 % pour BTC, 59 % pour ETH) ; la page Explicabilité garde celle du développement (72 % et 49 %), chacune étant nommée ;
+  - le résumé anglais écrit les nombres au format anglais (point décimal), avec les mêmes valeurs ;
+  - la figure 7 reste dans le dépôt et dans le README ; dans l'application, elle est remplacée par un graphique natif lisible.

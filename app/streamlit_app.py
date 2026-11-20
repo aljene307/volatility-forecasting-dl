@@ -17,7 +17,7 @@ from vues import accueil, demonstration, explicabilite, exploration, limites, me
 st.set_page_config(page_title="Volatilité crypto", page_icon="📈", layout="wide")
 
 PAGES = [
-    st.Page(accueil.afficher, title="Accueil", url_path="accueil", default=True),
+    st.Page(accueil.afficher, title="Accueil", default=True),          # page par défaut : adresse « / »
     st.Page(methode.afficher, title="Données et méthode", url_path="methode"),
     st.Page(exploration.afficher, title="Exploration", url_path="exploration"),
     st.Page(resultats.afficher, title="Résultats", url_path="resultats"),

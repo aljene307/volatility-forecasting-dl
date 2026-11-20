@@ -10,3 +10,6 @@ Pygments==2.21.0
 httpx==0.28.1
 httpcore==1.0.9
 certifi==2026.10.23
+# Captures de revue de l'application (navigateur Chromium de Playwright, sans profil, sans affichage)
+playwright==1.65.2
+greenlet==3.5.6

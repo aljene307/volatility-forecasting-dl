@@ -1,0 +1,9 @@
+# Réglages de l'application Streamlit (lus dans le dossier de lancement : la racine du projet, en local comme sur Streamlit Cloud).
+# L'adresse d'écoute n'est PAS fixée ici : en local, les commandes ajoutent --server.address 127.0.0.1 ;
+# la fixer dans ce fichier empêcherait Streamlit Cloud de servir l'application.
+
+[client]
+toolbarMode = "minimal"      # pas de bouton « Deploy » ni de menu de développement
+
+[browser]
+gatherUsageStats = false     # aucune statistique d'usage envoyée

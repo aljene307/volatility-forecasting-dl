@@ -86,7 +86,8 @@ def _afficher_resultat(statut: str, contenu) -> None:
 def afficher() -> None:
     st.title("Démonstration")
     adresse = K.adresse_api()
-    st.markdown(f"Adresse de l'API : `{adresse}`. Les données viennent de vous : l'application et l'API ne téléchargent et ne "
+    api = "l'API locale (lancée sur ce poste)" if K.adresse_locale(adresse) else f"l'API à l'adresse `{adresse}`"
+    st.markdown(f"Les prévisions sont calculées par {api}. Les données viennent de vous : l'application et l'API ne téléchargent et ne "
                 "diffusent **aucune** donnée Binance.")
     actif = st.selectbox("Actif", K.ACTIFS, format_func=lambda a: K.NOMS[a], key="actif_demo")
     jour = st.selectbox("Jour de la semaine du dernier jour fourni", range(7), format_func=lambda k: JOURS[k], index=2, key="jour_demo")
@@ -95,7 +96,9 @@ def afficher() -> None:
     if st.button("Envoyer l'exemple synthétique", key="envoyer_exemple"):
         requete = dict(exemple()["requete"], actif=actif, jour_semaine_dernier_jour=jour)
         with st.spinner("L'API se réveille, cela peut prendre environ une minute…"):
-            st.session_state["demo"] = envoyer(adresse, requete)
+            st.session_state["demo"] = ("exemple", *envoyer(adresse, requete))
+    if st.session_state.get("demo", ("",))[0] == "exemple":          # résultat juste sous le bouton utilisé
+        _afficher_resultat(*st.session_state["demo"][1:])
     st.subheader("Vos propres données (fichier CSV)")
     longueur = K.regles()["variables"]["fenetre_sequence_jours"]
     st.markdown(f"Format : une ligne d'en-tête avec les colonnes `{'`, `'.join(variables())}`, puis exactement {longueur} lignes, une par "
@@ -104,14 +107,17 @@ def afficher() -> None:
     modele_csv = pd.DataFrame(exemple()["requete"]["jours"])[variables()].to_csv(index=False).encode("utf-8")
     st.download_button("Télécharger un modèle de fichier (valeurs SYNTHÉTIQUES)", modele_csv, file_name="modele_synthetique.csv",
                        mime="text/csv", key="modele_csv")
-    fichier = st.file_uploader("Fichier CSV", type=["csv"], key="fichier_csv")
+    st.markdown("**Choisissez votre fichier CSV** ci-dessous (un seul fichier, au format décrit plus haut), puis cliquez sur "
+                "« Envoyer mon fichier ».")
+    st.caption("Les textes du bouton de choix de fichier et de la taille maximale sont écrits par Streamlit, en anglais.")
+    fichier = st.file_uploader("Fichier CSV", type=["csv"], key="fichier_csv", label_visibility="collapsed")
     if fichier is not None and st.button("Envoyer mon fichier", key="envoyer_csv"):
         jours, erreurs = lire_csv(fichier.getvalue())
         if erreurs:
-            st.session_state["demo"] = ("invalide", [{"champ": "fichier", "message": e} for e in erreurs])
+            st.session_state["demo"] = ("csv", "invalide", [{"champ": "fichier", "message": e} for e in erreurs])
         else:
             with st.spinner("L'API se réveille, cela peut prendre environ une minute…"):
-                st.session_state["demo"] = envoyer(adresse, {"actif": actif, "jour_semaine_dernier_jour": jour, "jours": jours})
-    if "demo" in st.session_state:
-        _afficher_resultat(*st.session_state["demo"])
+                st.session_state["demo"] = ("csv", *envoyer(adresse, {"actif": actif, "jour_semaine_dernier_jour": jour, "jours": jours}))
+    if st.session_state.get("demo", ("",))[0] == "csv":
+        _afficher_resultat(*st.session_state["demo"][1:])
     K.pied()

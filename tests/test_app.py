@@ -72,7 +72,59 @@ def test_demonstration_message_clair_si_l_api_ne_repond_pas(monkeypatch):
 
 
 def test_format_francais():
-    assert K.nombre(1234.5678, 2) == "1 234,57" and K.nombre(-0.0866, 4) == "−0,0866" and K.pourcent(0.322) == "32,2 %"
+    assert K.nombre(1234.5678, 2) == "1 234,57" and K.nombre(-0.0866, 4) == "−0,0866"
+    assert K.pourcent(0.322) == "32,2 %"                         # espace insécable : jamais coupé avant « % »
+    assert K.pourcent(-0.0003) == "0,0 %" and K.pourcent(-0.003) == "−0,3 %"   # pas de « −0,0 »
+
+
+def test_resume_anglais_avec_les_memes_valeurs_que_le_francais_et_temoin():
+    import copy
+    v = K.valeurs_trouvailles()
+    fr, en = " ".join(K.phrases_trouvailles(v, "fr")), " ".join(K.phrases_trouvailles(v, "en"))
+    for a, x in v["actifs"].items():
+        for cle, d in (("gain_har_rv", 1), ("gain_har_j", 1), ("part_jour_semaine", 0)):
+            assert K.pourcent(x[cle], d) in fr and f"{100 * x[cle]:.{d}f}%" in en, (a, cle)
+        assert K.nombre(x["sharpe"]["valeur"], 2) in fr and f"{x['sharpe']['valeur']:.2f}" in en
+    faux = copy.deepcopy(v)
+    a = next(iter(faux["actifs"]))
+    faux["actifs"][a]["gain_har_rv"] += 0.05                          # témoin : une valeur changée change les deux langues
+    fr2, en2 = " ".join(K.phrases_trouvailles(faux, "fr")), " ".join(K.phrases_trouvailles(faux, "en"))
+    nouvelle = faux["actifs"][a]["gain_har_rv"]
+    assert K.pourcent(nouvelle) in fr2 and f"{100 * nouvelle:.1f}%" in en2 and fr2 != fr and en2 != en
+
+
+def test_page_par_defaut_a_l_adresse_racine_sans_page_introuvable():
+    """Navigateur réel (Chromium de Playwright, sans profil) sur l'application lancée en 127.0.0.1."""
+    import subprocess
+    import time
+    import httpx
+    playwright = pytest.importorskip("playwright.sync_api")
+    serveur = subprocess.Popen([sys.executable, "-m", "streamlit", "run", str(RACINE / "app" / "streamlit_app.py"), "--server.headless", "true",
+                                "--server.address", "127.0.0.1", "--server.port", "8599"], cwd=RACINE,
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    try:
+        debut = time.time()
+        while time.time() - debut < 60:
+            try:
+                if httpx.get("http://127.0.0.1:8599/_stcore/health", timeout=1).status_code == 200:
+                    break
+            except httpx.TransportError:
+                time.sleep(0.3)
+        with playwright.sync_playwright() as p:
+            try:
+                navigateur = p.chromium.launch(headless=True)
+            except Exception:
+                pytest.skip("Chromium de Playwright non installé")
+            page = navigateur.new_page()
+            page.goto("http://127.0.0.1:8599/")
+            page.wait_for_selector("text=Ce qu'on a trouvé", timeout=60000)
+            time.sleep(1.5)
+            texte = page.inner_text("body")
+            navigateur.close()
+        assert "Page not found" not in texte and "Prévision de la volatilité" in texte
+    finally:
+        serveur.terminate()
+        serveur.wait(timeout=20)
 
 
 def test_lecture_du_csv_valide_et_refus_clairs():

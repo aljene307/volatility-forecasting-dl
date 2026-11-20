@@ -21,7 +21,7 @@ COMMITS_REGLES = [
 
 SCHEMA = """
 digraph {
-  rankdir=LR; node [shape=box, style="rounded,filled", fillcolor="#F3F4F6", fontname="Helvetica"];
+  rankdir=TB; node [shape=box, style="rounded,filled", fillcolor="#F3F4F6", fontname="Helvetica", fontsize=16];
   b [label="Bougies de 5 minutes\\n(Binance Vision)"]; q [label="Contrôle de qualité\\n(jours valides)"];
   v [label="Variables du jour J\\n(passé seulement)"]; c [label="Cible : log RV de J+1"];
   w [label="Walk-forward\\n(ajustement, validation, évaluation)"]; m [label="Modèles\\n(baselines, réseaux)"];
@@ -57,8 +57,9 @@ def afficher() -> None:
         ecarts = sum(x["ecarts"] for x in am["modeles"].values())
         comparees = sum(x["previsions_comparees"] for x in am["modeles"].values())
         g = cf["actifs"][a]["cible_melangee"]["gain_sur_har_rv"]["moyenne_des_plis"]
-        lignes.append({"Actif": K.NOMS[a], "Avenir modifié (tous les réseaux) : écarts / prévisions comparées": f"{ecarts} / {comparees}",
-                       "Jour J du test": am["jour_j"], "LSTM à cible mélangée : gain sur HAR-RV": K.pourcent(g)})
+        lignes.append({"Actif": K.NOMS[a], "Avenir modifié (tous les réseaux) : écarts / prévisions comparées":
+                       f"{K.nombre(ecarts, 0)} / {K.nombre(comparees, 0)}",
+                       "Jour J du test de l'avenir modifié": am["jour_j"], "LSTM à cible mélangée : gain sur HAR-RV": K.pourcent(g)})
     st.table(pd.DataFrame(lignes).set_index("Actif"))
     st.markdown("- **Avenir modifié** : toutes les données après le jour J sont modifiées ; aucune prévision faite avant J ne doit "
                 "changer (0 écart exigé, au bit près).\n"

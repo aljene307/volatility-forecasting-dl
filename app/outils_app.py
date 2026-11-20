@@ -50,11 +50,13 @@ def nombre(x: float, decimales: int = 3) -> str:
     if x is None:
         return "—"
     texte = f"{x:,.{decimales}f}".replace(",", " ").replace(".", ",").replace(" ", " ")
+    if texte.startswith("-") and not any(c in "123456789" for c in texte):
+        texte = texte[1:]                                    # « −0,0 » : une valeur arrondie à zéro n'a pas de signe
     return texte.replace("-", "−")
 
 
 def pourcent(x: float, decimales: int = 1) -> str:
-    return nombre(100 * x, decimales) + " %"
+    return nombre(100 * x, decimales) + " %"          # espace insécable : « 32,2 % » n'est jamais coupé
 
 
 def p_valeur(p: float) -> str:
@@ -69,6 +71,64 @@ def adresse_api() -> str:
     except Exception:                       # aucun fichier de secrets : c'est permis
         valeur = None
     return (valeur or os.environ.get("API_URL") or API_PAR_DEFAUT).rstrip("/")
+
+
+def adresse_locale(adresse: str) -> bool:
+    return any(h in adresse for h in ("127.0.0.1", "localhost", "0.0.0.0"))
+
+
+# --- Résumé « Ce qu'on a trouvé » : mêmes valeurs pour le français et l'anglais ------------------------------
+
+def valeurs_trouvailles() -> dict:
+    """Valeurs du résumé, lues dans rapports/test_final.json (aucun chiffre tapé à la main)."""
+    t = json_rapport("test_final.json")
+    v = {"periode": t["periode"], "actifs": {}}
+    for a in ACTIFS:
+        r = t["actifs"][a]
+        retenu = r["modele_retenu"]
+        q = {m: r["modeles"][m]["qlike"] for m in ("HAR-RV", "HAR-J", retenu)}
+        v["actifs"][a] = {"retenu": retenu, "gain_har_rv": r["gain_sur_har_rv"][retenu], "gain_har_j": r["gain_sur_har_j"][retenu],
+                          "part_jour_semaine": (q["HAR-RV"] - q["HAR-J"]) / (q["HAR-RV"] - q[retenu]),
+                          "h1": t["hypotheses"]["H1"][a]["confirmee"],
+                          "sharpe": r["strategie"]["difference_sharpe_retenu_moins_har"]}
+    return v
+
+
+def phrases_trouvailles(v: dict, langue: str = "fr") -> list[str]:
+    """Les trois phrases du résumé, en français ou en anglais, générées depuis les MÊMES valeurs."""
+    fr = langue == "fr"
+    pc = (lambda x, d=1: pourcent(x, d)) if fr else (lambda x, d=1: f"{100 * x:.{d}f}%")
+    nb = (lambda x: nombre(x, 2)) if fr else (lambda x: f"{x:.2f}")
+    A = v["actifs"]
+    noms = {a: f"{NOMS[a]}, {A[a]['retenu']}" for a in ACTIFS}
+    tous_h1 = all(A[a]["h1"] for a in ACTIFS)
+    p1 = (f"Sur le test final ({v['periode'][0]} au {v['periode'][1]}), le modèle retenu fait mieux que HAR-RV de "
+          + " et de ".join(f"{pc(A[a]['gain_har_rv'])} ({noms[a]})" for a in ACTIFS) + " en QLIKE"
+          + (", de façon significative (H1 confirmée pour les deux actifs)." if tous_h1 else ".")) if fr else \
+         (f"On the final test ({v['periode'][0]} to {v['periode'][1]}), the selected model beats HAR-RV by "
+          + " and ".join(f"{pc(A[a]['gain_har_rv'])} ({noms[a]})" for a in ACTIFS) + " in QLIKE"
+          + (", significantly (H1 confirmed for both assets)." if tous_h1 else "."))
+    p2 = ("Mais une grande part vient du jour de la semaine : face à HAR-J (HAR-RV + jour de la semaine), le gain n'est plus que de "
+          + " et de ".join(f"{pc(A[a]['gain_har_j'])} ({NOMS[a]})" for a in ACTIFS) + " ; ce seul ajout comble "
+          + " et ".join(f"{pc(A[a]['part_jour_semaine'], 0)} ({NOMS[a]})" for a in ACTIFS)
+          + " de l'écart entre HAR-RV et le modèle retenu.") if fr else \
+         ("But a large part comes from the day of the week: against HAR-J (HAR-RV + day of the week), the gain shrinks to "
+          + " and ".join(f"{pc(A[a]['gain_har_j'])} ({NOMS[a]})" for a in ACTIFS) + "; this single addition closes "
+          + " and ".join(f"{pc(A[a]['part_jour_semaine'], 0)} ({NOMS[a]})" for a in ACTIFS)
+          + " of the gap between HAR-RV and the selected model.")
+    nette = [a for a in ACTIFS if A[a]["sharpe"]["bas"] > 0]
+    detail = " ; ".join(f"{NOMS[a]} : {nb(A[a]['sharpe']['valeur'])} [{nb(A[a]['sharpe']['bas'])} ; {nb(A[a]['sharpe']['haut'])}]"
+                        for a in ACTIFS) if fr else \
+        "; ".join(f"{NOMS[a]}: {nb(A[a]['sharpe']['valeur'])} [{nb(A[a]['sharpe']['bas'])}, {nb(A[a]['sharpe']['haut'])}]" for a in ACTIFS)
+    if fr:
+        p3 = (("La stratégie de pilotage par la volatilité n'en profite pas" if not nette else
+               "La stratégie de pilotage par la volatilité en profite pour " + " et ".join(NOMS[a] for a in nette))
+              + f" : différence de Sharpe avec HAR-RV et intervalle à 95 % ({detail}).")
+    else:
+        p3 = (("The volatility-targeting strategy does not benefit" if not nette else
+               "The volatility-targeting strategy benefits for " + " and ".join(NOMS[a] for a in nette))
+              + f": Sharpe ratio difference with HAR-RV and 95% interval ({detail}).")
+    return [p1, p2, p3]
 
 
 def pied() -> None:
