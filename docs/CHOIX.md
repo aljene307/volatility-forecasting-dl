@@ -707,3 +707,20 @@ Aucune connexion à un compte ; le dépôt reste privé.
 - `api/verifier_en_ligne.py` : **conforme** pour les deux actifs, écart nul en log avec la prévision locale (onnxruntime sous Linux redonne exactement les valeurs obtenues sous Windows sur l'exemple synthétique) ; mémoire lue dans `/health` sur Render : 95,3 Mo (`/proc/self/status`, VmRSS), pour une limite de 512 Mo ; temps de réponse de 437 à 656 ms (service éveillé, depuis le poste, réseau compris).
 - Le service était éveillé au premier essai : le temps de réveil n'a pas pu être mesuré à ce moment ; le script affiche maintenant le délai de la première réponse de `/health`, mesuré plus loin après une période sans requête.
 - Application : l'adresse par défaut de l'API est maintenant l'adresse publique (toujours remplaçable par `st.secrets["API_URL"]` ou la variable d'environnement `API_URL`) ; la page « Démonstration » l'affiche ; une adresse locale n'est jamais affichée (testé, avec un témoin).
+
+### Audit de tout l'historique (33 commits, tous les fichiers et tous les messages)
+
+Chaque recherche est appliquée au dépôt réel ET à un dépôt témoin temporaire où le problème est planté (puis supprimé) : une recherche qui ne trouve pas son témoin ne vaut rien.
+
+- gitleaks sur tout l'historique : aucune fuite.
+- Une seule identité, pour l'auteur et le committer de chaque commit : Mohamed Aljene, adresse noreply (témoin : un commit d'une autre identité est détecté).
+- Fichiers de tous les commits, binaires compris : aucun chemin ni identifiant du poste (dossier des utilisateurs de Windows, numéro du dossier personnel hors d'un nombre, dossier des données d'application, dossier temporaire), aucune mention d'un outil d'aide à l'écriture du code. Témoins : chaque motif planté est trouvé ; un nombre décimal contenant le numéro du dossier personnel n'est pas trouvé, comme voulu.
+- Messages de tous les commits : aucune de ces mentions (témoin propre aux messages : un commit par mention, le mot seulement dans le message ; chacun est trouvé).
+- Aucun fichier interdit dans aucun commit (données brutes et traitées, .env, fichier d'instructions de l'éditeur, son dossier de réglages, sorties/, poids .pt, PDF, captures brutes) ; témoins : un fichier de chaque est trouvé.
+- Taille : dossier `.git` de 4,9 Mo ; plus gros fichier de l'historique : une figure PNG de 202 Ko.
+- Erreurs de l'audit, corrigées : la première recherche du chemin du dossier des utilisateurs avait un échappement en trop et ne trouvait même pas son témoin ; corrigée et relancée. Le dépôt témoin n'était pas supprimé (fichiers internes de Git en lecture seule sous Windows) ; les dossiers restants ont été supprimés et la suppression corrigée.
+- **Numéro d'étape dans un message** : un seul commit est concerné.
+
+### Rectification datée du 2026-11-20
+
+Le message du commit c58c48e contient un numéro d'étape, contraire à la convention du projet. Il est conservé tel quel : l'historique n'est jamais réécrit, parce qu'il sert de preuve que les règles ont été écrites avant les résultats.
