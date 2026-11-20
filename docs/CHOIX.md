@@ -724,3 +724,11 @@ Chaque recherche est appliquée au dépôt réel ET à un dépôt témoin tempor
 ### Rectification datée du 2026-11-20
 
 Le message du commit c58c48e contient un numéro d'étape, contraire à la convention du projet. Il est conservé tel quel : l'historique n'est jamais réécrit, parce qu'il sert de preuve que les règles ont été écrites avant les résultats.
+
+### Synthèse PDF (`docs/synthese.pdf`, générée par `src/synthese.py`)
+
+- Bibliothèque : reportlab 5.1.0, épinglée dans `requirements-dev.txt` avec ses dépendances (pillow, charset-normalizer). Raison : elle écrit le PDF directement en Python, sans navigateur ni LaTeX, et a un mode « invariant » prévu pour obtenir un fichier identique à chaque génération.
+- Police : Vera, fournie avec reportlab. La police DejaVu de matplotlib n'est pas utilisée, parce que matplotlib n'est pas installé par la reproduction rapide. Vera n'a pas l'espace fine insécable : elle est remplacée dans le PDF par l'espace insécable ordinaire (le nombre reste sur une ligne).
+- Date du document fixée au jour d'ouverture du test final, lue dans `rapports/test_final.json` (variable `SOURCE_DATE_EPOCH`, reconnue par reportlab), avec le mode invariant (identifiant de fichier fixe). Vérifié : trois générations, dans des processus séparés, dont une lancée depuis un autre dossier, donnent la même empreinte SHA-256. Un test le vérifie, ainsi que l'égalité avec le PDF commité, le nombre de pages (3 à 5), la date et l'absence de chemin du poste (motifs vérifiés sur des témoins).
+- Une seule source de texte : le résumé « Ce qu'on a trouvé » et la liste des limites sont écrits par `src/resume.py`, utilisé par l'application, la synthèse et le README. Le code a été déplacé de l'application vers ce module ; les phrases et les limites produites avant et après le déplacement ont été comparées et sont identiques.
+- Mise en page vérifiée en regardant chaque page en image. Pour cela, pypdfium2 a été installé dans `.venv`, puis désinstallé ; `pip check` est sans erreur. Première version : 6 pages, parce que la figure de la volatilité sur le développement ne tenait pas sur la page 1. Elle est retirée : la synthèse ne montre que des figures du test final. Résultat : 5 pages.

@@ -13,3 +13,7 @@ certifi==2026.10.23
 # Captures de revue de l'application (navigateur Chromium de Playwright, sans profil, sans affichage)
 playwright==1.65.2
 greenlet==3.5.6
+# Synthèse PDF (src/synthese.py, police Vera fournie avec reportlab), avec ses dépendances en versions exactes
+reportlab==5.1.0
+pillow==13.0.0
+charset-normalizer==3.5.2
