@@ -760,4 +760,17 @@ Les commandes du README ont été copiées telles quelles et lancées sur un clo
 
 L'API et l'application du clone ont été lancées avec les commandes du README. L'API (127.0.0.1 seulement) vérifie son manifeste et donne la même prévision que le dépôt principal. L'application (127.0.0.1 seulement) affiche l'accueil et le résumé, et envoie l'exemple synthétique à l'API locale ; la réponse est affichée, et l'adresse locale ne l'est pas.
 
+**Suite du test du clone (2026-11-20, après la publication et l'étiquette v1.0).**
+
+- Téléchargement sur le premier clone (commande du README) : 581 s, 424 fichiers, 90,3 Mo ; `git diff --exit-code -- data/manifeste_brut.json` est vide : les empreintes SHA-256 des fichiers téléchargés sont exactement celles du dépôt.
+- Clone anonyme, sans aucun identifiant, après le passage en public : il réussit. Même commit que le dépôt local, mêmes 138 fichiers (contenus identiques octet pour octet), 40 commits, `git fsck` sans erreur, aucune donnée brute. Il a été supprimé.
+- Second clone neuf, au commit de l'étiquette v1.0, pour vérifier les corrections. Installation en 123 s ; reproduction rapide en 31 s, avec `git diff` vide ; 44 tests passent et 2 sont sautés (données absentes). Accents corrects dans PowerShell 5.1, pour une réponse comme pour une erreur 422. Application lancée avec la commande du README et un dossier personnel vide : aucune invite, écoute sur 127.0.0.1 seulement, démonstration envoyée à l'API locale. Aucune nouvelle correction du dépôt n'a été nécessaire : l'étiquette v1.0 n'est pas déplacée, et aucune étiquette v1.0.1 n'est posée.
+- API locale des clones arrêtée ; clones temporaires supprimés (y compris le premier essai dans un dossier trop profond et le clone anonyme).
+
+**Temps de réveil de l'API en ligne : non mesuré, le service n'a jamais été vu endormi.**
+
+- Essai 1, à 07 h 00, après 16 min 50 s sans requête de ma part : première réponse de `/health` en 0,3 s.
+- Essai 2, à 10 h 45, plus de 30 min après ma dernière requête et 31 min après le dernier push (Render redéploie à chaque push) : première réponse en 1,5 s. Vérification conforme pour les deux actifs, écart nul ; 100,1 Mo de mémoire ; l'en-tête `application/json; charset=utf-8` est bien en ligne.
+- Un vrai réveil de l'offre gratuite prend en général plusieurs dizaines de secondes : ces deux réponses rapides montrent que le service ne dormait pas. Explication possible, non vérifiée : d'autres requêtes que les miennes (l'application en ligne, des visites) ou la fin du redéploiement ont remis à zéro le délai d'inactivité. Le README garde l'avertissement : la première réponse peut prendre du temps.
+
 Une application Streamlit lancée hors de cette séance, avec le Python global et sans l'option `--server.address 127.0.0.1`, écoutait sur le réseau local depuis 08 h 58. Elle a été arrêtée le 2026-11-20 en fin de matinée, à la demande du propriétaire du dépôt ; plus rien n'écoute sur le port 8501.
