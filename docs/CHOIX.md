@@ -698,3 +698,12 @@ Aucune connexion à un compte ; le dépôt reste privé.
 - **Clone propre** (`git clone` du dépôt local dans un dossier temporaire, supprimé ensuite ; Python lancé en mode isolé) : l'API démarre, vérifie ses 7 fichiers et donne exactement la même prévision qu'au dossier de travail (écart nul) ; elle ne dépend d'aucun fichier ignoré par Git. Le clone contient seulement les manifestes commités dans `data/`, que l'API ne lit pas.
 - **`api/verifier_en_ligne.py`** : attend jusqu'à 120 s le réveil, affiche l'état et la mémoire, envoie l'exemple synthétique pour les deux actifs et compare à la prévision locale (tolérance de 1e-6 en log). Testé contre l'API locale (CONFORME, écart nul) avec un témoin (un écart de 2e-6 est détecté).
 - Décisions prises seul (à valider) : le script de vérification utilise seulement la bibliothèque standard pour les appels HTTP ; il vérifie les deux actifs (et non seulement BTC, l'actif de l'exemple).
+
+## 2026-11-20 — Préparation de la publication (dépôt toujours privé)
+
+### API en ligne (https://volatilite-api.onrender.com)
+
+- Construction sur Render réussie : l'hypothèse sur la glibc de Render (onnxruntime 1.32.0 exige glibc ≥ 2.28) est confirmée par le déploiement.
+- `api/verifier_en_ligne.py` : **conforme** pour les deux actifs, écart nul en log avec la prévision locale (onnxruntime sous Linux redonne exactement les valeurs obtenues sous Windows sur l'exemple synthétique) ; mémoire lue dans `/health` sur Render : 95,3 Mo (`/proc/self/status`, VmRSS), pour une limite de 512 Mo ; temps de réponse de 437 à 656 ms (service éveillé, depuis le poste, réseau compris).
+- Le service était éveillé au premier essai : le temps de réveil n'a pas pu être mesuré à ce moment ; le script affiche maintenant le délai de la première réponse de `/health`, mesuré plus loin après une période sans requête.
+- Application : l'adresse par défaut de l'API est maintenant l'adresse publique (toujours remplaçable par `st.secrets["API_URL"]` ou la variable d'environnement `API_URL`) ; la page « Démonstration » l'affiche ; une adresse locale n'est jamais affichée (testé, avec un témoin).

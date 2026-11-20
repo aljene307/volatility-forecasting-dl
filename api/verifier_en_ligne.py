@@ -71,11 +71,13 @@ def main(arguments: list[str]) -> int:
     from api import app as A
     moteur = A.Moteur(A.DOSSIER_MODELES)
     exemple = json.loads((RACINE / "api" / "exemple_synthetique.json").read_text(encoding="utf-8"))["requete"]
+    debut_reveil = time.monotonic()
     try:
         sante = attendre_reveil(adresse)
     except TimeoutError as e:
         print(f"ÉCHEC : {e}")
         return 1
+    print(f"Première réponse de /health après {time.monotonic() - debut_reveil:.1f} s (réveil compris s'il dormait).")
     print(f"/health : {sante.get('statut')} ; fichiers vérifiés : {sante.get('fichiers_verifies')} ; mémoire : "
           f"{sante.get('memoire_mo')} Mo ({sante.get('source_memoire')}) ; versions : {sante.get('versions')}")
     reussi = True

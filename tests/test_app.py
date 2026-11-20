@@ -63,6 +63,16 @@ def test_nombres_affiches_egaux_au_json_et_temoin():
     assert f"{K.nombre(q['qlike'])} [{K.nombre(q['qlike_intervalle']['bas'])} ; {K.nombre(q['qlike_intervalle']['haut'])}]" in texte
 
 
+def test_demonstration_affiche_l_adresse_publique_par_defaut(monkeypatch):
+    monkeypatch.delenv("API_URL", raising=False)
+    assert K.API_PAR_DEFAUT == "https://volatilite-api.onrender.com" and K.adresse_api() == K.API_PAR_DEFAUT
+    at = AppTest.from_function(_page, args=("demonstration", str(RACINE)), default_timeout=120).run()
+    assert not at.exception and K.API_PAR_DEFAUT in _textes(at)
+    monkeypatch.setenv("API_URL", "http://127.0.0.1:8000")            # témoin : une adresse locale n'est pas affichée
+    at = AppTest.from_function(_page, args=("demonstration", str(RACINE)), default_timeout=120).run()
+    assert "127.0.0.1" not in _textes(at) and "API locale" in _textes(at)
+
+
 def test_demonstration_message_clair_si_l_api_ne_repond_pas(monkeypatch):
     monkeypatch.setenv("API_URL", "http://127.0.0.1:9")              # aucune API sur ce port : API simulée en panne
     at = AppTest.from_function(_page, args=("demonstration", str(RACINE)), default_timeout=120).run()

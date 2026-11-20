@@ -19,7 +19,7 @@ sys.path.insert(0, str(RACINE / "src"))
 
 MENTION = "Données : Binance Vision, CC BY-NC-SA 4.0"
 DEPOT = "https://github.com/aljene307/volatility-forecasting-dl"
-API_PAR_DEFAUT = "http://127.0.0.1:8000"
+API_PAR_DEFAUT = "https://volatilite-api.onrender.com"     # API publique (Render) ; remplaçable par st.secrets ou API_URL
 COULEURS = {"BTCUSDT": "#D97706", "ETHUSDT": "#2563EB", "retenu": "#7C3AED", "gris": "#999999", "HAR-J": "#16A34A"}
 NOMS = {"BTCUSDT": "BTC", "ETHUSDT": "ETH"}
 ACTIFS = ["BTCUSDT", "ETHUSDT"]

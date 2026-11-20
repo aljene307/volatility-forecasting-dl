@@ -94,7 +94,7 @@ Dans PowerShell, depuis le dossier du projet, avec deux fenêtres :
 .venv\Scripts\python -m streamlit run app\streamlit_app.py --server.address 127.0.0.1
 ```
 
-Puis ouvrir http://127.0.0.1:8501 dans le navigateur. L'option `--server.address 127.0.0.1` limite l'application à ce poste : sans elle, Streamlit écoute aussi sur le réseau local. L'adresse de l'API vaut http://127.0.0.1:8000 par défaut ; elle peut être remplacée par `st.secrets["API_URL"]` ou par la variable d'environnement `API_URL` (par exemple `$env:API_URL = "https://…"` avant de lancer l'application). L'application fonctionne sans fichier de secrets.
+Puis ouvrir http://127.0.0.1:8501 dans le navigateur. L'option `--server.address 127.0.0.1` limite l'application à ce poste : sans elle, Streamlit écoute aussi sur le réseau local. L'adresse de l'API vaut https://volatilite-api.onrender.com par défaut (l'API en ligne) ; elle peut être remplacée par `st.secrets["API_URL"]` ou par la variable d'environnement `API_URL` (par exemple `$env:API_URL = "https://…"` avant de lancer l'application). L'application fonctionne sans fichier de secrets.
 
 ## Règles et exceptions
 
