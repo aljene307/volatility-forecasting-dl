@@ -110,6 +110,23 @@ def test_api_sans_torch_ni_pandas():
     assert sortie == "[]"
 
 
+def test_verification_en_ligne_contre_une_api_locale_et_temoin():
+    """Le script de vérification, lancé contre l'API servie par uvicorn en 127.0.0.1, conclut CONFORME ; témoin : un écart est détecté."""
+    import time
+    from api import verifier_en_ligne as V
+    serveur = subprocess.Popen([sys.executable, "-m", "uvicorn", "api.app:app", "--host", "127.0.0.1", "--port", "8771", "--log-level", "warning"],
+                               cwd=RACINE)
+    try:
+        time.sleep(1)
+        assert V.main(["http://127.0.0.1:8771"]) == 0
+    finally:
+        serveur.terminate()
+        serveur.wait(timeout=20)
+    locale = A.Moteur(A.DOSSIER_MODELES).prevoir(A.Requete(**_requete()))
+    faux = dict(locale, prevision_log_rv=locale["prevision_log_rv"] + 2e-6)
+    assert V.comparer(locale, locale) == [] and V.comparer(faux, locale) != []
+
+
 # --- Test clé : validation interne du test final (2024-H2, développement) --------------------------------
 
 @pytest.mark.skipif(not (RACINE / "data" / "processed" / "BTCUSDT_5m.parquet").exists(), reason="données locales absentes")

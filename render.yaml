@@ -1,0 +1,14 @@
+# Blueprint Render : API légère de prévision (api/app.py), offre gratuite.
+# Aucun secret dans ce fichier. L'API ne télécharge et ne diffuse aucune donnée Binance.
+services:
+  - type: web
+    name: volatilite-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r requirements-api.txt
+    startCommand: uvicorn api.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

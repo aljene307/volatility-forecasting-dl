@@ -688,3 +688,13 @@ Section `api` de `config/regles.toml` et section 18 des règles, commitées et p
   - la part expliquée par le jour de la semaine, dans l'encadré de l'Accueil, est calculée sur le test final (74 % pour BTC, 59 % pour ETH) ; la page Explicabilité garde celle du développement (72 % et 49 %), chacune étant nommée ;
   - le résumé anglais écrit les nombres au format anglais (point décimal), avec les mêmes valeurs ;
   - la figure 7 reste dans le dépôt et dans le README ; dans l'application, elle est remplacée par un graphique natif lisible.
+
+## 2026-11-20 — Étape 11A-1 : préparation du déploiement de l'API sur Render
+
+Aucune connexion à un compte ; le dépôt reste privé.
+
+- **`render.yaml`** (Blueprint) : service web gratuit, région Frankfurt, `PYTHON_VERSION` 3.11.9, construction `pip install -r requirements-api.txt`, démarrage `uvicorn api.app:app --host 0.0.0.0 --port $PORT`, contrôle de santé `/health`. Aucun secret.
+- **Roues Linux** (`pip download --only-binary :all:` pour Python 3.11, dans un dossier temporaire hors du projet, supprimé ensuite ; rien installé dans `.venv`) : avec la seule norme `manylinux2014` (glibc 2.17), **onnxruntime 1.32.0 est introuvable** : ses roues Linux exigent glibc 2.28. En acceptant aussi `manylinux_2_27` et `manylinux_2_28`, les 20 paquets de `requirements-api.txt` existent en roues pour Python 3.11 (onnxruntime exige glibc ≥ 2.28 et numpy glibc ≥ 2.27). Hypothèse, à confirmer par le journal de construction de Render : son environnement Python natif repose sur une Ubuntu récente, dont la glibc est plus récente que 2.28. Sinon, il faudrait une version plus ancienne d'onnxruntime, ce qui serait une décision à valider.
+- **Clone propre** (`git clone` du dépôt local dans un dossier temporaire, supprimé ensuite ; Python lancé en mode isolé) : l'API démarre, vérifie ses 7 fichiers et donne exactement la même prévision qu'au dossier de travail (écart nul) ; elle ne dépend d'aucun fichier ignoré par Git. Le clone contient seulement les manifestes commités dans `data/`, que l'API ne lit pas.
+- **`api/verifier_en_ligne.py`** : attend jusqu'à 120 s le réveil, affiche l'état et la mémoire, envoie l'exemple synthétique pour les deux actifs et compare à la prévision locale (tolérance de 1e-6 en log). Testé contre l'API locale (CONFORME, écart nul) avec un témoin (un écart de 2e-6 est détecté).
+- Décisions prises seul (à valider) : le script de vérification utilise seulement la bibliothèque standard pour les appels HTTP ; il vérifie les deux actifs (et non seulement BTC, l'actif de l'exemple).

@@ -75,6 +75,8 @@ $corps = (Get-Content api\exemple_synthetique.json -Raw -Encoding UTF8 | Convert
 Invoke-RestMethod -Uri http://127.0.0.1:8000/prevoir -Method Post -ContentType "application/json" -Body $corps
 ```
 
+Déploiement : le fichier `render.yaml` décrit le service web de l'API sur Render (offre gratuite, région Frankfurt, Python 3.11.9, contrôle de santé sur `/health`), sans aucun secret. Une fois le service en ligne, `.venv\Scripts\python api\verifier_en_ligne.py https://adresse-du-service` vérifie l'état et la mémoire, puis compare la prévision en ligne à la prévision locale sur l'exemple synthétique (le service gratuit s'endort sans requête : le script attend jusqu'à 120 s son réveil).
+
 La documentation interactive est à l'adresse http://127.0.0.1:8000/docs. Une requête invalide renvoie une erreur 422 en français, champ par champ (par exemple « jours[5].rv_7 : valeur manquante »). Export des modèles : `src/exporter_onnx.py` ; mesure de la mémoire et du temps de réponse : `api/mesurer.py`.
 
 ## Application (lancement en local sous Windows)
