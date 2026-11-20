@@ -740,3 +740,9 @@ Le message du commit c58c48e contient un numéro d'étape, contraire à la conve
 - `src/readme.py` génère quatre blocs : le résumé, « In English », les limites (mêmes fonctions que l'application et la synthèse) et les durées. Ces dernières sont lues dans les JSON quand elles y sont : la phase des plis du deep learning et le pic de mémoire. Les autres restent dans ce journal, parce qu'une reprise après interruption fausserait une durée écrite dans un fichier de résultats. Un test vérifie que le README commité est exactement ce que le script écrit (témoin : un bloc modifié à la main est détecté, un marqueur supprimé est refusé). Le test des liens couvre aussi `api/`, `app/` et `figures/`.
 - Chiffres tapés à la main retirés pendant la relecture : nombre de pages de la synthèse, numéros des captures, taille de la fenêtre d'entrée de l'API. Le nombre de réseaux et d'actifs du bloc des durées est lu dans le JSON.
 - Liens externes vérifiés une fois à la main (code 200 pour Binance Vision, ses conditions, la licence Creative Commons, Git et Python) ; l'API et le dépôt (encore privé) sont vérifiés à part.
+
+### Écart daté du 2026-11-20 à l'ordre de publication
+
+Écart daté à l'ordre de publication : le dépôt est passé en public avant la fin du test sur un clone neuf, pour tenir une échéance. L'audit de sécurité de tout l'historique était terminé. Tout défaut trouvé ensuite par le clone sera corrigé par un commit daté.
+
+- Licences : `LICENSE` (MIT, code seul) et `LICENSE-DONNEES.md` (données non incluses, fichiers dérivés sous CC BY-NC-SA 4.0, attribution et liens) existaient déjà, depuis le commit 4eafe2b ; ils n'ont pas été réécrits. La section « Licences » du README renvoie aux deux. Un test vérifie maintenant leur contenu et ces liens, avec un témoin.
