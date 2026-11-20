@@ -84,6 +84,8 @@ Chaque limite est générée depuis les fichiers de résultats (les mêmes phras
 
 Il faut [Git](https://git-scm.com/download/win) et Python 3.11 (installateur de [python.org](https://www.python.org/downloads/windows/), qui ajoute le lanceur `py`). Toutes les commandes ci-dessous sont pour Windows PowerShell 5.1 ; elles se copient **une par une**, et chacune peut être relancée sans erreur si le dossier ou l'environnement existe déjà.
 
+Ouvrez PowerShell dans un dossier au chemin court, par exemple `cd $HOME\Documents` : par défaut, Windows refuse les chemins de plus de 260 caractères, et une bibliothèque de test (Playwright) installe des fichiers très imbriqués. Un dossier trop profond fait échouer l'installation avec l'erreur `WinError 206`. Si le clonage s'arrête sur une erreur réseau, relancez simplement la même commande.
+
 ```powershell
 if (-not (Test-Path volatility-forecasting-dl)) { git clone https://github.com/aljene307/volatility-forecasting-dl.git }
 ```
@@ -164,7 +166,7 @@ $env:API_URL = "http://127.0.0.1:8000"
 
 Ouvrir ensuite http://127.0.0.1:8501 dans le navigateur. L'option `--server.address 127.0.0.1` limite l'application à ce poste (sans elle, Streamlit écoute aussi sur le réseau local). L'adresse de l'API se règle aussi par `st.secrets["API_URL"]` ; l'application fonctionne sans fichier de secrets.
 
-L'API (`api/app.py`) sert les modèles retenus du test final au format ONNX, sans torch ni pandas ; elle reçoit une fenêtre de jours des variables du projet (format décrit dans sa documentation interactive) et renvoie la volatilité prévue du lendemain, l'exposition de la stratégie et la VaR à 1 jour. Une requête invalide renvoie une erreur 422 en français, champ par champ. Le déploiement sur Render est décrit par `render.yaml` (sans aucun secret) ; `api/verifier_en_ligne.py` compare l'API en ligne à la prévision locale.
+L'API (`api/app.py`) sert les modèles retenus du test final au format ONNX, sans torch ni pandas ; elle reçoit une fenêtre de jours des variables du projet (format décrit dans sa documentation interactive ; définition de chaque variable : section 6 des [règles](docs/REGLES.md)) et renvoie la volatilité prévue du lendemain, l'exposition de la stratégie et la VaR à 1 jour. Une requête invalide renvoie une erreur 422 en français, champ par champ. Le déploiement sur Render est décrit par `render.yaml` (sans aucun secret) ; `api/verifier_en_ligne.py` compare l'API en ligne à la prévision locale.
 
 ## Reproduction complète (avec les données, plusieurs heures)
 

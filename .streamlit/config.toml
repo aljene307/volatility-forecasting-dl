@@ -2,6 +2,9 @@
 # L'adresse d'écoute n'est PAS fixée ici : en local, les commandes ajoutent --server.address 127.0.0.1 ;
 # la fixer dans ce fichier empêcherait Streamlit Cloud de servir l'application.
 
+[server]
+headless = true              # aucune invite d'adresse e-mail au premier lancement, aucun navigateur ouvert automatiquement
+
 [client]
 toolbarMode = "minimal"      # pas de bouton « Deploy » ni de menu de développement
 

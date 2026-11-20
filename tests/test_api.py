@@ -56,6 +56,18 @@ def test_exemple_synthetique_indique_comme_tel_et_prevision_coherente():
     assert "Binance Vision" in c["licence"]
 
 
+def test_encodage_utf8_declare_dans_toutes_les_reponses():
+    """Sans « charset=utf-8 », Windows PowerShell 5.1 lit la réponse en Latin-1 : « Volatilité » devient « VolatilitÃ© »."""
+    q = _requete()
+    q["jours"] = q["jours"][:29]
+    for r in (CLIENT.get("/health"), CLIENT.post("/prevoir", json=_requete()), CLIENT.post("/prevoir", json=q)):
+        assert r.headers["content-type"] == "application/json; charset=utf-8", r.request.url
+    texte = CLIENT.post("/prevoir", json=_requete()).content
+    assert "Volatilité".encode("utf-8") in texte                    # le contenu lui-même est en UTF-8
+    # Témoin : ces octets lus en Latin-1, comme le fait PowerShell 5.1 sans charset, abîment les accents.
+    assert "Volatilité" not in texte.decode("latin-1") and "VolatilitÃ©" in texte.decode("latin-1")
+
+
 def test_erreur_29_jours():
     q = _requete()
     q["jours"] = q["jours"][:29]

@@ -160,8 +160,14 @@ def _message(e: dict) -> str:
     return "valeur invalide"
 
 
+class ReponseJSON(JSONResponse):
+    """JSON avec l'encodage déclaré : sans « charset=utf-8 », Windows PowerShell 5.1 (Invoke-RestMethod) lit la réponse
+    en Latin-1 et abîme les accents. Le contenu envoyé ne change pas (déjà en UTF-8)."""
+    media_type = "application/json; charset=utf-8"
+
+
 async def erreurs_en_francais(_requete: Request, exc: RequestValidationError) -> JSONResponse:
-    return JSONResponse(status_code=422, content={"erreurs": [{"champ": _champ(tuple(e.get("loc", ()))), "message": _message(e)}
+    return ReponseJSON(status_code=422, content={"erreurs": [{"champ": _champ(tuple(e.get("loc", ()))), "message": _message(e)}
                                                               for e in exc.errors()]})
 
 
@@ -211,7 +217,8 @@ def creer_app(dossier: Path = DOSSIER_MODELES) -> FastAPI:
     moteur = Moteur(dossier)
     app = FastAPI(title="Prévision de la volatilité (BTC, ETH)", version="1.0",
                   description="Les données sont fournies par l'utilisateur ; aucune donnée Binance n'est téléchargée ni diffusée. "
-                              "Modèles : CC BY-NC-SA 4.0, Données : Binance Vision.")
+                              "Modèles : CC BY-NC-SA 4.0, Données : Binance Vision.",
+                  default_response_class=ReponseJSON)
     app.add_exception_handler(RequestValidationError, erreurs_en_francais)
 
     @app.get("/health")
